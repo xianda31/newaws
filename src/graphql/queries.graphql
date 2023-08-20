@@ -1,0 +1,31 @@
+# this is an auto generated file. This will be overwritten
+
+query GetCategory($id: ID!) {
+  getCategory(id: $id) {
+    id
+    label
+    description
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListCategories(
+  $filter: ModelCategoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      label
+      description
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}

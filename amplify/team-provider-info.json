@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bcsto-dev-105304-authRole",
+      "UnauthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-105304-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-105304-authRole",
+      "Region": "eu-west-3",
+      "DeploymentBucketName": "amplify-bcsto-dev-105304-deployment",
+      "UnauthRoleName": "amplify-bcsto-dev-105304-unauthRole",
+      "StackName": "amplify-bcsto-dev-105304",
+      "StackId": "arn:aws:cloudformation:eu-west-3:943391456702:stack/amplify-bcsto-dev-105304/faa70de0-3f36-11ee-8f2a-0e87d3eb8f2e",
+      "AmplifyAppId": "d1rppaiczgqfy2"
+    },
+    "categories": {
+      "api": {
+        "bcsto": {}
+      }
+    }
+  }
+}

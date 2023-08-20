@@ -1,0 +1,34 @@
+# this is an auto generated file. This will be overwritten
+
+subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onCreateCategory(filter: $filter) {
+    id
+    label
+    description
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onUpdateCategory(filter: $filter) {
+    id
+    label
+    description
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onDeleteCategory(filter: $filter) {
+    id
+    label
+    description
+    createdAt
+    updatedAt
+    __typename
+  }
+}
