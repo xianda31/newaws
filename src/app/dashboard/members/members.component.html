@@ -1,0 +1,110 @@
+<div class="container">
+
+  <!-- <div *ngIf="loading | async" class="row">
+    <div class="col-md-8">
+      <div class="row">
+        <div class="alert alert-info" role="alert">
+          <h4 class="alert-heading">Chargement des données</h4>
+          <p>Les données sont en cours de chargement, veuillez patienter.</p>
+          <hr>
+          <p class="mb-0">Si le chargement est trop long, veuillez vérifier votre connexion internet.</p>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="spinner-border text-primary " role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="card shadow">
+    <div class="card-header">
+      <form [formGroup]="memberForm">
+
+        <div class="input-group">
+          <!-- <span class="input-group-text">adherent</span> -->
+          <input type="text" class="form-control col-md-2" placeholder="nom" formControlName="lastname"
+            (input)="controlTextToUpperCase('lastname')"
+            [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)">
+          <div class="invalid-feedback">
+            nom obligatoire
+          </div>
+
+          <input type="text" class="form-control col-md-2" placeholder="prénom" formControlName="firstname"
+            (input)="controlTextFirstLetterToUpperCase('firstname')"
+            [class.is-invalid]="firstname.invalid && (firstname.dirty || firstname.touched)">
+          <div class="invalid-feedback">
+            prénom obligatoire
+          </div>
+
+          <input type=" text" class="form-control col-md-2" placeholder="n°licence" formControlName="license"
+            [class.is-invalid]="license.invalid && (license.dirty || license.touched)">
+          <div class="invalid-feedback">
+            n° licence obligatoire
+          </div>
+
+          <input type="mail" class="form-control col-md-2" placeholder="email" formControlName="email"
+            [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
+          <div class="invalid-feedback">
+            email obligatoire
+          </div>
+
+
+          <input type="string" class="form-control col-md-2" placeholder="droits" formControlName="rights"
+            [class.is-invalid]="rights.invalid && (rights.dirty || rights.touched)">
+          <div class="invalid-feedback">
+            définir les droits (p:publication, c:caisse, a:adherents)
+          </div>
+
+
+          <button *ngIf="createMode" type="button" class="btn btn-primary col-md-2"
+            (click)="createMember()">ajouter</button>
+          <button *ngIf="!createMode" type="button" class="btn btn-primary col-md-2"
+            (click)="updateMember()">modifier</button>
+        </div>
+
+      </form>
+    </div>
+    <div class="card-body">
+      <table class="table align-items-center table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" class="col-md-3" *ngFor="let column of columns">
+              {{ column.header }}
+            </th>
+            <th scope="col" class="col">action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let element of members | async " (click)="selectMember(element)">
+            <td *ngFor="let column of columns" class="col-md-2">
+              <span *ngIf="
+                    column.columnDef.includes('icon');
+                    then iconBlock;
+                    else dataBlock
+                  ">
+              </span>
+
+              <ng-template #dataBlock>
+                {{ column.cell(element) }}
+              </ng-template>
+
+              <ng-template #iconBlock>
+                <!-- <button type="button" class="btn btn-primary"> -->
+                <i [ngClass]="column.cell(element)"></i>
+                <!-- </button> -->
+              </ng-template>
+            </td>
+            <td>
+              <button type="button" class="btn btn-light btn-sm " (click)="deleteMember($event,element)">
+                <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
+              </button>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
