@@ -3,8 +3,17 @@
 input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
-type Category @model @auth(rules: [{ allow: public }]) {
-  id: String!
+type Category @model {
+  id: ID!
   label: String!
   description: String!
+}
+
+type Member @model {
+  id: ID!
+  firstname: String!
+  lastname: String!
+  license: String!
+  email: String!
+  rights: String!
 }

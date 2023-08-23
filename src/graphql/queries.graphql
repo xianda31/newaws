@@ -29,3 +29,39 @@ query ListCategories(
     __typename
   }
 }
+
+query GetMember($id: ID!) {
+  getMember(id: $id) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListMembers(
+  $filter: ModelMemberFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMembers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      firstname
+      lastname
+      license
+      email
+      rights
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}

@@ -13,6 +13,9 @@ export type __SubscriptionContainer = {
   onCreateCategory: OnCreateCategorySubscription;
   onUpdateCategory: OnUpdateCategorySubscription;
   onDeleteCategory: OnDeleteCategorySubscription;
+  onCreateMember: OnCreateMemberSubscription;
+  onUpdateMember: OnUpdateMemberSubscription;
+  onDeleteMember: OnDeleteMemberSubscription;
 };
 
 export type CreateCategoryInput = {
@@ -22,7 +25,6 @@ export type CreateCategoryInput = {
 };
 
 export type ModelCategoryConditionInput = {
-  id?: ModelStringInput | null;
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
   and?: Array<ModelCategoryConditionInput | null> | null;
@@ -88,13 +90,74 @@ export type DeleteCategoryInput = {
   id: string;
 };
 
+export type CreateMemberInput = {
+  id?: string | null;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+};
+
+export type ModelMemberConditionInput = {
+  firstname?: ModelStringInput | null;
+  lastname?: ModelStringInput | null;
+  license?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  rights?: ModelStringInput | null;
+  and?: Array<ModelMemberConditionInput | null> | null;
+  or?: Array<ModelMemberConditionInput | null> | null;
+  not?: ModelMemberConditionInput | null;
+};
+
+export type Member = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateMemberInput = {
+  id: string;
+  firstname?: string | null;
+  lastname?: string | null;
+  license?: string | null;
+  email?: string | null;
+  rights?: string | null;
+};
+
+export type DeleteMemberInput = {
+  id: string;
+};
+
 export type ModelCategoryFilterInput = {
-  id?: ModelStringInput | null;
+  id?: ModelIDInput | null;
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
   and?: Array<ModelCategoryFilterInput | null> | null;
   or?: Array<ModelCategoryFilterInput | null> | null;
   not?: ModelCategoryFilterInput | null;
+};
+
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
 };
 
 export type ModelCategoryConnection = {
@@ -103,12 +166,45 @@ export type ModelCategoryConnection = {
   nextToken?: string | null;
 };
 
+export type ModelMemberFilterInput = {
+  id?: ModelIDInput | null;
+  firstname?: ModelStringInput | null;
+  lastname?: ModelStringInput | null;
+  license?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  rights?: ModelStringInput | null;
+  and?: Array<ModelMemberFilterInput | null> | null;
+  or?: Array<ModelMemberFilterInput | null> | null;
+  not?: ModelMemberFilterInput | null;
+};
+
+export type ModelMemberConnection = {
+  __typename: "ModelMemberConnection";
+  items: Array<Member | null>;
+  nextToken?: string | null;
+};
+
 export type ModelSubscriptionCategoryFilterInput = {
-  id?: ModelSubscriptionStringInput | null;
+  id?: ModelSubscriptionIDInput | null;
   label?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
   or?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
+};
+
+export type ModelSubscriptionIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  in?: Array<string | null> | null;
+  notIn?: Array<string | null> | null;
 };
 
 export type ModelSubscriptionStringInput = {
@@ -124,6 +220,17 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null;
   in?: Array<string | null> | null;
   notIn?: Array<string | null> | null;
+};
+
+export type ModelSubscriptionMemberFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  firstname?: ModelSubscriptionStringInput | null;
+  lastname?: ModelSubscriptionStringInput | null;
+  license?: ModelSubscriptionStringInput | null;
+  email?: ModelSubscriptionStringInput | null;
+  rights?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionMemberFilterInput | null> | null;
+  or?: Array<ModelSubscriptionMemberFilterInput | null> | null;
 };
 
 export type CreateCategoryMutation = {
@@ -153,6 +260,42 @@ export type DeleteCategoryMutation = {
   updatedAt: string;
 };
 
+export type CreateMemberMutation = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateMemberMutation = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteMemberMutation = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type GetCategoryQuery = {
   __typename: "Category";
   id: string;
@@ -169,6 +312,34 @@ export type ListCategoriesQuery = {
     id: string;
     label: string;
     description: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type GetMemberQuery = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListMembersQuery = {
+  __typename: "ModelMemberConnection";
+  items: Array<{
+    __typename: "Member";
+    id: string;
+    firstname: string;
+    lastname: string;
+    license: string;
+    email: string;
+    rights: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -198,6 +369,42 @@ export type OnDeleteCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateMemberSubscription = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateMemberSubscription = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteMemberSubscription = {
+  __typename: "Member";
+  id: string;
+  firstname: string;
+  lastname: string;
+  license: string;
+  email: string;
+  rights: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -281,6 +488,90 @@ export class APIService {
     )) as any;
     return <DeleteCategoryMutation>response.data.deleteCategory;
   }
+  async CreateMember(
+    input: CreateMemberInput,
+    condition?: ModelMemberConditionInput
+  ): Promise<CreateMemberMutation> {
+    const statement = `mutation CreateMember($input: CreateMemberInput!, $condition: ModelMemberConditionInput) {
+        createMember(input: $input, condition: $condition) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateMemberMutation>response.data.createMember;
+  }
+  async UpdateMember(
+    input: UpdateMemberInput,
+    condition?: ModelMemberConditionInput
+  ): Promise<UpdateMemberMutation> {
+    const statement = `mutation UpdateMember($input: UpdateMemberInput!, $condition: ModelMemberConditionInput) {
+        updateMember(input: $input, condition: $condition) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateMemberMutation>response.data.updateMember;
+  }
+  async DeleteMember(
+    input: DeleteMemberInput,
+    condition?: ModelMemberConditionInput
+  ): Promise<DeleteMemberMutation> {
+    const statement = `mutation DeleteMember($input: DeleteMemberInput!, $condition: ModelMemberConditionInput) {
+        deleteMember(input: $input, condition: $condition) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteMemberMutation>response.data.deleteMember;
+  }
   async GetCategory(id: string): Promise<GetCategoryQuery> {
     const statement = `query GetCategory($id: ID!) {
         getCategory(id: $id) {
@@ -333,6 +624,65 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ListCategoriesQuery>response.data.listCategories;
+  }
+  async GetMember(id: string): Promise<GetMemberQuery> {
+    const statement = `query GetMember($id: ID!) {
+        getMember(id: $id) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetMemberQuery>response.data.getMember;
+  }
+  async ListMembers(
+    filter?: ModelMemberFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListMembersQuery> {
+    const statement = `query ListMembers($filter: ModelMemberFilterInput, $limit: Int, $nextToken: String) {
+        listMembers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            firstname
+            lastname
+            license
+            email
+            rights
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListMembersQuery>response.data.listMembers;
   }
   OnCreateCategoryListener(
     filter?: ModelSubscriptionCategoryFilterInput
@@ -409,6 +759,93 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteCategory">>
+    >;
+  }
+
+  OnCreateMemberListener(
+    filter?: ModelSubscriptionMemberFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateMember">>
+  > {
+    const statement = `subscription OnCreateMember($filter: ModelSubscriptionMemberFilterInput) {
+        onCreateMember(filter: $filter) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateMember">>
+    >;
+  }
+
+  OnUpdateMemberListener(
+    filter?: ModelSubscriptionMemberFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateMember">>
+  > {
+    const statement = `subscription OnUpdateMember($filter: ModelSubscriptionMemberFilterInput) {
+        onUpdateMember(filter: $filter) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateMember">>
+    >;
+  }
+
+  OnDeleteMemberListener(
+    filter?: ModelSubscriptionMemberFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteMember">>
+  > {
+    const statement = `subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
+        onDeleteMember(filter: $filter) {
+          __typename
+          id
+          firstname
+          lastname
+          license
+          email
+          rights
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteMember">>
     >;
   }
 }

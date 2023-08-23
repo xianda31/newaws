@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard.routing.module';
-import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesComponent } from '../publications/categories/categories.component';
+import { MembersComponent } from '../members/members.component';
 // import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 
 @NgModule({
   declarations: [
-    // MemberListComponent,
+    MembersComponent,
     CategoriesComponent,
-    ArticlesComponent,
+    // ArticlesComponent,
     // NewArticleComponent,
     // TestComponent
   ],

@@ -4,10 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 // import { IsPublisherGuard } from 'src/app/guards/ispublisher.guard';
 // import { IsMemberMgrGuard } from 'src/app/guards/ismemberMgr.guard';
 import { CategoriesComponent } from '../publications/categories/categories.component';
+import { MembersComponent } from '../members/members.component';
 // import { TestComponent } from '../test/test.component';
 
 const routes: Routes = [
-  // { path: 'members', component: MemberListComponent, canActivate: [IsMemberMgrGuard] },
+  { path: 'members', component: MembersComponent }, //, canActivate: [IsMemberMgrGuard] },
   { path: 'publication/categories', component: CategoriesComponent } //, canActivate: [IsPublisherGuard] },
   // { path: 'publication/articles', component: ArticlesComponent, canActivate: [IsPublisherGuard] },
   // { path: 'publication/articles/new', component: NewArticleComponent },

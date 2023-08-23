@@ -41,3 +41,54 @@ mutation DeleteCategory(
     __typename
   }
 }
+
+mutation CreateMember(
+  $input: CreateMemberInput!
+  $condition: ModelMemberConditionInput
+) {
+  createMember(input: $input, condition: $condition) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateMember(
+  $input: UpdateMemberInput!
+  $condition: ModelMemberConditionInput
+) {
+  updateMember(input: $input, condition: $condition) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteMember(
+  $input: DeleteMemberInput!
+  $condition: ModelMemberConditionInput
+) {
+  deleteMember(input: $input, condition: $condition) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}

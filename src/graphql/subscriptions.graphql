@@ -32,3 +32,45 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
     __typename
   }
 }
+
+subscription OnCreateMember($filter: ModelSubscriptionMemberFilterInput) {
+  onCreateMember(filter: $filter) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateMember($filter: ModelSubscriptionMemberFilterInput) {
+  onUpdateMember(filter: $filter) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
+  onDeleteMember(filter: $filter) {
+    id
+    firstname
+    lastname
+    license
+    email
+    rights
+    createdAt
+    updatedAt
+    __typename
+  }
+}
