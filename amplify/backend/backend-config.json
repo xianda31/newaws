@@ -16,5 +16,48 @@
       "providerPlugin": "awscloudformation",
       "service": "AppSync"
     }
+  },
+  "auth": {
+    "bcsto40d86ae9": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_bcsto40d86ae9_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bcsto40d86ae9"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bcsto40d86ae9_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bcsto40d86ae9"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bcsto40d86ae9_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bcsto40d86ae9"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bcsto40d86ae9_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bcsto40d86ae9"
+        }
+      ]
+    }
   }
 }

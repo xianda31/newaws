@@ -1,18 +1,23 @@
 import { Injectable } from "@angular/core";
-import { Amplify } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import { ModelCategoryConditionInput } from '../API.service';
 import { User } from "../interfaces/user.interface";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class CognitoService {
 
-  // Amplify.configure({
-  //   Auth: environment.cognito
-  // });
+  // _userLoggedIn: boolean = false;
+  UserLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  userLogged(bool: boolean) {
+    this.UserLoggedIn$.next(bool);
+  }
+
+  get userLoggedIn() {
+    return this.UserLoggedIn$.asObservable();
+  }
 
   _signUp(user: User): Promise<any> {
     return Auth.signUp({
@@ -22,33 +27,22 @@ export class CognitoService {
         email: user.email,
         name: user.firstname,
         family_name: user.lastname,
+        'custom:license': user.license
       }
     });
   }
-
 
   _confirmSignUp(user: User): Promise<any> {
     return Auth.confirmSignUp(user.email, user.code ? user.code : '');
   }
 
-
   _deleteLoggedUser(): Promise<any> {
-
     return Auth.deleteUser();
-  }
-
-
-  _getUser(): Promise<any> {
-    return Auth.currentUserInfo();
   }
 
   _signIn(user: User): Promise<any> {
     return Auth.signIn(user.email, user.password);
   }
-
-  // _confirmSignIn(user: User): Promise<any> {
-  //   return Auth.confirmSignIn(user.email, user.code ? user.code : '');
-  // }
 
   _signOut(): Promise<any> {
     return Auth.signOut();
@@ -61,4 +55,9 @@ export class CognitoService {
   _forgotPasswordSubmit(email: string, code: string, password: string): Promise<any> {
     return Auth.forgotPasswordSubmit(email, code, password);
   }
+
+  _getUserInfo(): Promise<any> {
+    return Auth.currentAuthenticatedUser();
+  }
 }
+

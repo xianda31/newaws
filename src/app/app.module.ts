@@ -13,9 +13,11 @@ import { SingleCategoryComponent } from './pages/single-category/single-category
 import { SinglePostComponent } from './pages/single-post/single-post.component';
 import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
-import { SignupComponent } from './authentification/signup/signup.component';
+import { SignupComponent } from './authentication/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { TestComponent } from './test/test.component';
     ToastComponent,
     ToasterComponent,
     SignupComponent,
-    TestComponent
+    TestComponent,
+    LoginComponent,
+    PswresetComponent,
 
   ],
   imports: [

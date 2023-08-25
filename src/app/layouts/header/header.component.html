@@ -12,10 +12,25 @@
           </span>
           <span class="text-nowrap">&nbsp; 31650 Saint-Orens de Gameville</span>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
           <i class="bi bi-telephone"></i>
           <span>&nbsp;05 61 39 00 39</span>
+        </div> -->
+
+        <div *ngIf="!username" class="col-md-3">
+          <button type="button" class="btn btn-primary" routerLink="login">
+            <i class="bi bi-person-circle"></i>
+            s'identifier
+          </button>
         </div>
+
+        <div *ngIf="username" class="col-md-3">
+          <button type="button" class="btn btn-primary" (click)="onLogout()">
+            <i class="bi bi-box-arrow-left"></i>
+            {{username}}
+          </button>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -33,22 +48,18 @@
       <ul class="navbar-nav mx-auto">
 
         <li class="nav-item mx-2">
-          <a class="nav-link active" href="#">BCSTO</a>
+          <a class="nav-link active" routerLink="home">BCSTO</a>
         </li>
 
-        <li class="nav-item mx-2">
+        <!-- <li class="nav-item mx-2">
           <a class="nav-link" href="#">Tournois</a>
-        </li>
+        </li> -->
 
-        <li class="nav-item mx-2">
-          <a class="nav-link" routerLink="signup">sign up</a>
-        </li>
-
-        <li class="nav-item ">
+        <!-- <li class="nav-item ">
           <a class="nav-link mx-2" routerLink="/test">test</a>
-        </li>
+        </li> -->
 
-        <li class="nav-item mx-2 dropdown">
+        <li class="nav-item mx-2 dropdown" *ngIf="logged">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             mon espace
           </a>
@@ -62,7 +73,7 @@
 
 
 
-        <li class="nav-item mx-2 dropdown">
+        <li class="nav-item mx-2 dropdown" *ngIf="logged">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration</a>
           <ul class="dropdown-menu">
@@ -86,10 +97,10 @@
     </div>
   </div>
 </div>
-<!-- <div class="container-fluid"> -->
+
+
 <div class="navplayground">
   <div class="container p-2">
     <router-outlet></router-outlet>
   </div>
-  <!-- </div> -->
 </div>

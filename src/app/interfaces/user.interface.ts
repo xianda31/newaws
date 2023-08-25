@@ -4,5 +4,6 @@ export interface User {
   firstname?: string;
   lastname?: string;
   code?: string;
+  license?: string;
   // showPassword: boolean;
 }
