@@ -13,7 +13,7 @@
           </div>
           <br>
 
-          <form [formGroup]="signupForm">
+          <form [formGroup]="signupForm" novalidate>
             <div class="col">
 
 
@@ -43,14 +43,13 @@
               <ng-container *ngIf="memberConfirmed">
 
                 <div class="row">
-                  <!-- <div class="col form-group form-outline mb-4">
-                    <label class="form-label">username (pseudo) :</label>
-                    <input type="email" class="form-control form-control-sm" formControlName="username" />
-                  </div> -->
-
                   <div class="col form-group form-outline mb-4">
                     <label class="form-label">choisisez un mot de passe :</label>
-                    <input type="password" class="form-control form-control-sm" formControlName="password" />
+                    <input type="password" class="form-control form-control-sm" formControlName="password"
+                      [class.is-invalid]="password.invalid && (password.dirty || password.touched)" />
+                    <div class="invalid-feedback">
+                      mot de passe non conforme
+                    </div>
                   </div>
                 </div>
 
@@ -78,33 +77,21 @@
                   <button class="btn btn-sm btn-primary" (click)="confirmSignUp(code.value)" type="button">je l'ai
                     !</button>
                 </div>
-                <!-- <button class="btn btn-sm btn-primary " type="button" *ngIf="memberConfirmed && isConfirmed"
-                 (click)="onSignup()">enregistrez moi !</button> -->
               </div>
-              <!-- </div> -->
+              <div class="row justify-content-center pt-4" *ngIf="memberConfirmed && !isConfirmed">
+                <div class="col-md-8">
+                  <div class="info-feedback">
+
+                    le mot de passe doit avoir 8 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1
+                    caractère
+                    spécial
+                  </div>
+                </div>
+              </div>
             </div>
           </form>
-
-
-          <div class="row text-center m-3">
-            <!-- <div class="col">
-                <a class="small text-muted" href="">Mot de passe oublié ?</a>
-              </div>
-              <div class="col">
-                <a class="small text-muted" routerLink="/signin">Pour avoir un compte </a>
-              </div> -->
-
-          </div>
-          <!-- <a href="#!" class="small text-muted">Terms of use.</a>
-                <a href="#!" class="small text-muted">Privacy policy</a> -->
-          <!-- {{userId}}
-            <button class="btn btn-lg btn-primary " type="button" (click)="getRoles()">vos roles</button> -->
-
         </div>
-        <!-- </div> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
 </div>
-<!-- </section> -->

@@ -1,0 +1,64 @@
+<div class="container pt-5">
+  <div class="row justify-content-center">
+    <div class="col col-md-8">
+      <div class="card">
+
+        <div *ngIf="resetForm" class="card-body ">
+
+          <div class="row">
+            <span class="h3 text-center pb-4"> changer le mot de passe
+            </span>
+          </div>
+
+          <form [formGroup]="resetForm" novalidate>
+
+            <div class="container ">
+
+              <div class="row justify-content-center pt-2">
+                <div class="col-md-8">
+                  <label class="form-label">email :</label>
+                  <input type="mail" class="form-control form-control-sm" formControlName="email">
+                </div>
+              </div>
+
+              <div class="row justify-content-center pt-2">
+                <div class="col-md-8">
+                  <label class="form-label">nouveau mot de passe :</label>
+                  <input type="password" class="form-control form-control-sm" placeholder="mot de passe"
+                    formControlName="password"
+                    [class.is-invalid]="password.invalid && (password.dirty || password.touched)" />
+                  <div class="invalid-feedback">
+                    mot de passe absent
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center pt-2">
+                <div class="col-md-8">
+                  <label class="form-label">code reçu par mail :</label>
+                  <input type="code" class="form-control form-control-sm" placeholder="mot de passe"
+                    formControlName="code" [class.is-invalid]="code.invalid && (code.dirty || code.touched)" />
+                  <div class="invalid-feedback">
+                    code absent
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row justify-content-center pt-4">
+                <div class="col-md-8">
+                  <button class="btn btn-sm btn-primary col-12" type="submit" (click)="onReset()">
+                    changer de mot de passe</button>
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+          <br>
+
+
+        </div>
+      </div>
+    </div>
+  </div>

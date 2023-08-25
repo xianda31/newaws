@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
@@ -29,7 +29,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       console.log('to do : cleanup partial signin');
       this.cognitoService._deleteLoggedUser();
     }
-    console.log('signup component destroyed');
   }
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class SignupComponent implements OnInit, OnDestroy {
       firstname: new FormControl({ value: '', disabled: true }),
       lastname: new FormControl({ value: '', disabled: true }),
       email: new FormControl({ value: '', disabled: false }),
-      password: new FormControl(''),
+      password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$')]),
       license: new FormControl(''),
     })
 
@@ -47,10 +46,11 @@ export class SignupComponent implements OnInit, OnDestroy {
     })
   }
 
-  get password() { return this.signupForm.get('password')!.value; }
-  get email() { return this.signupForm.get('email')!.value; }
-  get firstname() { return this.signupForm.get('firstname')!.value; }
-  get lastname() { return this.signupForm.get('lastname')!.value; }
+  get password() { return this.signupForm.get('password')!; }
+  get email() { return this.signupForm.get('email')!; }
+  get firstname() { return this.signupForm.get('firstname')!; }
+  get lastname() { return this.signupForm.get('lastname')!; }
+  get license() { return this.signupForm.get('license')!; }
 
   async onSearch() {
     if (this.memberFound === false) {
@@ -58,11 +58,12 @@ export class SignupComponent implements OnInit, OnDestroy {
       if (member === null) {
         this.toastService.showErrorToast('signup error', 'license inconnue du Club');
         return;
-      } else if (member.email === this.email) {
+      } else if (member.email === this.email.value) {
         this.signupForm.patchValue({
           firstname: member.firstname,
           lastname: member.lastname,
-          email: member.email
+          email: member.email,
+          license: member.license
         });
         this.memberFound = true;
       }
@@ -78,12 +79,12 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   async onSignup() {
     {
-      console.log('signing up: ', this.password, this.email);
       this.cognitoService._signUp({
-        email: this.email,
-        password: this.password,
-        firstname: this.firstname,
-        lastname: this.lastname
+        email: this.email.value,
+        password: this.password.value,
+        firstname: this.firstname.value,
+        lastname: this.lastname.value,
+        license: this.license.value,
       }).then((result) => {
         console.log('result: ', result);
         this.isConfirmed = true;
@@ -97,11 +98,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
   confirmSignUp(code: string) {
     this.cognitoService._confirmSignUp({
-      email: this.email,
-      password: this.password,
+      email: this.email.value,
+      password: this.password.value,
       code: code,
     }).then((result) => {
-      this.toastService.showSuccessToast('signup success', 'Bienvenue ' + this.firstname);
+      this.toastService.showSuccessToast('signup success', 'Bienvenue ' + this.firstname.value);
       this.signupSucceded = true;
       this.router.navigate(['/login']);
     })

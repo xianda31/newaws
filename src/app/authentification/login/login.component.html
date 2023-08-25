@@ -1,0 +1,66 @@
+<div class="container pt-5">
+  <div class="row justify-content-center">
+    <div class="col col-md-8">
+      <div class="card">
+
+        <div class="card-body ">
+
+          <div class="row">
+            <span class="h3 text-center pb-4"> s'identifier
+            </span>
+          </div>
+
+          <form [formGroup]="loginForm" novalidate>
+
+            <div class="container ">
+
+              <div class="row justify-content-center pt-2">
+                <div class="col-md-8">
+                  <label class="form-label">email :</label>
+                  <input type="mail" class="form-control form-control-sm" placeholder="adresse mail"
+                    formControlName="email" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" />
+                  <div class="invalid-feedback">
+                    une adresse mail doit être fournie
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center pt-2">
+                <div class="col-md-8">
+                  <label class="form-label">mot de passe</label>
+                  <input type="password" class="form-control form-control-sm" placeholder="mot de passe"
+                    formControlName="password"
+                    [class.is-invalid]="password.invalid && (password.dirty || password.touched)" />
+                  <div class="invalid-feedback">
+                    mot de passe absent
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="row justify-content-center pt-4">
+                <div class="col-md-8">
+                  <button class="btn btn-sm btn-primary col-12" type="submit" (click)="onLogin()">log in</button>
+                  <div *ngIf="loginRefused" class="invalid-feedback">
+                    désolé, username/mot de passe non reconnu ...
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-center pt-4">
+                <div class="col-md-8 ">
+                  <a class="text-sm-start text-muted" (click)="onReset()">changer le mot de passe </a>
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+          <br>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
