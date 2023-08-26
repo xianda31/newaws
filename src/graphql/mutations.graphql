@@ -8,6 +8,23 @@ mutation CreateCategory(
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -22,6 +39,23 @@ mutation UpdateCategory(
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -36,6 +70,23 @@ mutation DeleteCategory(
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -89,6 +140,99 @@ mutation DeleteMember(
     rights
     createdAt
     updatedAt
+    __typename
+  }
+}
+
+mutation CreateArticle(
+  $input: CreateArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  createArticle(input: $input, condition: $condition) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
+    __typename
+  }
+}
+
+mutation UpdateArticle(
+  $input: UpdateArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  updateArticle(input: $input, condition: $condition) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
+    __typename
+  }
+}
+
+mutation DeleteArticle(
+  $input: DeleteArticleInput!
+  $condition: ModelArticleConditionInput
+) {
+  deleteArticle(input: $input, condition: $condition) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
     __typename
   }
 }

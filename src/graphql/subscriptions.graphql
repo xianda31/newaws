@@ -5,6 +5,23 @@ subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -16,6 +33,23 @@ subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -27,6 +61,23 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -71,6 +122,90 @@ subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
     rights
     createdAt
     updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onCreateArticle(filter: $filter) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
+    __typename
+  }
+}
+
+subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onUpdateArticle(filter: $filter) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
+    __typename
+  }
+}
+
+subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
+  onDeleteArticle(filter: $filter) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
     __typename
   }
 }

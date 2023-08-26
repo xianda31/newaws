@@ -22,6 +22,12 @@
           "webClientId": "el8thbvd4h1cfsn031hbtrdlg",
           "nativeClientId": "el8thbvd4h1cfsn031hbtrdlg"
         }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1hc1upwky5pat",
+          "type": "manual"
+        }
       }
     }
   }

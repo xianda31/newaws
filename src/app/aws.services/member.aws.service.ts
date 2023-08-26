@@ -67,4 +67,6 @@ export class MemberService {
   getMemberByLicense(license: string): Member | null {
     return this._members.find((member) => member.license === license) || null;
   }
+
+
 }

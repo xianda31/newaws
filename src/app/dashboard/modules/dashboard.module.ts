@@ -5,6 +5,9 @@ import { DashboardRoutingModule } from './dashboard.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesComponent } from '../publications/categories/categories.component';
 import { MembersComponent } from '../members/members.component';
+import { ArticlesComponent } from '../publications/articles/articles/articles.component';
+import { NewArticleComponent } from '../publications/articles/new-article/new-article.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 // import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
@@ -13,8 +16,8 @@ import { MembersComponent } from '../members/members.component';
   declarations: [
     MembersComponent,
     CategoriesComponent,
-    // ArticlesComponent,
-    // NewArticleComponent,
+    ArticlesComponent,
+    NewArticleComponent,
     // TestComponent
   ],
   imports: [
@@ -23,7 +26,7 @@ import { MembersComponent } from '../members/members.component';
     ReactiveFormsModule,
     DashboardRoutingModule,
     HttpClientModule,
-    // AngularEditorModule
+    AngularEditorModule
   ]
 })
 export class DashboardModule { }

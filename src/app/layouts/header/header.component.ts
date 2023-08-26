@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,7 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 export class HeaderComponent implements OnInit {
   username !: string;
   userlicence !: string;
-  logged: boolean = false;
+  logged: boolean = environment.logging_bypass;
 
   constructor(
     private cognitoService: CognitoService,

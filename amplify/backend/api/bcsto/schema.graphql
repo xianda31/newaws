@@ -6,6 +6,7 @@ type Category @model @auth(rules: [{ allow: public }]) {
   id: ID!
   label: String!
   description: String!
+  articles: [Article] @hasMany
 }
 
 type Member @model @auth(rules: [{ allow: public }]) {
@@ -15,4 +16,15 @@ type Member @model @auth(rules: [{ allow: public }]) {
   license: String!
   email: String!
   rights: String!
+}
+
+type Article @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  title: String!
+  permalink: String!
+  summary: String!
+  content: String!
+  imgPath: String!
+  category: Category @belongsTo
+  isPublished: Boolean!
 }

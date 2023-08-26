@@ -16,6 +16,9 @@ export type __SubscriptionContainer = {
   onCreateMember: OnCreateMemberSubscription;
   onUpdateMember: OnUpdateMemberSubscription;
   onDeleteMember: OnDeleteMemberSubscription;
+  onCreateArticle: OnCreateArticleSubscription;
+  onUpdateArticle: OnUpdateArticleSubscription;
+  onDeleteArticle: OnDeleteArticleSubscription;
 };
 
 export type CreateCategoryInput = {
@@ -76,8 +79,30 @@ export type Category = {
   id: string;
   label: string;
   description: string;
+  articles?: ModelArticleConnection | null;
   createdAt: string;
   updatedAt: string;
+};
+
+export type ModelArticleConnection = {
+  __typename: "ModelArticleConnection";
+  items: Array<Article | null>;
+  nextToken?: string | null;
+};
+
+export type Article = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: Category | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
 };
 
 export type UpdateCategoryInput = {
@@ -135,13 +160,35 @@ export type DeleteMemberInput = {
   id: string;
 };
 
-export type ModelCategoryFilterInput = {
-  id?: ModelIDInput | null;
-  label?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  and?: Array<ModelCategoryFilterInput | null> | null;
-  or?: Array<ModelCategoryFilterInput | null> | null;
-  not?: ModelCategoryFilterInput | null;
+export type CreateArticleInput = {
+  id?: string | null;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  isPublished: boolean;
+  categoryArticlesId?: string | null;
+};
+
+export type ModelArticleConditionInput = {
+  title?: ModelStringInput | null;
+  permalink?: ModelStringInput | null;
+  summary?: ModelStringInput | null;
+  content?: ModelStringInput | null;
+  imgPath?: ModelStringInput | null;
+  isPublished?: ModelBooleanInput | null;
+  and?: Array<ModelArticleConditionInput | null> | null;
+  or?: Array<ModelArticleConditionInput | null> | null;
+  not?: ModelArticleConditionInput | null;
+  categoryArticlesId?: ModelIDInput | null;
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
 };
 
 export type ModelIDInput = {
@@ -158,6 +205,30 @@ export type ModelIDInput = {
   attributeExists?: boolean | null;
   attributeType?: ModelAttributeTypes | null;
   size?: ModelSizeInput | null;
+};
+
+export type UpdateArticleInput = {
+  id: string;
+  title?: string | null;
+  permalink?: string | null;
+  summary?: string | null;
+  content?: string | null;
+  imgPath?: string | null;
+  isPublished?: boolean | null;
+  categoryArticlesId?: string | null;
+};
+
+export type DeleteArticleInput = {
+  id: string;
+};
+
+export type ModelCategoryFilterInput = {
+  id?: ModelIDInput | null;
+  label?: ModelStringInput | null;
+  description?: ModelStringInput | null;
+  and?: Array<ModelCategoryFilterInput | null> | null;
+  or?: Array<ModelCategoryFilterInput | null> | null;
+  not?: ModelCategoryFilterInput | null;
 };
 
 export type ModelCategoryConnection = {
@@ -182,6 +253,20 @@ export type ModelMemberConnection = {
   __typename: "ModelMemberConnection";
   items: Array<Member | null>;
   nextToken?: string | null;
+};
+
+export type ModelArticleFilterInput = {
+  id?: ModelIDInput | null;
+  title?: ModelStringInput | null;
+  permalink?: ModelStringInput | null;
+  summary?: ModelStringInput | null;
+  content?: ModelStringInput | null;
+  imgPath?: ModelStringInput | null;
+  isPublished?: ModelBooleanInput | null;
+  and?: Array<ModelArticleFilterInput | null> | null;
+  or?: Array<ModelArticleFilterInput | null> | null;
+  not?: ModelArticleFilterInput | null;
+  categoryArticlesId?: ModelIDInput | null;
 };
 
 export type ModelSubscriptionCategoryFilterInput = {
@@ -233,11 +318,45 @@ export type ModelSubscriptionMemberFilterInput = {
   or?: Array<ModelSubscriptionMemberFilterInput | null> | null;
 };
 
+export type ModelSubscriptionArticleFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  title?: ModelSubscriptionStringInput | null;
+  permalink?: ModelSubscriptionStringInput | null;
+  summary?: ModelSubscriptionStringInput | null;
+  content?: ModelSubscriptionStringInput | null;
+  imgPath?: ModelSubscriptionStringInput | null;
+  isPublished?: ModelSubscriptionBooleanInput | null;
+  and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
+  or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
+};
+
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null;
+  eq?: boolean | null;
+};
+
 export type CreateCategoryMutation = {
   __typename: "Category";
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -247,6 +366,23 @@ export type UpdateCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -256,6 +392,23 @@ export type DeleteCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -296,11 +449,106 @@ export type DeleteMemberMutation = {
   updatedAt: string;
 };
 
+export type CreateArticleMutation = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
+export type UpdateArticleMutation = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
+export type DeleteArticleMutation = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
 export type GetCategoryQuery = {
   __typename: "Category";
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -312,6 +560,10 @@ export type ListCategoriesQuery = {
     id: string;
     label: string;
     description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -346,11 +598,80 @@ export type ListMembersQuery = {
   nextToken?: string | null;
 };
 
+export type GetArticleQuery = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
+export type ListArticlesQuery = {
+  __typename: "ModelArticleConnection";
+  items: Array<{
+    __typename: "Article";
+    id: string;
+    title: string;
+    permalink: string;
+    summary: string;
+    content: string;
+    imgPath: string;
+    category?: {
+      __typename: "Category";
+      id: string;
+      label: string;
+      description: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null;
+    isPublished: boolean;
+    createdAt: string;
+    updatedAt: string;
+    categoryArticlesId?: string | null;
+  } | null>;
+  nextToken?: string | null;
+};
+
 export type OnCreateCategorySubscription = {
   __typename: "Category";
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -360,6 +681,23 @@ export type OnUpdateCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -369,6 +707,23 @@ export type OnDeleteCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  articles?: {
+    __typename: "ModelArticleConnection";
+    items: Array<{
+      __typename: "Article";
+      id: string;
+      title: string;
+      permalink: string;
+      summary: string;
+      content: string;
+      imgPath: string;
+      isPublished: boolean;
+      createdAt: string;
+      updatedAt: string;
+      categoryArticlesId?: string | null;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -409,6 +764,84 @@ export type OnDeleteMemberSubscription = {
   updatedAt: string;
 };
 
+export type OnCreateArticleSubscription = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
+export type OnUpdateArticleSubscription = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
+export type OnDeleteArticleSubscription = {
+  __typename: "Article";
+  id: string;
+  title: string;
+  permalink: string;
+  summary: string;
+  content: string;
+  imgPath: string;
+  category?: {
+    __typename: "Category";
+    id: string;
+    label: string;
+    description: string;
+    articles?: {
+      __typename: "ModelArticleConnection";
+      nextToken?: string | null;
+    } | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  categoryArticlesId?: string | null;
+};
+
 @Injectable({
   providedIn: "root"
 })
@@ -423,6 +856,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -448,6 +898,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -473,6 +940,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -572,6 +1056,132 @@ export class APIService {
     )) as any;
     return <DeleteMemberMutation>response.data.deleteMember;
   }
+  async CreateArticle(
+    input: CreateArticleInput,
+    condition?: ModelArticleConditionInput
+  ): Promise<CreateArticleMutation> {
+    const statement = `mutation CreateArticle($input: CreateArticleInput!, $condition: ModelArticleConditionInput) {
+        createArticle(input: $input, condition: $condition) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateArticleMutation>response.data.createArticle;
+  }
+  async UpdateArticle(
+    input: UpdateArticleInput,
+    condition?: ModelArticleConditionInput
+  ): Promise<UpdateArticleMutation> {
+    const statement = `mutation UpdateArticle($input: UpdateArticleInput!, $condition: ModelArticleConditionInput) {
+        updateArticle(input: $input, condition: $condition) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateArticleMutation>response.data.updateArticle;
+  }
+  async DeleteArticle(
+    input: DeleteArticleInput,
+    condition?: ModelArticleConditionInput
+  ): Promise<DeleteArticleMutation> {
+    const statement = `mutation DeleteArticle($input: DeleteArticleInput!, $condition: ModelArticleConditionInput) {
+        deleteArticle(input: $input, condition: $condition) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteArticleMutation>response.data.deleteArticle;
+  }
   async GetCategory(id: string): Promise<GetCategoryQuery> {
     const statement = `query GetCategory($id: ID!) {
         getCategory(id: $id) {
@@ -579,6 +1189,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -604,6 +1231,10 @@ export class APIService {
             id
             label
             description
+            articles {
+              __typename
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -684,6 +1315,89 @@ export class APIService {
     )) as any;
     return <ListMembersQuery>response.data.listMembers;
   }
+  async GetArticle(id: string): Promise<GetArticleQuery> {
+    const statement = `query GetArticle($id: ID!) {
+        getArticle(id: $id) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetArticleQuery>response.data.getArticle;
+  }
+  async ListArticles(
+    filter?: ModelArticleFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListArticlesQuery> {
+    const statement = `query ListArticles($filter: ModelArticleFilterInput, $limit: Int, $nextToken: String) {
+        listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            title
+            permalink
+            summary
+            content
+            imgPath
+            category {
+              __typename
+              id
+              label
+              description
+              createdAt
+              updatedAt
+            }
+            isPublished
+            createdAt
+            updatedAt
+            categoryArticlesId
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListArticlesQuery>response.data.listArticles;
+  }
   OnCreateCategoryListener(
     filter?: ModelSubscriptionCategoryFilterInput
   ): Observable<
@@ -695,6 +1409,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -721,6 +1452,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -747,6 +1495,23 @@ export class APIService {
           id
           label
           description
+          articles {
+            __typename
+            items {
+              __typename
+              id
+              title
+              permalink
+              summary
+              content
+              imgPath
+              isPublished
+              createdAt
+              updatedAt
+              categoryArticlesId
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -846,6 +1611,135 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteMember">>
+    >;
+  }
+
+  OnCreateArticleListener(
+    filter?: ModelSubscriptionArticleFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateArticle">>
+  > {
+    const statement = `subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
+        onCreateArticle(filter: $filter) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateArticle">>
+    >;
+  }
+
+  OnUpdateArticleListener(
+    filter?: ModelSubscriptionArticleFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateArticle">>
+  > {
+    const statement = `subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
+        onUpdateArticle(filter: $filter) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateArticle">>
+    >;
+  }
+
+  OnDeleteArticleListener(
+    filter?: ModelSubscriptionArticleFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteArticle">>
+  > {
+    const statement = `subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
+        onDeleteArticle(filter: $filter) {
+          __typename
+          id
+          title
+          permalink
+          summary
+          content
+          imgPath
+          category {
+            __typename
+            id
+            label
+            description
+            articles {
+              __typename
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          isPublished
+          createdAt
+          updatedAt
+          categoryArticlesId
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteArticle">>
     >;
   }
 }

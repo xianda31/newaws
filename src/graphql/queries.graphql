@@ -5,6 +5,23 @@ query GetCategory($id: ID!) {
     id
     label
     description
+    articles {
+      items {
+        id
+        title
+        permalink
+        summary
+        content
+        imgPath
+        isPublished
+        createdAt
+        updatedAt
+        categoryArticlesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -21,6 +38,10 @@ query ListCategories(
       id
       label
       description
+      articles {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -59,6 +80,66 @@ query ListMembers(
       rights
       createdAt
       updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetArticle($id: ID!) {
+  getArticle(id: $id) {
+    id
+    title
+    permalink
+    summary
+    content
+    imgPath
+    category {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    isPublished
+    createdAt
+    updatedAt
+    categoryArticlesId
+    __typename
+  }
+}
+
+query ListArticles(
+  $filter: ModelArticleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      permalink
+      summary
+      content
+      imgPath
+      category {
+        id
+        label
+        description
+        createdAt
+        updatedAt
+        __typename
+      }
+      isPublished
+      createdAt
+      updatedAt
+      categoryArticlesId
       __typename
     }
     nextToken
