@@ -1,0 +1,34 @@
+<div class="card col-md-8">
+  <label for="file">sélectionnez un fichier ... </label>
+  <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
+
+  <div>
+    {{filename || "No file selected yet."}}
+    <button type="button" class="btn btn-primary btn-sm " (click)="fileSelect.click()">
+      <i class="bi bi-paperclip"></i>
+      image
+    </button>
+    <img [src]="preview" alt="" class="img-fluid">
+  </div>
+
+  <div *ngIf="filename">
+    <button type="button" class="btn btn-primary btn-sm " (click)="upload()">
+      <i class="bi bi-cloud-arrow-up"></i>
+      image
+    </button>
+  </div>
+</div>
+
+<div class="card col-md-8">
+  <div class="card-header">
+    <span>files</span>
+  </div>
+  <div *ngIf="filesystem" class="card-body">
+    <ul>
+      <li *ngFor="let file of filesystem.files">
+        <p (click)="download(file.key)"> {{file.key}} </p>
+      </li>
+    </ul>
+  </div>
+
+</div>
