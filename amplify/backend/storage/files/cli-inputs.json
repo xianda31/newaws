@@ -1,0 +1,16 @@
+{
+  "resourceName": "files",
+  "policyUUID": "5866744a",
+  "bucketName": "bucksto",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

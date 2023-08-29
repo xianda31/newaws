@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         lastname: this.lastname.value,
         license: this.license.value,
       }).then((result) => {
-        console.log('result: ', result);
+        // console.log('result: ', result);
         this.isConfirmed = true;
       })
         .catch((error) => {

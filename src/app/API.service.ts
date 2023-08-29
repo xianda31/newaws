@@ -25,11 +25,13 @@ export type CreateCategoryInput = {
   id?: string | null;
   label: string;
   description: string;
+  image?: string | null;
 };
 
 export type ModelCategoryConditionInput = {
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
+  image?: ModelStringInput | null;
   and?: Array<ModelCategoryConditionInput | null> | null;
   or?: Array<ModelCategoryConditionInput | null> | null;
   not?: ModelCategoryConditionInput | null;
@@ -79,6 +81,7 @@ export type Category = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: ModelArticleConnection | null;
   createdAt: string;
   updatedAt: string;
@@ -109,6 +112,7 @@ export type UpdateCategoryInput = {
   id: string;
   label?: string | null;
   description?: string | null;
+  image?: string | null;
 };
 
 export type DeleteCategoryInput = {
@@ -226,6 +230,7 @@ export type ModelCategoryFilterInput = {
   id?: ModelIDInput | null;
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
+  image?: ModelStringInput | null;
   and?: Array<ModelCategoryFilterInput | null> | null;
   or?: Array<ModelCategoryFilterInput | null> | null;
   not?: ModelCategoryFilterInput | null;
@@ -273,6 +278,7 @@ export type ModelSubscriptionCategoryFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   label?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
+  image?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
   or?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
 };
@@ -340,6 +346,7 @@ export type CreateCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -366,6 +373,7 @@ export type UpdateCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -392,6 +400,7 @@ export type DeleteCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -462,6 +471,7 @@ export type CreateArticleMutation = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -488,6 +498,7 @@ export type UpdateArticleMutation = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -514,6 +525,7 @@ export type DeleteArticleMutation = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -532,6 +544,7 @@ export type GetCategoryQuery = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -560,6 +573,7 @@ export type ListCategoriesQuery = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -611,6 +625,7 @@ export type GetArticleQuery = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -639,6 +654,7 @@ export type ListArticlesQuery = {
       id: string;
       label: string;
       description: string;
+      image?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null;
@@ -655,6 +671,7 @@ export type OnCreateCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -681,6 +698,7 @@ export type OnUpdateCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -707,6 +725,7 @@ export type OnDeleteCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  image?: string | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -777,6 +796,7 @@ export type OnCreateArticleSubscription = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -803,6 +823,7 @@ export type OnUpdateArticleSubscription = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -829,6 +850,7 @@ export type OnDeleteArticleSubscription = {
     id: string;
     label: string;
     description: string;
+    image?: string | null;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -856,6 +878,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -898,6 +921,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -940,6 +964,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -1074,6 +1099,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1116,6 +1142,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1158,6 +1185,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1189,6 +1217,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -1231,6 +1260,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1330,6 +1360,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1372,6 +1403,7 @@ export class APIService {
               id
               label
               description
+              image
               createdAt
               updatedAt
             }
@@ -1409,6 +1441,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -1452,6 +1485,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -1495,6 +1529,7 @@ export class APIService {
           id
           label
           description
+          image
           articles {
             __typename
             items {
@@ -1633,6 +1668,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1676,6 +1712,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken
@@ -1719,6 +1756,7 @@ export class APIService {
             id
             label
             description
+            image
             articles {
               __typename
               nextToken

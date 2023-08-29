@@ -17,7 +17,9 @@ export class CategoryService {
 
     this.api.ListCategories().then((result) => {
       this._categories = result.items as Category[];
+      console.log('this._categories : ', this._categories);
       this._categories$.next(this._categories);
+
     });
 
   }
@@ -39,6 +41,11 @@ export class CategoryService {
       .catch((error) => { console.log('Error creating category: ', error); });
   }
 
+  getCategoryById(id: string): Category | undefined {
+    let category = this._categories.find((category) => category.id === id);
+    console.log('category : ', category)
+    return this._categories.find((category) => category.id === id);
+  }
 
   updateCategory(category: Category) {
     this.api.UpdateCategory(category).then((result) => {

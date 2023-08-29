@@ -30,5 +30,35 @@
         }
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bcsto-dev-103110-authRole",
+      "UnauthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-103110-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-103110-authRole",
+      "Region": "eu-west-3",
+      "DeploymentBucketName": "amplify-bcsto-dev-103110-deployment",
+      "UnauthRoleName": "amplify-bcsto-dev-103110-unauthRole",
+      "StackName": "amplify-bcsto-dev-103110",
+      "StackId": "arn:aws:cloudformation:eu-west-3:943391456702:stack/amplify-bcsto-dev-103110/e9620ef0-43ea-11ee-8080-0ef2b0dc2fea",
+      "AmplifyAppId": "d1hc1upwky5pat"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d1hc1upwky5pat",
+          "type": "manual"
+        }
+      },
+      "auth": {
+        "bcsto83e97830": {}
+      },
+      "api": {
+        "bcsto": {}
+      },
+      "storage": {
+        "files": {}
+      }
+    }
   }
 }

@@ -18,12 +18,31 @@
     }
   },
   "auth": {
-    "bcsto40d86ae9": {
+    "bcsto83e97830": {
       "customAuth": false,
       "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
       "providerPlugin": "awscloudformation",
-      "service": "Cognito",
-      "serviceType": "imported"
+      "service": "Cognito"
     }
   },
   "hosting": {
@@ -34,38 +53,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_bcsto40d86ae9_nativeClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "bcsto40d86ae9"
-        }
-      ]
-    },
-    "AMPLIFY_auth_bcsto40d86ae9_userPoolId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "bcsto40d86ae9"
-        }
-      ]
-    },
-    "AMPLIFY_auth_bcsto40d86ae9_userPoolName": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "bcsto40d86ae9"
-        }
-      ]
-    },
-    "AMPLIFY_auth_bcsto40d86ae9_webClientId": {
-      "usedBy": [
-        {
-          "category": "auth",
-          "resourceName": "bcsto40d86ae9"
-        }
-      ]
-    },
     "AMPLIFY_hosting_amplifyhosting_appId": {
       "usedBy": [
         {
@@ -81,6 +68,13 @@
           "resourceName": "amplifyhosting"
         }
       ]
+    }
+  },
+  "storage": {
+    "files": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
     }
   }
 }

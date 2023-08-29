@@ -5,6 +5,7 @@ query GetCategory($id: ID!) {
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -38,6 +39,7 @@ query ListCategories(
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -99,6 +101,7 @@ query GetArticle($id: ID!) {
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -132,6 +135,7 @@ query ListArticles(
         id
         label
         description
+        image
         createdAt
         updatedAt
         __typename

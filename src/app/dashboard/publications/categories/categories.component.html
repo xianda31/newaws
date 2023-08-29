@@ -10,17 +10,26 @@
       <form class="form-inline text-center" [formGroup]="categoryForm">
 
         <div class="input-group mb-3">
-          <input type="text" class="form-control w-25" formControlName="label" id="label"
-            placeholder="nouvelle rubrique" [class.is-invalid]="label.invalid && (label.dirty || label.touched)">
+
+          <input type="text" class="form-control col-md-2" formControlName="label" id="label"
+            placeholder="titre rubrique" [class.is-invalid]="label.invalid && (label.dirty || label.touched)">
           <div class="invalid-feedback">
             un nom de rubrique doit être fourni
           </div>
-          <input type="text" class="form-control w-50" formControlName="description" id="description"
+
+          <input type="text" class="form-control col-md-4" formControlName="description" id="description"
             placeholder="court descriptif"
             [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
           <div class="invalid-feedback">
             une descriptif doit être fourni
           </div>
+
+          <div class="custom-file-button">
+            <input type="file" accept="image/*" class="form-control col-md-4" id="image" placeholder="image"
+              (change)="onImageChange($event)">
+          </div>
+
+
           <button *ngIf="createMode" type="submit" class="btn btn-primary text-white col-md-2"
             (click)="createCategory()" [disabled]="categoryForm.invalid">
             Ajouter
@@ -30,6 +39,10 @@
             (click)="updateCategory()" [disabled]="categoryForm.invalid">
             Modifier
           </button>
+
+        </div>
+        <div *ngIf="fileTooBig" class="text-bg-warning">
+          le fichier est trop volumineux {{maxSize}}
         </div>
 
       </form>
@@ -46,15 +59,19 @@
   <table class="table align-items-center table-hover">
     <thead class="thead-light">
       <tr>
-        <th scope="col" class="col-md-4">rubrique</th>
-        <th scope="col" class="col-md-6">descriptif</th>
+        <th scope="col" class="col-md-2">rubrique</th>
+        <th scope="col" class="col-md-4 text-center">descriptif</th>
+        <th scope="col" class="col-md-4 text-center">image</th>
         <th scope="col" class="col-md-2 text-center">action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let category of categories$ | async " (click)="selectCategory(category)">
-        <td class="col-md-4">{{ category.label }}</td>
-        <td class="col-md-6">{{ category.description }}</td>
+        <td class="col-md-2"> {{ category.label }} </td>
+        <td class="col-md-4 text-center">{{ category.description }}</td>
+        <td class="col-md-4 text-center">
+          <img *ngIf="category.image" src="{{ category.image }}" class="img-fluid" alt="vignette" width="100px">
+        </td>
         <td class="col-md-2 text-center">
           <!-- <div class="btn-toolbar "> -->
           <button type="button" class="btn btn-light btn-sm " (click)="deleteCategory($event,category)">

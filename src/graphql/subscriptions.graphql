@@ -5,6 +5,7 @@ subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -33,6 +34,7 @@ subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -61,6 +63,7 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -138,6 +141,7 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -166,6 +170,7 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -194,6 +199,7 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
       id
       label
       description
+      image
       articles {
         nextToken
         __typename

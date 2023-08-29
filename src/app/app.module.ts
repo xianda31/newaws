@@ -10,7 +10,6 @@ import { PostCardComponent } from './layouts/post-card/post-card.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SingleCategoryComponent } from './pages/single-category/single-category.component';
-import { SinglePostComponent } from './pages/single-post/single-post.component';
 import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
 import { SignupComponent } from './authentication/signup/signup.component';
@@ -24,7 +23,6 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    SinglePostComponent,
     ContactUsComponent,
     SingleCategoryComponent,
     FooterComponent,

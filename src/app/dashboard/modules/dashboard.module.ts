@@ -8,7 +8,7 @@ import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { NewArticleComponent } from '../publications/articles/new-article/new-article.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-// import { AngularEditorModule } from '@kolkov/angular-editor';
+import { TestComponent } from '../test/test.component';
 
 
 
@@ -18,7 +18,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     CategoriesComponent,
     ArticlesComponent,
     NewArticleComponent,
-    // TestComponent
+    TestComponent
   ],
   imports: [
     CommonModule,

@@ -2,10 +2,18 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 # input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
+# type Category @model @auth(rules: [{ allow: public }]) {
+#   id: ID!
+#   label: String!
+#   description: String!
+#   articles: [Article] @hasMany
+# }
+
 type Category @model @auth(rules: [{ allow: public }]) {
   id: ID!
   label: String!
   description: String!
+  image: String
   articles: [Article] @hasMany
 }
 

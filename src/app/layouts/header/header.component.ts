@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Category } from 'src/app/API.service';
+import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { environment } from 'src/app/environments/environment';
 
@@ -9,13 +12,18 @@ import { environment } from 'src/app/environments/environment';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
   username !: string;
   userlicence !: string;
   logged: boolean = environment.logging_bypass;
 
+  categories$: Observable<Category[]> = this.categoryService.categories$;
+
+
   constructor(
     private cognitoService: CognitoService,
-    private router: Router
+    private router: Router,
+    private categoryService: CategoryService
   ) { }
   ngOnInit(): void {
 

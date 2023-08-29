@@ -8,6 +8,7 @@ mutation CreateCategory(
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -39,6 +40,7 @@ mutation UpdateCategory(
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -70,6 +72,7 @@ mutation DeleteCategory(
     id
     label
     description
+    image
     articles {
       items {
         id
@@ -159,6 +162,7 @@ mutation CreateArticle(
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -190,6 +194,7 @@ mutation UpdateArticle(
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
@@ -221,6 +226,7 @@ mutation DeleteArticle(
       id
       label
       description
+      image
       articles {
         nextToken
         __typename
