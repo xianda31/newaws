@@ -50,7 +50,6 @@ export class NewArticleComponent implements OnInit {
 
 
   constructor(
-    // private backService: B4aService,
     private categoryService: CategoryService,
     private articleService: ArticleService,
     // private fileService: FileService,
