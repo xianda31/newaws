@@ -1,6 +1,6 @@
 {
   "api": {
-    "bcsto": {
+    "bcstoapp": {
       "dependsOn": [],
       "output": {
         "authConfig": {
@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "bcsto83e97830": {
+    "bcstoappc14cd35a": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -45,33 +45,8 @@
       "service": "Cognito"
     }
   },
-  "hosting": {
-    "amplifyhosting": {
-      "providerPlugin": "awscloudformation",
-      "service": "amplifyhosting",
-      "type": "manual"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_hosting_amplifyhosting_appId": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_type": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    }
-  },
   "storage": {
-    "files": {
+    "bcstore": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "S3"

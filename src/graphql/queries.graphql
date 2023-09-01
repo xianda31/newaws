@@ -1,58 +1,5 @@
 # this is an auto generated file. This will be overwritten
 
-query GetCategory($id: ID!) {
-  getCategory(id: $id) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-query ListCategories(
-  $filter: ModelCategoryFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      label
-      description
-      image
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
 query GetMember($id: ID!) {
   getMember(id: $id) {
     id
@@ -89,19 +36,66 @@ query ListMembers(
   }
 }
 
+query GetCategory($id: ID!) {
+  getCategory(id: $id) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListCategories(
+  $filter: ModelCategoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      label
+      description
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
 query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -113,7 +107,6 @@ query GetArticle($id: ID!) {
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
@@ -127,15 +120,13 @@ query ListArticles(
     items {
       id
       title
-      permalink
       summary
-      content
-      imgPath
+      body
+      categoryId
       category {
         id
         label
         description
-        image
         createdAt
         updatedAt
         __typename
@@ -143,7 +134,46 @@ query ListArticles(
       isPublished
       createdAt
       updatedAt
-      categoryArticlesId
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query ArticlesByCategoryIdAndSummary(
+  $categoryId: ID!
+  $summary: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelArticleFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  articlesByCategoryIdAndSummary(
+    categoryId: $categoryId
+    summary: $summary
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      title
+      summary
+      body
+      categoryId
+      category {
+        id
+        label
+        description
+        createdAt
+        updatedAt
+        __typename
+      }
+      isPublished
+      createdAt
+      updatedAt
       __typename
     }
     nextToken

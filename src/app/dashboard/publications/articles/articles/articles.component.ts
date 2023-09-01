@@ -13,8 +13,6 @@ export class ArticlesComponent implements OnInit {
   articles$: Observable<Article[]> = this.articleService.articles$;
 
   constructor(
-    // private backService: B4aService,
-    // private fileService: FileService,
     private articleService: ArticleService
   ) { }
   ngOnInit(): void {

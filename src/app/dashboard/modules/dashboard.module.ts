@@ -7,8 +7,9 @@ import { CategoriesComponent } from '../publications/categories/categories.compo
 import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { NewArticleComponent } from '../publications/articles/new-article/new-article.component';
-import { AngularEditorModule } from '@kolkov/angular-editor';
 import { TestComponent } from '../test/test.component';
+import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { EditorComponent } from '../editor/editor.component';
 
 
 
@@ -18,7 +19,8 @@ import { TestComponent } from '../test/test.component';
     CategoriesComponent,
     ArticlesComponent,
     NewArticleComponent,
-    TestComponent
+    TestComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,10 @@ import { TestComponent } from '../test/test.component';
     ReactiveFormsModule,
     DashboardRoutingModule,
     HttpClientModule,
-    AngularEditorModule
+    EditorModule
+  ],
+  providers: [
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ]
 })
 export class DashboardModule { }

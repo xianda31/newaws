@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="articleForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="articleForm">
 
     <div class="row">
       <div class="col-md-12 text-center">
@@ -11,13 +11,12 @@
 
     <div class="card bg-body-secondary shadow-effect">
 
-      <!-- <div class="card-body"> -->
       <div class="row m-2">
-
+        <!-- titre -->
         <div class="col-md-9">
           <label>Titre de l'article</label>
           <input type="text" class="form-control" formControlName="title"
-            placeholder="Titre de l'article (10 caractères minimum)" (keyup)="onTitleChange($event)">
+            placeholder="Titre de l'article (10 caractères minimum)">
           <div *ngIf="fcontrols['title'].errors?.['required']">
             <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
               titre
@@ -30,113 +29,67 @@
           </div>
         </div>
 
+        <!-- category -->
         <div class="col-md-3">
-          <!-- category -->
           <label> Rubrique</label>
-          <!-- <p>selectedId : {{selectedId}} among ...{{ categories.length}} categories</p> -->
-          <!-- <p>selectedCategory : {{selectedCategory | json}}</p> -->
-          <!-- <p> value to show : {{fcontrols['category'].value | json}}</p> -->
-
-          <select class="form-control" formControlName="category">
+          <select class="form-control" formControlName="categoryArticlesId">
             <option value="" disabled selected>--choisissez une categorie--</option>
-            <option *ngFor="let cat of categories$ | async " [ngValue]="cat" [selected]="cat.id === selectedCategoryId">
+            <option *ngFor="let cat of categories$ | async " [ngValue]="cat.id"
+              [selected]="cat.id === selectedCategoryId">
               {{cat.label}}</option>
           </select>
-          <div *ngIf="fcontrols['category'].errors?.['required']">
-            <div class="alert alert-danger" *ngIf="fcontrols['category'].touched && fcontrols['category'].invalid">
+          <div *ngIf="fcontrols['categoryId'].errors?.['required']">
+            <div class="alert alert-danger" *ngIf="fcontrols['categoryId'].touched && fcontrols['categoryId'].invalid">
               choisir la categorie de l'article</div>
           </div>
-
-
         </div>
+
       </div>
 
+      <!-- summary -->
       <div class="row m-2">
-
-        <!-- summary -->
-        <div class="col-md-8">
+        <div class="col-md-12">
           <div class="form-group">
             <label>résumé de l'article</label>
             <textarea class="form-control" formControlName="summary"
-              placeholder="Extrait de l'article (50 caractères minimum)" cols="20" rows="6"></textarea>
+              placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="1"></textarea>
           </div>
           <div *ngIf="fcontrols['summary'].errors?.['minlength']">
             <div class="alert alert-danger" *ngIf="fcontrols['summary'].touched && fcontrols['summary'].invalid">
               titre de 50 caractères minimum</div>
           </div>
         </div>
-
-
-        <!-- image -->
-        <div class="col-md-4">
-          <label>Image d'appel</label>
-          <div class="input-group custom-file-button">
-            <input type="file" accept="image/*" formControlName="imgPath" class="form-control form-control-sm"
-              (change)="onImgFileChange($event)">
-            <!-- <input type="file" class="form-control" aria-label="Upload" (change)="onImgFileChange($event)"> -->
-
-            <!-- <div *ngIf="fcontrols['imgPath'].errors?.['required']">
-              <div class="alert alert-danger" *ngIf="fcontrols['imgPath'].touched && fcontrols['imgPath'].invalid">
-                image requise
-              </div>
-            </div> -->
-          </div>
-          <div class="align-content-center">
-            <img [src]="imgSrc" alt="" class="img-fluid">
-          </div>
-        </div>
       </div>
-
-      <!-- <label class="text-light-emphasis "> permalink : {{permalink}} </label> -->
-      <!-- </div> -->
 
       <br>
 
-
-
-      <!-- </div> -->
-
-      <!-- contenu de l'article -->
+      <!-- editeur : contenu de l'article -->
       <div class="form-group">
         <label>Contenu de l'article</label>
-        <angular-editor placeholder="votre text ici" formControlName="content">
-          [config]="editorConfig"</angular-editor>
+        <app-editor [control]="bodyControl"></app-editor>
       </div>
-      <div *ngIf="fcontrols['content'].errors?.['required']">
-        <div class="alert alert-danger" *ngIf="fcontrols['content'].touched && fcontrols['content'].invalid">
+      <div *ngIf="fcontrols['body'].errors?.['required']">
+        <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
           n'oubliez pas de remplir le texte de l'article </div>
       </div>
     </div>
-    <!-- </div> -->
 
-    <!-- <div class="col-lg-4 col-sm-12">
-        <div class="card bg-body-secondary shadow-effect">
-          <div class="card-body">
+    <div class="col-md-12">
+      <label> controle : </label>
+      {{bodyControl.value}}
+    </div>
 
-
-
-            <br>
-
-
-
-
-          </div>
-        </div>
-      </div> -->
-    <!-- </div> -->
-
-
-
+    <!-- bouton validation -->
     <div class="row">
-
       <div class="col-md-12 text-center pt-4">
-        <button class="btn btn-primary" [disabled]="!articleForm.valid && formMode == 'create'">Enregistrer</button>
+        <button class="btn btn-primary" (click)="createArticle()"
+          [disabled]="!articleForm.valid && formMode == 'create'">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info">Abandonner</button>
-
       </div>
-
     </div>
+
+
   </form>
   <!-- <button class="btn btn-danger">Test</button> -->
 </div>

@@ -34,6 +34,7 @@ export class ArticleService {
 
 
   createArticle(article: Article) {
+    console.log('createArticle ****', article);
 
     this.api.CreateArticle(article).then((result) => {
       const article = result as Article;

@@ -28,14 +28,15 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@kolkov/angular-editor/assets/",
-                "output": "./assets/fonts/"
+                "input": "node_modules/tinymce",
+                "output": "/tinymce/"
               }
             ],
             "styles": ["src/styles.scss"],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/@popperjs/core/lib/popper.js"
+              "./node_modules/@popperjs/core/lib/popper.js",
+              "./node_modules/tinymce/tinymce.min.js"
             ],
             "allowedCommonJsDependencies": [
               "@aws-crypto/crc32",

@@ -24,10 +24,10 @@
             une descriptif doit être fourni
           </div>
 
-          <div class="custom-file-button">
+          <!-- <div class="custom-file-button">
             <input type="file" accept="image/*" class="form-control col-md-4" id="image" placeholder="image"
               (change)="onImageChange($event)">
-          </div>
+          </div> -->
 
 
           <button *ngIf="createMode" type="submit" class="btn btn-primary text-white col-md-2"
@@ -70,7 +70,7 @@
         <td class="col-md-2"> {{ category.label }} </td>
         <td class="col-md-4 text-center">{{ category.description }}</td>
         <td class="col-md-4 text-center">
-          <img *ngIf="category.image" src="{{ category.image }}" class="img-fluid" alt="vignette" width="100px">
+          <!-- <img *ngIf="category.image" src="{{ category.image }}" class="img-fluid" alt="vignette" width="100px"> -->
         </td>
         <td class="col-md-2 text-center">
           <!-- <div class="btn-toolbar "> -->

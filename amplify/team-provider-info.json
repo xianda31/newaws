@@ -1,63 +1,25 @@
 {
-  "draft": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-bcsto-draft-143842-authRole",
-      "UnauthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-draft-143842-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-draft-143842-authRole",
-      "Region": "eu-west-3",
-      "DeploymentBucketName": "amplify-bcsto-draft-143842-deployment",
-      "UnauthRoleName": "amplify-bcsto-draft-143842-unauthRole",
-      "StackName": "amplify-bcsto-draft-143842",
-      "StackId": "arn:aws:cloudformation:eu-west-3:943391456702:stack/amplify-bcsto-draft-143842/2910c6c0-427b-11ee-b09d-0acecff43298",
-      "AmplifyAppId": "d1hc1upwky5pat"
-    },
-    "categories": {
-      "api": {
-        "bcsto": {}
-      },
-      "auth": {
-        "bcsto40d86ae9": {
-          "userPoolId": "eu-west-3_F0Qv8xLS4",
-          "userPoolName": "bcsto_members_group",
-          "webClientId": "el8thbvd4h1cfsn031hbtrdlg",
-          "nativeClientId": "el8thbvd4h1cfsn031hbtrdlg"
-        }
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d1hc1upwky5pat",
-          "type": "manual"
-        }
-      }
-    }
-  },
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-bcsto-dev-103110-authRole",
-      "UnauthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-103110-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcsto-dev-103110-authRole",
+      "AuthRoleName": "amplify-bcstoapp-dev-113936-authRole",
+      "UnauthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcstoapp-dev-113936-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::943391456702:role/amplify-bcstoapp-dev-113936-authRole",
       "Region": "eu-west-3",
-      "DeploymentBucketName": "amplify-bcsto-dev-103110-deployment",
-      "UnauthRoleName": "amplify-bcsto-dev-103110-unauthRole",
-      "StackName": "amplify-bcsto-dev-103110",
-      "StackId": "arn:aws:cloudformation:eu-west-3:943391456702:stack/amplify-bcsto-dev-103110/e9620ef0-43ea-11ee-8080-0ef2b0dc2fea",
-      "AmplifyAppId": "d1hc1upwky5pat"
+      "DeploymentBucketName": "amplify-bcstoapp-dev-113936-deployment",
+      "UnauthRoleName": "amplify-bcstoapp-dev-113936-unauthRole",
+      "StackName": "amplify-bcstoapp-dev-113936",
+      "StackId": "arn:aws:cloudformation:eu-west-3:943391456702:stack/amplify-bcstoapp-dev-113936/2281caf0-4719-11ee-b827-0615f68f0126",
+      "AmplifyAppId": "d35ym193jicjdp"
     },
     "categories": {
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d1hc1upwky5pat",
-          "type": "manual"
-        }
+      "api": {
+        "bcstoapp": {}
       },
       "auth": {
-        "bcsto83e97830": {}
-      },
-      "api": {
-        "bcsto": {}
+        "bcstoappc14cd35a": {}
       },
       "storage": {
-        "files": {}
+        "bcstore": {}
       }
     }
   }

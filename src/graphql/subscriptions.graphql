@@ -1,92 +1,5 @@
 # this is an auto generated file. This will be overwritten
 
-subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onCreateCategory(filter: $filter) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onUpdateCategory(filter: $filter) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onDeleteCategory(filter: $filter) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
 subscription OnCreateMember($filter: ModelSubscriptionMemberFilterInput) {
   onCreateMember(filter: $filter) {
     id
@@ -129,19 +42,95 @@ subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
   }
 }
 
+subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onCreateCategory(filter: $filter) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onUpdateCategory(filter: $filter) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
+  onDeleteCategory(filter: $filter) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
 subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -153,7 +142,6 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
@@ -162,15 +150,13 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onUpdateArticle(filter: $filter) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -182,7 +168,6 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
@@ -191,15 +176,13 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
   onDeleteArticle(filter: $filter) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -211,7 +194,6 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }

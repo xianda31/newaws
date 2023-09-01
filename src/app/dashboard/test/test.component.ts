@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify/lib-esm';
+
+// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js/#configure-your-application
+
 
 @Component({
   selector: 'app-test',
@@ -11,30 +13,40 @@ export class TestComponent implements OnInit {
 
   fileList: string[] = [];
   filesystem !: { files: any[]; folders: Set<unknown>; };
+  filename: string = '';
+  file!: File;
+  preview: string = '';
+  loadedImg: string = '';
 
   constructor(
   ) { }
   ngOnInit(): void {
 
 
-    Storage.list('', { pageSize: 'ALL' }) // for listing ALL files without prefix, pass '' instead
-      .then(({ results }) => {
+    // Storage.list('', { pageSize: 'ALL' }) // for listing ALL files without prefix, pass '' instead
+    //   .then(({ results }) => {
 
-        // console.log(results);
-        this.fileList = results.map((file: any) => file.key);
-        console.log('fileList : ', this.fileList);
+    //     // console.log(results);
+    //     this.fileList = results.map((file: any) => file.key);
+    //     console.log('fileList : ', this.fileList);
 
-        this.filesystem = this.processStorageList({ results });
-        console.log('filesystem : ', this.filesystem);
-      })
-      .catch((err) => console.log(err));
+    //     this.filesystem = this.processStorageList({ results });
+    //     console.log('filesystem : ', this.filesystem);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    this.getFiles();
 
   }
 
-  filename: string = '';
-  file!: File;
-  preview: string = '';
-
+  getFiles() {
+    Storage.list('', { pageSize: 'ALL' }) // for listing ALL files without prefix, pass '' instead
+      .then(({ results }) => {
+        this.fileList = results.map((file: any) => file.key);
+        this.filesystem = this.processStorageList({ results });
+      })
+      .catch((err) => console.log(err));
+  }
 
   async onFileSelected(event: any) {
     this.file = event.target.files[0];
@@ -68,6 +80,7 @@ export class TestComponent implements OnInit {
         level: 'public'
       });
       console.log("Successfully uploaded file: ", result);
+      this.getFiles();
     } catch (error) {
       console.log("Error uploading file: ", error);
     }
@@ -78,11 +91,12 @@ export class TestComponent implements OnInit {
     try {
       const result = await Storage.get(filename, { level: 'public' });
       console.log("Successfully downloaded file: ", result);
+      this.loadedImg = result as string;
+
     } catch (error) {
       console.log("Error downloading file: ", error);
     }
   }
-
 
 
   processStorageList(response: { results: any; }) {

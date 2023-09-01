@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
+// import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { PostCardComponent } from './layouts/post-card/post-card.component';
@@ -14,7 +14,6 @@ import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TestComponent } from './test/test.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 
@@ -30,7 +29,6 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
     ToastComponent,
     ToasterComponent,
     SignupComponent,
-    TestComponent,
     LoginComponent,
     PswresetComponent,
 
@@ -40,7 +38,7 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AmplifyAuthenticatorModule,
+    // AmplifyAuthenticatorModule,
 
   ],
   providers: [],

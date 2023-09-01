@@ -2,13 +2,6 @@
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
 # input AMPLIFY { globalAuthRule: AuthRule = { allow: public } } # FOR TESTING ONLY!
 
-type Category @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  label: String!
-  description: String!
-  articles: [Article] @hasMany
-}
-
 type Member @model @auth(rules: [{ allow: public }]) {
   id: ID!
   firstname: String!
@@ -17,14 +10,19 @@ type Member @model @auth(rules: [{ allow: public }]) {
   email: String!
   rights: String!
 }
+type Category @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  label: String!
+  description: String!
+  articles: [Article] @hasMany(indexName: "byCategory", fields: ["id"])
+}
 
 type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
-  permalink: String!
   summary: String!
-  content: String!
-  imgPath: String!
-  category: Category @belongsTo
+  body: String!
+  categoryId: ID! @index(name: "byCategory", sortKeyFields: ["summary"])
+  category: Category @belongsTo(fields: ["categoryId"])
   isPublished: Boolean!
 }

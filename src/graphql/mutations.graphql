@@ -1,101 +1,5 @@
 # this is an auto generated file. This will be overwritten
 
-mutation CreateCategory(
-  $input: CreateCategoryInput!
-  $condition: ModelCategoryConditionInput
-) {
-  createCategory(input: $input, condition: $condition) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation UpdateCategory(
-  $input: UpdateCategoryInput!
-  $condition: ModelCategoryConditionInput
-) {
-  updateCategory(input: $input, condition: $condition) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation DeleteCategory(
-  $input: DeleteCategoryInput!
-  $condition: ModelCategoryConditionInput
-) {
-  deleteCategory(input: $input, condition: $condition) {
-    id
-    label
-    description
-    image
-    articles {
-      items {
-        id
-        title
-        permalink
-        summary
-        content
-        imgPath
-        isPublished
-        createdAt
-        updatedAt
-        categoryArticlesId
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
 mutation CreateMember(
   $input: CreateMemberInput!
   $condition: ModelMemberConditionInput
@@ -147,6 +51,93 @@ mutation DeleteMember(
   }
 }
 
+mutation CreateCategory(
+  $input: CreateCategoryInput!
+  $condition: ModelCategoryConditionInput
+) {
+  createCategory(input: $input, condition: $condition) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateCategory(
+  $input: UpdateCategoryInput!
+  $condition: ModelCategoryConditionInput
+) {
+  updateCategory(input: $input, condition: $condition) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteCategory(
+  $input: DeleteCategoryInput!
+  $condition: ModelCategoryConditionInput
+) {
+  deleteCategory(input: $input, condition: $condition) {
+    id
+    label
+    description
+    articles {
+      items {
+        id
+        title
+        summary
+        body
+        categoryId
+        isPublished
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
 mutation CreateArticle(
   $input: CreateArticleInput!
   $condition: ModelArticleConditionInput
@@ -154,15 +145,13 @@ mutation CreateArticle(
   createArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -174,7 +163,6 @@ mutation CreateArticle(
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
@@ -186,15 +174,13 @@ mutation UpdateArticle(
   updateArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -206,7 +192,6 @@ mutation UpdateArticle(
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
@@ -218,15 +203,13 @@ mutation DeleteArticle(
   deleteArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
     summary
-    content
-    imgPath
+    body
+    categoryId
     category {
       id
       label
       description
-      image
       articles {
         nextToken
         __typename
@@ -238,7 +221,6 @@ mutation DeleteArticle(
     isPublished
     createdAt
     updatedAt
-    categoryArticlesId
     __typename
   }
 }
