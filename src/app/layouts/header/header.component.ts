@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
     this.cognitoService.userLoggedIn.subscribe((userLoggedIn) => {
       if (userLoggedIn) {
         this.cognitoService._getUserInfo().then((user) => {
-          // console.log('user : ', user.attributes);
+          console.log('user : ', user.attributes);
           this.username = user.attributes.name;
           this.userlicence = user.attributes['custom:license'];
           this.logged = true;
@@ -43,6 +43,7 @@ export class HeaderComponent implements OnInit {
       } else {
         this.username = '';
         this.userlicence = '';
+        console.log("anonymous access ...")
       }
     });
 

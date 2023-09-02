@@ -44,6 +44,9 @@ export class ArticleService {
       .catch((error) => { console.log('Error creating article: ', error); });
   }
 
+  readArticle(id: string) {
+    return this.api.GetArticle(id);
+  }
 
   updateArticle(article: Article) {
     this.api.UpdateArticle(article).then((result) => {

@@ -32,7 +32,7 @@
         <!-- category -->
         <div class="col-md-3">
           <label> Rubrique</label>
-          <select class="form-control" formControlName="categoryArticlesId">
+          <select class="form-control" formControlName="categoryId">
             <option value="" disabled selected>--choisissez une categorie--</option>
             <option *ngFor="let cat of categories$ | async " [ngValue]="cat.id"
               [selected]="cat.id === selectedCategoryId">

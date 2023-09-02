@@ -53,7 +53,7 @@
 
         <ng-container *ngFor="let category of categories$ | async">
           <li class="nav-item mx-2">
-            <a class="nav-link active" routerLink="category/:{{category.id}}">{{category.label}}</a>
+            <a class="nav-link active" routerLink="category/{{category.id}}">{{category.label}}</a>
           </li>
         </ng-container>
 
@@ -89,13 +89,13 @@
             <li><a class="dropdown-item" routerLink="dashboard/members">Adhérents</a></li>
 
             <!-- menu publications -->
-            <li><a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">Publications </a>
-              <ul class="dropdown-menu dropdown-submenu">
-                <li><a class="dropdown-item" routerLink="dashboard/publication/articles">articles</a></li>
-                <li><a class="dropdown-item" routerLink="dashboard/publication/categories">rubriques</a></li>
-              </ul>
-            </li>
+            <!-- <li><a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Publications </a> -->
+            <!-- <ul class="dropdown-menu dropdown-submenu"> -->
+            <li><a class="dropdown-item" routerLink="dashboard/publication/articles">articles</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publication/categories">rubriques</a></li>
+            <!-- </ul> -->
+            <!-- </li> -->
             <!-- <li><a class="dropdown-item" routerLink="dashboard/publications">Publications</a></li> -->
             <li><a class="dropdown-item" href="#">Accueil tournois</a></li>
           </ul>
