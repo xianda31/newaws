@@ -9,8 +9,9 @@
     </div>
 
     <h5 class="card-title text-center">{{title}}</h5>
-    <p class="card-text">{{content}}
-    </p>
+    <p class="card-text">{{summary}}
+    <p [innerHTML]="body | safeHtml"></p>
+
     <a href="#" class="btn btn-primary">Go somewhere</a>
   </div>
 </div>

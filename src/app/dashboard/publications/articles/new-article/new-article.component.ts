@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest, forkJoin, merge } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -49,7 +50,8 @@ export class NewArticleComponent implements OnInit {
     private articleService: ArticleService,
     // private fileService: FileService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) { }
 
 
@@ -82,7 +84,10 @@ export class NewArticleComponent implements OnInit {
 
   createArticle() {
 
+    this.bodyControl.patchValue(this.sanitizer.sanitize(SecurityContext.HTML, this.bodyControl.value));
     this.articleService.createArticle(this.articleForm.value);
+
+    this.router.navigate(['/dashboard/publication/articles']);
   }
 
 

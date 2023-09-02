@@ -52,11 +52,11 @@ export class TestComponent implements OnInit {
     this.file = event.target.files[0];
     if (this.file) {
       this.filename = this.file.name;
-      this.preview = await this.imagePreview(this.file);
+      this.preview = await this.getImage64(this.file);
     }
   }
 
-  imagePreview(file: File): Promise<string> {
+  getImage64(file: File): Promise<string> {
     var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
       var image64 = '';
       const reader = new FileReader();

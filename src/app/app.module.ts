@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { CardComponent } from './layouts/card/card.component';
+import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CardComponent } from './layouts/card/card.component';
     LoginComponent,
     PswresetComponent,
     CardComponent,
+    SafeHtmlPipe,
 
   ],
   imports: [
