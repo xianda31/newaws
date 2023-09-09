@@ -17,6 +17,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { CardComponent } from './layouts/card/card.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
+import { PageComponent } from './pages/page/page.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     PswresetComponent,
     CardComponent,
     SafeHtmlPipe,
+    PageComponent,
 
   ],
   imports: [
@@ -43,7 +45,7 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
     // AmplifyAuthenticatorModule,
 
   ],
-  providers: [],
+  providers: [SafeHtmlPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

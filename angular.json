@@ -33,11 +33,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "./node_modules/@popperjs/core/lib/popper.js",
-              "./node_modules/tinymce/tinymce.min.js"
-            ],
+            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
             "allowedCommonJsDependencies": [
               "@aws-crypto/crc32",
               "@aws-crypto/sha256-browser",
@@ -57,7 +53,9 @@
               "xstate/lib/waitFor.js",
               "style-dictionary/lib/utils/references/usesReference.js",
               "style-dictionary/lib/utils/flattenProperties.js",
-              "style-dictionary/lib/utils/deepExtend.js"
+              "style-dictionary/lib/utils/deepExtend.js",
+              "dompurify",
+              "tinymce"
             ]
           },
           "configurations": {

@@ -44,8 +44,8 @@ export class ArticleService {
       .catch((error) => { console.log('Error creating article: ', error); });
   }
 
-  readArticle(id: string) {
-    return this.api.GetArticle(id);
+  async readArticle(id: string): Promise<any> {
+    return await this.api.GetArticle(id) as Article;
   }
 
   updateArticle(article: Article) {

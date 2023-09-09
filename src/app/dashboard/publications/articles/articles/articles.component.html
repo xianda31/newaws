@@ -12,12 +12,12 @@
       <thead class="thead-light">
         <tr>
           <!-- <th scope="col" class="col-md-2">vignette</th> -->
-          <th scope="col" class="col-md-2">titre</th>
+          <th scope="col" class="col-md-3">titre</th>
           <th scope="col" class="col-md-3">résumé...</th>
           <th scope="col" class="col-md-1">categorie</th>
           <th scope="col" class="col-md-1">date</th>
           <th scope="col" class="col-md-1">publié</th>
-          <th scope="col" class="col-md-2">actions</th>
+          <th scope="col" class="col-md-1">actions</th>
         </tr>
       </thead>
       <tbody>
@@ -30,13 +30,29 @@
           <td>{{ article.createdAt| date : 'dd/MM/yyyy' }}</td>
           <td>{{ article.isPublished }}</td>
           <td>
-            <div class="btn-toolbar ">
-              <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(article.id)">
+            <div class="btn-toolbar justify-content-end">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="onDelete(article.id)">
                 <i class="bi bi-trash"></i>
               </button>
               <div class="mtauto "> &nbsp; </div>
-              <button type="button" class="btn btn-sm btn-warning" routerLink="./new">
+              <button type="button" class="btn btn-sm btn-outline-primary" routerLink="new">
                 <i class="bi bi-pencil-square"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+          <td>
+            <div class="btn-toolbar justify-content-end ">
+
+              <button type="button" class="btn btn-sm btn-outline-primary " routerLink="new">
+                <i class="bi bi-plus-circle"></i>
               </button>
             </div>
           </td>

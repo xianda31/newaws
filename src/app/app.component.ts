@@ -6,7 +6,11 @@ import { CategoryService } from './aws.services/category.aws.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  ngOnInit(): void {
+    console.log('AppComponent ngOnInit');
+  }
+
 
 
   title = 'bcsto';

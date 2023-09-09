@@ -6,10 +6,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoriesComponent } from '../publications/categories/categories.component';
 import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
-import { NewArticleComponent } from '../publications/articles/new-article/new-article.component';
+import { ArticleComponent } from '../publications/articles/article/article.component';
 import { TestComponent } from '../test/test.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { EditorComponent } from '../editor/editor.component';
+// import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 
 
 
@@ -18,9 +19,10 @@ import { EditorComponent } from '../editor/editor.component';
     MembersComponent,
     CategoriesComponent,
     ArticlesComponent,
-    NewArticleComponent,
+    ArticleComponent,
     TestComponent,
-    EditorComponent
+    EditorComponent,
+    // SafeHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { EditorComponent } from '../editor/editor.component';
     ReactiveFormsModule,
     DashboardRoutingModule,
     HttpClientModule,
-    EditorModule
+    EditorModule,
+
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }

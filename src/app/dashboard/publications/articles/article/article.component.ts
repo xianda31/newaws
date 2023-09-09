@@ -1,20 +1,21 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest, forkJoin, merge } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Article, Category } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
+import { Location } from '@angular/common';
 
 
 @Component({
-  selector: 'app-new-article',
-  templateUrl: './new-article.component.html',
-  styleUrls: ['./new-article.component.scss']
+  selector: 'app-article',
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.scss']
 })
-export class NewArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit {
 
 
   categories$: Observable<Category[]> = this.categoryService.categories$ as Observable<Category[]>;
@@ -50,8 +51,9 @@ export class NewArticleComponent implements OnInit {
     private articleService: ArticleService,
     // private fileService: FileService,
     private router: Router,
+    private location: Location,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private safeHtmlPipe: SafeHtmlPipe
   ) { }
 
 
@@ -84,7 +86,10 @@ export class NewArticleComponent implements OnInit {
 
   createArticle() {
 
-    this.bodyControl.patchValue(this.sanitizer.sanitize(SecurityContext.HTML, this.bodyControl.value));
+
+    const sanitized = this.safeHtmlPipe.transform(this.bodyControl.value);
+
+    this.bodyControl.patchValue(sanitized);
     this.articleService.createArticle(this.articleForm.value);
 
     this.router.navigate(['/dashboard/publication/articles']);
@@ -126,5 +131,7 @@ export class NewArticleComponent implements OnInit {
     // this.formStatus = ['Modification d\'un article', 'modifier cet article'];;
     // this.formMode = 'update';
   }
-
+  navBack() {
+    this.location.back();
+  }
 }

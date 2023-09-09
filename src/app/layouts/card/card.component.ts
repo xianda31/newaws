@@ -1,36 +1,25 @@
 import { Component, Input, OnInit, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import * as DOMPurify from 'dompurify';
+import { Article } from 'src/app/API.service';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
-
-  @Input() title: string = '';
-  @Input() summary: string = '';
-  @Input() body: string = '';
-
-  config = {
-    ADD_ATTR: ['height', 'width', 'alt', 'src', 'style', 'title'],
-    ADD_TAGS: [],
-    ADD_URI_SAFE_ATTR: ['href'],
-  }
-
-  sanitizedBody: string = '';
+export class CardComponent {
   constructor(
-    private sanitizer: DomSanitizer
+    private router: Router,
   ) { }
 
-  ngOnInit(): void {
-    this.sanitizedBody = DOMPurify.sanitize(this.body, this.config);
-    if (DOMPurify.removed.length > 0) {
-
-      console.log("%s : DOMsanitizer would removed : ", this.title, DOMPurify.removed);
-    }
+  @Input() article!: Article;
 
 
+  viewArticle() {
+    console.log('viewArticle()');
+    this.router.navigate(['/articles', this.article.id]);
 
   }
+
 }

@@ -16,17 +16,14 @@ export class SafeHtmlPipe implements PipeTransform {
   constructor(protected sanitizer: DomSanitizer) { }
 
   public transform(dirty: any): any {
-    // const sanitized = DOMPurify.sanitize(dirty);
-    // return this.sanitizer.bypassSecurityTrustHtml(sanitized);
-
-    // return this.sanitizer.bypassSecurityTrustHtml(dirty);  // aucun controle !!
 
     const sanitized = DOMPurify.sanitize(dirty, this.config);
-    return this.sanitizer.bypassSecurityTrustHtml(sanitized);
 
+    if (DOMPurify.removed.length > 0) {
+      console.log("DOMsanitizer removed  ", DOMPurify.removed);
+    }
+    return this.sanitizer.bypassSecurityTrustHtml(sanitized); // on y croit , plus aucun controle !!
 
-
-    return this.sanitizer.sanitize(SecurityContext.HTML, sanitized); // bloque les balises <script> et <style> mais pas les attributs style et onclick
   }
 
 }
