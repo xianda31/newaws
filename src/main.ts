@@ -6,5 +6,6 @@ import { Amplify } from 'aws-amplify/lib-esm';
 
 
 Amplify.configure(aws_exports);
+
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

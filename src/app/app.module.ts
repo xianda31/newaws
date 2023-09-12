@@ -18,6 +18,7 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
 import { CardComponent } from './layouts/card/card.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { PageComponent } from './pages/page/page.component';
+import { ToolsModule } from './tools/tools/tools.module';
 
 @NgModule({
   declarations: [
@@ -36,15 +37,19 @@ import { PageComponent } from './pages/page/page.component';
     SafeHtmlPipe,
     PageComponent,
 
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
+    ToolsModule
+    // FormsModule,
+    // ReactiveFormsModule,
     // AmplifyAuthenticatorModule,
 
   ],
+
+
   providers: [SafeHtmlPipe],
   bootstrap: [AppComponent]
 })

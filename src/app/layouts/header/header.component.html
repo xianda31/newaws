@@ -69,38 +69,39 @@
           <a class="nav-link mx-2" routerLink="dashboard/articles/new">new</a>
         </li>
 
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            mon espace
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mes données</a></li>
-            <li><a class="dropdown-item" href="#">Photos</a></li>
-            <li><a class="dropdown-item" href="#">Documents</a></li>
-          </ul>
-        </li>
 
-
+        <!-- <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/articles">articles</a></li>
+        <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/categories">rubriques</a></li>
+        <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/members">Adhérents</a></li> -->
 
         <li class="nav-item mx-2 dropdown" *ngIf="logged">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/members">Adhérents</a></li>
-
-            <!-- menu publications -->
-            <!-- <li><a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">Publications </a> -->
-            <!-- <ul class="dropdown-menu dropdown-submenu"> -->
-            <li><a class="dropdown-item" routerLink="dashboard/articles">articles</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/publication/categories">rubriques</a></li>
-            <!-- </ul> -->
-            <!-- </li> -->
-            <!-- <li><a class="dropdown-item" routerLink="dashboard/publications">Publications</a></li> -->
             <li><a class="dropdown-item" href="#">Accueil tournois</a></li>
           </ul>
         </li>
+        <li class="nav-item mx-2 dropdown" *ngIf="logged">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Publications </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="dashboard/articles">articles</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/categories">rubriques</a></li>
+          </ul>
+        </li>
 
+        <li class="nav-item mx-2 dropdown" *ngIf="logged">
+          <button class="btn btn-sm btn-outline-info dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            mon espace
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Mes données</a></li>
+            <li><a class="dropdown-item" href="#">Photos</a></li>
+            <li><a class="dropdown-item" href="#">Documents</a></li>
+          </ul>
+        </li>
 
       </ul>
     </div>

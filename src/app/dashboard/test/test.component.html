@@ -35,3 +35,35 @@
 <div *ngIf="loadedImg" class="card col-md-8">
   <img [src]="loadedImg" alt="" class="img-fluid">
 </div>
+
+<form [formGroup]="form">
+
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <label for="inputToggler" class="col-form-label"> publié</label>
+    </div>
+    <div class="col-auto">
+      <app-toggle-input formControlName="toggler" id="inputToggler"></app-toggle-input>
+    </div>
+  </div>
+
+</form>
+
+
+
+{{toggler}}
+
+
+<!-- <p> **************tinyMCE**************</p>
+<form [formGroup]="form">
+
+  <editor formControlName="body" [init]="{ 
+    base_url: '/tinymce',
+    suffix: '.min',
+    plugins: 'lists link image table code help wordcount',
+    toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview  | insertfile image  template link ',
+    menubar: false,
+    min_height: 150,
+   }"> </editor>
+
+</form> -->

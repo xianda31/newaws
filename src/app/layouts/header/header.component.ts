@@ -27,25 +27,25 @@ export class HeaderComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
-    this.cognitoService.userLoggedIn.subscribe((userLoggedIn) => {
-      if (userLoggedIn) {
-        this.cognitoService._getUserInfo().then((user) => {
-          console.log('user : ', user.attributes);
-          this.username = user.attributes.name;
-          this.userlicence = user.attributes['custom:license'];
-          this.logged = true;
+    // this.cognitoService.userLoggedIn.subscribe((userLoggedIn) => {
+    //   if (userLoggedIn) {
+    //     this.cognitoService._getUserInfo().then((user) => {
+    //       console.log('user : ', user.attributes);
+    //       this.username = user.attributes.name;
+    //       this.userlicence = user.attributes['custom:license'];
+    //       this.logged = true;
 
 
-        }
-        ).catch((error) => {
-          console.log('getUser error : ', error);
-        });
-      } else {
-        this.username = '';
-        this.userlicence = '';
-        console.log("anonymous access ...")
-      }
-    });
+    //     }
+    //     ).catch((error) => {
+    //       console.log('getUser error : ', error);
+    //     });
+    //   } else {
+    //     this.username = '';
+    //     this.userlicence = '';
+    //     console.log("anonymous access ...")
+    //   }
+    // });
 
   }
 

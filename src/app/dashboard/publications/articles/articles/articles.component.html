@@ -14,7 +14,7 @@
           <!-- <th scope="col" class="col-md-2">vignette</th> -->
           <th scope="col" class="col-md-3">titre</th>
           <th scope="col" class="col-md-3">résumé...</th>
-          <th scope="col" class="col-md-1">categorie</th>
+          <th scope="col" class="col-md-1">rubrique</th>
           <th scope="col" class="col-md-1">date</th>
           <th scope="col" class="col-md-1">publié</th>
           <th scope="col" class="col-md-1">actions</th>
@@ -31,7 +31,7 @@
           <td>{{ article.isPublished }}</td>
           <td>
             <div class="btn-toolbar justify-content-end">
-              <button type="button" class="btn btn-sm btn-outline-danger" (click)="onDelete(article.id)">
+              <button type="button" class="btn btn-sm btn-outline-danger" (click)="onDelete(article)">
                 <i class="bi bi-trash"></i>
               </button>
               <div class="mtauto "> &nbsp; </div>

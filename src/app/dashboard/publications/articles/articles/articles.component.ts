@@ -17,15 +17,15 @@ export class ArticlesComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.articles$.subscribe((articles) => {
-      console.log('articles', articles);
+      // console.log('articles', articles);
     }
     )
   }
 
 
 
-  onDelete(objectId: string) {
-    // this.backService.deleteArticle(objectId);
+  onDelete(article: Article) {
+    this.articleService.deleteArticle(article);
   }
 
   onUpdate(objectId: string) {

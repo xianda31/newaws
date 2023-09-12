@@ -8,8 +8,11 @@ import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { ArticleComponent } from '../publications/articles/article/article.component';
 import { TestComponent } from '../test/test.component';
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { EditorComponent } from '../editor/editor.component';
+import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+// import { EditorComponent, TinyEditorComponent, TinyMCEComponent } from '../editor/tinyMCE.component';
+import { ToolsModule } from 'src/app/tools/tools/tools.module';
+import { EditComponent } from '../editor/edit.component';
+// import { ToggleInputComponent } from 'src/app/tools/toggle-input/toggle-input.component';
 // import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 
 
@@ -21,20 +24,19 @@ import { EditorComponent } from '../editor/editor.component';
     ArticlesComponent,
     ArticleComponent,
     TestComponent,
-    EditorComponent,
-    // SafeHtmlPipe
+    EditComponent,
+
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    ToolsModule,
     DashboardRoutingModule,
     HttpClientModule,
     EditorModule,
 
   ],
-  providers: [
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
-  ]
+  // providers: [
+  //   { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  // ]
 })
 export class DashboardModule { }

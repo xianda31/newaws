@@ -4,7 +4,7 @@
   <p class="text-center">{{theCategory.description}}</p>
   <div *ngIf="articles" class="row">
     <app-card class="col-lg-3 col-md-4 col-sm-6 pt-1" *ngFor="let article of articles" [title]="article.title"
-      [article]="article"> </app-card>
+      [article]="article" [category]="theCategory"> </app-card>
   </div>
 
 </div>

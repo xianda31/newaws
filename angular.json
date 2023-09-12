@@ -33,7 +33,7 @@
               }
             ],
             "styles": ["src/styles.scss"],
-            "scripts": ["./node_modules/tinymce/tinymce.min.js"],
+            "scripts": ["node_modules/tinymce/tinymce.min.js"],
             "allowedCommonJsDependencies": [
               "@aws-crypto/crc32",
               "@aws-crypto/sha256-browser",

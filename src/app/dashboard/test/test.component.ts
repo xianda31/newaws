@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Storage } from 'aws-amplify/lib-esm';
+import tinymce from 'tinymce';
 
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js/#configure-your-application
 
@@ -18,7 +20,10 @@ export class TestComponent implements OnInit {
   preview: string = '';
   loadedImg: string = '';
 
+  form!: FormGroup;
+
   constructor(
+    private fb: FormBuilder
   ) { }
   ngOnInit(): void {
 
@@ -37,7 +42,24 @@ export class TestComponent implements OnInit {
 
     this.getFiles();
 
+    this.form = this.fb.group({
+      toggler: [false],
+      body: ['']
+    });
+    // tinymce.init({
+    //   base_url: '/tinymce',
+    //   suffix: '.min',
+    //   toolbar: false,
+    //   plugins: 'lists link image table code help wordcount',
+    //   menubar: false,
+    //   min_height: 150,
+    //   ui_mode: 'split'
+
+    // });
+
   }
+
+  get toggler() { return this.form.get('toggler')!.value; }
 
   getFiles() {
     Storage.list('', { pageSize: 'ALL' }) // for listing ALL files without prefix, pass '' instead

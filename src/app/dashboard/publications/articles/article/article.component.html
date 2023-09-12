@@ -66,18 +66,19 @@
       <!-- editeur : contenu de l'article -->
       <div class="form-group">
         <label>Contenu de l'article</label>
-        <app-editor [control]="bodyControl"></app-editor>
+        <app-edit [control]="bodyControl"> </app-edit>
       </div>
+
       <div *ngIf="fcontrols['body'].errors?.['required']">
         <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
           n'oubliez pas de remplir le texte de l'article </div>
       </div>
     </div>
 
-    <div class="col-md-12">
+    <!-- <div class="col-md-12">
       <label> controle : </label>
       {{bodyControl.value}}
-    </div>
+    </div> -->
 
     <!-- bouton validation -->
     <div class="row">

@@ -1,13 +1,14 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { combineLatest, forkJoin, merge } from 'rxjs';
+import { Subject, combineLatest, forkJoin, merge } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { Article, Category } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { Location } from '@angular/common';
+import * as DOMPurify from 'dompurify';
 
 
 @Component({
@@ -33,8 +34,6 @@ export class ArticleComponent implements OnInit {
   createdArticle !: Article;
 
   formStatus: string[] = ['Création d\' article', 'créer un nouvel article'];
-
-
 
   articleForm!: FormGroup;
 
@@ -83,16 +82,27 @@ export class ArticleComponent implements OnInit {
 
   // }
 
+  config = {
+    ADD_ATTR: ['height', 'width', 'alt', 'src', 'style', 'title'],
+    ADD_TAGS: [],
+    ADD_URI_SAFE_ATTR: ['href'],
+  }
 
   createArticle() {
 
+    const body = this.bodyControl.value;
+    const sanitized = DOMPurify.sanitize(body, this.config);
+    if (DOMPurify.removed.length > 0) {
+      console.log("DOMsanitizer has removed %s tags ", DOMPurify.removed.length);
+    }
+    // console.log('%s sanitized ~> %s', body, sanitized);
+    // this.bodyControl.patchValue(sanitized);
+    const article = this.articleForm.value as Article;
+    article.body = sanitized as string;
+    // console.log('createArticle :', article);
+    this.articleService.createArticle(article);
 
-    const sanitized = this.safeHtmlPipe.transform(this.bodyControl.value);
-
-    this.bodyControl.patchValue(sanitized);
-    this.articleService.createArticle(this.articleForm.value);
-
-    this.router.navigate(['/dashboard/publication/articles']);
+    this.router.navigate(['dashboard/articles']);
   }
 
 
