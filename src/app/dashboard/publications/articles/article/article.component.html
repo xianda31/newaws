@@ -76,14 +76,14 @@
     </div>
 
     <!-- <div class="col-md-12">
-      <label> controle : </label>
+      <label> body value : </label>
       {{bodyControl.value}}
     </div> -->
 
     <!-- bouton validation -->
     <div class="row">
       <div class="col-md-12 text-center pt-4">
-        <button class="btn btn-primary" (click)="createArticle()"
+        <button class="btn btn-primary" (click)="saveArticle()"
           [disabled]="!articleForm.valid && formMode == 'create'">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info" (click)="navBack()">Abandonner</button>

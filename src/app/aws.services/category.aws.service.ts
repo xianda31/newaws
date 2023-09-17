@@ -17,7 +17,7 @@ export class CategoryService {
 
     this.api.ListCategories().then((result) => {
       this._categories = result.items as Category[];
-      console.log('this._categories : ', this._categories);
+      // console.log('this._categories : ', this._categories);
       this._categories$.next(this._categories);
 
     })

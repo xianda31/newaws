@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Article, Category } from 'src/app/API.service';
+import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 
 @Component({
@@ -10,6 +12,7 @@ import { CategoryService } from 'src/app/aws.services/category.aws.service';
 })
 export class SingleCategoryComponent implements OnInit {
 
+  articles$: Observable<Article[]> = this.articleService.articles$;
   theCategory!: Category;
   articles: Article[] = [];
 
@@ -29,7 +32,8 @@ export class SingleCategoryComponent implements OnInit {
     summary: 'résumé de l\'article',
     body: '',
     categoryId: '',
-    isPublished: false,
+    published: false,
+    featured: false,
     createdAt: '',
     updatedAt: ''
   }
@@ -37,7 +41,9 @@ export class SingleCategoryComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private articleService: ArticleService,
+
   ) { }
 
 
@@ -47,14 +53,19 @@ export class SingleCategoryComponent implements OnInit {
       async paramMap => {
         if (paramMap.get('id')) {
           const id = paramMap.get('id')!;
-          console.log('id : ', id);
+          // console.log('id : ', id);
           this.theCategory = await this.categoryService.getCategory(id);
           if (this.theCategory.articles!.items) {
             this.articles = this.theCategory.articles!.items as Article[];
           }
-          console.log('theCategory : ', this.theCategory);
+          // console.log('theCategory : ', this.theCategory);
         } else {   // page Home
-          this.articles.push(this.dummyArticle);
+          // this.articles.push(this.dummyArticle);
+          this.articleService.articles$.subscribe(
+            (articles) => {
+              this.articles = articles.filter((article) => (article.published && article.featured))
+            });
+
           this.theCategory = this.HomeCategory;
         }
 

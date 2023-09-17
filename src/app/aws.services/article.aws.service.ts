@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { APIService, Article } from '../API.service';
+import { APIService, Article, UpdateArticleInput } from '../API.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +30,10 @@ export class ArticleService {
     return this._articles.find((article) => article.id === id);
   }
 
-  // C(R)UD CATEGORIES
+  // CRUD CATEGORIES
 
 
   createArticle(article: Article) {
-    // console.log('createArticle ****', article);
 
     this.api.CreateArticle(article).then((result) => {
       const article = result as Article;
@@ -48,12 +47,17 @@ export class ArticleService {
     return await this.api.GetArticle(id) as Article;
   }
 
-  updateArticle(article: Article) {
-    this.api.UpdateArticle(article).then((result) => {
-      this._articles = this._articles.map((cat) => cat.id === article.id ? article : cat);
-      this._articles$.next(this._articles);
-    })
-      .catch((error) => { console.log('Error updating article: ', error); });
+  updateArticle(articleInput: UpdateArticleInput) {
+    // console.log('articleInput: ', articleInput)
+    this.api.UpdateArticle(articleInput)
+      .then((result) => {
+        const article = result as Article;
+        this._articles = this._articles.map((cat) => cat.id === article.id ? article : cat);
+        this._articles$.next(this._articles);
+      })
+      .catch((error) => {
+        console.log('Error updating article: ', error);
+      });
 
   }
 

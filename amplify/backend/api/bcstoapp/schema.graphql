@@ -24,5 +24,6 @@ type Article @model @auth(rules: [{ allow: public }]) {
   body: String!
   categoryId: ID! @index(name: "byCategory", sortKeyFields: ["summary"])
   category: Category @belongsTo(fields: ["categoryId"])
-  isPublished: Boolean!
+  published: Boolean!
+  featured: Boolean!
 }

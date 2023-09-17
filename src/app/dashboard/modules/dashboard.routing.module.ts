@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'articles', component: ArticlesComponent },    // canActivate: [IsPublisherGuard],
   { path: 'articles/new', component: ArticleComponent },
+  { path: 'articles/:id', component: ArticleComponent }
 ];
 
 @NgModule({

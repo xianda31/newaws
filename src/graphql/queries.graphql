@@ -48,7 +48,8 @@ query GetCategory($id: ID!) {
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -104,7 +105,8 @@ query GetArticle($id: ID!) {
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename
@@ -131,7 +133,8 @@ query ListArticles(
         updatedAt
         __typename
       }
-      isPublished
+      published
+      featured
       createdAt
       updatedAt
       __typename
@@ -171,7 +174,8 @@ query ArticlesByCategoryIdAndSummary(
         updatedAt
         __typename
       }
-      isPublished
+      published
+      featured
       createdAt
       updatedAt
       __typename

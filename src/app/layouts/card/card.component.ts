@@ -14,10 +14,9 @@ export class CardComponent {
   @Input() article!: Article;
   @Input() category !: Category;
 
-
   viewArticle() {
-    console.log('viewArticle()', this.article);
-    this.router.navigate(['/articles', this.article.id]);
+    // console.log('viewArticle()', this.article);
+    this.router.navigate(['pages', this.article.id]);
 
   }
 

@@ -54,7 +54,8 @@ subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -80,7 +81,8 @@ subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -106,7 +108,8 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -139,7 +142,8 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename
@@ -165,7 +169,8 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename
@@ -191,7 +196,8 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename

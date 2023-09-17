@@ -1,17 +1,24 @@
 <div *ngIf="article && category" class="card shadow-lg">
-  <!-- <img
-    src="https://images.pexels.com/photos/13374672/pexels-photo-13374672.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load"
-    class="card-img-top" alt="volcan"> -->
+  <div class="card-header">
+    <h4 class="card-title">{{article.title}}</h4>
+    <!-- <h6 class="border-bottom"></h6> -->
+    <h6 class="card-subtitle mb-2 ms-2 text-body-secondary ">{{article.summary}}</h6>
+
+  </div>
+  <img src="assets\images\Image1.jpg">
   <div class="card-body">
-    <div class="row">
+    <!-- <div class="row">
       <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{category.label}}</p>
-      <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{article.createdAt | date: 'dd/MM/yy' }}</p>
-    </div>
+    </div> -->
+    <!-- <h6 class="border-bottom"></h6> -->
 
-    <h5 class="card-title text-center">{{article.title}}</h5>
-    <p class="card-text">{{article.summary}}
-    <p [innerHTML]="article.body | safeHtml"></p>
+    <p class="card-text" [innerHTML]="article.body | safeHtml"></p>
 
-    <!-- <a class="btn btn-primary" routerLink="articles/{{article.id}}">voir</a> -->
+  </div>
+  <div class="card-footer text-body-secondary">
+    <p class="text-lowercase text-black-50 ">
+      première publication : {{article.createdAt | date: 'dd/MM/yy' }} &nbsp;
+      {{hasBeenUpdated ? ' mise à jour : ' + (article.updatedAt | date: 'dd/MM/yy') : ''}}
+    </p>
   </div>
 </div>

@@ -1,7 +1,5 @@
 <div class="card shadow-lg">
-  <img
-    src="https://images.pexels.com/photos/13374672/pexels-photo-13374672.jpeg?auto=compress&cs=tinysrgb&w=300&lazy=load"
-    class="card-img-top" alt="volcan">
+  <img src="assets\images\bcsto.jpg" class="card-img-top" alt="volcan">
   <div class="card-body">
     <div class="row">
       <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{category.label}}</p>
@@ -9,11 +7,8 @@
     </div>
 
     <h5 class="card-title text-center">{{article.title}}</h5>
-    <p class="card-text">{{article.summary}}
-    <p [innerHTML]="article.body  | slice: 0:300 "></p>
-    <span class="text-center">...</span>
-
-    <!-- <a class="btn btn-primary" routerLink="articles/{{article.id}}">voir</a> -->
-    <a class="btn btn-primary" (click)="viewArticle()">voir</a>
+    <p class="card-text">{{article.summary}}</p>
+    <a [routerLink]="['/pages' ,article.id]" class="card-link">voir plus</a>
+    <!-- <a class="btn btn-primary" (click)="viewArticle()">voir</a> -->
   </div>
 </div>

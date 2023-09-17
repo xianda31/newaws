@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
 import { Article } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
@@ -10,10 +11,13 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
 })
 export class ArticlesComponent implements OnInit {
 
+
+
   articles$: Observable<Article[]> = this.articleService.articles$;
 
   constructor(
-    private articleService: ArticleService
+    private articleService: ArticleService,
+    private router: Router
   ) { }
   ngOnInit(): void {
     this.articles$.subscribe((articles) => {
@@ -28,7 +32,14 @@ export class ArticlesComponent implements OnInit {
     this.articleService.deleteArticle(article);
   }
 
-  onUpdate(objectId: string) {
+  onPublish(article: Article) {
+    const { category, createdAt, updatedAt, __typename, ...articleInput } = article;
+    this.articleService.updateArticle(articleInput);
+  }
+
+  onUpdate(article: Article) {
+    console.log('routing to article : ', article.id);
+    this.router.navigate(['dashboard/articles', article.id]);
     // this.createMode = false;
     // let article = this.backService.readArticle(objectId);
     // if (!article) {

@@ -143,7 +143,8 @@ export type Article = {
   body: string;
   categoryId: string;
   category?: Category | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -164,7 +165,8 @@ export type CreateArticleInput = {
   summary: string;
   body: string;
   categoryId: string;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
 };
 
 export type ModelArticleConditionInput = {
@@ -172,7 +174,8 @@ export type ModelArticleConditionInput = {
   summary?: ModelStringInput | null;
   body?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
-  isPublished?: ModelBooleanInput | null;
+  published?: ModelBooleanInput | null;
+  featured?: ModelBooleanInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
   or?: Array<ModelArticleConditionInput | null> | null;
   not?: ModelArticleConditionInput | null;
@@ -207,7 +210,8 @@ export type UpdateArticleInput = {
   summary?: string | null;
   body?: string | null;
   categoryId?: string | null;
-  isPublished?: boolean | null;
+  published?: boolean | null;
+  featured?: boolean | null;
 };
 
 export type DeleteArticleInput = {
@@ -253,7 +257,8 @@ export type ModelArticleFilterInput = {
   summary?: ModelStringInput | null;
   body?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
-  isPublished?: ModelBooleanInput | null;
+  published?: ModelBooleanInput | null;
+  featured?: ModelBooleanInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
@@ -329,7 +334,8 @@ export type ModelSubscriptionArticleFilterInput = {
   summary?: ModelSubscriptionStringInput | null;
   body?: ModelSubscriptionStringInput | null;
   categoryId?: ModelSubscriptionIDInput | null;
-  isPublished?: ModelSubscriptionBooleanInput | null;
+  published?: ModelSubscriptionBooleanInput | null;
+  featured?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
   or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
 };
@@ -389,7 +395,8 @@ export type CreateCategoryMutation = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -413,7 +420,8 @@ export type UpdateCategoryMutation = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -437,7 +445,8 @@ export type DeleteCategoryMutation = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -466,7 +475,8 @@ export type CreateArticleMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -490,7 +500,8 @@ export type UpdateArticleMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -514,7 +525,8 @@ export type DeleteArticleMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -561,7 +573,8 @@ export type GetCategoryQuery = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -607,7 +620,8 @@ export type GetArticleQuery = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -629,7 +643,8 @@ export type ListArticlesQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
-    isPublished: boolean;
+    published: boolean;
+    featured: boolean;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -653,7 +668,8 @@ export type ArticlesByCategoryIdAndSummaryQuery = {
       createdAt: string;
       updatedAt: string;
     } | null;
-    isPublished: boolean;
+    published: boolean;
+    featured: boolean;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -710,7 +726,8 @@ export type OnCreateCategorySubscription = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -734,7 +751,8 @@ export type OnUpdateCategorySubscription = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -758,7 +776,8 @@ export type OnDeleteCategorySubscription = {
       summary: string;
       body: string;
       categoryId: string;
-      isPublished: boolean;
+      published: boolean;
+      featured: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -787,7 +806,8 @@ export type OnCreateArticleSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -811,7 +831,8 @@ export type OnUpdateArticleSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -835,7 +856,8 @@ export type OnDeleteArticleSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  isPublished: boolean;
+  published: boolean;
+  featured: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -947,7 +969,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -987,7 +1010,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1027,7 +1051,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1072,7 +1097,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1112,7 +1138,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1152,7 +1179,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1243,7 +1271,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1320,7 +1349,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1356,7 +1386,8 @@ export class APIService {
               createdAt
               updatedAt
             }
-            isPublished
+            published
+            featured
             createdAt
             updatedAt
           }
@@ -1411,7 +1442,8 @@ export class APIService {
               createdAt
               updatedAt
             }
-            isPublished
+            published
+            featured
             createdAt
             updatedAt
           }
@@ -1550,7 +1582,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1591,7 +1624,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1632,7 +1666,8 @@ export class APIService {
               summary
               body
               categoryId
-              isPublished
+              published
+              featured
               createdAt
               updatedAt
             }
@@ -1678,7 +1713,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1719,7 +1755,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }
@@ -1760,7 +1797,8 @@ export class APIService {
             createdAt
             updatedAt
           }
-          isPublished
+          published
+          featured
           createdAt
           updatedAt
         }

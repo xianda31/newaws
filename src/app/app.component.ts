@@ -8,7 +8,7 @@ import { CategoryService } from './aws.services/category.aws.service';
 })
 export class AppComponent implements OnInit {
   ngOnInit(): void {
-    console.log('AppComponent ngOnInit');
+    // console.log('AppComponent ngOnInit');
   }
 
 

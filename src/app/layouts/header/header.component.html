@@ -48,31 +48,31 @@
       <ul class="navbar-nav mx-auto">
 
         <li class="nav-item mx-2">
-          <a class="nav-link active" routerLink="home">BCSTO</a>
+          <a class="nav-link active" routerLinkActive="active-link" routerLink="home">BCSTO</a>
         </li>
 
+        <!-- boucle sur les rubriques -->
         <ng-container *ngFor="let category of categories$ | async">
           <li class="nav-item mx-2">
-            <a class="nav-link active" routerLink="category/{{category.id}}">{{category.label}}</a>
+            <a class="nav-link " routerLinkActive="active-link"
+              routerLink="category/{{category.id}}">{{category.label}}</a>
           </li>
         </ng-container>
 
-
-        <!-- <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Tournois</a>
-        </li> -->
-
         <li class="nav-item ">
-          <a class="nav-link mx-2" routerLink="dashboard/test">test</a>
-        </li>
-        <li class="nav-item ">
-          <a class="nav-link mx-2" routerLink="dashboard/articles/new">new</a>
+          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="dashboard/test">test</a>
         </li>
 
-
-        <!-- <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/articles">articles</a></li>
-        <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/categories">rubriques</a></li>
-        <li class="nav-item"><a class="nav-link mx-2" routerLink="dashboard/members">Adhérents</a></li> -->
+        <li class="nav-item mx-2 dropdown" *ngIf="logged">
+          <a class="nav-link dropdown-toggle" routerLinkActive="active-link" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Mon espace </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Mes données</a></li>
+            <li><a class="dropdown-item" href="#">Photos</a></li>
+            <li><a class="dropdown-item" href="#">Documents</a></li>
+          </ul>
+        </li>
 
         <li class="nav-item mx-2 dropdown" *ngIf="logged">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -91,17 +91,6 @@
           </ul>
         </li>
 
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
-          <button class="btn btn-sm btn-outline-info dropdown-toggle" href="#" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            mon espace
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mes données</a></li>
-            <li><a class="dropdown-item" href="#">Photos</a></li>
-            <li><a class="dropdown-item" href="#">Documents</a></li>
-          </ul>
-        </li>
 
       </ul>
     </div>

@@ -20,10 +20,10 @@ export class PageComponent implements OnInit {
 
   article!: Article;
   category!: Category;
+  hasBeenUpdated: boolean = false;
 
   ngOnInit(): void {
 
-    console.log('PageComponent ngOnInit');
     this.activatedRoute.paramMap.subscribe(
       async paramMap => {
         if (paramMap.get('id')) {
@@ -31,8 +31,15 @@ export class PageComponent implements OnInit {
           // console.log('id : ', id);
           this.article = await this.articleService.readArticle(id);
           this.category = await this.categoryService.getCategory(this.article.categoryId);
-          console.log('category : ', this.category);
-          // console.log('article : ', this.article);
+          if (this.article.updatedAt) {
+            const createdAt = new Date(this.article.createdAt).setHours(0, 0, 0, 0);
+            const updatedAt = new Date(this.article.updatedAt).setHours(0, 0, 0, 0);
+            // console.log('updatedAt : ', updatedAt);
+            // console.log('createdAt : ', createdAt);
+            this.hasBeenUpdated = createdAt !== updatedAt;
+          }
+
+          // console.log('category : ', this.category);
 
         } else {   // page Home
           console.log('erreur : pas d\'id dans l\'url')

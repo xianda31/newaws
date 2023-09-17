@@ -66,7 +66,8 @@ mutation CreateCategory(
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -95,7 +96,8 @@ mutation UpdateCategory(
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -124,7 +126,8 @@ mutation DeleteCategory(
         summary
         body
         categoryId
-        isPublished
+        published
+        featured
         createdAt
         updatedAt
         __typename
@@ -160,7 +163,8 @@ mutation CreateArticle(
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename
@@ -189,7 +193,8 @@ mutation UpdateArticle(
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename
@@ -218,7 +223,8 @@ mutation DeleteArticle(
       updatedAt
       __typename
     }
-    isPublished
+    published
+    featured
     createdAt
     updatedAt
     __typename

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subject, AsyncSubject } from 'rxjs';
+// import { Subject, AsyncSubject } from 'rxjs';
 import tinymce from 'tinymce';
 
 
@@ -10,15 +10,12 @@ import tinymce from 'tinymce';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
+  
 export class EditComponent {
   @Input() control!: FormControl;
   
   useDarkMode = false;  //window.matchMedia('(prefers-color-scheme: dark)').matches;
   isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
-  
-
-  private editorSubject: Subject<any> = new AsyncSubject();
-
   
   tinyMCEconfig: any = {
     base_url: '/tinymce',
@@ -30,7 +27,7 @@ export class EditComponent {
       ' fullscreen image link table  pagebreak nonbreaking  advlist lists quickbars ',
     
     toolbar: // 'undo redo |' + 
-      // 'save |' +
+      'save |' +
       ' bold italic underline strikethrough |' +
       'fontfamily fontsize blocks |' + 
       ' alignleft aligncenter alignright alignjustify |' +
@@ -82,20 +79,7 @@ export class EditComponent {
     };
     
     
-    // getImage64(file: File): Promise<string> {
-      //   var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
-        //     var image64 = '';
-        //     const reader = new FileReader();
-        //     reader.onload = (e: any) => {
-          //       image64 = e.target.result;
-          //       resolve(image64);
-          //     };
-          //     reader.readAsDataURL(file);
-          //   });
-          //   return promise;
-          // }
-          
-          ImagePickerCallback(cb: (arg0: string, arg1: { title: string; }) => void, value: any, meta: any): void {
+    ImagePickerCallback(cb: (arg0: string, arg1: { title: string; }) => void, value: any, meta: any): void {
             const input = document.createElement('input');
             input.setAttribute('type', 'file');
             input.setAttribute('accept', 'image/*');
@@ -112,6 +96,9 @@ export class EditComponent {
             registry. In the next release this part hopefully won't be
             necessary, as we are looking to handle it internally.
             */
+                  
+                  // debugger;
+                  
            const id = 'blobid' + (new Date()).getTime();
            const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
            const image64 = e.target.result;
@@ -127,14 +114,6 @@ export class EditComponent {
         
         input.click();
       }
-      
-  
-  
-  handleEditorInit(e: any) {
-    this.editorSubject.next(e.editor);
-    this.editorSubject.complete();
-  }
-
       
 }
     
