@@ -1,22 +1,18 @@
-<div class="card col-md-8">
-  <label for="file">sélectionnez un fichier ... </label>
+<div class="card col-md-3">
+  <!-- <label for="file">sélectionnez un fichier ... </label> -->
   <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
 
-  <div>
-    {{filename || "No file selected yet."}}
-    <button type="button" class="btn btn-primary btn-sm " (click)="fileSelect.click()">
-      <i class="bi bi-paperclip"></i>
-      image
-    </button>
-    <img [src]="preview" alt="" class="img-fluid">
-  </div>
+  <button type="button" class="btn btn-primary btn-sm " (click)="fileSelect.click()">
+    <i class="bi bi-paperclip"></i>
+    sélectionnez une image
+  </button>
 
-  <div *ngIf="filename">
-    <button type="button" class="btn btn-primary btn-sm " (click)="upload()">
-      <i class="bi bi-cloud-arrow-up"></i>
-      image
-    </button>
-  </div>
+  <img [src]="preview" alt="" class="img-fluid">
+
+  <button type="button" [disabled]="!filename" class="btn btn-primary btn-sm " (click)="upload()">
+    <i class="bi bi-cloud-arrow-up"></i>
+    validez l'image
+  </button>
 </div>
 
 <div class="card col-md-8">
@@ -49,9 +45,11 @@
 
 </form>
 
-
-
 {{toggler}}
+
+<p> **************user logged**************</p>
+
+{{loggedUser | json}}
 
 
 <!-- <p> **************tinyMCE**************</p>

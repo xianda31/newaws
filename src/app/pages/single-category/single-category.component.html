@@ -1,10 +1,11 @@
-<div *ngIf="theCategory" class="container">
+<div *ngIf="articles && selectedCategory" class="container">
 
-  <h1 class="text-center">{{theCategory.label}}</h1>
-  <p class="text-center">{{theCategory.description}}</p>
-  <div *ngIf="articles" class="row">
-    <app-card class="col-lg-3 col-md-4 col-sm-6 pt-1" *ngFor="let article of articles" [title]="article.title"
-      [article]="article" [category]="theCategory"> </app-card>
+  <h1 class="text-start">{{selectedCategory.description}}</h1>
+
+  <div class="row ">
+
+    <app-card class="col-lg-3 col-md-4 col-sm-6 pt-1 " *ngFor="let article of articles"
+      [catLabel]="featured ? article.category!.label : selectedCategory.label" [article]="article"> </app-card>
   </div>
 
 </div>

@@ -1,0 +1,14 @@
+<div class="card col-md-8">
+    <div class="card-header">
+        <span>files</span>
+    </div>
+    <div *ngIf="filesystem" class="card-body">
+        <ul>
+            <li *ngFor="let folder of keysGetter(filesystem); let i=index">
+                <p> {{folder}} </p>
+                <!-- <li *ngFor="let file of filesystem[key][0]"> -->
+                <!-- <p> {{file}} </p> -->
+                <!-- </li> -->
+        </ul>
+    </div>
+</div>

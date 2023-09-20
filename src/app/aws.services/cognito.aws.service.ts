@@ -1,23 +1,35 @@
 import { Injectable } from "@angular/core";
 import { Auth } from 'aws-amplify';
 import { User } from "../interfaces/user.interface";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
+import { environment } from "../environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class CognitoService {
 
-  // _userLoggedIn: boolean = false;
-  UserLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  currentUser: { username: string; license: string; } | null =
+    (environment.logging_bypass ? { username: 'Gordo', license: '000' } : null);
 
-  userLogged(bool: boolean) {
-    this.UserLoggedIn$.next(bool);
+  private _currentAuthenticatedUser$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
+  get currentAuthenticatedUser() {
+    return this._currentAuthenticatedUser$.asObservable();
   }
 
-  get userLoggedIn() {
-    return this.UserLoggedIn$.asObservable();
+
+  async signIn(user: User): Promise<any> {
+    try {
+      const result = await Auth.signIn(user.email, user.password);
+      this.currentUser = { username: result.attributes.name, license: result.attributes['custom:license'] };
+      this._currentAuthenticatedUser$.next(this.currentUser);
+      return (result);
+    } catch (error) {
+      return (null);
+    }
+
   }
+
 
   _signUp(user: User): Promise<any> {
     return Auth.signUp({
@@ -45,6 +57,8 @@ export class CognitoService {
   }
 
   _signOut(): Promise<any> {
+    console.log('signing out ...');
+    this._currentAuthenticatedUser$.next(null);
     return Auth.signOut();
   }
 
@@ -56,8 +70,5 @@ export class CognitoService {
     return Auth.forgotPasswordSubmit(email, code, password);
   }
 
-  _getUserInfo(): Promise<any> {
-    return Auth.currentAuthenticatedUser();
-  }
 }
 

@@ -38,6 +38,8 @@ import { ToolsModule } from './tools/tools/tools.module';
     PageComponent,
 
 
+
+
   ],
   imports: [
     BrowserModule,

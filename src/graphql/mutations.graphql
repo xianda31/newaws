@@ -63,11 +63,13 @@ mutation CreateCategory(
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -93,11 +95,13 @@ mutation UpdateCategory(
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -123,11 +127,13 @@ mutation DeleteCategory(
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -148,6 +154,7 @@ mutation CreateArticle(
   createArticle(input: $input, condition: $condition) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -165,6 +172,7 @@ mutation CreateArticle(
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename
@@ -178,6 +186,7 @@ mutation UpdateArticle(
   updateArticle(input: $input, condition: $condition) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -195,6 +204,7 @@ mutation UpdateArticle(
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename
@@ -208,6 +218,7 @@ mutation DeleteArticle(
   deleteArticle(input: $input, condition: $condition) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -225,6 +236,7 @@ mutation DeleteArticle(
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename

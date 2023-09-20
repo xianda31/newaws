@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
-import { ToastService } from 'src/app/toaster/service/toast.service';
+import { ToastService } from 'src/app/tools/service/toast.service';
 
 @Component({
   selector: 'app-signup',

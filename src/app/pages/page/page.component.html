@@ -1,24 +1,28 @@
-<div *ngIf="article && category" class="card shadow-lg">
-  <div class="card-header">
-    <h4 class="card-title">{{article.title}}</h4>
-    <!-- <h6 class="border-bottom"></h6> -->
-    <h6 class="card-subtitle mb-2 ms-2 text-body-secondary ">{{article.summary}}</h6>
+<div *ngIf="article && category" class="container">
+  <div class="row justify-content-center">
 
-  </div>
-  <img src="assets\images\Image1.jpg">
-  <div class="card-body">
-    <!-- <div class="row">
-      <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{category.label}}</p>
-    </div> -->
-    <!-- <h6 class="border-bottom"></h6> -->
+    <div class="m-2 text-center col-md-10 ">
 
-    <p class="card-text" [innerHTML]="article.body | safeHtml"></p>
+      <h1 class=" ms-1 text-center">{{article.title}}</h1>
 
+      <div class=" text-body-secondary">
+        <p class="text-lowercase text-black-50 ">
+          {{category.label}} &nbsp;
+          publié le : {{article.createdAt | date: 'dd/MM/yy' }} &nbsp;
+          {{hasBeenUpdated ? ' dernière mise à jour le : ' + (article.updatedAt | date: 'dd/MM/yy') : ''}}
+        </p>
+      </div>
+      <!-- <div class="text-center"> -->
+
+      <img [src]="signedURL" class="card-img-top" alt="bcsto">
+      <!-- </div> -->
+      <!-- <h6 class="border-bottom"></h6> -->
+      <h4 class="text-body-secondary ">{{article.summary}}</h4>
+      <br>
+      <p class="card-text" [innerHTML]="article.body | safeHtml"></p>
+
+
+    </div>
   </div>
-  <div class="card-footer text-body-secondary">
-    <p class="text-lowercase text-black-50 ">
-      première publication : {{article.createdAt | date: 'dd/MM/yy' }} &nbsp;
-      {{hasBeenUpdated ? ' mise à jour : ' + (article.updatedAt | date: 'dd/MM/yy') : ''}}
-    </p>
-  </div>
+
 </div>

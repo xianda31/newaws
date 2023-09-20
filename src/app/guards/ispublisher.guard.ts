@@ -14,18 +14,11 @@ export class IsPublisherGuard {
     private cognitoService: CognitoService,
     private MemberService: MemberService
   ) {
-    this.cognitoService.userLoggedIn.subscribe(
-      (userLogged) => {
-        if (userLogged) {
-          this.cognitoService._getUserInfo()
-            .then((user) => {
-              const license = user.attributes['custom:license'];
-              this.user_rights = this.MemberService.getMemberByLicense(license)!.rights;
-            })
-            .catch((error) => {
-              console.log('getUser error : ', error);
-              this.user_rights = environment.default_rights;
-            });
+    this.cognitoService.currentAuthenticatedUser.subscribe(
+      (user) => {
+        if (user) {
+          const license = user.license;
+          this.user_rights = this.MemberService.getMemberByLicense(license)!.rights;
         } else {
           this.user_rights = environment.default_rights;
         }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Storage } from 'aws-amplify/lib-esm';
+import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import tinymce from 'tinymce';
 
 // https://docs.amplify.aws/lib/storage/getting-started/q/platform/js/#configure-your-application
@@ -21,11 +22,18 @@ export class TestComponent implements OnInit {
   loadedImg: string = '';
 
   form!: FormGroup;
+  loggedUser: any;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cognitoService: CognitoService
   ) { }
   ngOnInit(): void {
+
+    this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
+      this.loggedUser = user;
+    });
+
 
 
     // Storage.list('', { pageSize: 'ALL' }) // for listing ALL files without prefix, pass '' instead
@@ -140,4 +148,14 @@ export class TestComponent implements OnInit {
     });
     return { files, folders };
   }
+
+
+  // *** cognito test***
+
+  // getUserLoggedIn() {
+  //   const user = this.cognitoService.currentAuthenticatedUser;
+  //   console.log('user returned: ', user);
+
+  // }
+
 }

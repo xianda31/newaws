@@ -11,22 +11,18 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
 })
 export class ArticlesComponent implements OnInit {
 
-
-
   articles$: Observable<Article[]> = this.articleService.articles$;
 
   constructor(
     private articleService: ArticleService,
     private router: Router
   ) { }
+
   ngOnInit(): void {
     this.articles$.subscribe((articles) => {
       // console.log('articles', articles);
-    }
-    )
+    });
   }
-
-
 
   onDelete(article: Article) {
     this.articleService.deleteArticle(article);
@@ -40,11 +36,8 @@ export class ArticlesComponent implements OnInit {
   onUpdate(article: Article) {
     console.log('routing to article : ', article.id);
     this.router.navigate(['dashboard/articles', article.id]);
-    // this.createMode = false;
-    // let article = this.backService.readArticle(objectId);
-    // if (!article) {
-    //   return;
-    // }
-    // this.articleForm.patchValue(article);
+  }
+  onCreate() {
+    this.router.navigate(['dashboard/articles', 'new']);
   }
 }

@@ -1,6 +1,7 @@
 <div id="mainNavigation">
+  <!-- bandeau adresse  -->
   <nav role="navigation">
-    <div class=" py-md-2  text-center  border-bottom">
+    <div class="text-center fw-light fs-6 border-bottom bg-warning ">
       <div class="row">
         <div class="col-md-3">
           <span>Bridge Club de Saint-Orens </span>
@@ -12,87 +13,92 @@
           </span>
           <span class="text-nowrap">&nbsp; 31650 Saint-Orens de Gameville</span>
         </div>
-        <!-- <div class="col-md-3">
+        <div class="col-md-3">
           <i class="bi bi-telephone"></i>
           <span>&nbsp;05 61 39 00 39</span>
-        </div> -->
-
-        <div *ngIf="!username" class="col-md-3">
-          <button type="button" class="btn btn-primary" routerLink="login">
-            <i class="bi bi-person-circle"></i>
-            s'identifier
-          </button>
         </div>
-
-        <div *ngIf="username" class="col-md-3">
-          <button type="button" class="btn btn-primary" (click)="onLogout()">
-            <i class="bi bi-box-arrow-left"></i>
-            {{username}}
-          </button>
-        </div>
-
       </div>
     </div>
   </nav>
 
-  <div class="navbar navbar-expand-lg ">
+  <!-- bandeau menu -->
+  <div class="navbar  navbar-expand-lg bg-success navbar-dark ps-md-5 pe-md-5">
+    <div class="container-fluid">
 
-    <button class="navbar-toggler ms-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      <span class="align-middle">Menu</span>
-    </button>
+      <!-- brand logo -->
+      <a class="navbar-brand " routerLinkActive="active-link" routerLink="home">BCSTO</a>
 
+      <!-- toggler button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mx-auto">
+      <!-- collapsible bar -->
+      <div class="collapse navbar-collapse fs-5 " id="collapsibleNavbar">
+        <ul class="navbar-nav mx-auto ">
 
-        <li class="nav-item mx-2">
-          <a class="nav-link active" routerLinkActive="active-link" routerLink="home">BCSTO</a>
-        </li>
+          <!-- boucle sur les rubriques -->
+          <ng-container *ngFor="let category of categories$ | async">
+            <li class="nav-item mx-2">
+              <a class="nav-link " routerLinkActive="active-link"
+                routerLink="category/{{category.id}}">{{category.label}}</a>
+            </li>
+          </ng-container>
 
-        <!-- boucle sur les rubriques -->
-        <ng-container *ngFor="let category of categories$ | async">
-          <li class="nav-item mx-2">
-            <a class="nav-link " routerLinkActive="active-link"
-              routerLink="category/{{category.id}}">{{category.label}}</a>
+          <li class="nav-item ">
+            <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="dashboard/test">test</a>
           </li>
-        </ng-container>
-
-        <li class="nav-item ">
-          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="dashboard/test">test</a>
-        </li>
-
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
-          <a class="nav-link dropdown-toggle" routerLinkActive="active-link" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Mon espace </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Mes données</a></li>
-            <li><a class="dropdown-item" href="#">Photos</a></li>
-            <li><a class="dropdown-item" href="#">Documents</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Administration</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="dashboard/members">Adhérents</a></li>
-            <li><a class="dropdown-item" href="#">Accueil tournois</a></li>
-          </ul>
-        </li>
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Publications </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="dashboard/articles">articles</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/categories">rubriques</a></li>
-          </ul>
-        </li>
 
 
-      </ul>
+          <!-- login -->
+
+          <li *ngIf="!logged" class="d-flex">
+            <button type="button" class="btn btn-primary" routerLink="login">
+              <i class="bi bi-person-circle"></i>
+              MON ESPACE
+            </button>
+          </li>
+
+          <!-- <li *ngIf="logged" class="d-flex"> -->
+          <li *ngIf="logged" class="nav-item mx-2 dropdown">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{loggedusername}}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Mes données</a></li>
+              <li class="dropdown-item" (click)="onLogout()">
+                <button type="button" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-left"></i>
+                </button>
+                Déconnexion
+
+              </li>
+            </ul>
+
+          </li>
+
+          <!-- menu métier  -->
+          <li class="nav-item mx-2 dropdown" *ngIf="logged">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Administration</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="dashboard/members">Adhérents</a></li>
+              <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
+              <li><a class="dropdown-item" href="#">Autres paiements</a></li>
+            </ul>
+          </li>
+          <li class="nav-item mx-2 dropdown" *ngIf="logged">
+            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Publications </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" routerLink="dashboard/articles">Articles</a></li>
+              <li><a class="dropdown-item" routerLink="dashboard/categories">Rubriques</a></li>
+              <li><a class="dropdown-item" routerLink="dashboard/files">Gestion fichiers</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
     </div>
   </div>
 </div>

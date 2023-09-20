@@ -12,6 +12,7 @@ import { EditorComponent, EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tiny
 // import { EditorComponent, TinyEditorComponent, TinyMCEComponent } from '../editor/tinyMCE.component';
 import { ToolsModule } from 'src/app/tools/tools/tools.module';
 import { EditComponent } from '../editor/edit.component';
+import { FilesComponent } from '../publications/files/files.component';
 // import { ToggleInputComponent } from 'src/app/tools/toggle-input/toggle-input.component';
 // import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 
@@ -25,6 +26,7 @@ import { EditComponent } from '../editor/edit.component';
     ArticleComponent,
     TestComponent,
     EditComponent,
+    FilesComponent,
 
   ],
   imports: [

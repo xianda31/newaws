@@ -20,10 +20,12 @@ type Category @model @auth(rules: [{ allow: public }]) {
 type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
+  banner: String!
   summary: String!
   body: String!
   categoryId: ID! @index(name: "byCategory", sortKeyFields: ["summary"])
   category: Category @belongsTo(fields: ["categoryId"])
   published: Boolean!
   featured: Boolean!
+  public: Boolean!
 }

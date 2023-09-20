@@ -9,10 +9,12 @@ import { ArticlesComponent } from '../publications/articles/articles/articles.co
 import { ArticleComponent } from '../publications/articles/article/article.component';
 import { IsPublisherGuard } from 'src/app/guards/ispublisher.guard';
 import { TestComponent } from '../test/test.component';
+import { FilesComponent } from '../publications/files/files.component';
 
 const routes: Routes = [
   { path: 'members', component: MembersComponent }, //, canActivate: [IsMemberMgrGuard] },
   { path: 'categories', component: CategoriesComponent }, //, canActivate: [IsPublisherGuard] },
+  { path: 'files', component: FilesComponent }, //, canActivate: [IsPublisherGuard] },
   { path: 'test', component: TestComponent },
   { path: 'articles', component: ArticlesComponent },    // canActivate: [IsPublisherGuard],
   { path: 'articles/new', component: ArticleComponent },

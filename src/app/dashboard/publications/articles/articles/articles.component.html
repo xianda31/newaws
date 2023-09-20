@@ -13,11 +13,13 @@
         <tr>
           <!-- <th scope="col" class="col-md-2">vignette</th> -->
           <th scope="col">titre</th>
-          <th scope="col">résumé...</th>
+          <th scope="col">banière</th>
+          <th scope="col">résumé</th>
           <th scope="col">rubrique</th>
           <th scope="col">création</th>
-          <th scope="col">publié</th>
+          <th scope="col">public</th>
           <th scope="col">à la une</th>
+          <th scope="col">publié</th>
           <th scope="col">actions</th>
         </tr>
       </thead>
@@ -25,26 +27,32 @@
       <tbody>
         <tr *ngFor="let article of articles$ | async ; let i = index">
           <!-- <td>{{i+1}}</td> -->
-          <!-- <td><img src="{{ article.imgPath }}" class="img img-fluid" alt="vignette" width="100px"></td> -->
           <td>{{ article.title }}</td>
+          <td>{{ article.banner }}</td>
           <td>{{ article.summary | slice :0:100}} ....</td>
           <td>{{ article.category!.label ? article.category?.label! : ''}}</td>
           <td>{{ article.createdAt| date : 'dd/MM/yyyy' }}</td>
-          <td class="mtauto">
-            <app-toggle-input [(ngModel)]="article.published" (click)="onPublish(article)"></app-toggle-input>
+          <td>
+            <app-toggle-input [(ngModel)]="article.public" (click)="onPublish(article)"></app-toggle-input>
           </td>
           <td>
             <app-toggle-input [(ngModel)]="article.featured" (click)="onPublish(article)"></app-toggle-input>
           </td>
           <td>
-            <div class="btn-toolbar justify-content-end">
-              <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(article)">
-                <i class="bi bi-trash"></i>
-              </button>
-              <div class="mtauto "> &nbsp; </div>
-              <button type="button" class="btn btn-sm btn-primary" (click)="onUpdate(article)">
-                <i class="bi bi-pencil-square"></i>
-              </button>
+            <app-toggle-input [(ngModel)]="article.published" (click)="onPublish(article)"></app-toggle-input>
+          </td>
+          <td>
+            <div class="row">
+
+              <div class="btn-group ">
+                <button type="button" class="btn btn-sm btn-danger" (click)="onDelete(article)">
+                  <i class="bi bi-trash"></i>
+                </button>
+                <div class="mtauto "> &nbsp; </div>
+                <button type="button" class="btn btn-sm btn-primary" (click)="onUpdate(article)">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </div>
             </div>
           </td>
         </tr>
@@ -57,10 +65,10 @@
         <td></td>
         <td></td> -->
 
-        <td colspan="7">
+        <td colspan="9">
           <div class="btn-toolbar justify-content-end ">
             ajout d'un nouvel article :&nbsp;&nbsp;&nbsp;
-            <button type="button" class="btn btn-sm btn-primary " routerLink="new">
+            <button type="button" class="btn btn-sm btn-primary " (click)="onCreate()">
               <i class="bi bi-plus-circle"></i>
             </button>
           </div>

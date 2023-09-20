@@ -51,11 +51,13 @@ subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -78,11 +80,13 @@ subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -105,11 +109,13 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -127,6 +133,7 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -144,6 +151,7 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename
@@ -154,6 +162,7 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onUpdateArticle(filter: $filter) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -171,6 +180,7 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename
@@ -181,6 +191,7 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
   onDeleteArticle(filter: $filter) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -198,6 +209,7 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename

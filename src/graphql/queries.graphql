@@ -45,11 +45,13 @@ query GetCategory($id: ID!) {
       items {
         id
         title
+        banner
         summary
         body
         categoryId
         published
         featured
+        public
         createdAt
         updatedAt
         __typename
@@ -90,6 +92,7 @@ query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
     title
+    banner
     summary
     body
     categoryId
@@ -107,6 +110,7 @@ query GetArticle($id: ID!) {
     }
     published
     featured
+    public
     createdAt
     updatedAt
     __typename
@@ -122,6 +126,7 @@ query ListArticles(
     items {
       id
       title
+      banner
       summary
       body
       categoryId
@@ -135,6 +140,7 @@ query ListArticles(
       }
       published
       featured
+      public
       createdAt
       updatedAt
       __typename
@@ -163,6 +169,7 @@ query ArticlesByCategoryIdAndSummary(
     items {
       id
       title
+      banner
       summary
       body
       categoryId
@@ -176,6 +183,7 @@ query ArticlesByCategoryIdAndSummary(
       }
       published
       featured
+      public
       createdAt
       updatedAt
       __typename

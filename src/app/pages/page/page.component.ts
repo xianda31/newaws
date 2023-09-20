@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Article, Category } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { Storage } from 'aws-amplify/lib-esm';
 
 @Component({
   selector: 'app-page',
@@ -21,6 +22,7 @@ export class PageComponent implements OnInit {
   article!: Article;
   category!: Category;
   hasBeenUpdated: boolean = false;
+  signedURL !: string;
 
   ngOnInit(): void {
 
@@ -34,12 +36,14 @@ export class PageComponent implements OnInit {
           if (this.article.updatedAt) {
             const createdAt = new Date(this.article.createdAt).setHours(0, 0, 0, 0);
             const updatedAt = new Date(this.article.updatedAt).setHours(0, 0, 0, 0);
-            // console.log('updatedAt : ', updatedAt);
-            // console.log('createdAt : ', createdAt);
             this.hasBeenUpdated = createdAt !== updatedAt;
           }
 
-          // console.log('category : ', this.category);
+          if (this.article.banner && this.article.banner !== '') {
+            this.signedURL = await Storage.get(this.article.banner, { validateObjectExistence: true });
+          } else {
+            this.signedURL = 'assets/images/bcsto.jpg';
+          }
 
         } else {   // page Home
           console.log('erreur : pas d\'id dans l\'url')

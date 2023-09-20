@@ -1,14 +1,19 @@
-<div class="card shadow-lg">
-  <img src="assets\images\bcsto.jpg" class="card-img-top" alt="volcan">
+<div class="card shadow-lg h-100">
+  <!-- <div class="col-6"> -->
+
+  <img [src]="signedURL" class="card-img-top" alt="bcsto">
+  <!-- </div> -->
   <div class="card-body">
     <div class="row">
-      <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{category.label}}</p>
+      <p class="col-6  text-black-50 text-center fs-6">{{catLabel}}</p>
       <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{article.createdAt | date: 'dd/MM/yy' }}</p>
     </div>
 
     <h5 class="card-title text-center">{{article.title}}</h5>
-    <p class="card-text">{{article.summary}}</p>
-    <a [routerLink]="['/pages' ,article.id]" class="card-link">voir plus</a>
-    <!-- <a class="btn btn-primary" (click)="viewArticle()">voir</a> -->
+    <p class="card-text text-center">{{article.summary}}</p>
+
+    <div class="text-center">
+      <a [routerLink]="['/pages' ,article.id]" class="card-link">voir plus</a>
+    </div>
   </div>
 </div>

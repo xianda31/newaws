@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Article, Category } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
+
 
 @Component({
   selector: 'app-single-category',
@@ -13,65 +15,64 @@ import { CategoryService } from 'src/app/aws.services/category.aws.service';
 export class SingleCategoryComponent implements OnInit {
 
   articles$: Observable<Article[]> = this.articleService.articles$;
-  theCategory!: Category;
+  selectedCategory!: Category;
+  featured = false;     // true su filtrage sur page A la une
   articles: Article[] = [];
+  authenticatedUser: boolean = false;
 
-  HomeCategory: Category = {
+  FeaturedCategory: Category = {
     id: '',
     __typename: 'Category',
-    label: 'Home',
-    description: 'Les points majeurs',
+    label: 'BCSTO',
+    description: 'L\'actualité du Bridge Club de Saint-Orens',
     createdAt: '',
     updatedAt: ''
   }
 
-  dummyArticle: Article = {
-    id: "",
-    title: "titre bidon",
-    __typename: 'Article',
-    summary: 'résumé de l\'article',
-    body: '',
-    categoryId: '',
-    published: false,
-    featured: false,
-    createdAt: '',
-    updatedAt: ''
-  }
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoryService,
     private articleService: ArticleService,
+    private cognitoService: CognitoService
 
   ) { }
 
 
   ngOnInit(): void {
 
+    this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
+      this.authenticatedUser = user ? true : false;
+    });
+
     this.activatedRoute.paramMap.subscribe(
       async paramMap => {
         if (paramMap.get('id')) {
           const id = paramMap.get('id')!;
-          // console.log('id : ', id);
-          this.theCategory = await this.categoryService.getCategory(id);
-          if (this.theCategory.articles!.items) {
-            this.articles = this.theCategory.articles!.items as Article[];
+
+          this.selectedCategory = await this.categoryService.getCategory(id);
+          if (this.selectedCategory.articles!.items) {
+            this.articles = this.selectedCategory.articles!.items as Article[];
+            this.articles = this.articles.filter((article) => (article.published && (article.public || this.authenticatedUser)));
           }
-          // console.log('theCategory : ', this.theCategory);
-        } else {   // page Home
-          // this.articles.push(this.dummyArticle);
+        } else {   // page A la une
+
+          this.featured = true;
+          this.selectedCategory = this.FeaturedCategory;
           this.articleService.articles$.subscribe(
             (articles) => {
-              this.articles = articles.filter((article) => (article.published && article.featured))
+              this.articles = articles.filter((article) => (article.published && article.featured && (article.public || this.authenticatedUser)));
             });
-
-          this.theCategory = this.HomeCategory;
         }
+
+
 
       }
 
     );
   }
+
+
 
 }

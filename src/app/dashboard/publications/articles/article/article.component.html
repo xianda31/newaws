@@ -10,87 +10,114 @@
     </div>
 
     <div class="card bg-body-secondary shadow-effect">
-
       <div class="row m-2">
-        <!-- titre -->
-        <div class="col-md-9">
-          <label>Titre de l'article</label>
-          <input type="text" class="form-control" formControlName="title"
-            placeholder="Titre de l'article (10 caractères minimum)">
-          <div *ngIf="fcontrols['title'].errors?.['required']">
-            <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
-              titre
-              obligatoire</div>
+
+        <div class="col-md-6 ">
+
+          <!-- titre -->
+          <div class="col-md-12">
+            <label>Titre de l'article (10 caractères min)</label>
+            <input type="text" class="form-control" formControlName="title"
+              placeholder="Titre de l'article (10 caractères minimum)">
+            <div *ngIf="fcontrols['title'].errors?.['required']">
+              <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
+                titre
+                obligatoire</div>
+            </div>
+            <div *ngIf="fcontrols['title'].errors?.['minlength']">
+              <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
+                titre de 10 caractères minimum</div>
+            </div>
           </div>
-          <div *ngIf="fcontrols['title'].errors?.['minlength']">
-            <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
-              titre
-              de 10 caractères minimum</div>
+
+          <div class="row">
+            <!-- URL banner -->
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Banière de l'article</label>
+                <input type="text" class="form-control" formControlName="banner"
+                  placeholder="URL de l'image de l'article">
+              </div>
+            </div>
+            <!-- category -->
+            <div class="col-md-6">
+              <label> Rubrique</label>
+              <select class="form-control" formControlName="categoryId">
+                <option value="" disabled selected>--choisissez une categorie--</option>
+                <option *ngFor="let cat of categories$ | async " [ngValue]="cat.id"
+                  [selected]="cat.id === selectedCategoryId">
+                  {{cat.label}}</option>
+              </select>
+              <div *ngIf="fcontrols['categoryId'].errors?.['required']">
+                <div class="alert alert-danger"
+                  *ngIf="fcontrols['categoryId'].touched && fcontrols['categoryId'].invalid">
+                  choisir la categorie de l'article</div>
+              </div>
+            </div>
+
           </div>
+          <!-- summary -->
+          <div class="col-md-12">
+            <div class="form-group">
+              <label>résumé de l'article (20 caractères min)</label>
+              <textarea class="form-control" formControlName="summary"
+                placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="4"></textarea>
+            </div>
+            <div *ngIf="fcontrols['summary'].errors?.['minlength']">
+              <div class="alert alert-danger" *ngIf="fcontrols['summary'].touched && fcontrols['summary'].invalid">
+                résumé de 20 caractères minimum</div>
+            </div>
+          </div>
+
         </div>
 
-        <!-- category -->
-        <div class="col-md-3">
-          <label> Rubrique</label>
-          <select class="form-control" formControlName="categoryId">
-            <option value="" disabled selected>--choisissez une categorie--</option>
-            <option *ngFor="let cat of categories$ | async " [ngValue]="cat.id"
-              [selected]="cat.id === selectedCategoryId">
-              {{cat.label}}</option>
-          </select>
-          <div *ngIf="fcontrols['categoryId'].errors?.['required']">
-            <div class="alert alert-danger" *ngIf="fcontrols['categoryId'].touched && fcontrols['categoryId'].invalid">
-              choisir la categorie de l'article</div>
+
+        <!-- selecteur &  viewer de l'image banner -->
+        <div class="col-md-6">
+
+          <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
+          <div class="row">
+
+            <div class="col-md-1">
+              <button type="button" class="btn btn-outline-primary btn-sm " (click)="fileSelect.click()">
+                <i class="bi bi-image"></i>
+                <!-- sélectionnez une image -->
+              </button>
+            </div>
+            <div class="col-md-11">
+              <img [src]="preview" alt="" class="img-fluid">
+            </div>
           </div>
+
         </div>
 
       </div>
 
-      <!-- summary -->
-      <div class="row m-2">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label>résumé de l'article</label>
-            <textarea class="form-control" formControlName="summary"
-              placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="1"></textarea>
-          </div>
-          <div *ngIf="fcontrols['summary'].errors?.['minlength']">
-            <div class="alert alert-danger" *ngIf="fcontrols['summary'].touched && fcontrols['summary'].invalid">
-              titre de 50 caractères minimum</div>
-          </div>
-        </div>
-      </div>
-
-      <br>
 
       <!-- editeur : contenu de l'article -->
-      <div class="form-group">
-        <label>Contenu de l'article</label>
-        <app-edit [control]="bodyControl"> </app-edit>
-      </div>
+      <div class="row m-2">
 
-      <div *ngIf="fcontrols['body'].errors?.['required']">
-        <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
-          n'oubliez pas de remplir le texte de l'article </div>
+        <div class="form-group">
+          <label>Contenu de l'article</label>
+          <app-edit [control]="bodyControl"> </app-edit>
+        </div>
+
+        <div *ngIf="fcontrols['body'].errors?.['required']">
+          <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
+            n'oubliez pas de remplir le texte de l'article </div>
+        </div>
       </div>
     </div>
-
-    <!-- <div class="col-md-12">
-      <label> body value : </label>
-      {{bodyControl.value}}
-    </div> -->
 
     <!-- bouton validation -->
     <div class="row">
       <div class="col-md-12 text-center pt-4">
         <button class="btn btn-primary" (click)="saveArticle()"
-          [disabled]="!articleForm.valid && formMode == 'create'">Enregistrer</button>
+          [disabled]="!articleForm.valid && formMode == 'create' && bannerValue !=''">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info" (click)="navBack()">Abandonner</button>
       </div>
     </div>
 
-
   </form>
-  <!-- <button class="btn btn-danger">Test</button> -->
 </div>

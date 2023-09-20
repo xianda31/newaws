@@ -139,12 +139,14 @@ export type Article = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
   category?: Category | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -162,20 +164,24 @@ export type DeleteCategoryInput = {
 export type CreateArticleInput = {
   id?: string | null;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
   published: boolean;
   featured: boolean;
+  public: boolean;
 };
 
 export type ModelArticleConditionInput = {
   title?: ModelStringInput | null;
+  banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   body?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
   published?: ModelBooleanInput | null;
   featured?: ModelBooleanInput | null;
+  public?: ModelBooleanInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
   or?: Array<ModelArticleConditionInput | null> | null;
   not?: ModelArticleConditionInput | null;
@@ -207,11 +213,13 @@ export type ModelBooleanInput = {
 export type UpdateArticleInput = {
   id: string;
   title?: string | null;
+  banner?: string | null;
   summary?: string | null;
   body?: string | null;
   categoryId?: string | null;
   published?: boolean | null;
   featured?: boolean | null;
+  public?: boolean | null;
 };
 
 export type DeleteArticleInput = {
@@ -254,11 +262,13 @@ export type ModelCategoryConnection = {
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
+  banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   body?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
   published?: ModelBooleanInput | null;
   featured?: ModelBooleanInput | null;
+  public?: ModelBooleanInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
@@ -331,11 +341,13 @@ export type ModelSubscriptionCategoryFilterInput = {
 export type ModelSubscriptionArticleFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   title?: ModelSubscriptionStringInput | null;
+  banner?: ModelSubscriptionStringInput | null;
   summary?: ModelSubscriptionStringInput | null;
   body?: ModelSubscriptionStringInput | null;
   categoryId?: ModelSubscriptionIDInput | null;
   published?: ModelSubscriptionBooleanInput | null;
   featured?: ModelSubscriptionBooleanInput | null;
+  public?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
   or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
 };
@@ -392,11 +404,13 @@ export type CreateCategoryMutation = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -417,11 +431,13 @@ export type UpdateCategoryMutation = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -442,11 +458,13 @@ export type DeleteCategoryMutation = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -460,6 +478,7 @@ export type CreateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -477,6 +496,7 @@ export type CreateArticleMutation = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -485,6 +505,7 @@ export type UpdateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -502,6 +523,7 @@ export type UpdateArticleMutation = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -510,6 +532,7 @@ export type DeleteArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -527,6 +550,7 @@ export type DeleteArticleMutation = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -570,11 +594,13 @@ export type GetCategoryQuery = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -605,6 +631,7 @@ export type GetArticleQuery = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -622,6 +649,7 @@ export type GetArticleQuery = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -632,6 +660,7 @@ export type ListArticlesQuery = {
     __typename: "Article";
     id: string;
     title: string;
+    banner: string;
     summary: string;
     body: string;
     categoryId: string;
@@ -645,6 +674,7 @@ export type ListArticlesQuery = {
     } | null;
     published: boolean;
     featured: boolean;
+    public: boolean;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -657,6 +687,7 @@ export type ArticlesByCategoryIdAndSummaryQuery = {
     __typename: "Article";
     id: string;
     title: string;
+    banner: string;
     summary: string;
     body: string;
     categoryId: string;
@@ -670,6 +701,7 @@ export type ArticlesByCategoryIdAndSummaryQuery = {
     } | null;
     published: boolean;
     featured: boolean;
+    public: boolean;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -723,11 +755,13 @@ export type OnCreateCategorySubscription = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -748,11 +782,13 @@ export type OnUpdateCategorySubscription = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -773,11 +809,13 @@ export type OnDeleteCategorySubscription = {
       __typename: "Article";
       id: string;
       title: string;
+      banner: string;
       summary: string;
       body: string;
       categoryId: string;
       published: boolean;
       featured: boolean;
+      public: boolean;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -791,6 +829,7 @@ export type OnCreateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -808,6 +847,7 @@ export type OnCreateArticleSubscription = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -816,6 +856,7 @@ export type OnUpdateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -833,6 +874,7 @@ export type OnUpdateArticleSubscription = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -841,6 +883,7 @@ export type OnDeleteArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
+  banner: string;
   summary: string;
   body: string;
   categoryId: string;
@@ -858,6 +901,7 @@ export type OnDeleteArticleSubscription = {
   } | null;
   published: boolean;
   featured: boolean;
+  public: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -966,11 +1010,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1007,11 +1053,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1048,11 +1096,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1082,6 +1132,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1099,6 +1150,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1123,6 +1175,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1140,6 +1193,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1164,6 +1218,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1181,6 +1236,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1268,11 +1324,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1334,6 +1392,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1351,6 +1410,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1375,6 +1435,7 @@ export class APIService {
             __typename
             id
             title
+            banner
             summary
             body
             categoryId
@@ -1388,6 +1449,7 @@ export class APIService {
             }
             published
             featured
+            public
             createdAt
             updatedAt
           }
@@ -1431,6 +1493,7 @@ export class APIService {
             __typename
             id
             title
+            banner
             summary
             body
             categoryId
@@ -1444,6 +1507,7 @@ export class APIService {
             }
             published
             featured
+            public
             createdAt
             updatedAt
           }
@@ -1579,11 +1643,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1621,11 +1687,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1663,11 +1731,13 @@ export class APIService {
               __typename
               id
               title
+              banner
               summary
               body
               categoryId
               published
               featured
+              public
               createdAt
               updatedAt
             }
@@ -1698,6 +1768,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1715,6 +1786,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1740,6 +1812,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1757,6 +1830,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
@@ -1782,6 +1856,7 @@ export class APIService {
           __typename
           id
           title
+          banner
           summary
           body
           categoryId
@@ -1799,6 +1874,7 @@ export class APIService {
           }
           published
           featured
+          public
           createdAt
           updatedAt
         }
