@@ -17,9 +17,10 @@
       <img [src]="signedURL" class="card-img-top" alt="bcsto">
       <!-- </div> -->
       <!-- <h6 class="border-bottom"></h6> -->
-      <h4 class="text-body-secondary ">{{article.summary}}</h4>
+      <h5 class="text-body-secondary justify-content-start">{{article.summary}}</h5>
       <br>
-      <p class="card-text" [innerHTML]="article.body | safeHtml"></p>
+
+      <div [innerHTML]="article.body | safeHtml"></div>
 
 
     </div>

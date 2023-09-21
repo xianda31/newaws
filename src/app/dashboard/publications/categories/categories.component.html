@@ -17,7 +17,7 @@
             un nom de rubrique doit être fourni
           </div>
 
-          <input type="text" class="form-control col-md-4" formControlName="description" id="description"
+          <input type="text" class="form-control col-md-6" formControlName="description" id="description"
             placeholder="court descriptif"
             [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
           <div class="invalid-feedback">
@@ -56,15 +56,17 @@
       <thead class="thead-light">
         <tr>
           <th scope="col" class="col-md-3">rubrique</th>
-          <th scope="col" class="col-md-5 text-center">descriptif</th>
+          <th scope="col" class="col-md-5">descriptif</th>
+          <th scope="col" class="col-md-2 text-center">articles</th>
           <th scope="col" class="col-md-2 text-center">action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categories$ | async " (click)="selectCategory(category)">
-          <td class="col-md-2"> {{ category.label }} </td>
-          <td class="col-md-4 text-center">{{ category.description }}</td>
-          <td class="col-md-2 text-center">
+        <tr *ngFor="let category of categories$ | async ;let  i=index " (click)="selectCategory(category)">
+          <td class="col"> {{ category.label }} </td>
+          <td class="col">{{ category.description }}</td>
+          <td class="col text-center">{{ articlesByCategoryId[i] ? articlesByCategoryId[i].length : 0}}</td>
+          <td class="col text-center">
             <!-- <div class="btn-toolbar "> -->
             <button type="button" class="btn btn-light btn-sm " (click)="deleteCategory($event,category)">
               <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>

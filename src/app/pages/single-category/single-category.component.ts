@@ -55,6 +55,9 @@ export class SingleCategoryComponent implements OnInit {
           if (this.selectedCategory.articles!.items) {
             this.articles = this.selectedCategory.articles!.items as Article[];
             this.articles = this.articles.filter((article) => (article.published && (article.public || this.authenticatedUser)));
+            if (this.articles.length === 1) {
+              this.router.navigate(['/pages', this.articles[0].id]);
+            }
           }
         } else {   // page A la une
 
@@ -65,11 +68,7 @@ export class SingleCategoryComponent implements OnInit {
               this.articles = articles.filter((article) => (article.published && article.featured && (article.public || this.authenticatedUser)));
             });
         }
-
-
-
       }
-
     );
   }
 

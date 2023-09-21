@@ -145,6 +145,7 @@ export class ArticleComponent implements OnInit {
       this.preview = await this.getImage64(this.file);
       this.filename = 'banners/' + this.file.name;
       this.bannerControl.patchValue(this.filename);
+
     }
   }
 
@@ -165,7 +166,7 @@ export class ArticleComponent implements OnInit {
 
     if (await this.checkFileExistence() === true) {
 
-      // console.log('file already exists');
+      console.log('file already exists');
       return;
     }
 

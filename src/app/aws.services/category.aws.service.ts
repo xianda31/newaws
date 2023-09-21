@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { APIService, Category } from '../API.service';
+import { APIService, Article, Category } from '../API.service';
 
 @Injectable({
   providedIn: 'root'
@@ -65,4 +65,14 @@ export class CategoryService {
         console.log('Error deleting category: ', error);
       });
   }
+
+
+  // utilities
+
+  async articlesByCategoryId(categoryId: string): Promise<Article[]> {
+    let result = await this.api.ArticlesByCategoryIdAndSummary(categoryId);
+    // console.log('articlesByCategoryId : ', result);
+    return result.items as Article[];
+  }
 }
+

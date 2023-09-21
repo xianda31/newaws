@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Category } from 'src/app/API.service';
+import { Article, Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { environment } from 'src/app/environments/environment';
 
@@ -14,17 +14,29 @@ export class CategoriesComponent implements OnInit {
 
   categoryForm!: FormGroup;
   categories$: Observable<Category[]> = this.categoryService.categories$;
+  articlesByCategoryId: Article[][] = [];
   createMode: boolean = true;
   selectedCategory!: Category;
 
   fileTooBig: boolean = false;
   maxSize: string = environment.max_category_image_size_text;
 
+
+  // TO DO : controler la taille de l'image
+
+
   constructor(
     private categoryService: CategoryService
   ) { }
 
   ngOnInit(): void {
+
+    this.categories$.subscribe((categories) => {
+      categories.forEach(async (category, index) => {
+        this.articlesByCategoryId[index] = await this.categoryService.articlesByCategoryId(category.id);
+        console.log('category', category.label, this.articlesByCategoryId[index].length);
+      });
+    });
 
     this.categoryForm = new FormGroup({
       label: new FormControl('', Validators.required),
@@ -36,7 +48,6 @@ export class CategoriesComponent implements OnInit {
 
   get label() { return this.categoryForm.get('label')!; }
   get description() { return this.categoryForm.get('description')!; }
-  // get image() { return this.categoryForm.get('image')!; }
 
   selectCategory(category: Category) {
     this.categoryForm.patchValue(category);
@@ -44,21 +55,6 @@ export class CategoriesComponent implements OnInit {
     this.selectedCategory = category;
   }
 
-  // onImageChange(event: any) {
-  //   const file: File = event.target.files[0];
-  //   if (file.size > environment.max_category_image_size) {
-  //     this.fileTooBig = true;
-  //     return;
-  //   }
-  //   const reader = new FileReader();
-  //   reader.onload = () => {
-  //     const imgSrc = reader.result as string;
-  //     this.image.setValue(imgSrc);
-  //   };
-  //   reader.readAsDataURL(file);
-  //   console.log('file loaded ', file.name, file.size);
-
-  // }
 
   // CR(U)D CATEGORIES
 

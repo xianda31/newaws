@@ -1,18 +1,29 @@
 import { Injectable } from '@angular/core';
-import { AuthentificationService } from '../services/authentification.service';
 import { Observable } from 'rxjs';
+import { CognitoService } from '../aws.services/cognito.aws.service';
+import { MemberService } from '../aws.services/member.aws.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IsPublisherGuard {
+  currentUser: { username: string; license: string; } | null = null;
 
   constructor(
-    private auth: AuthentificationService
-  ) { }
+    private auth: CognitoService,
+    private memberService: MemberService
+  ) {
+    this.auth.currentAuthenticatedUser.subscribe((user) => {
+      this.currentUser = user;
+    });
+  }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    const rights = this.auth.getRights();
-    return rights ? rights?.includes('c') : false;
+    if (!this.currentUser) {
+      return false;
+    } else {
+      let member = this.memberService.getMemberByLicense(this.currentUser.license);
+      return member ? member.rights?.includes('c') : false;
+    }
   }
 }
