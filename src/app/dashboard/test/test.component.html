@@ -1,67 +1,170 @@
-<div class="card col-md-3">
-  <!-- <label for="file">sélectionnez un fichier ... </label> -->
-  <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
-
-  <button type="button" class="btn btn-primary btn-sm " (click)="fileSelect.click()">
-    <i class="bi bi-paperclip"></i>
-    sélectionnez une image
-  </button>
-
-  <img [src]="preview" alt="" class="img-fluid">
-
-  <button type="button" [disabled]="!filename" class="btn btn-primary btn-sm " (click)="upload()">
-    <i class="bi bi-cloud-arrow-up"></i>
-    validez l'image
-  </button>
-</div>
-
-<div class="card col-md-8">
-  <div class="card-header">
-    <span>files</span>
-  </div>
-  <div *ngIf="filesystem" class="card-body">
-    <ul>
-      <li *ngFor="let file of filesystem.files">
-        <p (click)="download(file.key)"> {{file.key}} </p>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<div *ngIf="loadedImg" class="card col-md-8">
-  <img [src]="loadedImg" alt="" class="img-fluid">
-</div>
-
 <form [formGroup]="form">
 
-  <div class="row align-items-center">
-    <div class="col-auto">
-      <label for="inputToggler" class="col-form-label"> publié</label>
-    </div>
-    <div class="col-auto">
-      <app-toggle-input formControlName="toggler" id="inputToggler"></app-toggle-input>
-    </div>
+  <div class="form-check">
+    <input formControlName="template" class="form-check-input" type="radio" name="template" value="template2">
+    <label> template 2 </label>
   </div>
+  <div class="form-check">
+    <input formControlName="template" class="form-check-input" type="radio" name="template" value="template1">
+    <label> template 1 </label>
+  </div>
+
+  <!-- {{template}} -->
+
+  <!-- <ng-container [ngSwitch]="template">
+    <div *ngSwitchCase="'template1'"> TEMPLATE 1 </div>
+    <div *ngSwitchCase="'template2'"> TEMPLATE 2 </div>
+  </ng-container>
+ -->
+  <div *ngIf="template ==='template1'"> div : TEMPLATE 1 </div>
+  <div *ngIf="template ==='template2'"> div : TEMPLATE 2 </div>
+
 
 </form>
 
-{{toggler}}
+<!-- <ng-container [ngSwitch]="template"> -->
+<!-- <section id="myTextarea"> -->
 
-<p> **************user logged**************</p>
+<div id="template1" [ngClass]="(template === 'template1') ? 'show' : 'noshow'">
+  <section>
+    <div class="container-fluid mt-4 mb-4">
+      <div class="row">
 
-{{loggedUser | json}}
+        <div class="col-md-4">
+          <img src="../assets/images/bcsto.jpg" alt="bcsto" width="200" height="100">
+        </div>
+
+        <div class="col-md-8">
+          <section class="editable">
+            <h1>Titre</h1>
+          </section>
+          <h6> {{sous_titre}} </h6>
+        </div>
+
+      </div>
+
+      <!-- <div class="row"> -->
+      <section class="editable">
+        <div class="col-md-12 text-center">
+          <p>Texte A</p>
+        </div>
+      </section>
+
+      <section class="editable">
+        <div class="col-md-10 mx-auto">
+          <ng-container *ngTemplateOutlet="table"></ng-container>
+        </div>
+      </section>
+
+      <section class="editable">
+        <div class="col-md-12 text-center">
+          <p>Texte B</p>
+        </div>
+      </section>
+      <!-- </div> -->
+    </div>
+  </section>
+</div>
+
+<div id="template2" [ngClass]="(template === 'template2') ? 'show' : 'noshow'">
+  <section>
+    <p>template2</p>
+    <div class="container mt-4 mb-4">
+      <div class="row">
+        <!-- <div class="col-md-4">
+                  <img src="../assets/images/bcsto.jpg" alt="bcsto" width="200" height="100">
+                </div> -->
+
+        <section class="editable">
+          <div class="col-md-8">
+            <h1>Getting and Setting TWO</h1>
+          </div>
+        </section>
 
 
-<!-- <p> **************tinyMCE**************</p>
-<form [formGroup]="form">
+        <section class="editable">
+          <div class="container text-center">
 
-  <editor formControlName="body" [init]="{ 
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'lists link image table code help wordcount',
-    toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview  | insertfile image  template link ',
-    menubar: false,
-    min_height: 150,
-   }"> </editor>
+            <table class="col-md-10 mx-auto table-primary table-hover table-bordered table-sm">
+              <thead class="table-light">
+                <tr class="align-middle">
+                  <th>colonne 1</th>
+                  <th>colonne 2</th>
+                  <th>colonne 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="align-middle">
+                  <td>ligne 1</td>
+                  <td>ligne 1</td>
+                  <td>ligne 1</td>
+                </tr>
+                <tr class="align-middle">
+                  <td>ligne 2</td>
+                  <td>ligne 2</td>
+                  <td>ligne 2</td>
+                </tr>
+                <tr class="align-middle">
+                  <td>ligne 3</td>
+                  <td>ligne 3</td>
+                  <td>ligne 3</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
 
-</form> -->
+
+<ng-template #table>
+  <div class="text-center">
+
+    <table class="table col-md-10 mx-auto table-info table-bordered table-sm">
+      <thead class="table-light">
+        <tr>
+          <th class="col">colonne 1</th>
+          <th class="col">colonne 2</th>
+          <th class="col">colonne 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="col align-middle">
+          <td>ligne 1</td>
+          <td>ligne 1</td>
+          <td>ligne 1</td>
+        </tr>
+        <tr class="col align-middle">
+          <td>ligne 2</td>
+          <td>ligne 2</td>
+          <td>ligne 2</td>
+        </tr>
+        <tr class="col align-middle">
+          <td>ligne 3</td>
+          <td>ligne 3</td>
+          <td>ligne 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
+
+<!-- </section> -->
+<!-- </ng-container> -->
+
+
+
+
+<button class="btn btn-primary" (click)="getContent()">show Content</button>
+
+<div>content : {{saferHtml}}</div>
+
+
+<div class="align-center">
+  <p>
+    ******* affichage innerHTML ******
+  </p>
+  <section [innerHTML]="saferHtml "></section>
+</div>

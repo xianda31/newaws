@@ -61,7 +61,7 @@
             <div class="form-group">
               <label>résumé de l'article (20 caractères min)</label>
               <textarea class="form-control" formControlName="summary"
-                placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="4"></textarea>
+                placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="2"></textarea>
             </div>
             <div *ngIf="fcontrols['summary'].errors?.['minlength']">
               <div class="alert alert-danger" *ngIf="fcontrols['summary'].touched && fcontrols['summary'].invalid">

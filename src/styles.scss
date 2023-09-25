@@ -4,7 +4,16 @@
 
 // Include any default variable overrides here (though functions won't be available)
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+$primary: #25408f;
+$secondary: #8f5325;
+$success: #3e8d63;
+$info: #401cad;
+$warning: #945707;
+$danger: #18d65a;
+$light: #f8f9fa;
+$dark: #343a40;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
 
 // Then add additional custom code here
 

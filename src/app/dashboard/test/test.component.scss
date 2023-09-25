@@ -1,3 +1,16 @@
-.file-input {
+.show {
+  display: block;
+  visibility: visible;
+}
+
+.noshow {
   display: none;
+  visibility: hidden;
+}
+
+.editable {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }

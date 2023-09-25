@@ -20,14 +20,14 @@ export class EditComponent {
   tinyMCEconfig: any = {
     base_url: '/tinymce',
     suffix: '.min',
-    height: 380,
+    height: 500,
     menubar: true,
     plugins:  'preview  searchreplace autolink autosave save' +
               '  code visualblocks visualchars ' +
       ' fullscreen image link table  pagebreak nonbreaking  advlist lists quickbars ',
     
     toolbar: // 'undo redo |' + 
-      'save |' +
+      'table code |' +
       ' bold italic underline strikethrough |' +
       'fontfamily fontsize blocks |' + 
       ' alignleft aligncenter alignright alignjustify |' +
@@ -62,8 +62,17 @@ export class EditComponent {
       { title: 'None', value: '' },
       { title: 'Some class', value: 'class-name' }
     ],
+    table_class_list: [
+      { title: 'None', value: '' },
+      { title: 'No Borders', value: 'table_no_borders' },
+      { title: 'Red borders', value: 'table_red_borders' },
+      { title: 'Blue borders', value: 'table_blue_borders' },
+      { title: 'Green borders', value: 'table_green_borders' }
+    ],
 
-
+    table_default_attributes: {
+      border: '1'
+    },
     file_picker_callback: this.ImagePickerCallback,
     image_caption: true,
     
