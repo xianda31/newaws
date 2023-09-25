@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SecurityContext } from '@angular/core';
+import { Component, Input, OnInit, SecurityContext, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
@@ -8,6 +8,9 @@ import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { Location } from '@angular/common';
 import { Storage } from 'aws-amplify/lib-esm';
 import * as DOMPurify from 'dompurify';
+import { HttpClient } from '@angular/common/http';
+// import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import tinymce from 'tinymce';
 
 
 @Component({
@@ -15,7 +18,7 @@ import * as DOMPurify from 'dompurify';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, AfterViewInit {
 
   @Input() id: string = '';// @RouteParam()
 
@@ -29,6 +32,7 @@ export class ArticleComponent implements OnInit {
   selectedArticle!: Article | undefined;
   formMode: 'create' | 'update' = 'create'
   formStatus: string[] = ['Création d\' article', 'créer un nouvel article'];
+  // HtmlContent: string = '';
 
 
   articleForm!: FormGroup;
@@ -48,53 +52,74 @@ export class ArticleComponent implements OnInit {
     // private fileService: FileService,
     private router: Router,
     private location: Location,
+    private http: HttpClient,
+    // private sanitizer: DomSanitizer,
+
   ) { }
+  ngAfterViewInit(): void {
+
+  }
 
   async ngOnInit(): Promise<void> {
 
+    // console.log("ngOnInit", this.id);
+
     this.initForm();
+
+
     if (this.id !== undefined) {
+      // initialisation du formulaire avec les valeurs de l'article[id] à modifier
+      this.formStatus = ['Modification d\'un article', 'modifier cet article'];
+      this.formMode = 'update';
       this.articleService.readArticle(this.id)
         .then((article) => {
           this.setForm(article!);
           this.selectedArticle = article;
-          this.formStatus = ['Modification d\'un article', 'modifier cet article'];;
-          this.formMode = 'update';
+          // this.HtmlContent = article!.body;
+          // console.log("loading article with body : ", article!.body);
+          this.tinymceInit(article!.body);
+          // const strg = tinymce.activeEditor!.selection.setContent(article!.body, { format: 'text' });
+          // console.log("strg : ", strg);
         })
         .catch((error) => { console.log('error : ', error); return undefined; });
+
+    } else {
+
+      // initialisation du formulaire avec des valeurs "vides" et le template pour le body de l'article
+      this.formStatus = ['Création d\' article', 'créer un nouvel article'];
+      this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
+        data => {
+          // this.HtmlContent = data;
+          this.tinymceInit(data);
+          // this.HtmlContent = this.sanitizer.bypassSecurityTrustHtml(data);
+          // this.tinymceInit();
+        }
+      );
     }
+
+
   }
 
 
-  DOMPurifyconfig = {
-    ADD_ATTR: ['height', 'width', 'alt', 'src', 'style', 'title'],
-    ADD_TAGS: [],
-    ADD_URI_SAFE_ATTR: ['href'],
-  }
 
 
   async saveArticle() {
 
-    const body = this.bodyControl.value;
-    const sanitized = DOMPurify.sanitize(body, this.DOMPurifyconfig);
-    if (DOMPurify.removed.length > 0) {
-      console.log("DOMsanitizer has removed %s tags ", DOMPurify.removed.length);
-    }
     const article = this.articleForm.getRawValue() as Article;   // getRawValue() pour récupérer les valeurs des champs disabled
-    article.body = sanitized as string;
-
+    const body = tinymce.activeEditor!.getContent();
+    tinymce.remove();
+    article.body = body;
+    console.log("saving article.body : ", article.body);
 
     if (this.formMode === 'create') {
       this.articleService.createArticle(article);
     } else {
       // mode 'update'
       article.id = this.id;
-      // article.categoryId = this.selectedCategoryId;
       this.articleService.updateArticle(article);
     }
 
     this.uploadBannerImage();
-
     this.router.navigate(['dashboard/articles']);
   }
 
@@ -104,7 +129,7 @@ export class ArticleComponent implements OnInit {
 
     this.articleForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      body: new FormControl('', Validators.required),
+      body: new FormControl(''),
       banner: new FormControl({ value: '', disabled: true }),
       summary: new FormControl('', [Validators.minLength(2)]),
       categoryId: new FormControl(''),
@@ -134,6 +159,30 @@ export class ArticleComponent implements OnInit {
     this.location.back();
   }
 
+  // ********* configuration tinymce ***********
+  tinymceInit(initialContent: string) {
+    console.log("tinymceInit");
+    // return
+    tinymce.init({
+      selector: "textarea#myTextarea",
+      setup: (editor) => {
+        editor.on('init', () => {
+          editor.setContent(initialContent);
+        });
+      },
+      plugins: "preview code  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image  media  codesample  table charmap pagebreak nonbreaking anchor  lists  wordcount ",
+      height: '800px',
+      format: 'html',
+      content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+      // skin: 'bootstrap',
+      // toolbar_sticky: true,
+      // linkchecker_service_url: 'http://mydomain.com/linkchecker',
+      // autosave_restore_when_empty: true,
+      editable_root: false,
+      editable_class: 'editable',
+    });
+
+  }
   // ************ gestion image ******************
   filename: string = '';
   file!: File;

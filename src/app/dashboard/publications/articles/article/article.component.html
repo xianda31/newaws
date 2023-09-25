@@ -95,9 +95,9 @@
 
 
       <!-- editeur : contenu de l'article -->
-      <div class="row m-2">
+      <textarea id="myTextarea" class="row m-2">
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Contenu de l'article</label>
           <app-edit [control]="bodyControl"> </app-edit>
         </div>
@@ -105,14 +105,16 @@
         <div *ngIf="fcontrols['body'].errors?.['required']">
           <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
             n'oubliez pas de remplir le texte de l'article </div>
-        </div>
-      </div>
+        </div> -->
+
+        <!-- <div [innerHTML]="HtmlContent" class="col-md-12" ></div> -->
+      </textarea>
     </div>
 
     <!-- bouton validation -->
     <div class="row">
       <div class="col-md-12 text-center pt-4">
-        <button class="btn btn-primary" (click)="saveArticle()"
+        <button class="btn btn-primary" type="button" (click)="saveArticle()"
           [disabled]="!articleForm.valid && formMode == 'create' && bannerValue !=''">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info" (click)="navBack()">Abandonner</button>

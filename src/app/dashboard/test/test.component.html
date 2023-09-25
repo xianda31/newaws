@@ -67,55 +67,7 @@
 </div>
 
 <div id="template2" [ngClass]="(template === 'template2') ? 'show' : 'noshow'">
-  <section>
-    <p>template2</p>
-    <div class="container mt-4 mb-4">
-      <div class="row">
-        <!-- <div class="col-md-4">
-                  <img src="../assets/images/bcsto.jpg" alt="bcsto" width="200" height="100">
-                </div> -->
-
-        <section class="editable">
-          <div class="col-md-8">
-            <h1>Getting and Setting TWO</h1>
-          </div>
-        </section>
-
-
-        <section class="editable">
-          <div class="container text-center">
-
-            <table class="col-md-10 mx-auto table-primary table-hover table-bordered table-sm">
-              <thead class="table-light">
-                <tr class="align-middle">
-                  <th>colonne 1</th>
-                  <th>colonne 2</th>
-                  <th>colonne 3</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="align-middle">
-                  <td>ligne 1</td>
-                  <td>ligne 1</td>
-                  <td>ligne 1</td>
-                </tr>
-                <tr class="align-middle">
-                  <td>ligne 2</td>
-                  <td>ligne 2</td>
-                  <td>ligne 2</td>
-                </tr>
-                <tr class="align-middle">
-                  <td>ligne 3</td>
-                  <td>ligne 3</td>
-                  <td>ligne 3</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </div>
-  </section>
+  <div [innerHTML]="externalHtml"></div>
 </div>
 
 
@@ -168,3 +120,7 @@
   </p>
   <section [innerHTML]="saferHtml "></section>
 </div>
+
+
+<p> **** affiche generic-template.html</p>
+<div [innerHTML]="externalHtml"></div>

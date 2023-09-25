@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import tinymce from 'tinymce';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -20,21 +21,27 @@ export class TestComponent implements OnInit, AfterViewInit {
   any: boolean = true;
   sous_titre: string = 'édité le 18/01/58';
   saferHtml: SafeHtml = '';
+  externalHtml: SafeHtml = '';
 
   constructor(
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) { }
   ngAfterViewInit(): void {
-    this.tinymceInit('template1');
+    this.tinymceInit('template2');
     console.log("ngAfterViewInit");
   }
 
 
   ngOnInit(): void {
 
+    this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
+      data => this.externalHtml = this.sanitizer.bypassSecurityTrustHtml(data)
+    );
+
     this.form = this.fb.group({
-      template: ['template1']
+      template: ['template2']
     });
 
 
@@ -44,7 +51,6 @@ export class TestComponent implements OnInit, AfterViewInit {
       this.tinymceInit(template);
       this.content = '';
     });
-
 
   }
 
@@ -60,7 +66,7 @@ export class TestComponent implements OnInit, AfterViewInit {
       plugins: "preview code  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image  media  codesample  table charmap pagebreak nonbreaking anchor  lists  wordcount ",
       height: '800px',
       format: 'html',
-      content_css: "https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css",
+      content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
       // skin: 'bootstrap',
       // toolbar_sticky: true,
       // linkchecker_service_url: 'http://mydomain.com/linkchecker',
