@@ -1,11 +1,47 @@
-<div *ngIf="articles && selectedCategory" class="container">
+<div *ngIf="articles && selectedCategory && !featured ">
+  <!-- <div class="container-lg "> -->
 
+  <div class="row justify-content-start">
 
-  <h1 class="text-start">{{selectedCategory.description}}</h1>
+    <div class="col-md-2">
+      <!-- <div class="row"> -->
+      <app-card class="col p-3 " *ngFor="let article of articles "
+        [catLabel]="featured ? article.category!.label : selectedCategory.label" [article]="article"
+        [displaymode]="'vertical'" (click)="selectArticle(article)"> </app-card>
+      <!-- </div> -->
+    </div>
 
-  <div class="row ">
-    <app-card class="col-lg-3 col-md-4 col-sm-6 pt-1 " *ngFor="let article of articles"
-      [catLabel]="featured ? article.category!.label : selectedCategory.label" [article]="article"> </app-card>
+    <div class="col-md-10">
+      <div>
+        <h1>{{selectedArticle.title}}</h1>
+        <p class="col-6 text-lowercase text-black-50 fs-6">{{selectedArticle.createdAt | date: 'dd/MM/yy' }}</p>
+
+        <!-- <h5 class="text-body-secondary ">{{selectedArticle.summary}}</h5> -->
+        <div [innerHTML]="selectedArticle.body | safeHtml"></div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+
+</div>
+
+<!-- affichage des news en mode horizontal  -->
+
+<div *ngIf="articles && selectedCategory && featured ">
+  <div class="text-center p-3">
+    <h3>{{selectedCategory.description}}</h3>
+
+  </div>
+
+  <div class="container-fluid ">
+    <div class="row gy-3">
+      <!-- <div class="col"> -->
+      <app-card class="col-lg-2 col-md-3 col-sm-12" *ngFor="let article of articles "
+        [catLabel]="featured ? article.category!.label : selectedCategory.label" [article]="article"
+        [displaymode]="'horizontal'" (click)="selectArticle(article)"> </app-card>
+      <!-- </div> -->
+
+    </div>
   </div>
 
 </div>

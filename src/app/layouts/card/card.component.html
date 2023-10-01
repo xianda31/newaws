@@ -1,19 +1,19 @@
-<div class="card shadow-lg h-100">
+<div [class]="displaymode === 'vertical' ? 'card border-0 ' : 'card border-0 h-100 ' ">
   <!-- <div class="col-6"> -->
 
   <img [src]="signedURL" class="card-img-top" alt="bcsto">
   <!-- </div> -->
-  <div class="card-body">
-    <div class="row">
-      <p class="col-6  text-black-50 text-center fs-6">{{catLabel}}</p>
-      <p class="col-6 text-lowercase text-black-50 text-center fs-6">{{article.createdAt | date: 'dd/MM/yy' }}</p>
-    </div>
+  <div *ngIf="displaymode !== 'vertical'" class="row">
+    <small class="col-6  text-black-50 text-center ">{{catLabel}}</small>
+    <small class="col-6 text-lowercase text-black-50 text-center ">{{article.createdAt | date: 'dd/MM/yy' }}</small>
+  </div>
+  <div class="card-body text-center bg-transparent">
 
-    <h5 class="card-title text-center">{{article.title}}</h5>
-    <p class="card-text text-center">{{article.summary}}</p>
+    <h6 class="card-title text-center">{{article.title}}</h6>
+    <small class="card-text text-center">{{article.summary}}</small>
 
-    <div class="text-center">
+    <!-- <div class="text-center">
       <a [routerLink]="['/pages' ,article.id]" class="card-link">voir plus</a>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Article, Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { environment } from 'src/app/environments/environment';
+import { ToastService } from 'src/app/tools/service/toast.service';
 
 @Component({
   selector: 'app-categories',
@@ -26,7 +27,8 @@ export class CategoriesComponent implements OnInit {
 
 
   constructor(
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class CategoriesComponent implements OnInit {
     this.categories$.subscribe((categories) => {
       categories.forEach(async (category, index) => {
         this.articlesByCategoryId[index] = await this.categoryService.articlesByCategoryId(category.id);
-        console.log('category', category.label, this.articlesByCategoryId[index].length);
+        // console.log('category', category.label, this.articlesByCategoryId[index].length);
       });
     });
 
@@ -81,11 +83,17 @@ export class CategoriesComponent implements OnInit {
   }
 
 
-  deleteCategory(event: any, category: Category) {
-    event.stopPropagation();
-    this.categoryService.deleteCategory(category);
-    this.categoryForm.reset();
-    this.createMode = true;
-  }
+  async deleteCategory(event: any, category: Category) {
+    const articles = await this.categoryService.articlesByCategoryId(category.id);
+    if (articles.length > 0) {
+      this.toastService.showWarningToast('Category not empty', 'la rubrique n\'est pas vide');
+      return
+    } else {
+      event.stopPropagation();
+      this.categoryService.deleteCategory(category);
+      this.categoryForm.reset();
+      this.createMode = true;
+    }
 
+  }
 }

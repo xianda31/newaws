@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { APIService, Article, UpdateArticleInput } from '../API.service';
+import { ToastService } from '../tools/service/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class ArticleService {
 
   constructor(
     private api: APIService,
+    private toastService: ToastService
   ) {
 
     // READ ALL CATEGORIES
@@ -40,7 +42,10 @@ export class ArticleService {
       this._articles.push(article);
       this._articles$.next(this._articles);
     })
-      .catch((error) => { console.log('Error creating article: ', error); });
+      .catch((error) => {
+        console.log('Error creating article: ', error);
+        this.toastService.showErrorToast('aws', 'erreur création article');
+      });
   }
 
   async readArticle(id: string): Promise<any> {
@@ -57,6 +62,7 @@ export class ArticleService {
       })
       .catch((error) => {
         console.log('Error updating article: ', error);
+        this.toastService.showErrorToast('aws', 'erreur mise à jour article');
       });
 
   }
@@ -69,6 +75,7 @@ export class ArticleService {
     })
       .catch((error) => {
         console.log('Error deleting article: ', error);
+        this.toastService.showErrorToast('aws', 'erreur suppression article');
       });
   }
 }

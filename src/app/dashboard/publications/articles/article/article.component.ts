@@ -30,6 +30,8 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   selectedCategoryId: string = '';
   selectedArticle!: Article | undefined;
+  templateLoaded: boolean = false;
+
   formMode: 'create' | 'update' = 'create'
   formStatus: string[] = ['Création d\' article', 'créer un nouvel article'];
   // HtmlContent: string = '';
@@ -89,6 +91,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
       this.formStatus = ['Création d\' article', 'créer un nouvel article'];
       this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
         data => {
+          // console.log("initialisation avec template vide : ", data);
           // this.HtmlContent = data;
           this.tinymceInit(data);
           // this.HtmlContent = this.sanitizer.bypassSecurityTrustHtml(data);
@@ -109,7 +112,7 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     const body = tinymce.activeEditor!.getContent();
     tinymce.remove();
     article.body = body;
-    console.log("saving article.body : ", article.body);
+    // console.log("saving article.body : ", article.body);
 
     if (this.formMode === 'create') {
       this.articleService.createArticle(article);
@@ -161,29 +164,84 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   // ********* configuration tinymce ***********
   tinymceInit(initialContent: string) {
-    console.log("tinymceInit");
-    // return
     tinymce.init({
       selector: "textarea#myTextarea",
       setup: (editor) => {
         editor.on('init', () => {
           editor.setContent(initialContent);
+          console.log("initial Content loaded... ");
+          this.templateLoaded = true;
+
         });
       },
-      plugins: "preview code  searchreplace autolink autosave save directionality  visualblocks visualchars fullscreen image  media  codesample  table charmap pagebreak nonbreaking anchor  lists  wordcount ",
-      height: '800px',
+      plugins: 'preview searchreplace  autolink autosave save' +
+        ' code visualblocks visualchars' +
+        ' fullscreen image table  pagebreak nonbreaking advlist lists wordcount ',
+      toolbar: // 'undo redo |' + 
+        'table code |' +
+        ' bold italic underline strikethrough |' +
+        'fontfamily fontsize blocks |' +
+        ' alignleft aligncenter alignright alignjustify |' +
+        'outdent indent pagebreak | ' +
+        'numlist bullist | ' +
+        'forecolor backcolor removeformat |' +
+        'fullscreen  preview ' +
+        ' insertfile image template link ',
+
+      height: '700px',
       format: 'html',
       content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-      // skin: 'bootstrap',
-      // toolbar_sticky: true,
-      // linkchecker_service_url: 'http://mydomain.com/linkchecker',
-      // autosave_restore_when_empty: true,
       editable_root: false,
       editable_class: 'editable',
+
+      file_picker_callback: this.ImagePickerCallback,
+      image_caption: true,
+
     });
 
   }
+
+
+  ImagePickerCallback(cb: (arg0: string, arg1: { title: string; }) => void, value: any, meta: any): void {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+
+    input.addEventListener('change', (e: any) => {
+      // if (input.files && input.files.length > 0) {
+      const file = e.target.files[0] as File;
+      // }
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        /*
+  Note: Now we need to register the blob in TinyMCEs image blob
+  registry. In the next release this part hopefully won't be
+  necessary, as we are looking to handle it internally.
+  */
+
+        // debugger;
+
+        const id = 'blobid' + (new Date()).getTime();
+        const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
+        const image64 = e.target.result;
+        const base64 = image64.split(',')[1];
+        const blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+
+        /* call the callback and populate the Title field with the file name */
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
+    });
+
+    input.click();
+  }
+
+
   // ************ gestion image ******************
+
+
   filename: string = '';
   file!: File;
   preview: string = '';

@@ -12,7 +12,7 @@ export class CardComponent implements OnInit {
 
   @Input() article!: Article;
   @Input() catLabel !: string;    // non renseigné au niveau Article quand query Category 
-
+  @Input() displaymode: 'vertical' | 'horizontal' = 'vertical';
   signedURL !: string;
 
   constructor(

@@ -19,6 +19,7 @@ export class SingleCategoryComponent implements OnInit {
   featured = false;     // true su filtrage sur page A la une
   articles: Article[] = [];
   authenticatedUser: boolean = false;
+  selectedArticle!: Article;
 
   FeaturedCategory: Category = {
     id: '',
@@ -55,23 +56,36 @@ export class SingleCategoryComponent implements OnInit {
           if (this.selectedCategory.articles!.items) {
             this.articles = this.selectedCategory.articles!.items as Article[];
             this.articles = this.articles.filter((article) => (article.published && (article.public || this.authenticatedUser)));
+            this.selectedArticle = this.articles[0];
+            // console.log('selectedArticle', this.selectedArticle.title);
             if (this.articles.length === 1) {
               this.router.navigate(['/pages', this.articles[0].id]);
             }
           }
-        } else {   // page A la une
+        } else {   // page A la une  "home"
 
           this.featured = true;
           this.selectedCategory = this.FeaturedCategory;
           this.articleService.articles$.subscribe(
             (articles) => {
-              this.articles = articles.filter((article) => (article.published && article.featured && (article.public || this.authenticatedUser)));
+              this.articles = articles.filter((article) => (article.featured && (article.public || this.authenticatedUser)));
+              this.selectedArticle = this.articles[0];
+              // console.log('selectedArticle', this.selectedArticle.title);
+
             });
         }
       }
     );
   }
 
-
-
+  selectArticle(article: Article) {
+    if (this.featured) {
+      this.router.navigate(['/pages', article.id]);
+    } else {
+      this.selectedArticle = article;
+    }
+  }
 }
+
+
+
