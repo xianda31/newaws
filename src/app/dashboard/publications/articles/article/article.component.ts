@@ -7,10 +7,9 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { Location } from '@angular/common';
 import { Storage } from 'aws-amplify/lib-esm';
-import * as DOMPurify from 'dompurify';
 import { HttpClient } from '@angular/common/http';
-// import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import tinymce from 'tinymce';
+import { FileService } from 'src/app/tools/service/file.service';
 
 
 @Component({
@@ -18,13 +17,15 @@ import tinymce from 'tinymce';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit, AfterViewInit {
+export class ArticleComponent implements OnInit {
 
   @Input() id: string = '';// @RouteParam()
+
 
   categories$: Observable<Category[]> = this.categoryService.categories$ as Observable<Category[]>;
   articles$: Observable<Article[]> = this.articleService.articles$ as Observable<Article[]>;
   imgBuffer!: any;
+  preview !: string;
 
   selectedFile!: File;
 
@@ -36,6 +37,9 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   formStatus: string[] = ['Création d\' article', 'créer un nouvel article'];
   // HtmlContent: string = '';
 
+  bannerFile!: File;
+  bannerChanged: boolean = false;
+  bannerPreview: string = '';
 
   articleForm!: FormGroup;
 
@@ -43,7 +47,6 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     return this.articleForm.controls;
   }
 
-  get bodyControl() { return this.articleForm.get('body') as FormControl; }
   get bannerControl() { return this.articleForm.get('banner') as FormControl; }
   get bannerValue() { return this.bannerControl.value; }
 
@@ -51,16 +54,13 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   constructor(
     private categoryService: CategoryService,
     private articleService: ArticleService,
-    // private fileService: FileService,
+    private fileService: FileService,
     private router: Router,
     private location: Location,
     private http: HttpClient,
     // private sanitizer: DomSanitizer,
 
   ) { }
-  ngAfterViewInit(): void {
-
-  }
 
   async ngOnInit(): Promise<void> {
 
@@ -70,32 +70,43 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
 
     if (this.id !== undefined) {
+
       // initialisation du formulaire avec les valeurs de l'article[id] à modifier
       this.formStatus = ['Modification d\'un article', 'modifier cet article'];
       this.formMode = 'update';
+
       this.articleService.readArticle(this.id)
-        .then((article) => {
+        .then(async (article) => {
           this.setForm(article!);
           this.selectedArticle = article;
-          // this.HtmlContent = article!.body;
-          // console.log("loading article with body : ", article!.body);
-          this.tinymceInit(article!.body);
-          // const strg = tinymce.activeEditor!.selection.setContent(article!.body, { format: 'text' });
-          // console.log("strg : ", strg);
+
+          const filename = 'articles/' + article!.permalink;
+          const blob = await Storage.get(filename, { download: true });
+          blob.Body?.text().then((text) => {
+            this.tinymceInit(text);
+          });
+
+          this.imgBuffer = await Storage.get('banners/' + article.banner, { validateObjectExistence: true });
+
+          //  {
+          //   this.getImage64(this.selectedFile).then((image64) => {
+          //     this.imgBuffer = image64;
+          //     this.bannerControl.patchValue(this.selectedFile.name);
+          //   });
+          // }
+
         })
         .catch((error) => { console.log('error : ', error); return undefined; });
 
     } else {
 
-      // initialisation du formulaire avec des valeurs "vides" et le template pour le body de l'article
+      // initialisation du formulaire avec des valeurs "vides" et le template pour le HTML de l'article
       this.formStatus = ['Création d\' article', 'créer un nouvel article'];
+      this.formMode = 'create';
+
       this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
         data => {
-          // console.log("initialisation avec template vide : ", data);
-          // this.HtmlContent = data;
           this.tinymceInit(data);
-          // this.HtmlContent = this.sanitizer.bypassSecurityTrustHtml(data);
-          // this.tinymceInit();
         }
       );
     }
@@ -103,40 +114,64 @@ export class ArticleComponent implements OnInit, AfterViewInit {
 
   }
 
-
+  async UploadTxtFile(filename: string, text: string, overwrite: boolean) {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const file = new File([blob], 'test.txt', { type: 'text/plain' });
+    return await this.fileService.uploadFile(file, filename, overwrite);
+  }
 
 
   async saveArticle() {
 
     const article = this.articleForm.getRawValue() as Article;   // getRawValue() pour récupérer les valeurs des champs disabled
-    const body = tinymce.activeEditor!.getContent();
+    const HTMLtext = tinymce.activeEditor!.getContent();
     tinymce.remove();
-    article.body = body;
-    // console.log("saving article.body : ", article.body);
+
 
     if (this.formMode === 'create') {
-      this.articleService.createArticle(article);
+      // mode 'create'
+      article.permalink = this.articleForm.get('title')?.value.toLowerCase().replace(/\s/g, '-');
+
+      const filename = 'articles/' + article.permalink;
+      if (await this.UploadTxtFile(filename, HTMLtext, false)) {
+        this.articleService.createArticle(article);
+      } else {
+        console.log("error uploading html file");
+      };
+
     } else {
+
       // mode 'update'
       article.id = this.id;
-      this.articleService.updateArticle(article);
+
+      const filename = 'articles/' + article.permalink;
+      if (await this.UploadTxtFile(filename, HTMLtext, true)) {
+        this.articleService.updateArticle(article);
+      } else {
+        console.log("error uploading html file");
+      };
     }
 
-    this.uploadBannerImage();
+    if (this.bannerChanged) await
+      this.fileService.uploadFile(this.bannerFile, 'banners/' + this.bannerFile.name, false);
+
     this.router.navigate(['dashboard/articles']);
   }
 
-
+  onTitleChanged(event: any) {
+    const title = event.target.value;
+    const permalink = title.toLowerCase().replace(/\s/g, '-');
+    this.articleForm.get('permalink')?.setValue(permalink);
+  }
 
   initForm() {
-
     this.articleForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      body: new FormControl(''),
+      permalink: new FormControl(''),
       banner: new FormControl({ value: '', disabled: true }),
       summary: new FormControl('', [Validators.minLength(2)]),
       categoryId: new FormControl(''),
-      published: new FormControl(true),
+      assigned: new FormControl(true),
       featured: new FormControl(false),
       public: new FormControl(true),
 
@@ -149,11 +184,11 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     this.articleForm.get('categoryId')?.patchValue(article.categoryId);
     this.selectedCategoryId = article.categoryId!;
     this.articleForm.get('title')?.setValue(article.title);
-    this.articleForm.get('body')?.setValue(article.body);
+    this.articleForm.get('permalink')?.setValue(article.permalink);
     this.articleForm.get('summary')?.setValue(article.summary);
-    this.articleForm.get('published')?.setValue(article.published);
-    this.articleForm.get('featured')?.setValue(article.published);
-    this.articleForm.get('public')?.setValue(article.published);
+    this.articleForm.get('assigned')?.setValue(article.assigned);
+    this.articleForm.get('featured')?.setValue(article.featured);
+    this.articleForm.get('public')?.setValue(article.public);
     this.articleForm.get('banner')?.setValue(article.banner);
 
 
@@ -202,36 +237,43 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   }
 
 
+
   ImagePickerCallback(cb: (arg0: string, arg1: { title: string; }) => void, value: any, meta: any): void {
+    // create an off-screen canvas
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
 
     input.addEventListener('change', (e: any) => {
-      // if (input.files && input.files.length > 0) {
       const file = e.target.files[0] as File;
-      // }
-
       const reader = new FileReader();
+
       reader.onload = (e: any) => {
-        /*
-  Note: Now we need to register the blob in TinyMCEs image blob
-  registry. In the next release this part hopefully won't be
-  necessary, as we are looking to handle it internally.
-  */
-
-        // debugger;
-
         const id = 'blobid' + (new Date()).getTime();
-        const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
         const image64 = e.target.result;
+        const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
         const base64 = image64.split(',')[1];
+
+        // const img = new Image();
+        // img.onload = () => {
+        //   canvas.width = img.width / 2;
+        //   canvas.height = img.height / 2;
+        //   console.log("img.width : ", img.width);
+        //   ctx!.drawImage(img, 0, 0, img.width, img.height);
+        //   const compressed64 = canvas.toDataURL();
+        //   console.log("compressed64 : ", compressed64);
+        // }
+
+
         const blobInfo = blobCache.create(id, file, base64);
         blobCache.add(blobInfo);
-
         /* call the callback and populate the Title field with the file name */
         cb(blobInfo.blobUri(), { title: file.name });
       };
+
       reader.readAsDataURL(file);
     });
 
@@ -239,22 +281,19 @@ export class ArticleComponent implements OnInit, AfterViewInit {
   }
 
 
-  // ************ gestion image ******************
+
+  // ************ gestion image (banner)******************
 
 
-  filename: string = '';
-  file!: File;
-  preview: string = '';
-
-  async onFileSelected(event: any) {
-    this.file = event.target.files[0];
-    if (this.file) {
-      this.preview = await this.getImage64(this.file);
-      this.filename = 'banners/' + this.file.name;
-      this.bannerControl.patchValue(this.filename);
-
-    }
-  }
+  // async onBannerSelected(event: any) {
+  //   this.bannerFile = event.target.files[0];
+  //   this.bannerChanged = true;
+  //   if (this.bannerFile) {
+  //     this.bannerPreview = await this.getImage64(this.bannerFile);
+  //     const filename = this.bannerFile.name;
+  //     this.bannerControl.patchValue(filename);
+  //   }
+  // }
 
   getImage64(file: File): Promise<string> {
     var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
@@ -269,32 +308,42 @@ export class ArticleComponent implements OnInit, AfterViewInit {
     return promise;
   }
 
-  async uploadBannerImage() {
+  // async uploadBannerImage() {
 
-    if (await this.checkFileExistence() === true) {
+  //   if (await this.checkFileExistence() === true) {
+  //     console.log('file already exists');
+  //     return;
+  //   }
 
-      console.log('file already exists');
-      return;
-    }
+  //   try {
+  //     const result = await Storage.put(this.filename, this.file, {
+  //       // contentType: "image/png",  contentType is optional
+  //       level: 'public'
+  //     });
+  //   } catch (error) { console.log("Error uploading file: ", error); }
+  // }
 
-    try {
-      const result = await Storage.put(this.filename, this.file, {
-        // contentType: "image/png",  contentType is optional
-        level: 'public'
+  // async checkFileExistence(): Promise<boolean> {
+  //   try {
+  //     await Storage.get(this.filename, { validateObjectExistence: true });
+  //     return true;
+  //   }
+  //   catch (error) {
+  //     return false;
+  //   }
+  // }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+
+    if (this.selectedFile) {
+      this.getImage64(this.selectedFile).then((image64) => {
+        this.imgBuffer = image64;
+        this.bannerControl.patchValue(this.selectedFile.name);
       });
-    } catch (error) { console.log("Error uploading file: ", error); }
-  }
-
-  async checkFileExistence(): Promise<boolean> {
-    try {
-      await Storage.get(this.filename, { validateObjectExistence: true });
-      return true;
     }
-    catch (error) {
-      return false;
-    }
-  }
 
+  }
 
 }
 

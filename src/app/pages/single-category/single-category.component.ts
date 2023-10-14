@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Article, Category } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
+import { Storage } from 'aws-amplify/lib-esm';
 
 
 @Component({
@@ -14,26 +15,21 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 })
 export class SingleCategoryComponent implements OnInit {
 
+  @Input('cat') categoryLabel!: string;// @RouteParam()
+  @Input('aid') articleId!: string;// @RouteParam()
+
+
   articles$: Observable<Article[]> = this.articleService.articles$;
-  selectedCategory!: Category;
-  featured = false;     // true su filtrage sur page A la une
+  filteredArticles$: Observable<Article[]> = this.articleService.articles$;
   articles: Article[] = [];
   authenticatedUser: boolean = false;
+  selectedCategory!: Category;
   selectedArticle!: Article;
-
-  FeaturedCategory: Category = {
-    id: '',
-    __typename: 'Category',
-    label: 'BCSTO',
-    description: 'L\'actualité du Bridge Club de Saint-Orens',
-    createdAt: '',
-    updatedAt: ''
-  }
+  categoryId!: string;
+  HTMLstring!: string;
 
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
     private categoryService: CategoryService,
     private articleService: ArticleService,
     private cognitoService: CognitoService
@@ -41,49 +37,53 @@ export class SingleCategoryComponent implements OnInit {
   ) { }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
 
     this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
       this.authenticatedUser = user ? true : false;
     });
 
-    this.activatedRoute.paramMap.subscribe(
-      async paramMap => {
-        if (paramMap.get('id')) {
-          const id = paramMap.get('id')!;
+    this.selectedCategory = this.categoryService.getCategoryByLabel(this.categoryLabel);
+    console.log('articleId :', this.articleId);
+    this.articles$.pipe(
+      map((articles) => articles.filter((article) => article.categoryId === this.selectedCategory.id)),
+      map((articles) => articles.sort((a, b) => ((a.createdAt > b.createdAt) || (a.id === this.articleId) ? -1 : 1))),
+      map((articles) => articles.sort((a, b) => ((a.id === this.articleId) && b.id ? -1 : 1))),
+      tap((articles) =>
+        this.selectedArticle = this.articleId ? articles.find((article) => (article.id === this.articleId))! : articles[0])
+    ).subscribe(async (articles) => {
+      console.log('articles :', articles);
+      if (articles.length !== 0) {
 
-          this.selectedCategory = await this.categoryService.getCategory(id);
-          if (this.selectedCategory.articles!.items) {
-            this.articles = this.selectedCategory.articles!.items as Article[];
-            this.articles = this.articles.filter((article) => (article.published && (article.public || this.authenticatedUser)));
-            this.selectedArticle = this.articles[0];
-            // console.log('selectedArticle', this.selectedArticle.title);
-            if (this.articles.length === 1) {
-              this.router.navigate(['/pages', this.articles[0].id]);
-            }
+        this.articles = articles;
+        const blob = await Storage.get('articles/' + this.selectedArticle.permalink, { download: true });
+        // console.log('blob :', blob);
+        blob.Body?.text()
+          .then((text) => {
+            this.HTMLstring = text;
           }
-        } else {   // page A la une  "home"
 
-          this.featured = true;
-          this.selectedCategory = this.FeaturedCategory;
-          this.articleService.articles$.subscribe(
-            (articles) => {
-              this.articles = articles.filter((article) => (article.featured && (article.public || this.authenticatedUser)));
-              this.selectedArticle = this.articles[0];
-              // console.log('selectedArticle', this.selectedArticle.title);
-
-            });
-        }
+          );
       }
+    }
     );
+
+
+
   }
 
-  selectArticle(article: Article) {
-    if (this.featured) {
-      this.router.navigate(['/pages', article.id]);
-    } else {
-      this.selectedArticle = article;
-    }
+  async selectArticle(article: Article) {
+    this.selectedArticle = article;
+    const blob = await Storage.get('articles/' + this.selectedArticle.permalink, { download: true });
+    // console.log('blob :', blob);
+    blob.Body?.text()
+      .then((text) => {
+        this.HTMLstring = text;
+      }
+
+      );
+    // console.log('selectedArticle', this.selectedArticle.id);
   }
 }
 

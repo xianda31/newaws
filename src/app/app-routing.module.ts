@@ -5,27 +5,30 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { PageComponent } from './pages/page/page.component';
+import { HomeComponent } from './pages/home/home.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 
 const routes: Routes = [
-  { path: '', component: SingleCategoryComponent },
-  { path: 'home', component: SingleCategoryComponent },
+
+  { path: 'home', component: HomeComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'category/:id', component: SingleCategoryComponent },
-  { path: 'pages/:id', component: PageComponent },
+  { path: 'cat/:cat', component: SingleCategoryComponent },
+  { path: 'cat/:cat/:aid', component: SingleCategoryComponent },
+  // { path: 'pages/:id', component: PageComponent },
   { path: 'pswreset/:email', component: PswresetComponent },
   {
     path: 'dashboard',
-    // canActivate: [IsAuthenticatedGuard],
+    //   // canActivate: [IsAuthenticatedGuard],
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
-
   },
+  { path: '**', component: HomeComponent },
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { bindToComponentInputs: true })],
   exports: [RouterModule],
   providers: [provideRouter(routes, withComponentInputBinding())]
 })

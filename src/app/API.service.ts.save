@@ -147,9 +147,9 @@ export type Category = {
   id: string;
   label: string;
   description: string;
-  articles?: ModelArticleConnection | null;
   rank: number;
   mandatory: boolean;
+  articles?: ModelArticleConnection | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -166,6 +166,7 @@ export type Article = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -193,6 +194,7 @@ export type CreateArticleInput = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -204,6 +206,7 @@ export type ModelArticleConditionInput = {
   title?: ModelStringInput | null;
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
+  innerHTML?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
   assigned?: ModelBooleanInput | null;
@@ -235,6 +238,7 @@ export type UpdateArticleInput = {
   title?: string | null;
   banner?: string | null;
   summary?: string | null;
+  innerHTML?: string | null;
   permalink?: string | null;
   categoryId?: string | null;
   assigned?: boolean | null;
@@ -286,6 +290,7 @@ export type ModelArticleFilterInput = {
   title?: ModelStringInput | null;
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
+  innerHTML?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
   categoryId?: ModelIDInput | null;
   assigned?: ModelBooleanInput | null;
@@ -294,6 +299,16 @@ export type ModelArticleFilterInput = {
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
 };
 
 export enum ModelSortDirection {
@@ -374,6 +389,7 @@ export type ModelSubscriptionArticleFilterInput = {
   title?: ModelSubscriptionStringInput | null;
   banner?: ModelSubscriptionStringInput | null;
   summary?: ModelSubscriptionStringInput | null;
+  innerHTML?: ModelSubscriptionStringInput | null;
   permalink?: ModelSubscriptionStringInput | null;
   categoryId?: ModelSubscriptionIDInput | null;
   assigned?: ModelSubscriptionBooleanInput | null;
@@ -424,12 +440,12 @@ export type CreateCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -439,12 +455,12 @@ export type UpdateCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -454,12 +470,12 @@ export type DeleteCategoryMutation = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -470,6 +486,7 @@ export type CreateArticleMutation = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -495,6 +512,7 @@ export type UpdateArticleMutation = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -520,6 +538,7 @@ export type DeleteArticleMutation = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -572,12 +591,12 @@ export type GetCategoryQuery = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -603,6 +622,7 @@ export type GetArticleQuery = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -630,6 +650,7 @@ export type ListArticlesQuery = {
     title: string;
     banner: string;
     summary: string;
+    innerHTML: string;
     permalink: string;
     categoryId: string;
     assigned: boolean;
@@ -641,7 +662,7 @@ export type ListArticlesQuery = {
   nextToken?: string | null;
 };
 
-export type ArticlesByCategoryIdQuery = {
+export type ArticlesByCategoryIdAndSummaryQuery = {
   __typename: "ModelArticleConnection";
   items: Array<{
     __typename: "Article";
@@ -649,6 +670,7 @@ export type ArticlesByCategoryIdQuery = {
     title: string;
     banner: string;
     summary: string;
+    innerHTML: string;
     permalink: string;
     categoryId: string;
     assigned: boolean;
@@ -701,12 +723,12 @@ export type OnCreateCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -716,12 +738,12 @@ export type OnUpdateCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -731,12 +753,12 @@ export type OnDeleteCategorySubscription = {
   id: string;
   label: string;
   description: string;
+  rank: number;
+  mandatory: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  mandatory: boolean;
   createdAt: string;
   updatedAt: string;
 };
@@ -747,6 +769,7 @@ export type OnCreateArticleSubscription = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -772,6 +795,7 @@ export type OnUpdateArticleSubscription = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -797,6 +821,7 @@ export type OnDeleteArticleSubscription = {
   title: string;
   banner: string;
   summary: string;
+  innerHTML: string;
   permalink: string;
   categoryId: string;
   assigned: boolean;
@@ -914,12 +939,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -945,12 +970,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -976,12 +1001,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -1008,6 +1033,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1049,6 +1075,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1090,6 +1117,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1186,12 +1214,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -1248,6 +1276,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1289,6 +1318,7 @@ export class APIService {
             title
             banner
             summary
+            innerHTML
             permalink
             categoryId
             assigned
@@ -1315,16 +1345,18 @@ export class APIService {
     )) as any;
     return <ListArticlesQuery>response.data.listArticles;
   }
-  async ArticlesByCategoryId(
+  async ArticlesByCategoryIdAndSummary(
     categoryId: string,
+    summary?: ModelStringKeyConditionInput,
     sortDirection?: ModelSortDirection,
     filter?: ModelArticleFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ArticlesByCategoryIdQuery> {
-    const statement = `query ArticlesByCategoryId($categoryId: ID!, $sortDirection: ModelSortDirection, $filter: ModelArticleFilterInput, $limit: Int, $nextToken: String) {
-        articlesByCategoryId(
+  ): Promise<ArticlesByCategoryIdAndSummaryQuery> {
+    const statement = `query ArticlesByCategoryIdAndSummary($categoryId: ID!, $summary: ModelStringKeyConditionInput, $sortDirection: ModelSortDirection, $filter: ModelArticleFilterInput, $limit: Int, $nextToken: String) {
+        articlesByCategoryIdAndSummary(
           categoryId: $categoryId
+          summary: $summary
           sortDirection: $sortDirection
           filter: $filter
           limit: $limit
@@ -1337,6 +1369,7 @@ export class APIService {
             title
             banner
             summary
+            innerHTML
             permalink
             categoryId
             assigned
@@ -1351,6 +1384,9 @@ export class APIService {
     const gqlAPIServiceArguments: any = {
       categoryId
     };
+    if (summary) {
+      gqlAPIServiceArguments.summary = summary;
+    }
     if (sortDirection) {
       gqlAPIServiceArguments.sortDirection = sortDirection;
     }
@@ -1366,7 +1402,9 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ArticlesByCategoryIdQuery>response.data.articlesByCategoryId;
+    return <ArticlesByCategoryIdAndSummaryQuery>(
+      response.data.articlesByCategoryIdAndSummary
+    );
   }
   OnCreateMemberListener(
     filter?: ModelSubscriptionMemberFilterInput
@@ -1466,12 +1504,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -1498,12 +1536,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -1530,12 +1568,12 @@ export class APIService {
           id
           label
           description
+          rank
+          mandatory
           articles {
             __typename
             nextToken
           }
-          rank
-          mandatory
           createdAt
           updatedAt
         }
@@ -1563,6 +1601,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1605,6 +1644,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned
@@ -1647,6 +1687,7 @@ export class APIService {
           title
           banner
           summary
+          innerHTML
           permalink
           categoryId
           assigned

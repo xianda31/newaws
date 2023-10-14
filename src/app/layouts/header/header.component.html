@@ -1,26 +1,3 @@
-<!-- <div id="mainNavigation"> -->
-<!-- bandeau adresse  -->
-<!-- <nav role="navigation">
-  <div class="text-center fw-light fs-6 border-bottom bg-warning ">
-    <div class="row">
-      <div class="col-md-3">
-        <span>Bridge Club de Saint-Orens </span>
-      </div>
-      <div class="col-md-6">
-        <span>
-          <i class="bi bi-geo-alt"></i>
-          13,boulevard du libre échange
-        </span>
-        <span class="text-nowrap">&nbsp; 31650 Saint-Orens de Gameville</span>
-      </div>
-      <div class="col-md-3">
-        <i class="bi bi-telephone"></i>
-        <span>&nbsp;05 61 39 00 39</span>
-      </div>
-    </div>
-  </div>
-</nav> -->
-
 <!-- bandeau menu -->
 <div class="navbar  navbar-expand-lg bg-success navbar-dark ps-md-5 pe-md-5">
   <div class="container-md">
@@ -48,7 +25,7 @@
         <ng-container *ngFor="let category of categories$ | async">
           <li class="nav-item mx-2">
             <a class="nav-link " routerLinkActive="active-link"
-              routerLink="category/{{category.id}}">{{category.label}}</a>
+              routerLink="cat/{{category.label}}">{{category.label}}</a>
           </li>
         </ng-container>
 
@@ -109,12 +86,3 @@
     </div>
   </div>
 </div>
-<!-- </div> -->
-
-
-<!-- <div class="navplayground"> -->
-
-<div>
-  <router-outlet></router-outlet>
-</div>
-<!-- </div> -->

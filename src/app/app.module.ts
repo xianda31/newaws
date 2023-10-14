@@ -19,6 +19,7 @@ import { CardComponent } from './layouts/card/card.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { PageComponent } from './pages/page/page.component';
 import { ToolsModule } from './tools/tools/tools.module';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ToolsModule } from './tools/tools/tools.module';
     CardComponent,
     SafeHtmlPipe,
     PageComponent,
+    HomeComponent
 
 
 

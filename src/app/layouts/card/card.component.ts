@@ -11,9 +11,9 @@ import { Storage } from 'aws-amplify/lib-esm';
 export class CardComponent implements OnInit {
 
   @Input() article!: Article;
-  @Input() catLabel !: string;    // non renseigné au niveau Article quand query Category 
+  @Input() catLabel !: string;
   @Input() displaymode: 'vertical' | 'horizontal' = 'vertical';
-  signedURL !: string;
+  bannerURL !: string;
 
   constructor(
     // private router: Router,
@@ -23,11 +23,12 @@ export class CardComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     if (this.article.banner && this.article.banner !== '') {
-      this.signedURL = await Storage.get(this.article.banner, { validateObjectExistence: true });
-    } else {
-      this.signedURL = 'assets/images/bcsto.jpg';
-    }
+      // this.bannerURL = 'assets/images/bcsto.jpg';
 
+      this.bannerURL = await Storage.get('banners/' + this.article.banner, { validateObjectExistence: true });
+    } else {
+      this.bannerURL = 'assets/images/bcsto.jpg';
+    }
   }
 
 

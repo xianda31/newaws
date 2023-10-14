@@ -17,12 +17,34 @@ export class ArticleService {
 
     // READ ALL CATEGORIES
 
-    this.api.ListArticles().then((result) => {
-      this._articles = result.items as Article[];
-      this._articles$.next(this._articles);
-    });
+    // this.api.ListArticles().then((result) => {
+    //   this._articles = result.items as Article[];
+    //   this._articles$.next(this._articles);
+    // });
+
+    this.loadArticles();
 
   }
+
+  loadArticles(): Promise<any> {
+    return new Promise(async (resolve) => {
+      const articles = await this.api.ListArticles();
+      if (articles.items) {
+        return await Promise.all(articles.items.map(async (article) => {
+          const articleData = await this.api.GetArticle(article!.id) as Article;
+          this._articles.push(articleData);
+        }
+        )).then(() => {
+          resolve(this._articles);
+          console.log('%s articles: ', this._articles.length, this._articles);
+          this._articles$.next(this._articles);
+        });
+
+      }
+
+    });
+  }
+
 
   get articles$(): Observable<Article[]> {
     return this._articles$ as Observable<Article[]>;

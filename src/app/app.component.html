@@ -1,6 +1,11 @@
-<div class="container-fluid">
+<div *ngIf="catloaded" class="outer-wrapper">
+    <div class="inner-wrapper">
+        <app-header></app-header>
+        <div class="container-fluid">
 
-    <app-header></app-header>
+            <router-outlet></router-outlet>
+            <app-toaster></app-toaster>
+        </div>
+    </div>
     <app-footer></app-footer>
-    <app-toaster></app-toaster>
 </div>

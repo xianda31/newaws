@@ -1,0 +1,23 @@
+.bandeau {
+    background-color: rgb(7, 7, 56);
+    height: 20vh;
+    color: white;
+    overflow: hidden;
+}
+
+.deco-vert {
+    width: 20vh;
+    height: 12vh;
+    transform: translate(30%, 40%);
+    margin-top: 10vh;
+    background-color: rgb(16, 109, 19);
+}
+
+.deco-jaune {
+
+    width: 25vh;
+    height: 12vh;
+    transform: translate(40%, -40%);
+    margin-left: 10vh;
+    background-color: rgb(188, 217, 61);
+}

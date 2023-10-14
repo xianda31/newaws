@@ -1,0 +1,10 @@
+.outer-wrapper {
+    display: flex;
+    flex-flow: column;
+    height: calc(100vh - 10px); //viewport height - app-navbar height
+}
+
+.inner-wrapper {
+    flex: 1; // if you want center container large space else will take size of the content or apply flex-basis
+
+}

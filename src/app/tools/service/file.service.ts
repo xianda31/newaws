@@ -47,5 +47,25 @@ export class FileService {
     return filesystem;
   }
 
+  uploadFile(file: any, key: string, overwrite: boolean): Promise<any> {
+    return new Promise((resolve, reject) => {
+      Storage.put(key, file, {
+        level: 'public',
+        contentType: file.type,
+        progressCallback(progress: any) {
+          // console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+        },
+        // metadata: {
+        //   album: 'happy'
+        // }
+      })
+        .then((result) => {
+          resolve(result);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
 
 }

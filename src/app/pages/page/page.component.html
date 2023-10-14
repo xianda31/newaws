@@ -1,24 +1,12 @@
-<div *ngIf="article && category" class="container p-1">
-
-  <!-- <div class="row align-content-between"> -->
-
-  <!-- <div class="col">
-      <img [src]="signedURL" class="card-img-top" alt="bcsto">
-      <p class="text-lowercase text-black-50 ">
-        publié le : {{article.createdAt | date: 'dd/MM/yy' }} &nbsp;
-        {{hasBeenUpdated ? ' dernière mise à jour le : ' + (article.updatedAt | date: 'dd/MM/yy') : ''}}
-      </p>
-    </div> -->
+<div class="container p-1">
 
   <div>
     <h1>{{article.title}}</h1>
+    <h3>{{article.summary}}</h3>
     <p class="col-6 text-lowercase text-black-50 fs-6">{{article.createdAt | date: 'dd/MM/yy' }}</p>
   </div>
 
-  <div class="d-flex">
-    <div [innerHTML]="article.body | safeHtml"></div>
+  <div>
+    <div [innerHTML]="HTMLstring | safeHtml"></div>
   </div>
-
-
-
 </div>

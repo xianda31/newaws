@@ -17,7 +17,7 @@ export class CategoryService {
 
     this.api.ListCategories().then((result) => {
       this._categories = result.items as Category[];
-      // console.log('this._categories : ', this._categories);
+      // console.log('%s categories identifiées : ', this._categories.length);
       this._categories$.next(this._categories);
 
     })
@@ -42,9 +42,13 @@ export class CategoryService {
       .catch((error) => { console.log('Error creating category: ', error); });
   }
 
-  async getCategory(id: string): Promise<any> {
-    return await this.api.GetCategory(id) as Category;
-  }
+  // async agetCategory(id: string): Promise<any> {
+  //   return this.api.GetCategory(id);
+  // }
+  // sgetCategory(id: string): Category {
+  //   return this._categories.find((category) => category.id === id)!;
+  // }
+
 
   updateCategory(category: Category) {
     this.api.UpdateCategory(category).then((result) => {
@@ -70,9 +74,13 @@ export class CategoryService {
   // utilities
 
   async articlesByCategoryId(categoryId: string): Promise<Article[]> {
-    let result = await this.api.ArticlesByCategoryIdAndSummary(categoryId);
+    let result = await this.api.ArticlesByCategoryId(categoryId);
     // console.log('articlesByCategoryId : ', result);
     return result.items as Article[];
+  }
+
+  getCategoryByLabel(label: string): Category {
+    return this._categories.find((category) => category.label === label)!;
   }
 }
 

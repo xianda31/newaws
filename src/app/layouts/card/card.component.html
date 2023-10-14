@@ -1,19 +1,35 @@
-<div [class]="displaymode === 'vertical' ? 'card border-0 ' : 'card border-0 h-100 ' ">
-  <!-- <div class="col-6"> -->
-
-  <img [src]="signedURL" class="card-img-top" alt="bcsto">
-  <!-- </div> -->
-  <div *ngIf="displaymode !== 'vertical'" class="row">
-    <small class="col-6  text-black-50 text-center ">{{catLabel}}</small>
-    <small class="col-6 text-lowercase text-black-50 text-center ">{{article.createdAt | date: 'dd/MM/yy' }}</small>
+<ng-container *ngIf="bannerURL && displaymode == 'horizontal'">
+  <div class="col">
+    <div class="card border-0 h-100">
+      <img [src]="bannerURL" class="card-img-top" alt="bcsto">
+      <div class="card-body ">
+        <div class="card-subtitle">
+          <div class="row">
+            <small class="col-6  text-black-50 text-start ">{{catLabel}}</small>
+            <small class="col-6 text-lowercase text-black-50 text-end ">{{article.createdAt | date: 'dd/MM/yy'
+              }}</small>
+          </div>
+        </div>
+        <h6 class="card-text text-center">{{article.title}}</h6>
+        <small class="card-text text-center">{{article.summary}}</small>
+      </div>
+    </div>
   </div>
-  <div class="card-body text-center bg-transparent">
+</ng-container>
 
-    <h6 class="card-title text-center">{{article.title}}</h6>
-    <small class="card-text text-center">{{article.summary}}</small>
 
-    <!-- <div class="text-center">
-      <a [routerLink]="['/pages' ,article.id]" class="card-link">voir plus</a>
-    </div> -->
+<ng-container *ngIf="bannerURL && displaymode === 'vertical'">
+  <div class="card border-0 w-100 g-0">
+    <div class="row">
+      <div class="col-4 align-self-center">
+        <img [src]="bannerURL" class="card-img-left" alt="bcsto">
+      </div>
+      <div class="col-8 align-self-center">
+        <div class="card-body  bg-transparent">
+          <h6>{{article.title}}</h6>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+</ng-container>

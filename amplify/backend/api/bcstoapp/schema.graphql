@@ -14,7 +14,9 @@ type Category @model @auth(rules: [{ allow: public }]) {
   id: ID!
   label: String!
   description: String!
-  articles: [Article] @hasMany(indexName: "byCategory", fields: ["id"])
+  articles: [Article] @hasMany(indexName: "ofCat", fields: ["id"])
+  rank: Int!
+  mandatory: Boolean!
 }
 
 type Article @model @auth(rules: [{ allow: public }]) {
@@ -22,10 +24,11 @@ type Article @model @auth(rules: [{ allow: public }]) {
   title: String!
   banner: String!
   summary: String!
-  body: String!
-  categoryId: ID! @index(name: "byCategory", sortKeyFields: ["summary"])
-  category: Category @belongsTo(fields: ["categoryId"])
-  published: Boolean!
+  # innerHTML: String!
+  permalink: String!
+  categoryId: ID! @index(name: "ofCat") #, sortKeyFields: ["summary"])
+  assigned: Boolean!
   featured: Boolean!
   public: Boolean!
+  category: Category @belongsTo(fields: ["categoryId"])
 }
