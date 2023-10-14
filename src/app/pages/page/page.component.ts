@@ -24,6 +24,10 @@ export class PageComponent implements OnInit {
     private categoryService: CategoryService,
   ) { }
 
+  async ngOnChanges() {
+    this.bannerURL = await Storage.get('banners/' + this.article.banner, { validateObjectExistence: true });
+
+  }
 
   async ngOnInit(): Promise<void> {
 

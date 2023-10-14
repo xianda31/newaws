@@ -1,12 +1,17 @@
 <div class="container p-1">
-
-  <div>
-    <h1>{{article.title}}</h1>
-    <h3>{{article.summary}}</h3>
-    <p class="col-6 text-lowercase text-black-50 fs-6">{{article.createdAt | date: 'dd/MM/yy' }}</p>
+  <div class="row ">
+    <div class="col-md-10 text-center">
+      <h1>{{article.title}}</h1>
+      <h3>{{article.summary}}</h3>
+    </div>
+    <div class="col-md-2">
+      <img class="img-fluid move-up" [src]="bannerURL" alt="image">
+      <p class="text-lowercase text-black-50 fs-6 text-move-up">édité le {{(article.updatedAt ? article.updatedAt :
+        article.createdAt) | date: 'dd/MM/yy' }}</p>
+    </div>
   </div>
 
-  <div>
+  <div class="py-2">
     <div [innerHTML]="HTMLstring | safeHtml"></div>
   </div>
 </div>

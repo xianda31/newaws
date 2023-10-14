@@ -1,16 +1,16 @@
 <ng-container *ngIf="bannerURL && displaymode == 'horizontal'">
   <div class="col">
-    <div class="card border-0 h-100">
+    <div class="card border-0 h-100 card-shadow">
       <img [src]="bannerURL" class="card-img-top" alt="bcsto">
       <div class="card-body ">
         <div class="card-subtitle">
           <div class="row">
             <small class="col-6  text-black-50 text-start ">{{catLabel}}</small>
-            <small class="col-6 text-lowercase text-black-50 text-end ">{{article.createdAt | date: 'dd/MM/yy'
-              }}</small>
+            <small class="col-6 text-lowercase text-black-50 text-end ">{{(article.updatedAt ? article.updatedAt :
+              article.createdAt) | date: 'dd/MM/yy' }}</small>
           </div>
         </div>
-        <h6 class="card-text text-center">{{article.title}}</h6>
+        <h6 class="card-text text-center py-2">{{article.title}}</h6>
         <small class="card-text text-center">{{article.summary}}</small>
       </div>
     </div>
@@ -19,7 +19,7 @@
 
 
 <ng-container *ngIf="bannerURL && displaymode === 'vertical'">
-  <div class="card border-0 w-100 g-0">
+  <div class="card border-0 w-100 h-100 g-0">
     <div class="row">
       <div class="col-4 align-self-center">
         <img [src]="bannerURL" class="card-img-left" alt="bcsto">

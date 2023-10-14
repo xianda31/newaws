@@ -1,18 +1,20 @@
-<div *ngIf="  selectedArticle && HTMLstring ">
+<div class="container-fluid p-0" *ngIf="  selectedArticle && HTMLstring ">
+  <div class="row ">
 
-  <div class="bandeau ">
-    <div class="row">
-      <div class="col-md-4">
+    <div class="bandeau ">
+      <div class="row">
+        <div class="col-md-3">
 
-        <div class="card deco-vert p-0"> </div>
-      </div>
+          <div class="card deco-vert p-0"> </div>
+        </div>
 
-      <div class="col-md-6  align-items-center my-auto">
-        <h1> {{selectedCategory.label}} </h1>
-        <h3> {{selectedCategory.description}} </h3>
-      </div>
-      <div class="col-md-2 justify-content-end">
-        <div class="card deco-jaune p-0"> </div>
+        <div class="col-md-6  text-center my-auto">
+          <h1> {{selectedCategory.label}} </h1>
+          <h3> {{selectedCategory.description}} </h3>
+        </div>
+        <div class="col-md-3 justify-content-end">
+          <div class="card deco-jaune p-0"> </div>
+        </div>
       </div>
     </div>
   </div>

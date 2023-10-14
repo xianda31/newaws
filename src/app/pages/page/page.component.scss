@@ -1,6 +1,15 @@
-.card-img-top {
+.move-up {
     // padding-top:                     1rem;
     max-width: 25vh;
-    max-height: 25vw;
+    max-height: 15vw;
     object-fit: cover;
+    transform: translate(0%, -50%);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.text-move-up {
+    // background-color: blue;
+    margin-top: -45px;
+    flex: auto;
 }
