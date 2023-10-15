@@ -14,7 +14,7 @@ interface FolderItem {
   styleUrls: ['./files.component.scss']
 })
 
-// acquiert le bucket S3 et le transforme en arborescence (récursive)
+// acquiert le bucket S3 et le transforme en arborescence (récursive) 
 export class FilesComponent implements OnInit {
 
   bucket!: any;

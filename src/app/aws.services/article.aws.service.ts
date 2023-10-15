@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { APIService, Article, UpdateArticleInput } from '../API.service';
 import { ToastService } from '../tools/service/toast.service';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,21 +18,18 @@ export class ArticleService {
 
     // READ ALL CATEGORIES
 
-    // this.api.ListArticles().then((result) => {
-    //   this._articles = result.items as Article[];
-    //   this._articles$.next(this._articles);
-    // });
-
-    this.loadArticles();
+    this.loadArticles(!environment.logging_bypass);
 
   }
 
-  loadArticles(): Promise<any> {
+  loadArticles(public_only: boolean): Promise<any> {
+    this._articles = [];
     return new Promise(async (resolve) => {
       const articles = await this.api.ListArticles();
       if (articles.items) {
         return await Promise.all(articles.items.map(async (article) => {
           const articleData = await this.api.GetArticle(article!.id) as Article;
+          if (public_only && !articleData.public) { return; }
           this._articles.push(articleData);
         }
         )).then(() => {

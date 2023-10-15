@@ -18,11 +18,11 @@
         <!-- contact  -->
 
         <li class="nav-item ">
-          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="contact">Contact</a>
+          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="cat/Contact">Contact</a>
         </li>
 
         <!-- boucle sur les rubriques (à l'exception de home)-->
-        <ng-container *ngFor="let category of categories$ | async">
+        <ng-container *ngFor="let category of sortedCategories$ | async">
           <li class="nav-item mx-2">
             <a class="nav-link " routerLinkActive="active-link"
               routerLink="cat/{{category.label}}">{{category.label}}</a>

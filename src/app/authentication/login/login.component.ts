@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { ToastService } from 'src/app/tools/service/toast.service';
+import { ArticleService } from '../../aws.services/article.aws.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private cognitoService: CognitoService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private articleService: ArticleService
   ) { }
 
   loginForm !: FormGroup;
@@ -46,7 +48,8 @@ export class LoginComponent implements OnInit {
           return;
         } else {
           this.toastService.showSuccessToast('login success', 'Bonjour ' + result.attributes.name);
-          this.router.navigate(['/']);
+          this.articleService.loadArticles(false);
+          this.router.navigate(['/home']);
 
         }
       })

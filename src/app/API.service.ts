@@ -108,16 +108,18 @@ export type DeleteMemberInput = {
 export type CreateCategoryInput = {
   id?: string | null;
   label: string;
+  title: string;
   description: string;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
 };
 
 export type ModelCategoryConditionInput = {
   label?: ModelStringInput | null;
+  title?: ModelStringInput | null;
   description?: ModelStringInput | null;
   rank?: ModelIntInput | null;
-  mandatory?: ModelBooleanInput | null;
+  fixed?: ModelBooleanInput | null;
   and?: Array<ModelCategoryConditionInput | null> | null;
   or?: Array<ModelCategoryConditionInput | null> | null;
   not?: ModelCategoryConditionInput | null;
@@ -146,10 +148,11 @@ export type Category = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: ModelArticleConnection | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -179,9 +182,10 @@ export type Article = {
 export type UpdateCategoryInput = {
   id: string;
   label?: string | null;
+  title?: string | null;
   description?: string | null;
   rank?: number | null;
-  mandatory?: boolean | null;
+  fixed?: boolean | null;
 };
 
 export type DeleteCategoryInput = {
@@ -267,9 +271,10 @@ export type ModelMemberConnection = {
 export type ModelCategoryFilterInput = {
   id?: ModelIDInput | null;
   label?: ModelStringInput | null;
+  title?: ModelStringInput | null;
   description?: ModelStringInput | null;
   rank?: ModelIntInput | null;
-  mandatory?: ModelBooleanInput | null;
+  fixed?: ModelBooleanInput | null;
   and?: Array<ModelCategoryFilterInput | null> | null;
   or?: Array<ModelCategoryFilterInput | null> | null;
   not?: ModelCategoryFilterInput | null;
@@ -345,9 +350,10 @@ export type ModelSubscriptionStringInput = {
 export type ModelSubscriptionCategoryFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   label?: ModelSubscriptionStringInput | null;
+  title?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
   rank?: ModelSubscriptionIntInput | null;
-  mandatory?: ModelSubscriptionBooleanInput | null;
+  fixed?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
   or?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
 };
@@ -423,13 +429,14 @@ export type CreateCategoryMutation = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -438,13 +445,14 @@ export type UpdateCategoryMutation = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -453,13 +461,14 @@ export type DeleteCategoryMutation = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -479,9 +488,10 @@ export type CreateArticleMutation = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -504,9 +514,10 @@ export type UpdateArticleMutation = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -529,9 +540,10 @@ export type DeleteArticleMutation = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -571,13 +583,14 @@ export type GetCategoryQuery = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -588,9 +601,10 @@ export type ListCategoriesQuery = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -612,9 +626,10 @@ export type GetArticleQuery = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -700,13 +715,14 @@ export type OnCreateCategorySubscription = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -715,13 +731,14 @@ export type OnUpdateCategorySubscription = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -730,13 +747,14 @@ export type OnDeleteCategorySubscription = {
   __typename: "Category";
   id: string;
   label: string;
+  title: string;
   description: string;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
   rank: number;
-  mandatory: boolean;
+  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -756,9 +774,10 @@ export type OnCreateArticleSubscription = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -781,9 +800,10 @@ export type OnUpdateArticleSubscription = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -806,9 +826,10 @@ export type OnDeleteArticleSubscription = {
     __typename: "Category";
     id: string;
     label: string;
+    title: string;
     description: string;
     rank: number;
-    mandatory: boolean;
+    fixed?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -913,13 +934,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -944,13 +966,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -975,13 +998,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -1017,9 +1041,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1058,9 +1083,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1099,9 +1125,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1185,13 +1212,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -1216,9 +1244,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1257,9 +1286,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1465,13 +1495,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -1497,13 +1528,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -1529,13 +1561,14 @@ export class APIService {
           __typename
           id
           label
+          title
           description
           articles {
             __typename
             nextToken
           }
           rank
-          mandatory
+          fixed
           createdAt
           updatedAt
         }
@@ -1572,9 +1605,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1614,9 +1648,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }
@@ -1656,9 +1691,10 @@ export class APIService {
             __typename
             id
             label
+            title
             description
             rank
-            mandatory
+            fixed
             createdAt
             updatedAt
           }

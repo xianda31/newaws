@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Article, Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { environment } from 'src/app/environments/environment';
@@ -15,16 +15,11 @@ export class CategoriesComponent implements OnInit {
 
   categoryForm!: FormGroup;
   categories$: Observable<Category[]> = this.categoryService.categories$;
+  sortedCategories$: Observable<Category[]> = new Observable<Category[]>;
+
   articlesByCategoryId: Article[][] = [];
   createMode: boolean = true;
   selectedCategory!: Category;
-
-  fileTooBig: boolean = false;
-  maxSize: string = environment.max_category_image_size_text;
-
-
-  // TO DO : controler la taille de l'image
-
 
   constructor(
     private categoryService: CategoryService,
@@ -40,8 +35,15 @@ export class CategoriesComponent implements OnInit {
       });
     });
 
+    this.sortedCategories$ = this.categories$.pipe(
+      map((categories) => categories.sort((a, b) => (a.rank + (a.fixed ? 1000 : 0)) - (b.rank + (b.fixed ? 1000 : 0))))
+    );
+
     this.categoryForm = new FormGroup({
+      rank: new FormControl(0, Validators.required),
       label: new FormControl('', Validators.required),
+      fixed: new FormControl(false, Validators.required),
+      title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       // image: new FormControl('', Validators.required),
     });
@@ -50,6 +52,7 @@ export class CategoriesComponent implements OnInit {
 
   get label() { return this.categoryForm.get('label')!; }
   get description() { return this.categoryForm.get('description')!; }
+  get title() { return this.categoryForm.get('title')!; }
 
   selectCategory(category: Category) {
     this.categoryForm.patchValue(category);
@@ -95,5 +98,10 @@ export class CategoriesComponent implements OnInit {
       this.createMode = true;
     }
 
+  }
+
+  cancel() {
+    this.categoryForm.reset();
+    this.createMode = true;
   }
 }

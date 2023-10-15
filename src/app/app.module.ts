@@ -20,6 +20,8 @@ import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { PageComponent } from './pages/page/page.component';
 import { ToolsModule } from './tools/tools/tools.module';
 import { HomeComponent } from './pages/home/home.component';
+import { HeadbandComponent } from './pages/headband/headband.component';
+import { Page404Component } from './pages/page404/page404.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,6 @@ import { HomeComponent } from './pages/home/home.component';
     ContactUsComponent,
     SingleCategoryComponent,
     FooterComponent,
-    // PostCardComponent,
     ToastComponent,
     ToasterComponent,
     SignupComponent,
@@ -37,9 +38,9 @@ import { HomeComponent } from './pages/home/home.component';
     CardComponent,
     SafeHtmlPipe,
     PageComponent,
-    HomeComponent
-
-
+    HomeComponent,
+    HeadbandComponent,
+    Page404Component,
 
 
   ],
@@ -47,14 +48,10 @@ import { HomeComponent } from './pages/home/home.component';
     BrowserModule,
     AppRoutingModule,
     ToolsModule
-    // FormsModule,
-    // ReactiveFormsModule,
-    // AmplifyAuthenticatorModule,
-
   ],
 
 
   providers: [SafeHtmlPipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

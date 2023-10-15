@@ -1,0 +1,26 @@
+.bandeau {
+    width: 100%;
+    background-color: #251a61;
+    height: 22vh;
+    color: white;
+    overflow: hidden;
+}
+
+.deco-gauche {
+    width: 20vh;
+    height: 12vh;
+    border-radius: 10px;
+    transform: translate(30%, 40%);
+    margin-top: 10vh;
+    background-color: rgb(16, 109, 19);
+}
+
+.deco-droite {
+
+    width: 15vh;
+    height: 12vh;
+    border-radius: 10px;
+    transform: translate(40%, -40%);
+    margin-left: 10vh;
+    background-color: rgb(188, 217, 61);
+}

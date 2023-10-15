@@ -1,79 +1,85 @@
 <div class="container">
 
-  <div class="row">
-
-    <div class="col-md-10">
-
-      <h3 class="text-center"> Les rubriques de publication</h3>
-      <br>
-
-      <form class="form-inline text-center" [formGroup]="categoryForm">
-
-        <div class="input-group mb-3">
-
-          <input type="text" class="form-control col-md-2" formControlName="label" id="label"
-            placeholder="titre rubrique" [class.is-invalid]="label.invalid && (label.dirty || label.touched)">
-          <div class="invalid-feedback">
-            un nom de rubrique doit être fourni
-          </div>
-
-          <input type="text" class="form-control col-md-6" formControlName="description" id="description"
-            placeholder="court descriptif"
-            [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
-          <div class="invalid-feedback">
-            une descriptif doit être fourni
-          </div>
-
-
-
-          <button *ngIf="createMode" type="submit" class="btn btn-primary text-white col-md-2"
-            (click)="createCategory()" [disabled]="categoryForm.invalid">
-            Ajouter
-          </button>
-
-          <button *ngIf="!createMode" type="submit" class="btn btn-primary text-white col-md-2"
-            (click)="updateCategory()" [disabled]="categoryForm.invalid">
-            Modifier
-          </button>
-
-        </div>
-        <div *ngIf="fileTooBig" class="text-bg-warning">
-          le fichier est trop volumineux {{maxSize}}
-        </div>
-
-      </form>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-
-  <!-- <div class="row"> -->
-
-  <div class="col-md-10">
+  <h3 class="text-center"> Les rubriques de publication</h3>
+  <br>
+  <form [formGroup]="categoryForm">
 
     <table class="table align-items-center table-hover">
       <thead class="thead-light">
         <tr>
-          <th scope="col" class="col-md-3">rubrique</th>
-          <th scope="col" class="col-md-5">descriptif</th>
-          <th scope="col" class="col-md-2 text-center">articles</th>
-          <th scope="col" class="col-md-2 text-center">action</th>
+          <th scope="col" class="col-md-1 text-center">rang</th>
+          <th scope="col" class="col-md-1">label</th>
+          <th scope="col" class="col-md-1">fixe</th>
+          <th scope="col" class="col-md-1">titre</th>
+          <th scope="col" class="col-md-6">sous-titre</th>
+          <th scope="col" class="col-md-1 text-center">nb articles</th>
+          <th scope="col" class="col-md-1 text-center">action</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let category of categories$ | async ;let  i=index " (click)="selectCategory(category)">
+        <tr [class]="category.fixed ? 'table-primary' : 'table-secondary'"
+          *ngFor="let category of sortedCategories$ | async ;let  i=index " (click)="selectCategory(category)">
+          <td class="col text-center"> {{ category.rank }} </td>
           <td class="col"> {{ category.label }} </td>
+          <td class="col"> {{ category.fixed ? 'fixe' :
+            'flex' }}
+          </td>
+
+          <td class="col"> {{ category.title }} </td>
           <td class="col">{{ category.description }}</td>
           <td class="col text-center">{{ articlesByCategoryId[i] ? articlesByCategoryId[i].length : 0}}</td>
           <td class="col text-center">
-            <!-- <div class="btn-toolbar "> -->
             <button type="button" class="btn btn-light btn-sm " (click)="deleteCategory($event,category)">
               <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
             </button>
           </td>
         </tr>
+
+        <tr>
+          <td colspan="7"></td> <!-- saute une ligne -->
+        </tr>
+
+        <tr class="table-info">
+          <td class="col text-center">
+            <input type="text" class="formcontrol w-50" formControlName="rank" id="rank">
+          </td>
+          <td><input type="text" class="formcontrol" formControlName="label" id="label"
+              [class.is-invalid]="label.invalid && (label.dirty || label.touched)"></td>
+
+          <td><app-toggle-input formControlName="fixed"></app-toggle-input></td>
+
+          <td><input type="text" class="formcontrol " formControlName="title" id="title"
+              [class.is-invalid]="title.invalid && (title.dirty || title.touched)">
+            <div class="invalid-feedback">
+              un titre de rubrique doit être fourni
+            </div>
+          </td>
+          <td><input type="text" class="formcontrol w-100" formControlName="description" id="description"
+              [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
+            <div class="invalid-feedback">
+              une descriptif doit être fourni
+            </div>
+          </td>
+          <td class="col text-center">
+            <button type="submit" class="btn btn-sm btn-primary text-white " (click)="cancel()">
+              Annuler
+            </button>
+          </td>
+          <td class="col text-center">
+            <button *ngIf="createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
+              (click)="createCategory()" [disabled]="categoryForm.invalid">
+              Ajouter
+            </button>
+
+            <button *ngIf="!createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
+              (click)="updateCategory()" [disabled]="categoryForm.invalid">
+              Modifier
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
-  </div>
+
+    <!-- </div> -->
+  </form>
 </div>

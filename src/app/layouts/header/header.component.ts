@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
@@ -18,6 +18,11 @@ export class HeaderComponent implements OnInit {
   logged: boolean = environment.logging_bypass;
 
   categories$: Observable<Category[]> = this.categoryService.categories$;
+  sortedCategories$: Observable<Category[]> = this.categoryService.categories$.pipe(
+    map((categories) => categories.filter((category) => !category.fixed)),
+    map((categories) => categories.sort((a, b) => (a.rank - b.rank)))
+  );
+
 
   constructor(
     private cognitoService: CognitoService,

@@ -13,10 +13,11 @@ type Member @model @auth(rules: [{ allow: public }]) {
 type Category @model @auth(rules: [{ allow: public }]) {
   id: ID!
   label: String!
+  title: String!
   description: String!
   articles: [Article] @hasMany(indexName: "ofCat", fields: ["id"])
   rank: Int!
-  mandatory: Boolean!
+  fixed: Boolean
 }
 
 type Article @model @auth(rules: [{ allow: public }]) {

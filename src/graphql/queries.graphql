@@ -40,25 +40,14 @@ query GetCategory($id: ID!) {
   getCategory(id: $id) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -74,11 +63,10 @@ query ListCategories(
     items {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
@@ -94,23 +82,22 @@ query GetArticle($id: ID!) {
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename
@@ -128,17 +115,9 @@ query ListArticles(
       title
       banner
       summary
-      body
+      permalink
       categoryId
-      category {
-        id
-        label
-        description
-        createdAt
-        updatedAt
-        __typename
-      }
-      published
+      assigned
       featured
       public
       createdAt
@@ -150,17 +129,15 @@ query ListArticles(
   }
 }
 
-query ArticlesByCategoryIdAndSummary(
+query ArticlesByCategoryId(
   $categoryId: ID!
-  $summary: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelArticleFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  articlesByCategoryIdAndSummary(
+  articlesByCategoryId(
     categoryId: $categoryId
-    summary: $summary
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -171,17 +148,9 @@ query ArticlesByCategoryIdAndSummary(
       title
       banner
       summary
-      body
+      permalink
       categoryId
-      category {
-        id
-        label
-        description
-        createdAt
-        updatedAt
-        __typename
-      }
-      published
+      assigned
       featured
       public
       createdAt

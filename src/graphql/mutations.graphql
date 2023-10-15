@@ -58,25 +58,14 @@ mutation CreateCategory(
   createCategory(input: $input, condition: $condition) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -90,25 +79,14 @@ mutation UpdateCategory(
   updateCategory(input: $input, condition: $condition) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -122,25 +100,14 @@ mutation DeleteCategory(
   deleteCategory(input: $input, condition: $condition) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -156,23 +123,22 @@ mutation CreateArticle(
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename
@@ -188,23 +154,22 @@ mutation UpdateArticle(
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename
@@ -220,23 +185,22 @@ mutation DeleteArticle(
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename

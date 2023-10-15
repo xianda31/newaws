@@ -4,9 +4,9 @@ import { SingleCategoryComponent } from './pages/single-category/single-category
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
-import { PageComponent } from './pages/page/page.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
+import { Page404Component } from './pages/page404/page404.component';
 
 const routes: Routes = [
 
@@ -23,7 +23,9 @@ const routes: Routes = [
     //   // canActivate: [IsAuthenticatedGuard],
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
   },
-  { path: '**', component: HomeComponent },
+  { path: '404', component: Page404Component },
+  { path: '**', component: Page404Component },
+
 
 ];
 

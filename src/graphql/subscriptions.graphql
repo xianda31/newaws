@@ -46,25 +46,14 @@ subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
   onCreateCategory(filter: $filter) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -75,25 +64,14 @@ subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
   onUpdateCategory(filter: $filter) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -104,25 +82,14 @@ subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
   onDeleteCategory(filter: $filter) {
     id
     label
+    title
     description
     articles {
-      items {
-        id
-        title
-        banner
-        summary
-        body
-        categoryId
-        published
-        featured
-        public
-        createdAt
-        updatedAt
-        __typename
-      }
       nextToken
       __typename
     }
+    rank
+    fixed
     createdAt
     updatedAt
     __typename
@@ -135,23 +102,22 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename
@@ -164,23 +130,22 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename
@@ -193,23 +158,22 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     title
     banner
     summary
-    body
+    permalink
     categoryId
+    assigned
+    featured
+    public
     category {
       id
       label
+      title
       description
-      articles {
-        nextToken
-        __typename
-      }
+      rank
+      fixed
       createdAt
       updatedAt
       __typename
     }
-    published
-    featured
-    public
     createdAt
     updatedAt
     __typename

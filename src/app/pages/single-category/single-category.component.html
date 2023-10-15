@@ -1,35 +1,20 @@
 <div class="container-fluid p-0" *ngIf="  selectedArticle && HTMLstring ">
   <div class="row ">
 
-    <div class="bandeau ">
-      <div class="row">
-        <div class="col-md-3">
 
-          <div class="card deco-vert p-0"> </div>
-        </div>
+    <app-headband [title]="selectedCategory.label" [description]="selectedCategory.description"> </app-headband>
 
-        <div class="col-md-6  text-center my-auto">
-          <h1> {{selectedCategory.label}} </h1>
-          <h3> {{selectedCategory.description}} </h3>
-        </div>
-        <div class="col-md-3 justify-content-end">
-          <div class="card deco-jaune p-0"> </div>
-        </div>
+    <div class="row py-3">
+
+      <!-- // pseudo-menu lateral gauche -->
+      <div class="col-md-2 ">
+        <app-card class="d-flex m-2" *ngFor="let article of articles " [catLabel]=" selectedCategory.label "
+          [article]="article" [displaymode]="'vertical'" (click)="selectArticle(article)"> </app-card>
+      </div>
+      <!-- affichage HTML article selectionné -->
+      <div class="col-md-10">
+        <app-page [article]="selectedArticle" [HTMLstring]="HTMLstring"> </app-page>
       </div>
     </div>
+
   </div>
-
-  <div class="row py-3">
-
-    <!-- // pseudo-menu lateral gauche -->
-    <div class="col-md-2 ">
-      <app-card class="d-flex m-2" *ngFor="let article of articles " [catLabel]=" selectedCategory.label "
-        [article]="article" [displaymode]="'vertical'" (click)="selectArticle(article)"> </app-card>
-    </div>
-    <!-- affichage HTML article selectionné -->
-    <div class="col-md-10">
-      <app-page [article]="selectedArticle" [HTMLstring]="HTMLstring"> </app-page>
-    </div>
-  </div>
-
-</div>
