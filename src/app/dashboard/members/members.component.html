@@ -1,6 +1,6 @@
 <app-dash-header title="administration" subtitle="gestion des adhérents"></app-dash-header>
 
-<div class="container p-2">
+<div class="container-fluid p-2">
 
   <div class="card shadow">
     <form [formGroup]="memberForm">
@@ -10,9 +10,9 @@
             <tr>
               <th scope="col" class="col-md-2 text-start">Nom</th>
               <th scope="col" class="col-md-2">Prénom</th>
-              <th scope="col" class="col-md-1">License</th>
+              <th scope="col" class="col-md-2">License</th>
               <th scope="col" class="col-md-2">email</th>
-              <th scope="col" class="col-md-4">droits</th>
+              <th scope="col" class="col-md-3">droits</th>
               <th scope="col" class="col-md-1 text-center">action</th>
             </tr>
           </thead>
@@ -37,7 +37,7 @@
             </tr>
 
             <tr class="table-info">
-              <td>
+              <td class="col">
                 <input type="text" class="form-control " placeholder="nom" formControlName="lastname"
                   (input)="controlTextToUpperCase('lastname')"
                   [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)">
@@ -45,7 +45,7 @@
                   nom obligatoire
                 </div>
               </td>
-              <td>
+              <td class="col">
 
                 <input type="text" class="form-control " placeholder="prénom" formControlName="firstname"
                   (input)="controlTextFirstLetterToUpperCase('firstname')"
@@ -55,7 +55,7 @@
                 </div>
               </td>
 
-              <td>
+              <td class="col">
                 <input type=" text" class="form-control " placeholder="n°licence" formControlName="license"
                   [class.is-invalid]="license.invalid && (license.dirty || license.touched)">
                 <div class="invalid-feedback">
@@ -63,17 +63,17 @@
                 </div>
               </td>
 
-              <td>
+              <td class="col">
                 <input type="mail" class="form-control " placeholder="email" formControlName="email"
                   [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
                 <div class="invalid-feedback">
                   email obligatoire
                 </div>
               </td>
-              <td>
+              <td class="col">
                 <app-rights-input class="form-control " formControlName="rights"></app-rights-input>
               </td>
-              <td>
+              <td class="col">
                 <button *ngIf="createMode" type="button" class="btn btn-primary "
                   (click)="createMember()">ajouter</button>
                 <button *ngIf="!createMode" type="button" class="btn btn-primary"
