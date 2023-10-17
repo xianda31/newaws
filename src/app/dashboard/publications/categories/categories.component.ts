@@ -17,7 +17,7 @@ export class CategoriesComponent implements OnInit {
   categories$: Observable<Category[]> = this.categoryService.categories$;
   sortedCategories$: Observable<Category[]> = new Observable<Category[]>;
 
-  articlesByCategoryId: Article[][] = [];
+  articlesByCategoryId: { [key: string]: string | number } = {};
   createMode: boolean = true;
   selectedCategory!: Category;
 
@@ -29,8 +29,10 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
 
     this.categories$.subscribe((categories) => {
-      categories.forEach(async (category, index) => {
-        this.articlesByCategoryId[index] = await this.categoryService.articlesByCategoryId(category.id);
+      categories.forEach(async (category) => {
+        const array = await this.categoryService.articlesByCategoryId(category.id);
+        this.articlesByCategoryId[category.label] = array.length ? array.length : '-';
+
         // console.log('category', category.label, this.articlesByCategoryId[index].length);
       });
     });

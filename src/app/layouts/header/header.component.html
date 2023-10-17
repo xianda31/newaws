@@ -3,7 +3,9 @@
   <div class="container-md">
 
     <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link" routerLink="home">BCSTO</a>
+    <a class="navbar-brand " routerLinkActive="active-link" routerLink="home">
+      <i class="bi bi-house-fill"></i>
+      BCSTO</a>
 
     <!-- toggler button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -20,8 +22,12 @@
         <li class="nav-item ">
           <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="cat/Contact">Contact</a>
         </li>
+        <!-- liens utiles -->
+        <li class="nav-item ">
+          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="links">Liens</a>
+        </li>
 
-        <!-- boucle sur les rubriques (à l'exception de home)-->
+        <!-- boucle sur les rubriques (à l'exception de home,contact et liens)-->
         <ng-container *ngFor="let category of sortedCategories$ | async">
           <li class="nav-item mx-2">
             <a class="nav-link " routerLinkActive="active-link"
@@ -41,8 +47,12 @@
 
         <!-- <li *ngIf="logged" class="d-flex"> -->
         <li *ngIf="logged" class="nav-item mx-2 dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{loggedusername}}
+          <a class="nav-link dropdown-toggle btn btn-primary" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <button type="button" class="btn btn-primary">
+              <i class="bi bi-person-circle"></i>
+              {{loggedusername}}
+            </button>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Mes données</a></li>
@@ -73,12 +83,17 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/articles">Articles</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/categories">Catégories</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/files">Gestion fichiers</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/files">Fichiers</a></li>
           </ul>
         </li>
 
-        <li class="nav-item ">
-          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="dashboard/test">test</a>
+        <li class="nav-item mx-2 dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tests </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="dashboard/tests/tiny">tiny</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/tests/rights">rights</a></li>
+          </ul>
         </li>
 
 

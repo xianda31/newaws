@@ -1,7 +1,7 @@
 .bandeau {
     width: 100%;
-    background-color: #251a61;
-    height: 22vh;
+    background-color: #4b4f19;
+    height: 15vh;
     color: white;
     overflow: hidden;
 }
@@ -10,7 +10,7 @@
     width: 10vh;
     height: 12vh;
     border-radius: 10px;
-    transform: translate(0, -10%);
+    transform: translate(_10vh, -10%);
     // margin-top: 10vh;
     background-color: rgb(101, 158, 103);
     position: relative;
@@ -22,7 +22,7 @@
     width: 15vh;
     height: 12vh;
     border-radius: 10px;
-    transform: translate(6vh, 5vh);
+    transform: translate(26vh, 2vh);
     // margin-left: 0vh;
     background-color: rgb(228, 228, 93);
     position: relative;
@@ -34,7 +34,7 @@
     width: 15vh;
     height: 12vh;
     border-radius: 10px;
-    transform: translate(6vh, -5vh);
+    transform: translate(-6vh, -5vh);
     // margin-left: 0vh;
     background-color: rgb(188, 217, 61);
 }
@@ -43,7 +43,7 @@
     width: 15vh;
     height: 12vh;
     border-radius: 10px;
-    transform: translate(6vh, vh);
+    transform: translate(6vh, -2vh);
     // margin-left: 0vh;
     background-color: rgb(106, 13, 140);
     position: relative;
@@ -54,7 +54,7 @@
 .img-fluid {
     max-width: 15vh;
     max-height: 10vh;
-    z-index: 1;
+    z-index: 5;
     // position: relative;
     opacity: 0.8;
 }

@@ -6,13 +6,10 @@ import { AppComponent } from './app.component';
 // import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HeaderComponent } from './layouts/header/header.component';
-// import { PostCardComponent } from './layouts/post-card/post-card.component';
-import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { SingleCategoryComponent } from './pages/single-category/single-category.component';
 import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
 import { SignupComponent } from './authentication/signup/signup.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { CardComponent } from './layouts/card/card.component';
@@ -22,12 +19,14 @@ import { ToolsModule } from './tools/tools/tools.module';
 import { HomeComponent } from './pages/home/home.component';
 import { HeadbandComponent } from './pages/headband/headband.component';
 import { Page404Component } from './pages/page404/page404.component';
+import { LinksComponent } from './pages/links/links.component';
+import { RightsComponent } from './tests/rights/rights.component';
+import { RightsInputComponent } from './tools/rights-input/rights-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ContactUsComponent,
     SingleCategoryComponent,
     FooterComponent,
     ToastComponent,
@@ -41,6 +40,9 @@ import { Page404Component } from './pages/page404/page404.component';
     HomeComponent,
     HeadbandComponent,
     Page404Component,
+    LinksComponent,
+    RightsComponent,
+    RightsInputComponent,
 
 
   ],

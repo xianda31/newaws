@@ -5,13 +5,13 @@ import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { HomeComponent } from './pages/home/home.component';
-import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { Page404Component } from './pages/page404/page404.component';
+import { LinksComponent } from './pages/links/links.component';
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
-  { path: 'contact', component: ContactUsComponent },
+  { path: 'links', component: LinksComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cat/:cat', component: SingleCategoryComponent },

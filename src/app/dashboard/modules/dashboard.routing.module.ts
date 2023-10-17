@@ -8,14 +8,17 @@ import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { ArticleComponent } from '../publications/articles/article/article.component';
 import { IsPublisherGuard } from 'src/app/guards/ispublisher.guard';
-import { TestComponent } from '../test/test.component';
-import { FilesComponent } from '../publications/files/files.component';
+import { TestComponent } from '../tests/test.component';
+import { FilemgrComponent } from '../filemgr/filemgr.component';
+import { RightsComponent } from 'src/app/tests/rights/rights.component';
 
 const routes: Routes = [
   { path: 'members', component: MembersComponent }, //, canActivate: [IsMemberMgrGuard] },
   { path: 'categories', component: CategoriesComponent }, //, canActivate: [IsPublisherGuard] },
-  { path: 'files', component: FilesComponent }, //, canActivate: [IsPublisherGuard] },
-  { path: 'test', component: TestComponent },
+  { path: 'files', component: FilemgrComponent }, //, canActivate: [IsPublisherGuard] },
+  { path: 'tests/tiny', component: TestComponent },
+  { path: 'tests/rights', component: RightsComponent },
+
   { path: 'articles', component: ArticlesComponent },    // canActivate: [IsPublisherGuard],
   { path: 'articles/new', component: ArticleComponent },
   { path: 'articles/:id', component: ArticleComponent }

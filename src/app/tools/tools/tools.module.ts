@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToggleInputComponent } from '../toggle-input/toggle-input.component';
 import { Editor } from 'tinymce';
 import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
+import { FilesComponent } from '../files/files.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -11,16 +12,17 @@ import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
 @NgModule({
   declarations: [
     ToggleInputComponent,
+    FilesComponent,
     FilesizePipe
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    // EditorModule
   ],
   exports: [
     ToggleInputComponent,
+    FilesComponent,
     FormsModule,
     ReactiveFormsModule,
     FilesizePipe,

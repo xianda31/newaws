@@ -1,13 +1,14 @@
-<div class="container-fluid p-0">
-  <app-headband [title]="selectedCategory.title" [description]="selectedCategory.description"> </app-headband>
+<div class="container-fluid ">
+  <app-headband [title]="home.title" [description]="home.description"> </app-headband>
 
   <!-- affichage des news en mode horizontal  -->
 
-  <div *ngIf="articles && selectedCategory ">
+  <div class="p-2">
+
 
     <!-- <div class="container-fluid"> -->
-    <div class="row row-cols-md-6  mb-2 p-3 justify-content-around">
-      <app-card class="d-flex " *ngFor="let article of articles$ | async " [catLabel]=" article.category!.label"
+    <div class="row row-cols-md-6  mb-2 p-5 justify-content-around">
+      <app-card class="d-flex " *ngFor="let article of article$ | async " [catLabel]=" article.category!.label"
         [article]="article" [displaymode]="'horizontal'" (click)="selectArticle(article)"> </app-card>
     </div>
     <!-- </div> -->

@@ -1,4 +1,4 @@
-<div class="container-fluid p-0" *ngIf="  selectedArticle && HTMLstring ">
+<div class="container-fluid p-0">
   <div class="row ">
 
 
@@ -8,11 +8,11 @@
 
       <!-- // pseudo-menu lateral gauche -->
       <div class="col-md-2 ">
-        <app-card class="d-flex m-2" *ngFor="let article of articles " [catLabel]=" selectedCategory.label "
+        <app-card class="d-flex m-2" *ngFor="let article of articles$ | async " [catLabel]=" selectedCategory.label "
           [article]="article" [displaymode]="'vertical'" (click)="selectArticle(article)"> </app-card>
       </div>
       <!-- affichage HTML article selectionné -->
-      <div class="col-md-10">
+      <div class="col-md-10" *ngIf="selectedArticle && HTMLstring ">
         <app-page [article]="selectedArticle" [HTMLstring]="HTMLstring"> </app-page>
       </div>
     </div>

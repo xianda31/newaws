@@ -12,44 +12,29 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  articles$: Observable<Article[]> = this.articleService.articles$;
-
-  articles: Article[] = [];
+  article$!: Observable<Article[]>;
   authenticatedUser: boolean = false;
-  // selectedArticle!: Article;
-
-  selectedCategory!: Category;
+  home!: Category;
 
 
   constructor(
     private categoryService: CategoryService,
     private articleService: ArticleService,
-    private cognitoService: CognitoService,
     private router: Router
 
   ) { }
 
   async ngOnInit(): Promise<void> {
 
-    // this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
-    //   this.authenticatedUser = user ? true : false;
-    //   console.log('this.authenticatedUser', this.authenticatedUser);
-    // });
-
-
-
-    this.articles$.pipe(
+    this.article$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.featured))
-    ).subscribe((articles) => {
-      this.articles = articles;
-    });
+    );
 
-    this.selectedCategory = this.categoryService.getCategoryByLabel('Home');
+    this.home = this.categoryService.getCategoryByLabel('Home');
 
   }
 
   selectArticle(article: Article) {
-    const selectedArticle = article;
-    this.router.navigate(['/cat', selectedArticle.category!.label, selectedArticle.id]);
+    this.router.navigate(['/cat', article.category!.label, article.id]);
   }
 }

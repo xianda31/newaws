@@ -114,10 +114,10 @@ export class ArticleComponent implements OnInit {
 
   }
 
-  async UploadTxtFile(filename: string, text: string, overwrite: boolean) {
+  async UploadTxtFile(filename: string, text: string) {
     const blob = new Blob([text], { type: 'text/plain' });
     const file = new File([blob], 'test.txt', { type: 'text/plain' });
-    return await this.fileService.uploadFile(file, filename, overwrite);
+    return await this.fileService.uploadFile(filename, file);
   }
 
 
@@ -133,7 +133,7 @@ export class ArticleComponent implements OnInit {
       article.permalink = this.articleForm.get('title')?.value.toLowerCase().replace(/\s/g, '-');
 
       const filename = 'articles/' + article.permalink;
-      if (await this.UploadTxtFile(filename, HTMLtext, false)) {
+      if (await this.UploadTxtFile(filename, HTMLtext)) {
         this.articleService.createArticle(article);
       } else {
         console.log("error uploading html file");
@@ -145,7 +145,7 @@ export class ArticleComponent implements OnInit {
       article.id = this.id;
 
       const filename = 'articles/' + article.permalink;
-      if (await this.UploadTxtFile(filename, HTMLtext, true)) {
+      if (await this.UploadTxtFile(filename, HTMLtext)) {
         this.articleService.updateArticle(article);
       } else {
         console.log("error uploading html file");
@@ -153,7 +153,7 @@ export class ArticleComponent implements OnInit {
     }
 
     if (this.bannerChanged) await
-      this.fileService.uploadFile(this.bannerFile, 'banners/' + this.bannerFile.name, false);
+      this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
 
     this.router.navigate(['dashboard/articles']);
   }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FileService } from 'src/app/tools/service/file.service';
+import { Component } from '@angular/core';
 import { Storage } from 'aws-amplify/lib-esm';
-import { Observable } from 'dist/bcsto/tinymce/tinymce';
-import { Subject } from 'rxjs';
+import { Category } from 'src/app/API.service';
+import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { FileService } from 'src/app/tools/service/file.service';
 
 
 interface FolderItem {
@@ -13,28 +13,34 @@ interface FolderItem {
 }
 
 @Component({
-  selector: 'app-files',
-  templateUrl: './files.component.html',
-  styleUrls: ['./files.component.scss']
+  selector: 'app-links',
+  templateUrl: './links.component.html',
+  styleUrls: ['./links.component.scss']
 })
+export class LinksComponent {
 
-export class FilesComponent implements OnInit {
+  selectedCategory!: Category;
 
   bucket!: any;
   folderItems !: FolderItem[];
-  folder_path: string = ''
+  folder_path: string = 'docs/'
   new_folder: string = '';
 
   constructor(
-    private fileService: FileService
+    private fileService: FileService,
+    private categoryService: CategoryService,
+
   ) { }
 
 
   ngOnInit(): void {
+
+    this.selectedCategory = this.categoryService.getCategoryByLabel('Liens');
+    console.log('this.selectedCategory', this.selectedCategory);
     // acquiert le bucket S3 et le transforme en arborescence (récursive) 
     this.fileService.loadBucket().subscribe((res) => {
       this.bucket = res;
-      this.genFolderData('');
+      this.genFolderData('docs/');
     });
 
   };
@@ -50,17 +56,6 @@ export class FilesComponent implements OnInit {
 
   }
 
-  createFolder() {
-    if (this.new_folder !== '') {
-      const key = this.folder_path + this.new_folder + '/';
-      Storage.put(key, '', { level: 'public' })
-        .then((result) => {
-          this.bucket.push({ key: key, lastModified: Date.now(), size: 0, __isFile: false });
-          this.genFolderData(this.folder_path);
-        })
-        .catch((err) => console.log(err));
-    }
-  }
 
   uploadFile(e: any) {
     const newfile = e.target.files[0];
@@ -76,20 +71,7 @@ export class FilesComponent implements OnInit {
     }
   }
 
-  async deleteDirectory(dir: FolderItem) {
-    const item = { ...dir };
-    item.key += '/';
-    this.deleteFile(item);
-  }
 
-  async deleteFile(item: FolderItem) {
-    Storage.remove(this.folder_path + item.key, { level: 'public' })
-      .then((result) => {
-        this.bucket.splice(this.bucket.findIndex((file: any) => file.key === (this.folder_path + item.key)), 1);
-        this.genFolderData(this.folder_path);
-      })
-      .catch((err) => console.log(err));
-  }
 
   goBack() {
     const keys = this.folder_path.split('/');
@@ -126,12 +108,4 @@ export class FilesComponent implements OnInit {
 
 
   }
-
-
-
 }
-
-
-
-
-

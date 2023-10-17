@@ -1,0 +1,99 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { FolderItem } from 'src/app/interfaces/files.interface';
+import { FileService } from 'src/app/tools/service/file.service';
+
+
+
+@Component({
+  selector: 'app-files',
+  templateUrl: './files.component.html',
+  styleUrls: ['./files.component.scss']
+})
+
+export class FilesComponent implements OnInit {
+
+  @Input() root_folder: string = '';
+  @Input() full_rights: boolean = false;
+
+  current_folder: string = '';
+  folder_level: number = 0;
+  folderItems !: FolderItem[];
+  new_folder: string = '';
+
+  constructor(
+    private fileService: FileService
+  ) { }
+
+
+  ngOnInit(): void {
+    this.current_folder = this.root_folder;
+    this.fileService.bucketLoaded.subscribe((loaded) => {
+      if (loaded) {
+        this.folderItems = this.fileService.genFolderItems(this.current_folder);
+      };
+    });
+  };
+
+  // navigation dans l'arborescence
+
+  folderDown(item: FolderItem) {
+    this.current_folder += (item.key + '/');
+    this.folder_level++;
+    this.folderItems = this.fileService.genFolderItems(this.current_folder);
+  }
+
+  async selectFile(item: FolderItem) {
+    const signedURL = await this.fileService.getFileURL(this.current_folder + item.key);
+    window.open(signedURL as string);
+
+  }
+
+  folderUp() {
+    const keys = this.current_folder.split('/');
+    this.folder_level--;
+    keys.pop();    // suppression du '' final
+    keys.pop();    // repA/repB/ => repA/   et repA/ => ''
+    this.current_folder = (keys.length === 0) ? '' : keys.join('/') + '/';
+    this.folderItems = this.fileService.genFolderItems(this.current_folder);
+  }
+
+  // uplooad fichier
+
+  async uploadFile(e: any) {
+    const newfile = e.target.files[0];
+    if (newfile !== undefined) {
+      const key = this.current_folder + newfile.name;
+      await this.fileService.uploadFile(key, newfile)
+      this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    }
+  }
+
+  // modification de l'arborescence
+
+  async createFolder() {
+    if (this.new_folder !== '') {
+      const key = this.current_folder + this.new_folder + '/';
+      await this.fileService.createDirectory(key)
+      this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    }
+  }
+
+  async deleteDirectory(dir: FolderItem) {
+    const item = { ...dir };
+    item.key += '/';
+    this.deleteFile(item);
+  }
+
+  async deleteFile(item: FolderItem) {
+    await this.fileService.deleteFile(this.current_folder + item.key)
+    this.folderItems = this.fileService.genFolderItems(this.current_folder);
+  }
+
+
+
+}
+
+
+
+
+

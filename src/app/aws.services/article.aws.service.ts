@@ -15,13 +15,10 @@ export class ArticleService {
     private api: APIService,
     private toastService: ToastService
   ) {
-
-    // READ ALL CATEGORIES
-
     this.loadArticles(!environment.logging_bypass);
-
   }
 
+  // chargement des articles depuis la base de données ; filtrage vs  public_only 
   loadArticles(public_only: boolean): Promise<any> {
     this._articles = [];
     return new Promise(async (resolve) => {
@@ -34,7 +31,7 @@ export class ArticleService {
         }
         )).then(() => {
           resolve(this._articles);
-          console.log('%s articles: ', this._articles.length, this._articles);
+          // console.log('%s articles: ', this._articles.length, this._articles);
           this._articles$.next(this._articles);
         });
 

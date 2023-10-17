@@ -1,0 +1,4 @@
+<div class="form-check form-check-inline" *ngFor="let right of env_rights">
+    <input class="form-check-input" type="checkbox" [id]="right" [(ngModel)]="rights[right]" (click)="toggle(right)">
+    <label class="form-check-label" [for]="right">{{right}}</label>
+</div>
