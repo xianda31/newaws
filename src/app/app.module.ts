@@ -21,7 +21,7 @@ import { HeadbandComponent } from './pages/headband/headband.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { LinksComponent } from './pages/links/links.component';
 import { RightsComponent } from './tests/rights/rights.component';
-import { RightsInputComponent } from './tools/rights-input/rights-input.component';
+// import { RightsInputComponent } from './tools/rights-input/rights-input.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,6 @@ import { RightsInputComponent } from './tools/rights-input/rights-input.componen
     Page404Component,
     LinksComponent,
     RightsComponent,
-    RightsInputComponent,
 
 
   ],

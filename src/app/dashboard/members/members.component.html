@@ -1,92 +1,98 @@
-<div class="container">
+<app-dash-header title="administration" subtitle="gestion des adhérents"></app-dash-header>
+
+<div class="container p-2">
 
   <div class="card shadow">
-    <div class="card-header">
-      <form [formGroup]="memberForm">
+    <form [formGroup]="memberForm">
+      <div class="card-body">
+        <table class="table align-items-center table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col" class="col-md-2 text-start">Nom</th>
+              <th scope="col" class="col-md-2">Prénom</th>
+              <th scope="col" class="col-md-1">License</th>
+              <th scope="col" class="col-md-2">email</th>
+              <th scope="col" class="col-md-4">droits</th>
+              <th scope="col" class="col-md-1 text-center">action</th>
+            </tr>
+          </thead>
 
-        <div class="input-group">
-          <!-- <span class="input-group-text">adherent</span> -->
-          <input type="text" class="form-control col-md-2" placeholder="nom" formControlName="lastname"
-            (input)="controlTextToUpperCase('lastname')"
-            [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)">
-          <div class="invalid-feedback">
-            nom obligatoire
-          </div>
+          <tbody>
+            <tr *ngFor="let member of members | async " (click)="selectMember(member)">
+              <td class="col text-start">{{ member.lastname }}</td>
+              <td class="col">{{ member.firstname }}</td>
+              <td class="col">{{ member.license }}</td>
+              <td class="col">{{ member.email }}</td>
+              <td class="col"> {{ member.rights }}
+                <!-- <app-rights-input [(ngModel)]="member.rights"></app-rights-input> -->
+              </td>
+              <td class="col text-center">
+                <button type="button" class="btn btn-light btn-sm " (click)="deleteMember($event,member)">
+                  <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
+                </button>
+            </tr>
 
-          <input type="text" class="form-control col-md-2" placeholder="prénom" formControlName="firstname"
-            (input)="controlTextFirstLetterToUpperCase('firstname')"
-            [class.is-invalid]="firstname.invalid && (firstname.dirty || firstname.touched)">
-          <div class="invalid-feedback">
-            prénom obligatoire
-          </div>
+            <tr>
+              <td colspan="6"></td> <!-- saute une ligne -->
+            </tr>
 
-          <input type=" text" class="form-control col-md-2" placeholder="n°licence" formControlName="license"
-            [class.is-invalid]="license.invalid && (license.dirty || license.touched)">
-          <div class="invalid-feedback">
-            n° licence obligatoire
-          </div>
+            <tr class="table-info">
+              <td>
+                <input type="text" class="form-control " placeholder="nom" formControlName="lastname"
+                  (input)="controlTextToUpperCase('lastname')"
+                  [class.is-invalid]="lastname.invalid && (lastname.dirty || lastname.touched)">
+                <div class="invalid-feedback">
+                  nom obligatoire
+                </div>
+              </td>
+              <td>
 
-          <input type="mail" class="form-control col-md-2" placeholder="email" formControlName="email"
-            [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
-          <div class="invalid-feedback">
-            email obligatoire
-          </div>
+                <input type="text" class="form-control " placeholder="prénom" formControlName="firstname"
+                  (input)="controlTextFirstLetterToUpperCase('firstname')"
+                  [class.is-invalid]="firstname.invalid && (firstname.dirty || firstname.touched)">
+                <div class="invalid-feedback">
+                  prénom obligatoire
+                </div>
+              </td>
+
+              <td>
+                <input type=" text" class="form-control " placeholder="n°licence" formControlName="license"
+                  [class.is-invalid]="license.invalid && (license.dirty || license.touched)">
+                <div class="invalid-feedback">
+                  n° licence obligatoire
+                </div>
+              </td>
+
+              <td>
+                <input type="mail" class="form-control " placeholder="email" formControlName="email"
+                  [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
+                <div class="invalid-feedback">
+                  email obligatoire
+                </div>
+              </td>
+              <td>
+                <app-rights-input class="form-control " formControlName="rights"></app-rights-input>
+              </td>
+              <td>
+                <button *ngIf="createMode" type="button" class="btn btn-primary "
+                  (click)="createMember()">ajouter</button>
+                <button *ngIf="!createMode" type="button" class="btn btn-primary"
+                  (click)="updateMember()">modifier</button>
+              </td>
 
 
-          <input type="string" class="form-control col-md-2" placeholder="droits" formControlName="rights"
-            [class.is-invalid]="rights.invalid && (rights.dirty || rights.touched)">
-          <div class="invalid-feedback">
-            définir les droits (p:publication, c:caisse, a:adherents)
-          </div>
 
 
-          <button *ngIf="createMode" type="button" class="btn btn-primary col-md-2"
-            (click)="createMember()">ajouter</button>
-          <button *ngIf="!createMode" type="button" class="btn btn-primary col-md-2"
-            (click)="updateMember()">modifier</button>
-        </div>
 
-      </form>
-    </div>
-    <div class="card-body">
-      <table class="table align-items-center table-hover">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col" class="col-md-3" *ngFor="let column of columns">
-              {{ column.header }}
-            </th>
-            <th scope="col" class="col">action</th>
-          </tr>
-        </thead>
 
-        <tbody>
-          <tr *ngFor="let element of members | async " (click)="selectMember(element)">
-            <td *ngFor="let column of columns" class="col-md-2">
-              <span *ngIf="
-                    column.columnDef.includes('icon');
-                    then iconBlock;
-                    else dataBlock
-                  ">
-              </span>
 
-              <ng-template #dataBlock>
-                {{ column.cell(element) }}
-              </ng-template>
 
-              <ng-template #iconBlock>
-                <!-- <button type="button" class="btn btn-primary"> -->
-                <i [ngClass]="column.cell(element)"></i>
-                <!-- </button> -->
-              </ng-template>
-            </td>
-            <td>
-              <button type="button" class="btn btn-light btn-sm " (click)="deleteMember($event,element)">
-                <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
-              </button>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </form>
 
 
   </div>

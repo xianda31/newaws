@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { environment } from 'src/app/environments/environment';
 
-interface RightsElement { [key: string]: boolean }
+interface RightsArray { [key: string]: boolean }
 
 
 @Component({
@@ -21,22 +21,23 @@ interface RightsElement { [key: string]: boolean }
 export class RightsInputComponent implements OnInit, ControlValueAccessor {
 
   env_rights = environment.rights;
-  credential: string = '';
-  rights: RightsElement = {};
+  credentials: string = '';
+  rights: RightsArray = {};
   disabled = false;
 
-  onChange!: (value: RightsElement) => void;
+  onChange!: (value: string) => void;
   onTouch!: () => void;
 
 
   ngOnInit(): void {
   }
 
-  writeValue(obj: RightsElement): void {
+  writeValue(obj: string): void {
     if (obj === undefined || obj === null) {
       return;
     }
-    this.rights = obj;
+    this.credentials = obj;
+    this.rights = this.readRights(this.credentials);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -49,7 +50,6 @@ export class RightsInputComponent implements OnInit, ControlValueAccessor {
   }
 
   getRight(right: string): boolean {
-    // console.log('getRight of %s = ', right, this.rights[right]);
     return this.rights[right];
   }
 
@@ -58,16 +58,27 @@ export class RightsInputComponent implements OnInit, ControlValueAccessor {
       return;
     }
     this.rights[right] = !this.rights[right];
-    this.onChange(this.rights);
+    this.onChange(this.genCredentials(this.rights));
     this.onTouch();
   }
 
-  clearRights(): void {
-    const keys = Object.keys(this.rights);
-    keys.forEach((key) => {
-      this.rights[key] = false;
+  readRights(credentials: string): RightsArray {
+    const rightsDef = environment.rights;
+    let rights: any = {};
+    rightsDef.forEach((right) => {
+      rights[right] = credentials.includes(right);
     });
+    return rights;
   }
 
-
+  genCredentials(rights: any): string {
+    const rightsDef = environment.rights;
+    let credentials = '';
+    rightsDef.forEach((right) => {
+      if (rights[right]) {
+        credentials += (right + ' ');
+      }
+    });
+    return credentials;
+  }
 }

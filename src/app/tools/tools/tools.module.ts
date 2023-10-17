@@ -5,6 +5,7 @@ import { ToggleInputComponent } from '../toggle-input/toggle-input.component';
 import { Editor } from 'tinymce';
 import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
 import { FilesComponent } from '../files/files.component';
+import { RightsInputComponent } from '../rights-input/rights-input.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -13,6 +14,7 @@ import { FilesComponent } from '../files/files.component';
   declarations: [
     ToggleInputComponent,
     FilesComponent,
+    RightsInputComponent,
     FilesizePipe
   ],
   imports: [
@@ -22,6 +24,7 @@ import { FilesComponent } from '../files/files.component';
   ],
   exports: [
     ToggleInputComponent,
+    RightsInputComponent,
     FilesComponent,
     FormsModule,
     ReactiveFormsModule,

@@ -22,6 +22,8 @@ export class MembersComponent implements OnInit {
   createMode: boolean = true;
   selectedMember!: Member;
 
+  credentials: string = 'Publisher Admin Sales'; //
+
   constructor(
     private memberService: MemberService,
   ) { }
@@ -85,6 +87,7 @@ export class MembersComponent implements OnInit {
     newMember.id = this.selectedMember.id;
     this.memberService.updateMember(this.memberForm.value);
     this.memberForm.reset();
+    this.rights.patchValue('');   // comprends pas pourquoi il faut faire ça pour que le select soit vide
     this.createMode = true;
   }
 
