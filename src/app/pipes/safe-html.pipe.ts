@@ -20,7 +20,7 @@ export class SafeHtmlPipe implements PipeTransform {
     const sanitized = DOMPurify.sanitize(dirty, this.config);
 
     if (DOMPurify.removed.length > 0) {
-      console.log("DOMsanitizer has removed %s tags ", DOMPurify.removed.length);
+      // console.log("DOMsanitizer has removed %s tags ", DOMPurify.removed.length);
     }
     return this.sanitizer.bypassSecurityTrustHtml(sanitized); // on y croit , plus aucun controle !!
 

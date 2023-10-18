@@ -11,7 +11,7 @@
 
   <!-- <div class="container"> -->
   <div class="col-md-12 ">
-    <div class="table-responsive m-3">
+    <div class="table-responsive-sm m-3">
 
       <table class="table align-middle table-hover table-bordered">
         <thead class="thead-light">
@@ -22,7 +22,7 @@
             <th scope="col">affiche</th>
             <th scope="col">résumé</th>
             <th scope="col">catégorie</th>
-            <th scope="col">affecté</th>
+            <!-- <th scope="col">affecté</th> -->
             <th scope="col">création</th>
             <th scope="col">public</th>
             <th scope="col">vedette</th>
@@ -45,9 +45,9 @@
             <td [class]="article.assigned ? ' ' : 'text-decoration-line-through fst-italic'">{{ article.category!.label
               ?
               article.category?.label! : ''}}</td>
-            <td>
+            <!-- <td>
               <app-toggle-input [(ngModel)]="article.assigned" (click)="onPublish(article)"></app-toggle-input>
-            </td>
+            </td> -->
             <td>{{ article.createdAt| date : 'dd/MM/yyyy' }}</td>
             <td>
               <app-toggle-input [(ngModel)]="article.public" (click)="onPublish(article)"></app-toggle-input>
@@ -80,10 +80,10 @@
 
 
   <div class="card col-6 offset-md-6 p-2">
-    <div class="text-sm-start">
+    <!-- <div class="text-sm-start">
       <span class="fw-bold">affecté :&nbsp; </span>
       <span>l'article sera (ou pas) appelé par sa page-catégorie</span>
-    </div>
+    </div> -->
     <div class="text-sm-start">
       <span class="fw-bold">public : &nbsp;</span>
       <span>l'article sera (ou pas) visible même par une personne même non inscripte</span>

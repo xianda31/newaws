@@ -36,7 +36,7 @@ export class LinksComponent {
   ngOnInit(): void {
 
     this.selectedCategory = this.categoryService.getCategoryByLabel('Liens');
-    console.log('this.selectedCategory', this.selectedCategory);
+    // console.log('this.selectedCategory', this.selectedCategory);
     // acquiert le bucket S3 et le transforme en arborescence (récursive) 
     this.fileService.loadBucket().subscribe((res) => {
       this.bucket = res;

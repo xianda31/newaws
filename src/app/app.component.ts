@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
 
     this.categoryService.categories$.subscribe((categories) => {
       if (categories.length > 0) {
-        console.log('%s categories loaded', categories.length, categories);
+        // console.log('%s categories loaded', categories.length, categories);
         this.catloaded = true;
       }
 

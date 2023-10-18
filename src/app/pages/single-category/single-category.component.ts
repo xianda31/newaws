@@ -25,6 +25,7 @@ export class SingleCategoryComponent implements OnChanges {  //OncChanges pour p
   selectedArticle!: Article;
   HTMLstring!: string;
 
+  articles !: Article[];
 
   constructor(
     private categoryService: CategoryService,
@@ -34,6 +35,7 @@ export class SingleCategoryComponent implements OnChanges {  //OncChanges pour p
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes['categoryLabel']) {
+      // console.log('changes categoryLabel', changes['categoryLabel'].currentValue)
       this.selectedCategory = this.categoryService.getCategoryByLabel(changes['categoryLabel'].currentValue);
       await this.loadCategory();
     }
@@ -43,6 +45,7 @@ export class SingleCategoryComponent implements OnChanges {  //OncChanges pour p
   async loadCategory() {
     this.articles$.subscribe(async (articles) => {
       if (articles.length !== 0) {
+        this.articles = articles;
         this.selectedArticle = this.articleId ? articles.find((article) => (article.id === this.articleId))! : articles[0];
         this.HTMLstring = await this.loadHTML(this.selectedArticle);
       } else {

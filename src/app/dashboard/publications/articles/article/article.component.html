@@ -13,34 +13,24 @@
       <div class="row m-2">
 
         <div class="col-md-6 ">
-
-          <!-- titre -->
-          <div class="col-md-12">
-            <label>Titre de l'article (10 caractères min)</label>
-            <input type="text" class="form-control" formControlName="title"
-              placeholder="Titre de l'article (10 caractères minimum)">
-            <div *ngIf="fcontrols['title'].errors?.['required']">
-              <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
-                titre
-                obligatoire</div>
-            </div>
-            <div *ngIf="fcontrols['title'].errors?.['minlength']">
-              <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
-                titre de 10 caractères minimum</div>
-            </div>
-          </div>
-
-          <div class="row">
-            <!-- URL banner -->
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>Banière de l'article</label>
-                <input type="text" class="form-control" formControlName="banner"
-                  placeholder="URL de l'image de l'article">
+          <div class="row mb-4 ">
+            <!-- titre -->
+            <div class="col-md-8">
+              <label>Titre de l'article (10 caractères min)</label>
+              <input type="text" class="form-control" formControlName="title"
+                placeholder="Titre de l'article (10 caractères minimum)">
+              <div *ngIf="fcontrols['title'].errors?.['required']">
+                <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
+                  titre
+                  obligatoire</div>
+              </div>
+              <div *ngIf="fcontrols['title'].errors?.['minlength']">
+                <div class="alert alert-danger" *ngIf="fcontrols['title'].touched && fcontrols['title'].invalid">
+                  titre de 10 caractères minimum</div>
               </div>
             </div>
             <!-- category -->
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label> Rubrique</label>
               <select class="form-control" formControlName="categoryId">
                 <option value="" disabled selected>--choisissez une categorie--</option>
@@ -54,8 +44,28 @@
                   choisir la categorie de l'article</div>
               </div>
             </div>
-
           </div>
+          <!-- <div class="row"> -->
+          <!-- URL banner -->
+          <div class="row mb-4">
+
+            <div class="col-md-6">
+              <div class="input-group">
+                <label>Banière de l'article</label>
+                <input type="text" class="form-control" formControlName="banner"
+                  placeholder="URL de l'image de l'article">
+                <!-- </div>
+                  <div class="col-md-1"> -->
+                <button type="button" class="btn btn-outline-primary btn-sm " (click)="fileSelect.click()">
+                  <i class="bi bi-image"></i>
+                  <!-- sélectionnez une image -->
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- </div> -->
           <!-- summary -->
           <div class="col-md-12">
             <div class="form-group">
@@ -78,13 +88,8 @@
           <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
           <div class="row">
 
-            <div class="col-md-1">
-              <button type="button" class="btn btn-outline-primary btn-sm " (click)="fileSelect.click()">
-                <i class="bi bi-image"></i>
-                <!-- sélectionnez une image -->
-              </button>
-            </div>
-            <div class="col-md-11">
+
+            <div class="col-md-12">
               <img [src]="imgBuffer" alt="" class="img-fluid">
             </div>
           </div>

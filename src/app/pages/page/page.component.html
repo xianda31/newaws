@@ -8,8 +8,8 @@
       <h3>{{article.summary}}</h3>
     </div>
     <div class="col-md-2 ">
-      <img class="img-fluid move-up" [src]="bannerURL" alt="image">
-      <p class="text-lowercase text-black-50 fs-6 text-move-up">édition du {{(article.updatedAt ? article.updatedAt :
+      <img class="img-fluid " [src]="bannerURL" alt="image">
+      <p class="text-lowercase text-black-50 fs-6 ">édition du {{(article.updatedAt ? article.updatedAt :
         article.createdAt) | date: 'dd/MM/yy' }}</p>
     </div>
   </div>

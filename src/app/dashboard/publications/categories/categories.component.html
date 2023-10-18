@@ -4,12 +4,12 @@
 
   <form [formGroup]="categoryForm">
 
-    <table class="table align-items-center table-hover">
+    <table class="table table-responsive-sm align-items-center table-hover">
       <thead class="thead-light">
         <tr>
           <th scope="col" class="col-md-1 text-center">rang</th>
-          <th scope="col" class="col-md-1">menu</th>
-          <th scope="col" class="col-md-1">fixe</th>
+          <th scope="col" class="col-md-1 ">menu</th>
+          <th scope="col" class="col-md-1 text-center">fixe</th>
           <th scope="col" class="col-md-1">titre</th>
           <th scope="col" class="col-md-6">sous-titre</th>
           <th scope="col" class="col-md-1 text-center">nb articles</th>
@@ -20,9 +20,9 @@
         <tr [class]="category.fixed ? 'table-primary' : 'table-secondary'"
           *ngFor="let category of sortedCategories$ | async" (click)="selectCategory(category)">
           <td class="col text-center"> {{ category.rank }} </td>
-          <td class="col"> {{ category.label }} </td>
-          <td class="col"> {{ category.fixed ? 'fixe' :
-            'flex' }}
+          <td class="col-md-1"> {{ category.label }} </td>
+          <td class="col text-center"> {{ category.fixed ? 'fixe' :
+            'variable' }}
           </td>
 
           <td class="col"> {{ category.title }} </td>
@@ -40,22 +40,22 @@
           <td colspan="7"></td> <!-- saute une ligne -->
         </tr>
 
-        <tr class="table-info">
-          <td class="col text-center">
+        <tr class="table-info px-0">
+          <td class="col text-center ">
             <input type="text" class="formcontrol w-50" formControlName="rank" id="rank">
           </td>
-          <td><input type="text" class="formcontrol" formControlName="label" id="label"
+          <td class="px-1"><input type="text" class="formcontrol " formControlName="label" id="label"
               [class.is-invalid]="label.invalid && (label.dirty || label.touched)"></td>
 
-          <td><app-toggle-input formControlName="fixed"></app-toggle-input></td>
+          <td class="px-1"><app-toggle-input formControlName="fixed"></app-toggle-input></td>
 
-          <td><input type="text" class="formcontrol " formControlName="title" id="title"
+          <td class="px-1"><input type="text" class="formcontrol " formControlName="title" id="title"
               [class.is-invalid]="title.invalid && (title.dirty || title.touched)">
             <div class="invalid-feedback">
               un titre de rubrique doit être fourni
             </div>
           </td>
-          <td><input type="text" class="formcontrol w-100" formControlName="description" id="description"
+          <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="description" id="description"
               [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
             <div class="invalid-feedback">
               une descriptif doit être fourni

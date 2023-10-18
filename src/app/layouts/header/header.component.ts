@@ -13,6 +13,7 @@ import { environment } from 'src/app/environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
+  production: boolean = environment.production;
   loggedusername !: string;
   loggeduserlicence !: string;
   logged: boolean = environment.logging_bypass;
@@ -30,6 +31,8 @@ export class HeaderComponent implements OnInit {
     private categoryService: CategoryService
   ) { }
   ngOnInit(): void {
+
+
 
     this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
       if (user) {

@@ -1,12 +1,10 @@
 
 
 export const environment = {
-  logging_bypass: true,  // true => permet d'afficher tous les menus
+  production: true,
+  logging_bypass: false,  // true => permet d'afficher tous les menus
   rights: ['Admin', 'Publisher', 'Sales'],
-  default_rights: 'p r c', // droits par défaut pour un nouvel utilisateur
-  // max_category_image_size: 30000,
-  // max_category_image_size_text: '(30ko max)',
-  production: false,
+  default_rights: ' ', // droits par défaut pour un nouvel utilisateur = aucun droit
 };
 
 
