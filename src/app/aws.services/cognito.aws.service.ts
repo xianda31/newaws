@@ -17,6 +17,9 @@ export class CognitoService {
     return this._currentAuthenticatedUser$.asObservable();
   }
 
+  get user() {
+    return this._currentAuthenticatedUser$.value;
+  }
 
   async signIn(user: User): Promise<any> {
     try {

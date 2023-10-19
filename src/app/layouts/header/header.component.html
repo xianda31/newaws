@@ -38,15 +38,15 @@
 
         <!-- login -->
 
-        <li *ngIf="!logged" class="d-flex">
+        <li *ngIf="!isLogged" class="d-flex">
           <button type="button" class="btn btn-primary" routerLink="login">
             <i class="bi bi-person-circle"></i>
             MON ESPACE
           </button>
         </li>
 
-        <!-- <li *ngIf="logged" class="d-flex"> -->
-        <li *ngIf="logged" class="nav-item mx-2 dropdown">
+        <!-- <li *ngIf="isLogged" class="d-flex"> -->
+        <li *ngIf="isLogged" class="nav-item mx-2 dropdown">
           <a class="nav-link dropdown-toggle btn btn-primary text-start" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             <button type="button" class="btn btn-primary">
@@ -68,22 +68,22 @@
         </li>
 
         <!-- menu métier  -->
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
+        <li class="nav-item mx-2 dropdown" *ngIf="isAdmin">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="dashboard/members">Adhérents</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/admin/members">Adhérents</a></li>
             <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
             <li><a class="dropdown-item" href="#">Autres paiements</a></li>
           </ul>
         </li>
-        <li class="nav-item mx-2 dropdown" *ngIf="logged">
+        <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Publications </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="dashboard/articles">Articles</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/categories">Catégories</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/files">Fichiers</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publisher/articles">Articles</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publisher/categories">Catégories</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
         </li>
 

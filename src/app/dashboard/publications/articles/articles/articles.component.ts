@@ -36,7 +36,7 @@ export class ArticlesComponent implements OnInit {
             this.bannerURL.set(article.permalink, signedURL);
           })
             .catch((error) => {
-              console.log('error', error);
+              console.log('error %s sur l\'article :', error, article);
             })
         });
         this.articlesDBloaded = true;

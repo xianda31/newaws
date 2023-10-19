@@ -27,7 +27,7 @@ export class ArticleComponent implements OnInit {
   imgBuffer!: any;
   preview !: string;
 
-  selectedFile!: File;
+  // selectedFile!: File;
 
   selectedCategoryId: string = '';
   selectedArticle!: Article | undefined;
@@ -152,10 +152,12 @@ export class ArticleComponent implements OnInit {
       };
     }
 
-    if (this.bannerChanged) await
-      this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
-
-    this.router.navigate(['dashboard/articles']);
+    if (this.bannerChanged) {
+      console.log("banner changed")
+      await this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
+      console.log("banner uploaded")
+      this.router.navigate(['dashboard/articles']);
+    }
   }
 
   onTitleChanged(event: any) {
@@ -334,12 +336,13 @@ export class ArticleComponent implements OnInit {
   // }
 
   onFileSelected(event: any) {
-    this.selectedFile = event.target.files[0];
+    this.bannerFile = event.target.files[0];
 
-    if (this.selectedFile) {
-      this.getImage64(this.selectedFile).then((image64) => {
+    if (this.bannerFile) {
+      this.getImage64(this.bannerFile).then((image64) => {
         this.imgBuffer = image64;
-        this.bannerControl.patchValue(this.selectedFile.name);
+        this.bannerControl.patchValue(this.bannerFile.name);
+        this.bannerChanged = true;
       });
     }
 

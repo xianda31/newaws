@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
+import { MemberService } from 'src/app/aws.services/member.aws.service';
 import { environment } from 'src/app/environments/environment';
 
 @Component({
@@ -16,7 +17,9 @@ export class HeaderComponent implements OnInit {
   production: boolean = environment.production;
   loggedusername !: string;
   loggeduserlicence !: string;
-  logged: boolean = environment.logging_bypass;
+  isLogged: boolean = environment.logging_bypass;
+  isAdmin: boolean = false;
+  isPublisher: boolean = false;
 
   categories$: Observable<Category[]> = this.categoryService.categories$;
   sortedCategories$: Observable<Category[]> = this.categoryService.categories$.pipe(
@@ -28,7 +31,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private cognitoService: CognitoService,
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private memberService: MemberService
   ) { }
   ngOnInit(): void {
 
@@ -38,7 +42,12 @@ export class HeaderComponent implements OnInit {
       if (user) {
         this.loggedusername = user.username;
         this.loggeduserlicence = user.license;
-        this.logged = true;
+        this.isLogged = true;
+
+        let member = this.memberService.getMemberByLicense(user.license);
+        const rights = member?.rights!;
+        this.isAdmin = rights?.includes('Admin');
+        this.isPublisher = rights?.includes('Publisher');
 
       }
     });
@@ -46,7 +55,9 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.cognitoService._signOut();
-    this.logged = false;
+    this.isLogged = false;
+    this.isAdmin = false;
+    this.isPublisher = false;
     this.router.navigate(['/home']);
   }
 }

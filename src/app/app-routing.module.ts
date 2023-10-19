@@ -7,6 +7,7 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
 import { HomeComponent } from './pages/home/home.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { LinksComponent } from './pages/links/links.component';
+import { canActivateGuard } from './guards/can-activate.guard';
 
 const routes: Routes = [
 
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: 'pswreset/:email', component: PswresetComponent },
   {
     path: 'dashboard',
-    //   // canActivate: [IsAuthenticatedGuard],
+    canActivate: [canActivateGuard('any right')],
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
   },
   { path: '404', component: Page404Component },
