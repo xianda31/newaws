@@ -18,7 +18,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'cat/:cat', component: SingleCategoryComponent },
   { path: 'cat/:cat/:aid', component: SingleCategoryComponent },
-  // { path: 'pages/:id', component: PageComponent },
   { path: 'pswreset/:email', component: PswresetComponent },
   {
     path: 'dashboard',

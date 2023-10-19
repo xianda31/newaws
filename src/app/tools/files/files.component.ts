@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FolderItem } from 'src/app/interfaces/files.interface';
 import { FileService } from 'src/app/tools/service/file.service';
+import { ToastService } from '../service/toast.service';
 
 
 
@@ -21,7 +22,8 @@ export class FilesComponent implements OnInit {
   new_folder: string = '';
 
   constructor(
-    private fileService: FileService
+    private fileService: FileService,
+    private toastService: ToastService
   ) { }
 
 
@@ -85,8 +87,14 @@ export class FilesComponent implements OnInit {
   }
 
   async deleteFile(item: FolderItem) {
-    await this.fileService.deleteFile(this.current_folder + item.key)
-    this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    this.fileService.deleteFile(this.current_folder + item.key).then((result) => {
+      this.toastService.showSuccessToast("files", "Fichier supprimé");
+      this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    })
+      .catch((err) => {
+        this.toastService.showErrorToast("files", err);
+      }
+      );
   }
 
 

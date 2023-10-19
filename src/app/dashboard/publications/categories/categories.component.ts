@@ -44,7 +44,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryForm = new FormGroup({
       rank: new FormControl(0, Validators.required),
       label: new FormControl('', Validators.required),
-      fixed: new FormControl(false, Validators.required),
+      fixed: new FormControl(false),
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       // image: new FormControl('', Validators.required),

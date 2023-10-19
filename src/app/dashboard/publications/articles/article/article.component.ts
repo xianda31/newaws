@@ -62,12 +62,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
   ) { }
   ngOnDestroy(): void {
     tinymce.remove();
-    console.log("tinymce removed");
+    // console.log("tinymce removed");
   }
 
 
   async ngOnInit(): Promise<void> {
-    console.log("ngOnInit", this.id);
+    // console.log("ngOnInit", this.id);
     this.creationMode = (!this.id);
 
     this.initForm();
@@ -117,7 +117,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
     const article = this.articleForm.getRawValue() as Article;   // getRawValue() pour récupérer les valeurs des champs disabled
 
     const HTMLtext = tinymce.activeEditor!.getContent();
-    console.log("HTMLtext : ", HTMLtext);
     tinymce.remove();
     this.navBack();
 
@@ -147,9 +146,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     }
 
     if (this.bannerChanged) {
-      console.log("banner changed")
       await this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
-      console.log("banner uploaded")
       this.router.navigate(['dashboard/articles']);
     }
   }
@@ -202,9 +199,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       setup: (editor) => {
 
         editor.on('init', () => {
-          console.log("init event fired ...");
           editor.setContent(initialContent);
-          console.log("initial Content loaded... ");
           this.templateLoaded = true;
 
         });
@@ -285,15 +280,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
   // ************ gestion image (banner)******************
 
 
-  // async onBannerSelected(event: any) {
-  //   this.bannerFile = event.target.files[0];
-  //   this.bannerChanged = true;
-  //   if (this.bannerFile) {
-  //     this.bannerPreview = await this.getImage64(this.bannerFile);
-  //     const filename = this.bannerFile.name;
-  //     this.bannerControl.patchValue(filename);
-  //   }
-  // }
 
   getImage64(file: File): Promise<string> {
     var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
@@ -307,31 +293,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
     });
     return promise;
   }
-
-  // async uploadBannerImage() {
-
-  //   if (await this.checkFileExistence() === true) {
-  //     console.log('file already exists');
-  //     return;
-  //   }
-
-  //   try {
-  //     const result = await Storage.put(this.filename, this.file, {
-  //       // contentType: "image/png",  contentType is optional
-  //       level: 'public'
-  //     });
-  //   } catch (error) { console.log("Error uploading file: ", error); }
-  // }
-
-  // async checkFileExistence(): Promise<boolean> {
-  //   try {
-  //     await Storage.get(this.filename, { validateObjectExistence: true });
-  //     return true;
-  //   }
-  //   catch (error) {
-  //     return false;
-  //   }
-  // }
 
   onFileSelected(event: any) {
     this.bannerFile = event.target.files[0];
