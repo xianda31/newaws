@@ -14,7 +14,7 @@ import { environment } from 'src/app/environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  production: boolean = environment.production;
+  test_links: boolean = environment.test_links;
   loggedusername !: string;
   loggeduserlicence !: string;
   isLogged: boolean = environment.logging_bypass;

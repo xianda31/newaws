@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SecurityContext, AfterViewInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
@@ -17,10 +17,12 @@ import { FileService } from 'src/app/tools/service/file.service';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
 
   @Input() id: string = '';// @RouteParam()
 
+
+  creationMode!: boolean;
 
   categories$: Observable<Category[]> = this.categoryService.categories$ as Observable<Category[]>;
   articles$: Observable<Article[]> = this.articleService.articles$ as Observable<Article[]>;
@@ -33,13 +35,10 @@ export class ArticleComponent implements OnInit {
   selectedArticle!: Article | undefined;
   templateLoaded: boolean = false;
 
-  formMode: 'create' | 'update' = 'create'
-  formStatus: string[] = ['Création d\' article', 'créer un nouvel article'];
-  // HtmlContent: string = '';
-
   bannerFile!: File;
   bannerChanged: boolean = false;
   bannerPreview: string = '';
+  externalHtml: string = '';
 
   articleForm!: FormGroup;
 
@@ -61,19 +60,28 @@ export class ArticleComponent implements OnInit {
     // private sanitizer: DomSanitizer,
 
   ) { }
+  ngOnDestroy(): void {
+    tinymce.remove();
+    console.log("tinymce removed");
+  }
+
 
   async ngOnInit(): Promise<void> {
-
-    // console.log("ngOnInit", this.id);
+    console.log("ngOnInit", this.id);
+    this.creationMode = (!this.id);
 
     this.initForm();
 
-
-    if (this.id !== undefined) {
+    if (this.creationMode) {
+      this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
+        html => {
+          this.externalHtml = html;
+          this.tinymceInit(this.externalHtml);
+        }
+      );
+    } else {
 
       // initialisation du formulaire avec les valeurs de l'article[id] à modifier
-      this.formStatus = ['Modification d\'un article', 'modifier cet article'];
-      this.formMode = 'update';
 
       this.articleService.readArticle(this.id)
         .then(async (article) => {
@@ -82,33 +90,16 @@ export class ArticleComponent implements OnInit {
 
           const filename = 'articles/' + article!.permalink;
           const blob = await Storage.get(filename, { download: true });
-          blob.Body?.text().then((text) => {
+
+          blob.Body?.text().then(async (text) => {
+            this.externalHtml = text;
             this.tinymceInit(text);
           });
 
           this.imgBuffer = await Storage.get('banners/' + article.banner, { validateObjectExistence: true });
 
-          //  {
-          //   this.getImage64(this.selectedFile).then((image64) => {
-          //     this.imgBuffer = image64;
-          //     this.bannerControl.patchValue(this.selectedFile.name);
-          //   });
-          // }
-
         })
         .catch((error) => { console.log('error : ', error); return undefined; });
-
-    } else {
-
-      // initialisation du formulaire avec des valeurs "vides" et le template pour le HTML de l'article
-      this.formStatus = ['Création d\' article', 'créer un nouvel article'];
-      this.formMode = 'create';
-
-      this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
-        data => {
-          this.tinymceInit(data);
-        }
-      );
     }
 
 
@@ -124,11 +115,14 @@ export class ArticleComponent implements OnInit {
   async saveArticle() {
 
     const article = this.articleForm.getRawValue() as Article;   // getRawValue() pour récupérer les valeurs des champs disabled
+
     const HTMLtext = tinymce.activeEditor!.getContent();
+    console.log("HTMLtext : ", HTMLtext);
     tinymce.remove();
+    this.navBack();
 
 
-    if (this.formMode === 'create') {
+    if (this.creationMode) {
       // mode 'create'
       article.permalink = this.articleForm.get('title')?.value.toLowerCase().replace(/\s/g, '-');
 
@@ -201,10 +195,14 @@ export class ArticleComponent implements OnInit {
 
   // ********* configuration tinymce ***********
   tinymceInit(initialContent: string) {
+    if (!initialContent) console.log("initialContent is empty");
+
     tinymce.init({
       selector: "textarea#myTextarea",
       setup: (editor) => {
+
         editor.on('init', () => {
+          console.log("init event fired ...");
           editor.setContent(initialContent);
           console.log("initial Content loaded... ");
           this.templateLoaded = true;

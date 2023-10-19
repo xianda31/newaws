@@ -15,10 +15,10 @@ export function canActivateGuard(right: string): CanActivateFn {
       let member = memberService.getMemberByLicense(user.license);
       const rights = member?.rights;
       if (right == 'any right') {
-        console.log('checking right for user %s : %s', user.username, rights);
+        // console.log('checking right for user %s : %s', user.username, rights);
         return (rights == '') ? false : true;
       } else {
-        console.log('checking right for user %s : %s', user.username, rights?.includes(right));
+        // console.log('checking right for user %s : %s', user.username, rights?.includes(right));
         return (rights?.includes(right) ? true : false);
       }
     }

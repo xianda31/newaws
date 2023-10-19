@@ -79,7 +79,7 @@
         </li>
         <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Publications </a>
+            Publication </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/publisher/articles">Articles</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/categories">Catégories</a></li>
@@ -87,7 +87,7 @@
           </ul>
         </li>
         <!-- menu tests -->
-        <li class="nav-item mx-2 dropdown" *ngIf="!production">
+        <li class="nav-item mx-2 dropdown" *ngIf="test_links">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Tests </a>
           <ul class="dropdown-menu">

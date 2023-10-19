@@ -1,15 +1,9 @@
+<app-dash-header title="publication" subtitle="édition d'article"></app-dash-header>
 <div class="container">
   <form [formGroup]="articleForm">
 
-    <div class="row">
-      <div class="col-md-12 text-center">
-        <h3 class="text-center"> {{formStatus[0]}}</h3>
-        <!-- <p class="text-center">d'ici vous pouvez {{formStatus[1]}} </p> -->
-        <p> mode {{formMode}}</p>
-      </div>
-    </div>
 
-    <div class="card bg-body-secondary shadow-effect">
+    <div class="card bg-body-secondary shadow-effect m-5">
       <div class="row m-2">
 
         <div class="col-md-6 ">
@@ -81,46 +75,27 @@
 
         </div>
 
-
         <!-- selecteur &  viewer de l'image banner -->
         <div class="col-md-6">
-
           <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
           <div class="row">
-
-
             <div class="col-md-12">
               <img [src]="imgBuffer" alt="" class="img-fluid">
             </div>
           </div>
-
         </div>
 
       </div>
 
-
       <!-- editeur : contenu de l'article -->
-      <textarea id="myTextarea" class="row m-2">
-
-        <!-- <div class="form-group">
-          <label>Contenu de l'article</label>
-          <app-edit [control]="bodyControl"> </app-edit>
-        </div>
-
-        <div *ngIf="fcontrols['body'].errors?.['required']">
-          <div class="alert alert-danger" *ngIf="fcontrols['body'].touched && fcontrols['body'].invalid">
-            n'oubliez pas de remplir le texte de l'article </div>
-        </div> -->
-
-        <!-- <div [innerHTML]="HtmlContent" class="col-md-12" ></div> -->
-      </textarea>
+      <textarea id="myTextarea" class="row m-2"> </textarea>
     </div>
 
     <!-- bouton validation -->
     <div class="row">
       <div class="col-md-12 text-center pt-4">
         <button class="btn btn-primary" type="button" (click)="saveArticle()"
-          [disabled]="!articleForm.valid && formMode == 'create' && bannerValue !=''">Enregistrer</button>
+          [disabled]="!articleForm.valid && creationMode && bannerValue !=''">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info" (click)="navBack()">Abandonner</button>
       </div>

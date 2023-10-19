@@ -5,10 +5,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 
 
-
-// https://docs.amplify.aws/lib/storage/getting-started/q/platform/js/#configure-your-application
-
-
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -35,7 +31,6 @@ export class TestComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
-
     this.http.get('assets/html-templates/template_A.html', { responseType: 'text' }).subscribe(
       data => this.externalHtml = this.sanitizer.bypassSecurityTrustHtml(data)
     );
@@ -44,14 +39,11 @@ export class TestComponent implements OnInit, AfterViewInit {
       template: ['template2']
     });
 
-
-
     this.form.get('template')!.valueChanges.subscribe((template) => {
       tinymce.remove();
       this.tinymceInit(template);
       this.content = '';
     });
-
   }
 
   get template() {
@@ -74,7 +66,6 @@ export class TestComponent implements OnInit, AfterViewInit {
       editable_root: false,
       editable_class: 'editable',
     });
-
   }
 
   getContent() {
