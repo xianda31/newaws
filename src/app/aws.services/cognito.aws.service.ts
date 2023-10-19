@@ -10,7 +10,7 @@ import { environment } from "../environments/environment";
 export class CognitoService {
 
   currentUser: { username: string; license: string; } | null =
-    (environment.logging_bypass ? { username: 'Gordo', license: '000' } : null);
+    (environment.logging_bypass ? { username: 'Christian', license: '02439752' } : null);
 
   private _currentAuthenticatedUser$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
   get currentAuthenticatedUser() {

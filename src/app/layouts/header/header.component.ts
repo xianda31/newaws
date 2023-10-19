@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
 
     this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
       if (user) {
+
         this.loggedusername = user.username;
         this.loggeduserlicence = user.license;
         this.isLogged = true;

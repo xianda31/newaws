@@ -1,4 +1,4 @@
-<div *ngIf="catloaded" class="outer-wrapper">
+<div *ngIf="DBloaded" class="outer-wrapper">
     <div class="inner-wrapper">
         <app-header></app-header>
         <div class="container-fluid g-0">
@@ -8,4 +8,8 @@
         </div>
     </div>
     <app-footer></app-footer>
+</div>
+<div *ngIf="!DBloaded" class=" d-flex bg-success justify-content-center align-items-center" style="height: 100%">
+    <img src="../assets/images/bcsto.jpg" class=" row img-pulse" alt="logo">
+
 </div>

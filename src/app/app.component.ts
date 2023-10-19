@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from './aws.services/category.aws.service';
-import { ArticleService } from './aws.services/article.aws.service';
-import { Subject } from 'rxjs';
+import { combineLatest, delay } from 'rxjs';
+import { MemberService } from './aws.services/member.aws.service';
+import { environment } from './environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -9,38 +10,20 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  DBloaded: boolean = false;
 
-  catloaded: boolean = false;
-  articlesLoaded: boolean = true;  // impossible de trigger le chargement des articles dans le header
   constructor(
     private categoryService: CategoryService,
-    private articleService: ArticleService
+    private memberService: MemberService
   ) { }
   ngOnInit(): void {
-
-    // initialisation de categories nécessaire au chargement dynamique du menu (header ))
-
-
-    this.categoryService.categories$.subscribe((categories) => {
-      if (categories.length > 0) {
-        // console.log('%s categories loaded', categories.length, categories);
-        this.catloaded = true;
-      }
-
-    });
-
-
-    // this.articleService.articles$.subscribe((articles) => {
-    //   if (articles.length > 0) {
-    //     this.articlesLoaded = true;
-    //   }
-    //   console.log('%s articles loaded', articles.length, articles);
-    // }
-    // );
-
+    combineLatest([this.categoryService.categories$.pipe(delay(environment.spinner_tempo)), this.memberService.members$])
+      .subscribe(([categories, members]) => {
+        if (categories.length > 0 && members.length > 0) {
+          this.DBloaded = true;
+        }
+      });
   }
-
-
 
   title = 'bcsto';
 }
