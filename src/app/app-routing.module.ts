@@ -8,6 +8,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { Page404Component } from './pages/page404/page404.component';
 import { LinksComponent } from './pages/links/links.component';
 import { canActivateGuard } from './guards/can-activate.guard';
+import { MyDataComponent } from './pages/my-data/my-data.component';
 
 const routes: Routes = [
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'links', component: LinksComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'me', component: MyDataComponent },
   { path: 'cat/:cat', component: SingleCategoryComponent },
   { path: 'cat/:cat/:aid', component: SingleCategoryComponent },
   { path: 'pswreset/:email', component: PswresetComponent },
