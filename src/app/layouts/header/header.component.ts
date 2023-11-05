@@ -5,7 +5,11 @@ import { Category } from 'src/app/API.service';
 import { CategoryService } from 'src/app/aws.services/category.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
+import { NavigationService } from 'src/app/aws.services/navigation.aws.service';
 import { environment } from 'src/app/environments/environment';
+import { MenuItem } from 'src/app/interfaces/navigation.interface';
+
+
 
 @Component({
   selector: 'app-header',
@@ -14,12 +18,20 @@ import { environment } from 'src/app/environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
+
+  // menuItems!: MenuItem[];
+  menuItems$: Observable<MenuItem[]> = this.navService.siteMenus$;
+
+
   test_links: boolean = environment.test_links;
   loggedusername !: string;
   loggeduserlicence !: string;
   isLogged: boolean = environment.logging_bypass;
   isAdmin: boolean = false;
   isPublisher: boolean = false;
+
+  homeMenu!: MenuItem;
+  contactMenu!: MenuItem;
 
   categories$: Observable<Category[]> = this.categoryService.categories$;
   sortedCategories$: Observable<Category[]> = this.categoryService.categories$.pipe(
@@ -32,9 +44,13 @@ export class HeaderComponent implements OnInit {
     private cognitoService: CognitoService,
     private router: Router,
     private categoryService: CategoryService,
-    private memberService: MemberService
+    private memberService: MemberService,
+    private navService: NavigationService
   ) { }
   ngOnInit(): void {
+
+    // this.navService.loadSiteMenu;
+    this.homeMenu = this.navService.getMandatoryItem('Home');
 
 
 

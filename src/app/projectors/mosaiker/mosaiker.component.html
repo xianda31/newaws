@@ -1,0 +1,10 @@
+<div class="container-fluid ">
+    <app-headband [title]="label" description="..."> </app-headband>
+
+    <div class="p-2">
+        <div class="row row-cols-1 row-cols-md-2  justify-content-center">
+            <app-carder class="d-flex pb-2" *ngFor="let article of articles$ | async " [article]="article">
+            </app-carder>
+        </div>
+    </div>
+</div>

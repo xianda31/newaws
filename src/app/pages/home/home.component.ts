@@ -35,6 +35,6 @@ export class HomeComponent {
   }
 
   selectArticle(article: Article) {
-    this.router.navigate(['/cat', article.category!.label, article.id]);
+    this.router.navigate(['/page', article.category!.label, article.id]);
   }
 }

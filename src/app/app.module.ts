@@ -22,6 +22,11 @@ import { Page404Component } from './pages/page404/page404.component';
 import { LinksComponent } from './pages/links/links.component';
 import { RightsComponent } from './tests/rights/rights.component';
 import { MyDataComponent } from './pages/my-data/my-data.component';
+import { FlashPluginComponent } from './projectors/slider/plugins/flash-plugin/flash-plugin.component';
+import { AdDirective } from './projectors/slider/ad.directive';
+import { MosaikerComponent } from './projectors/mosaiker/mosaiker.component';
+import { CarderComponent } from './projectors/mosaiker/viewers/carder/carder.component';
+import { TodoComponent } from './pages/todo/todo.component';
 // import { RightsInputComponent } from './tools/rights-input/rights-input.component';
 
 @NgModule({
@@ -44,6 +49,11 @@ import { MyDataComponent } from './pages/my-data/my-data.component';
     LinksComponent,
     RightsComponent,
     MyDataComponent,
+    FlashPluginComponent,
+    AdDirective,
+    MosaikerComponent,
+    CarderComponent,
+    TodoComponent,
 
 
   ],
