@@ -12,14 +12,14 @@ import { Route } from '@angular/router';
 // }
 
 
-export interface oldPage {
-    id: string;
-    title: string;
-    description: string;
-    componentId: string;
-    param?: string;
-    // _route?: Route;
-}
+// export interface oldPage {
+//     id: string;
+//     title: string;
+//     description: string;
+//     componentId: string;
+//     param?: string;
+//     // _route?: Route;
+// }
 
 
 export class Page {
@@ -27,10 +27,9 @@ export class Page {
     nav!: string;
     title!: string;
     description!: string;
-    componentId!: string;
-    route_path?: string;
-
-    param!: string | null;
+    viewer!: string;
+    // category?: string | null;
+    route_path?: string;     // path without parameter extracted from the viewer component's path
 }
 
 export class Menu {

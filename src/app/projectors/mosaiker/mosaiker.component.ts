@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class MosaikerComponent implements OnChanges {
 
-  @Input('category') label!: string;
+  @Input('title') label!: string;
+  @Input('description') description!: string;
 
   articles$!: Observable<Article[]>;
   authenticatedUser: boolean = false;
@@ -25,6 +26,8 @@ export class MosaikerComponent implements OnChanges {
 
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
+
+    // console.log('mosaiker changes', changes['description'].currentValue);
 
 
     this.articles$ = this.articleService.articles$.pipe(

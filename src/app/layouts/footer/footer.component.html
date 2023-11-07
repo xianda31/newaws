@@ -4,16 +4,14 @@
 
       <div>
         <ul class="nav justify-content-center  ">
-          <!-- <li class="nav-item"> <a class="nav-link active" routerLink="home" aria-current="page">Home</a> </li> -->
-          <!-- <li class="nav-item"> <a class="nav-link" href="#">About</a> </li> -->
-          <li class="nav-item"> <a class="nav-link"
-              [routerLink]="contactMenu.page!.param ? [contactMenu.page!.route_path,contactMenu.page!.param] : [contactMenu.page!.route_path]">
-              contact</a>
+          <li class="nav-item"> <a class="nav-link" [routerLink]=" [contactMenu.page!.route_path]"
+              [queryParams]=" {title : contactMenu.page!.title, description : contactMenu.page!.description}">
+              contactez nous</a>
           </li>
-          <li class="nav-item"> <a class="nav-link"
-              [routerLink]="legalMenu.page!.param ? [legalMenu.page!.route_path,legalMenu.page!.param] : [legalMenu.page!.route_path]">
-              légales</a> </li>
-          <li class="nav-item"> <a class="nav-link " routerLink="signup">S'enregistrer</a> </li>
+          <li class="nav-item"> <a class="nav-link" [routerLink]=" [legalMenu.page!.route_path] "
+              [queryParams]=" {title : legalMenu.page!.title, description : legalMenu.page!.description}">
+              mentions légales</a> </li>
+          <li class="nav-item"> <a class="nav-link " routerLink="signup">s'enregistrer</a> </li>
         </ul>
       </div>
 

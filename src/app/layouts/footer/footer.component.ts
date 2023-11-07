@@ -14,7 +14,7 @@ export class FooterComponent {
     private navService: NavigationService
   ) { }
   contactMenu: Menu = this.navService.getMandatoryItem('Contact');
-  legalMenu: Menu = this.navService.getMandatoryItem('Légal');
+  legalMenu: Menu = this.navService.getMandatoryItem('Legal');
 
 
 

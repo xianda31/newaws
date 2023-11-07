@@ -13,8 +13,8 @@ import { MosaikerComponent } from './projectors/mosaiker/mosaiker.component';
 import { TodoComponent } from './pages/todo/todo.component';
 
 export const _compDirectory: any = {
-  "board": { path: 'multi/:category', component: MosaikerComponent },
-  "single": { path: 'multi/:category', component: MosaikerComponent },
+  "viewer": { path: 'multi', component: MosaikerComponent },
+  // "single": { path: 'multi/:category', component: MosaikerComponent },
 
   // "single": { path: 'page/:cat', component: SingleCategoryComponent },
   "links": { path: 'links', component: LinksComponent },

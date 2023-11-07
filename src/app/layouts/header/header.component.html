@@ -7,8 +7,8 @@
     </button>
 
     <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link"
-      [routerLink]="homeMenu.page!.param ? [homeMenu.page!.route_path,homeMenu.page!.param] : [homeMenu.page!.route_path]">
+    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" [homeMenu.page!.route_path]"
+      [queryParams]=" {title : homeMenu.page!.title, description : homeMenu.page!.description} ">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
@@ -21,16 +21,16 @@
         <!-- boucle sur les menus publisher -->
         <ng-container *ngFor="let item of menuItems$ | async | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
-            <a class="nav-link mx-2" routerLinkActive="active-link"
-              [routerLink]="item.value[0].page!.param ? [item.value[0].page!.route_path,item.value[0].page!.param] : [item.value[0].page!.route_path]">{{item.key}}</a>
+            <a class="nav-link mx-2" routerLinkActive="active-link" [routerLink]="[item.value[0].page!.route_path]"
+              [queryParams]="{title: item.value[0].page!.title, description:item.value[0].page!.description} ">{{item.key}}</a>
           </li>
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{item.key}}</a>
             <ul class="dropdown-menu">
               <li *ngFor="let subMenu of item.value">
-                <a class="dropdown-item"
-                  [routerLink]="subMenu.page!.param ? [subMenu.page!.route_path,subMenu.page!.param]: [subMenu.page!.route_path]">{{subMenu.label}}</a>
+                <a class="dropdown-item" [routerLink]=" [subMenu.page!.route_path]"
+                  [queryParams]="{title:subMenu.page!.title, description:subMenu.page!.description}">{{subMenu.label}}</a>
               </li>
             </ul>
           </li>

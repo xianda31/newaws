@@ -58,13 +58,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.homeMenu = this.navService.getMandatoryItem('Home');
 
     this.navService.siteMenus$.subscribe((menus) => {
       this.menuItems = menus;
     });
 
     // this.navService.loadSiteMenu;
-    this.homeMenu = this.navService.getMandatoryItem('Home');
 
 
 
