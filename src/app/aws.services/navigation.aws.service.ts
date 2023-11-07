@@ -22,7 +22,7 @@ export class NavigationService {
     { id: 'p1', nav: 'Ecole de Bridge', title: 'Initiation', description: 'blablabla', viewer: 'viewer' },
     { id: 'p2', nav: 'Ecole de Bridge', title: 'Perfectionnement', description: 'perf | go', viewer: 'viewer' },
     // { id: 'c', nav: 'Links', title: 'Links', description: 'blablabla', viewer: "links" },
-    { id: 'todoA', nav: 'Le Club', title: 'Les acteurs du Club', description: 'saison 2023-24', viewer: "todo" },
+    { id: 'todoA', nav: 'Le Club', title: 'Les acteurs du Club', description: 'saison 2023-24', viewer: "viewer" },
     { id: 'todoB', nav: 'Le Club', title: 'Tarifs', description: 'saison 2023-24', viewer: "todo" },
     { id: 'todoC', nav: 'Le Club', title: 'Status et règlements', description: '', viewer: "todo" },
 
