@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MenuItem, Page } from '../interfaces/navigation.interface';
+import { Menu, Page, oldPage } from '../interfaces/navigation.interface';
 import { BehaviorSubject } from 'rxjs';
 import { _compDirectory } from '../app-routing.module';
 
@@ -7,104 +7,106 @@ import { _compDirectory } from '../app-routing.module';
   providedIn: 'root'
 })
 export class NavigationService {
-  SiteMenus: MenuItem[] = [];
-  siteMenus$: BehaviorSubject<MenuItem[]> = new BehaviorSubject<MenuItem[]>([]);
+  siteMenus: Map<string, Menu[]> = new Map<string, Menu[]>([]);
+  siteMenus$: BehaviorSubject<Map<string, Menu[]>> = new BehaviorSubject<Map<string, Menu[]>>(this.siteMenus);
   _components = _compDirectory;
 
-
-  constructor() {
-    const timeout = setTimeout(() => {
-      this.loadSiteMenu();
-      this.siteMenus$.next(this.SiteMenus);
-    }, 1000);
-  }
-
   _mustHavePages: Page[] = [
-    { id: 'xx', title: 'Home', description: 'blablabla', componentId: 'single', param: 'Accueil' },
-    { id: 'a', title: 'Contact', description: 'blablabla', componentId: 'single', param: 'Contact' },
-    { id: 'zz', title: 'Légal', description: 'blablabla', componentId: 'single', param: 'Légal' },
+    { id: 'xx', nav: 'Home', title: 'Home', description: 'blablabla', componentId: 'single', param: 'Accueil' },
+    { id: 'a', nav: 'Contact', title: 'Contact', description: 'blablabla', componentId: 'single', param: 'Contact' },
+    { id: 'zz', nav: 'Legal', title: 'Légal', description: 'blablabla', componentId: 'single', param: 'Légal' },
   ]
 
   _pages: Page[] = [
-    // { id: 'legal', title: 'Légal', description:'blablabla', componentId: 'single', param: 'Légal' },
-    { id: 'b', title: 'La une', description: 'blablabla', componentId: "board", param: 'La une' },
-    { id: 'p1', title: 'Initiation', description: 'blablabla', componentId: "board", param: 'Initiation' },
-    { id: 'p2', title: 'Perfect.', description: 'blablabla', componentId: "board", param: 'Perfectionnement' },
-    { id: 'c', title: 'Links', description: 'blablabla', componentId: "links" },
-    { id: 'todo', title: 'todoo', description: 'blablabla', componentId: "todo" },
+    { id: 'b', nav: 'La une', title: 'La une', description: 'blablabla', componentId: "board", param: 'La une' },
+    { id: 'p1', nav: 'Ecole de Bridge', title: 'Initiation', description: 'blablabla', componentId: "board", param: 'Initiation' },
+    { id: 'p2', nav: 'Ecole de Bridge', title: 'Perfectionnement', description: 'blablabla', componentId: "board", param: 'Perfectionnement' },
+    { id: 'c', nav: 'Links', title: 'Links', description: 'blablabla', componentId: "links", param: null },
+    { id: 'todoA', nav: 'todo', title: 'todooA', description: 'blablabla', componentId: "todo", param: null },
+    { id: 'todoB', nav: 'todo', title: 'todooB', description: 'blablabla', componentId: "todo", param: null },
   ];
 
-  _menuItems: MenuItem[] = [
-    { endItem: true, label: 'La une', pageId: 'b' },
-    {
-      endItem: false, label: 'Tournois', subItems: [
-        { endItem: true, label: 'Horaires', pageId: 'todo' },
-        { endItem: true, label: 'Informations', pageId: 'todo' },
-      ]
-    },
-    { endItem: true, label: 'Links', pageId: 'c' },
-    {
-      endItem: false, label: 'Ecole de Bridge', subItems: [
-        { endItem: true, label: 'Initiation', pageId: 'p1' },
-        { endItem: true, label: 'Perfectionnement', pageId: 'p2' },
-        { endItem: true, label: 'Autre', pageId: 'todo' },
-      ]
-    },
-    {
-      endItem: false, label: 'Le Club', subItems: [
-        { endItem: true, label: 'Les acteurs du Club', pageId: 'todo' },
-        { endItem: true, label: 'Tarifs', pageId: 'todo' },
-        { endItem: true, label: 'Status et règlements', pageId: 'todo' },
-      ]
-    },
-    { endItem: true, label: 'Photos', pageId: 'todo' },
 
+  constructor() {
 
-  ];
-
-  getMandatoryItem(title: 'Home' | 'Contact' | 'Légal'): MenuItem {
-    let menuItem: MenuItem = { endItem: true, label: title };
-    let page = this._mustHavePages.find((page) => page.title === title);
-    page = page ? page : { id: 'xx', title: '404', description: 'blablabla', componentId: '404' };
-    let component = this._components[page.componentId];
-    let strippedPath = this.stripParameter(component.path!);
-    menuItem.routerLink = strippedPath;
-    menuItem.page_param = page.param;
-    return menuItem;
+    const timeout = setTimeout(() => {
+      ;
+      this.siteMenus$.next(this.buildMenuMap());
+    }, 1000);
   }
 
 
+
+  // _menus: Map<string, Menu[]> = new Map<string, Menu[]>([
+  //   ["La une", [{ label: 'La une', pageId: 'b' }]],
+  //   ["Tournois", [
+  //     { label: 'Horaires', pageId: 'todo' },
+  //     { label: 'Informations', pageId: 'todo' },
+  //   ]],
+  //   ["Links", [{ label: 'Links', pageId: 'c' }]],
+  //   ["Ecole de Bridge", [
+  //     { label: 'Initiation', pageId: 'p1' },
+  //     { label: 'Perfectionnement', pageId: 'p2' },
+  //     { label: 'Autre', pageId: 'todo' },
+  //   ]],
+  //   ["Le Club", [
+  //     { label: 'Les acteurs du Club', pageId: 'todo' },
+  //     { label: 'Tarifs', pageId: 'todo' },
+  //     { label: 'Status et règlements', pageId: 'todo' },
+  //   ]],
+  //   ["Photos", [{ label: 'Photos', pageId: 'todo' }]],
+
+
+  // ]);
+
+
+  getMandatoryItem(title: 'Home' | 'Contact' | 'Légal'): Menu {
+    let menu!: Menu;
+    let page = this._mustHavePages.find((page) => page.title === title);
+    if (!page) { return { label: '404', pageId: 'xx' }; }
+    let component = this._components[page.componentId];
+    let strippedPath = this.stripParameter(component.path!);
+    page.route_path = strippedPath;
+    menu = { label: page.title, pageId: page.id, page: page };
+    return menu;
+  }
 
   stripParameter(path: string) {
     return path.split('/:')[0];
   }
 
-  updateEndMenu(menuItem: MenuItem, push: boolean) {
-    if (menuItem.endItem) {
-      let page = this._pages.find((page) => page.id === menuItem.pageId);
-      if (page) {
-        let component = this._components[page.componentId];
-        let strippedPath = this.stripParameter(component.path!);
-        menuItem.routerLink = strippedPath;
-        menuItem.page_param = page.param;
-        if (push) { this.SiteMenus.push(menuItem); }
-      }
+  buildMenu(pageId: string): Menu {
+    let menu!: Menu;
+    let page = this._pages.find((page) => page.id === pageId);
+    if (!page) {
+      console.log('page %s not found', pageId);
+      menu = { label: '404', pageId: '404', page: this._components['404'] };
     } else {
-      this.SiteMenus.push(menuItem);
-      if (menuItem.subItems) {
-
-        menuItem.subItems.forEach((subItem) => {
-
-          this.updateEndMenu(subItem, false);
-        });
-      }
+      let component = this._components[page.componentId];
+      let strippedPath = this.stripParameter(component.path!);
+      page.route_path = strippedPath;
+      menu = { label: page.title, pageId: page.id, page: page };
     }
+    return menu;
   }
 
-  loadSiteMenu() {
-    this._menuItems.forEach((menuItem) => {
-      this.updateEndMenu(menuItem, true);
+  buildMenuMap(): Map<string, Menu[]> {
+    let menuMap = new Map<string, Menu[]>([]);
+
+    this._pages.forEach((page) => {
+      const root = page.nav;
+      if (menuMap.has(root)) {
+        let arr = menuMap.get(root)!;
+        arr.push(this.buildMenu(page.id));
+        // menuMap.set(root, arr);   // pas nécessaire car arr est une référence
+      } else {
+        menuMap.set(root, [this.buildMenu(page.id)]);
+      };
     });
-  }
 
+    console.log('menuMap: %o', menuMap);
+    return menuMap;
+
+
+  }
 }

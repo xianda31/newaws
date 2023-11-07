@@ -1,22 +1,40 @@
 
 import { Route } from '@angular/router';
 
-export class MenuItem {
-    label!: string;
+// export class MenuItem {
+//     label!: string;
 
-    endItem!: boolean;
-    pageId?: string;
-    subItems?: MenuItem[];
-    routerLink?: string;
-    page_param?: any;
-}
+//     endItem!: boolean;
+//     pageId!: string;
+//     subItems!: MenuItem[];
+//     routerLink?: string;
+//     page_param?: any;
+// }
 
 
-export interface Page {
+export interface oldPage {
     id: string;
     title: string;
     description: string;
     componentId: string;
     param?: string;
     // _route?: Route;
+}
+
+
+export class Page {
+    id!: string;
+    nav!: string;
+    title!: string;
+    description!: string;
+    componentId!: string;
+    route_path?: string;
+
+    param!: string | null;
+}
+
+export class Menu {
+    label !: string;
+    pageId!: string;
+    page?: Page;
 }

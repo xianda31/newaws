@@ -7,10 +7,11 @@
           <!-- <li class="nav-item"> <a class="nav-link active" routerLink="home" aria-current="page">Home</a> </li> -->
           <!-- <li class="nav-item"> <a class="nav-link" href="#">About</a> </li> -->
           <li class="nav-item"> <a class="nav-link"
-              [routerLink]="contactMenu.page_param ? [contactMenu.routerLink,contactMenu.page_param] : [contactMenu.routerLink]">Contact</a>
+              [routerLink]="contactMenu.page!.param ? [contactMenu.page!.route_path,contactMenu.page!.param] : [contactMenu.page!.route_path]">
+              contact</a>
           </li>
           <li class="nav-item"> <a class="nav-link"
-              [routerLink]="legalMenu.page_param ? [legalMenu.routerLink,legalMenu.page_param] : [legalMenu.routerLink]">Mentions
+              [routerLink]="legalMenu.page!.param ? [legalMenu.page!.route_path,legalMenu.page!.param] : [legalMenu.page!.route_path]">
               légales</a> </li>
           <li class="nav-item"> <a class="nav-link " routerLink="signup">S'enregistrer</a> </li>
         </ul>

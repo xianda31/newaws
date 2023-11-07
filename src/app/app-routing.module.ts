@@ -14,10 +14,12 @@ import { TodoComponent } from './pages/todo/todo.component';
 
 export const _compDirectory: any = {
   "board": { path: 'multi/:category', component: MosaikerComponent },
-  "single": { path: 'page/:cat', component: SingleCategoryComponent },
+  "single": { path: 'multi/:category', component: MosaikerComponent },
+
+  // "single": { path: 'page/:cat', component: SingleCategoryComponent },
   "links": { path: 'links', component: LinksComponent },
   "todo": { path: 'todo', component: TodoComponent },
-  // "404": { path: '404', component: Page404Component },
+  "404": { path: '404', component: Page404Component },
 };
 
 function getRoutes(): Routes {
@@ -33,7 +35,7 @@ function getRoutes(): Routes {
       canActivate: [canActivateGuard('any right')],
       loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
     },
-    { path: '404', component: Page404Component },
+    // { path: '404', component: Page404Component },
     { path: '**', component: Page404Component },
 
 

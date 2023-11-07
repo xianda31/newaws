@@ -7,7 +7,7 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
 import { NavigationService } from 'src/app/aws.services/navigation.aws.service';
 import { environment } from 'src/app/environments/environment';
-import { MenuItem } from 'src/app/interfaces/navigation.interface';
+import { Menu } from 'src/app/interfaces/navigation.interface';
 
 
 
@@ -19,8 +19,8 @@ import { MenuItem } from 'src/app/interfaces/navigation.interface';
 export class HeaderComponent implements OnInit {
 
 
-  // menuItems!: MenuItem[];
-  menuItems$: Observable<MenuItem[]> = this.navService.siteMenus$;
+  menuItems!: Map<string, Menu[]>;
+  menuItems$: Observable<Map<string, Menu[]>> = this.navService.siteMenus$;
 
 
   test_links: boolean = environment.test_links;
@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isPublisher: boolean = false;
 
-  homeMenu!: MenuItem;
-  contactMenu!: MenuItem;
+  homeMenu!: Menu;
+  contactMenu!: Menu;
 
   categories$: Observable<Category[]> = this.categoryService.categories$;
   sortedCategories$: Observable<Category[]> = this.categoryService.categories$.pipe(
@@ -47,7 +47,21 @@ export class HeaderComponent implements OnInit {
     private memberService: MemberService,
     private navService: NavigationService
   ) { }
+
+  get menuKeys() {
+    return Array.from(this.menuItems.keys());
+  }
+  get menuValues() {
+    return Array.from(this.menuItems.values());
+  }
+
+
   ngOnInit(): void {
+
+
+    this.navService.siteMenus$.subscribe((menus) => {
+      this.menuItems = menus;
+    });
 
     // this.navService.loadSiteMenu;
     this.homeMenu = this.navService.getMandatoryItem('Home');

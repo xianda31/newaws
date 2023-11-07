@@ -8,7 +8,7 @@
 
     <!-- brand logo -->
     <a class="navbar-brand " routerLinkActive="active-link"
-      [routerLink]="homeMenu.page_param ? [homeMenu.routerLink,homeMenu.page_param] : [homeMenu.routerLink]">
+      [routerLink]="homeMenu.page!.param ? [homeMenu.page!.route_path,homeMenu.page!.param] : [homeMenu.page!.route_path]">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
@@ -19,20 +19,21 @@
       <ul class="navbar-nav">
 
         <!-- boucle sur les menus publisher -->
-        <ng-container *ngFor="let menu of menuItems$ | async">
-          <li *ngIf="menu.endItem" class="nav-item ">
+        <ng-container *ngFor="let item of menuItems$ | async | keyvalue">
+          <li *ngIf="item.value.length === 1" class="nav-item ">
             <a class="nav-link mx-2" routerLinkActive="active-link"
-              [routerLink]="menu.page_param ? [menu.routerLink,menu.page_param] : [menu.routerLink]">{{menu.label}}</a>
+              [routerLink]="item.value[0].page!.param ? [item.value[0].page!.route_path,item.value[0].page!.param] : [item.value[0].page!.route_path]">{{item.key}}</a>
           </li>
-          <li *ngIf="!menu.endItem" class="nav-item dropdown">
+          <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{menu.label}}</a>
+              {{item.key}}</a>
             <ul class="dropdown-menu">
-              <li *ngFor="let subMenu of menu.subItems">
+              <li *ngFor="let subMenu of item.value">
                 <a class="dropdown-item"
-                  [routerLink]="subMenu.page_param ? [subMenu.routerLink,subMenu.page_param]: [subMenu.routerLink]">{{subMenu.label}}</a>
+                  [routerLink]="subMenu.page!.param ? [subMenu.page!.route_path,subMenu.page!.param]: [subMenu.page!.route_path]">{{subMenu.label}}</a>
               </li>
             </ul>
+          </li>
         </ng-container>
 
 

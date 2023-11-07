@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     this.memberService.members$,
     this.navService.siteMenus$])
       .subscribe(([categories, members, siteMenus]) => {
-        if (categories.length > 0 && members.length > 0 && siteMenus.length > 0) {
+        if (categories.length > 0 && members.length > 0 && siteMenus.size > 0) {
           this.DBloaded = true;
         }
       });

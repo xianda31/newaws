@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationService } from 'src/app/aws.services/navigation.aws.service';
 import { environment } from 'src/app/environments/environment';
-import { MenuItem } from 'src/app/interfaces/navigation.interface';
+import { Menu } from 'src/app/interfaces/navigation.interface';
 
 @Component({
   selector: 'app-footer',
@@ -13,8 +13,8 @@ export class FooterComponent {
   constructor(
     private navService: NavigationService
   ) { }
-  contactMenu: MenuItem = this.navService.getMandatoryItem('Contact');
-  legalMenu: MenuItem = this.navService.getMandatoryItem('Légal');
+  contactMenu: Menu = this.navService.getMandatoryItem('Contact');
+  legalMenu: Menu = this.navService.getMandatoryItem('Légal');
 
 
 
