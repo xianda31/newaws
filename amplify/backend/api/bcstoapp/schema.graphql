@@ -33,3 +33,12 @@ type Article @model @auth(rules: [{ allow: public }]) {
   public: Boolean!
   category: Category @belongsTo(fields: ["categoryId"])
 }
+
+type Menu @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  label: String!
+  public: Boolean!
+  rank: Int!
+  type: String! # tête de sous-menus, page de type A, page de type B, page de type C
+  routerLink: String
+}
