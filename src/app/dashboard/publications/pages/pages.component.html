@@ -1,0 +1,128 @@
+<app-dash-header title="administration" subtitle="gestion des pages"></app-dash-header>
+
+<div class="container p-2">
+
+
+    <form [formGroup]="pageForm">
+        <table class="table table-responsive-sm align-items-center table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
+                    <!-- <th scope="col" class="col-md-2 "></th> -->
+                    <th scope="col" class="col-md-1 ">racine</th>
+                    <th scope="col" class="col-md-1 ">menu</th>
+                    <th scope="col" class="col-md-5">descriptif (bandeau)</th>
+                    <th scope="col" class="col-md-2">afficheur</th>
+                    <th scope="col" class="col-md-1 text-center">nb articles</th>
+                    <th scope="col" class="col-md-2 text-center"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let page of sortedPages$ | async" (click)="selectPage(page)">
+                    <td class="col"> {{page.hidden ? '' : page.root_menu }} </td>
+                    <td class="col"> {{ page.label }} </td>
+                    <td class="col">{{ page.description }}</td>
+                    <td class="col">{{ page.viewer }}</td>
+                    <td class="col text-center ">{{ articlesByPageId[page.label] }}</td>
+                    <td class="col text-center">
+                        <button type="button" class="btn btn-light btn-sm " (click)="deletePage($event,page)">
+                            <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="6"></td> <!-- saute une ligne -->
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
+                    <th scope="col" class="col-md-1 "></th>
+                    <th scope="col" class="col-md-1 "></th>
+                    <th scope="col" class="col-md-5"></th>
+                    <th scope="col" class="col-md-2"></th>
+                    <th scope="col" class="col-md-1 text-center ">no show</th>
+                    <th scope="col" class="col-md-1 "></th>
+                    <th scope="col" class="col-md-1 text-center"></th>
+                </tr>
+                <tr class="table-info px-0">
+                    <td class="col text-center ">
+                        <input type="text" class="formcontrol" formControlName="root_menu" id="root_menu">
+                    </td>
+
+                    <td class="px-1"><input type="text" class="formcontrol " formControlName="label" id="label"
+                            [class.is-invalid]="label.invalid && (label.dirty || label.touched)">
+                        <div class="invalid-feedback">
+                            un titre de page doit être fourni
+                        </div>
+                    </td>
+
+                    <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="description"
+                            id="description"
+                            [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
+                        <div class="invalid-feedback">
+                            une descriptif doit être fourni
+                        </div>
+                    </td>
+
+                    <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="viewer" id="viewer"
+                            [class.is-invalid]="viewer.invalid && (viewer.dirty || viewer.touched)">
+                        <div class="invalid-feedback">
+                            une descriptif doit être fourni
+                        </div>
+                    </td>
+
+                    <td class="col text-center ">
+                        <!-- <input type="text" class="formcontrol" formControlName="hidden" id="hidden"> -->
+                        <app-toggle-input class="formcontrol" formControlName="hidden"></app-toggle-input>
+                    </td>
+                    <td class="col text-center">
+                        <button type="submit" class="btn btn-sm btn-warning " (click)="cancel()">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+
+                    </td>
+
+                    <td class="col text-center">
+                        <!-- &nbsp; -->
+                        <button *ngIf="createMode" type="submit" id="validation"
+                            class="btn btn-sm btn-primary text-white " (click)="createPage()"
+                            [disabled]="pageForm.invalid">
+                            Ajouter
+                        </button>
+
+                        <button *ngIf="!createMode" type="submit" id="validation"
+                            class="btn btn-sm btn-primary text-white " (click)="updatePage()"
+                            [disabled]="pageForm.invalid">
+                            Valider
+                        </button>
+                    </td>
+
+
+                </tr>
+
+            </tfoot>
+
+
+        </table>
+    </form>
+
+
+    <!-- </div> -->
+    <div class="card col-6 offset-md-6 p-2">
+        <div class="text-sm-start">
+            <span class="fw-bold">racine :&nbsp;</span>
+            <span>le rattachement à la barre de menu</span>
+        </div>
+        <div class="text-sm-start">
+            <span class="fw-bold">label : &nbsp;</span>
+            <span>le libellé dans la barre de menu (ou sous-menu)</span>
+        </div>
+        <div class="text-sm-start">
+            <span class="fw-bold">no show : &nbsp;</span>
+            <span>si activé, la page n'aura pas de menu dédié dans la barre de menu</span>
+        </div>
+    </div>
+
+</div>

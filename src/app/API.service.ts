@@ -13,9 +13,9 @@ export type __SubscriptionContainer = {
   onCreateMember: OnCreateMemberSubscription;
   onUpdateMember: OnUpdateMemberSubscription;
   onDeleteMember: OnDeleteMemberSubscription;
-  onCreateCategory: OnCreateCategorySubscription;
-  onUpdateCategory: OnUpdateCategorySubscription;
-  onDeleteCategory: OnDeleteCategorySubscription;
+  onCreatePage: OnCreatePageSubscription;
+  onUpdatePage: OnUpdatePageSubscription;
+  onDeletePage: OnDeletePageSubscription;
   onCreateArticle: OnCreateArticleSubscription;
   onUpdateArticle: OnUpdateArticleSubscription;
   onDeleteArticle: OnDeleteArticleSubscription;
@@ -105,36 +105,24 @@ export type DeleteMemberInput = {
   id: string;
 };
 
-export type CreateCategoryInput = {
+export type CreatePageInput = {
   id?: string | null;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
-  rank: number;
-  fixed?: boolean | null;
+  viewer: string;
+  hidden?: boolean | null;
 };
 
-export type ModelCategoryConditionInput = {
+export type ModelPageConditionInput = {
+  root_menu?: ModelStringInput | null;
   label?: ModelStringInput | null;
-  title?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  rank?: ModelIntInput | null;
-  fixed?: ModelBooleanInput | null;
-  and?: Array<ModelCategoryConditionInput | null> | null;
-  or?: Array<ModelCategoryConditionInput | null> | null;
-  not?: ModelCategoryConditionInput | null;
-};
-
-export type ModelIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
+  viewer?: ModelStringInput | null;
+  hidden?: ModelBooleanInput | null;
+  and?: Array<ModelPageConditionInput | null> | null;
+  or?: Array<ModelPageConditionInput | null> | null;
+  not?: ModelPageConditionInput | null;
 };
 
 export type ModelBooleanInput = {
@@ -144,15 +132,15 @@ export type ModelBooleanInput = {
   attributeType?: ModelAttributeTypes | null;
 };
 
-export type Category = {
-  __typename: "Category";
+export type Page = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: ModelArticleConnection | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -170,25 +158,24 @@ export type Article = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: Category | null;
+  pageId: string;
+  page?: Page | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type UpdateCategoryInput = {
+export type UpdatePageInput = {
   id: string;
+  root_menu?: string | null;
   label?: string | null;
-  title?: string | null;
   description?: string | null;
-  rank?: number | null;
-  fixed?: boolean | null;
+  viewer?: string | null;
+  hidden?: boolean | null;
 };
 
-export type DeleteCategoryInput = {
+export type DeletePageInput = {
   id: string;
 };
 
@@ -198,10 +185,9 @@ export type CreateArticleInput = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
+  pageId: string;
 };
 
 export type ModelArticleConditionInput = {
@@ -209,10 +195,9 @@ export type ModelArticleConditionInput = {
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  categoryId?: ModelIDInput | null;
-  assigned?: ModelBooleanInput | null;
   featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
+  pageId?: ModelIDInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
   or?: Array<ModelArticleConditionInput | null> | null;
   not?: ModelArticleConditionInput | null;
@@ -240,10 +225,9 @@ export type UpdateArticleInput = {
   banner?: string | null;
   summary?: string | null;
   permalink?: string | null;
-  categoryId?: string | null;
-  assigned?: boolean | null;
   featured?: boolean | null;
   public?: boolean | null;
+  pageId?: string | null;
 };
 
 export type DeleteArticleInput = {
@@ -268,21 +252,21 @@ export type ModelMemberConnection = {
   nextToken?: string | null;
 };
 
-export type ModelCategoryFilterInput = {
+export type ModelPageFilterInput = {
   id?: ModelIDInput | null;
+  root_menu?: ModelStringInput | null;
   label?: ModelStringInput | null;
-  title?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  rank?: ModelIntInput | null;
-  fixed?: ModelBooleanInput | null;
-  and?: Array<ModelCategoryFilterInput | null> | null;
-  or?: Array<ModelCategoryFilterInput | null> | null;
-  not?: ModelCategoryFilterInput | null;
+  viewer?: ModelStringInput | null;
+  hidden?: ModelBooleanInput | null;
+  and?: Array<ModelPageFilterInput | null> | null;
+  or?: Array<ModelPageFilterInput | null> | null;
+  not?: ModelPageFilterInput | null;
 };
 
-export type ModelCategoryConnection = {
-  __typename: "ModelCategoryConnection";
-  items: Array<Category | null>;
+export type ModelPageConnection = {
+  __typename: "ModelPageConnection";
+  items: Array<Page | null>;
   nextToken?: string | null;
 };
 
@@ -292,10 +276,9 @@ export type ModelArticleFilterInput = {
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  categoryId?: ModelIDInput | null;
-  assigned?: ModelBooleanInput | null;
   featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
+  pageId?: ModelIDInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
@@ -347,27 +330,15 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array<string | null> | null;
 };
 
-export type ModelSubscriptionCategoryFilterInput = {
+export type ModelSubscriptionPageFilterInput = {
   id?: ModelSubscriptionIDInput | null;
+  root_menu?: ModelSubscriptionStringInput | null;
   label?: ModelSubscriptionStringInput | null;
-  title?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
-  rank?: ModelSubscriptionIntInput | null;
-  fixed?: ModelSubscriptionBooleanInput | null;
-  and?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
-  or?: Array<ModelSubscriptionCategoryFilterInput | null> | null;
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  in?: Array<number | null> | null;
-  notIn?: Array<number | null> | null;
+  viewer?: ModelSubscriptionStringInput | null;
+  hidden?: ModelSubscriptionBooleanInput | null;
+  and?: Array<ModelSubscriptionPageFilterInput | null> | null;
+  or?: Array<ModelSubscriptionPageFilterInput | null> | null;
 };
 
 export type ModelSubscriptionBooleanInput = {
@@ -381,10 +352,9 @@ export type ModelSubscriptionArticleFilterInput = {
   banner?: ModelSubscriptionStringInput | null;
   summary?: ModelSubscriptionStringInput | null;
   permalink?: ModelSubscriptionStringInput | null;
-  categoryId?: ModelSubscriptionIDInput | null;
-  assigned?: ModelSubscriptionBooleanInput | null;
   featured?: ModelSubscriptionBooleanInput | null;
   public?: ModelSubscriptionBooleanInput | null;
+  pageId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
   or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
 };
@@ -425,50 +395,50 @@ export type DeleteMemberMutation = {
   updatedAt: string;
 };
 
-export type CreateCategoryMutation = {
-  __typename: "Category";
+export type CreatePageMutation = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type UpdateCategoryMutation = {
-  __typename: "Category";
+export type UpdatePageMutation = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type DeleteCategoryMutation = {
-  __typename: "Category";
+export type DeletePageMutation = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -480,18 +450,17 @@ export type CreateArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -506,18 +475,17 @@ export type UpdateArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -532,18 +500,17 @@ export type DeleteArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -579,32 +546,32 @@ export type ListMembersQuery = {
   nextToken?: string | null;
 };
 
-export type GetCategoryQuery = {
-  __typename: "Category";
+export type GetPageQuery = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type ListCategoriesQuery = {
-  __typename: "ModelCategoryConnection";
+export type ListPagesQuery = {
+  __typename: "ModelPageConnection";
   items: Array<{
-    __typename: "Category";
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -618,18 +585,17 @@ export type GetArticleQuery = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -646,17 +612,16 @@ export type ListArticlesQuery = {
     banner: string;
     summary: string;
     permalink: string;
-    categoryId: string;
-    assigned: boolean;
     featured: boolean;
     public: boolean;
+    pageId: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
   nextToken?: string | null;
 };
 
-export type ArticlesByCategoryIdQuery = {
+export type ArticlesByPageIdQuery = {
   __typename: "ModelArticleConnection";
   items: Array<{
     __typename: "Article";
@@ -665,10 +630,9 @@ export type ArticlesByCategoryIdQuery = {
     banner: string;
     summary: string;
     permalink: string;
-    categoryId: string;
-    assigned: boolean;
     featured: boolean;
     public: boolean;
+    pageId: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -711,50 +675,50 @@ export type OnDeleteMemberSubscription = {
   updatedAt: string;
 };
 
-export type OnCreateCategorySubscription = {
-  __typename: "Category";
+export type OnCreatePageSubscription = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type OnUpdateCategorySubscription = {
-  __typename: "Category";
+export type OnUpdatePageSubscription = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
 
-export type OnDeleteCategorySubscription = {
-  __typename: "Category";
+export type OnDeletePageSubscription = {
+  __typename: "Page";
   id: string;
+  root_menu: string;
   label: string;
-  title: string;
   description: string;
+  viewer: string;
+  hidden?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     nextToken?: string | null;
   } | null;
-  rank: number;
-  fixed?: boolean | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -766,18 +730,17 @@ export type OnCreateArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -792,18 +755,17 @@ export type OnUpdateArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -818,18 +780,17 @@ export type OnDeleteArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  categoryId: string;
-  assigned: boolean;
   featured: boolean;
   public: boolean;
-  category?: {
-    __typename: "Category";
+  pageId: string;
+  page?: {
+    __typename: "Page";
     id: string;
+    root_menu: string;
     label: string;
-    title: string;
     description: string;
-    rank: number;
-    fixed?: boolean | null;
+    viewer: string;
+    hidden?: boolean | null;
     createdAt: string;
     updatedAt: string;
   } | null;
@@ -925,23 +886,23 @@ export class APIService {
     )) as any;
     return <DeleteMemberMutation>response.data.deleteMember;
   }
-  async CreateCategory(
-    input: CreateCategoryInput,
-    condition?: ModelCategoryConditionInput
-  ): Promise<CreateCategoryMutation> {
-    const statement = `mutation CreateCategory($input: CreateCategoryInput!, $condition: ModelCategoryConditionInput) {
-        createCategory(input: $input, condition: $condition) {
+  async CreatePage(
+    input: CreatePageInput,
+    condition?: ModelPageConditionInput
+  ): Promise<CreatePageMutation> {
+    const statement = `mutation CreatePage($input: CreatePageInput!, $condition: ModelPageConditionInput) {
+        createPage(input: $input, condition: $condition) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -955,25 +916,25 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <CreateCategoryMutation>response.data.createCategory;
+    return <CreatePageMutation>response.data.createPage;
   }
-  async UpdateCategory(
-    input: UpdateCategoryInput,
-    condition?: ModelCategoryConditionInput
-  ): Promise<UpdateCategoryMutation> {
-    const statement = `mutation UpdateCategory($input: UpdateCategoryInput!, $condition: ModelCategoryConditionInput) {
-        updateCategory(input: $input, condition: $condition) {
+  async UpdatePage(
+    input: UpdatePageInput,
+    condition?: ModelPageConditionInput
+  ): Promise<UpdatePageMutation> {
+    const statement = `mutation UpdatePage($input: UpdatePageInput!, $condition: ModelPageConditionInput) {
+        updatePage(input: $input, condition: $condition) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -987,25 +948,25 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <UpdateCategoryMutation>response.data.updateCategory;
+    return <UpdatePageMutation>response.data.updatePage;
   }
-  async DeleteCategory(
-    input: DeleteCategoryInput,
-    condition?: ModelCategoryConditionInput
-  ): Promise<DeleteCategoryMutation> {
-    const statement = `mutation DeleteCategory($input: DeleteCategoryInput!, $condition: ModelCategoryConditionInput) {
-        deleteCategory(input: $input, condition: $condition) {
+  async DeletePage(
+    input: DeletePageInput,
+    condition?: ModelPageConditionInput
+  ): Promise<DeletePageMutation> {
+    const statement = `mutation DeletePage($input: DeletePageInput!, $condition: ModelPageConditionInput) {
+        deletePage(input: $input, condition: $condition) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -1019,7 +980,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <DeleteCategoryMutation>response.data.deleteCategory;
+    return <DeletePageMutation>response.data.deletePage;
   }
   async CreateArticle(
     input: CreateArticleInput,
@@ -1033,18 +994,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1075,18 +1035,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1117,18 +1076,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1206,20 +1164,20 @@ export class APIService {
     )) as any;
     return <ListMembersQuery>response.data.listMembers;
   }
-  async GetCategory(id: string): Promise<GetCategoryQuery> {
-    const statement = `query GetCategory($id: ID!) {
-        getCategory(id: $id) {
+  async GetPage(id: string): Promise<GetPageQuery> {
+    const statement = `query GetPage($id: ID!) {
+        getPage(id: $id) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -1230,24 +1188,24 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetCategoryQuery>response.data.getCategory;
+    return <GetPageQuery>response.data.getPage;
   }
-  async ListCategories(
-    filter?: ModelCategoryFilterInput,
+  async ListPages(
+    filter?: ModelPageFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ListCategoriesQuery> {
-    const statement = `query ListCategories($filter: ModelCategoryFilterInput, $limit: Int, $nextToken: String) {
-        listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  ): Promise<ListPagesQuery> {
+    const statement = `query ListPages($filter: ModelPageFilterInput, $limit: Int, $nextToken: String) {
+        listPages(filter: $filter, limit: $limit, nextToken: $nextToken) {
           __typename
           items {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1267,7 +1225,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListCategoriesQuery>response.data.listCategories;
+    return <ListPagesQuery>response.data.listPages;
   }
   async GetArticle(id: string): Promise<GetArticleQuery> {
     const statement = `query GetArticle($id: ID!) {
@@ -1278,18 +1236,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1320,10 +1277,9 @@ export class APIService {
             banner
             summary
             permalink
-            categoryId
-            assigned
             featured
             public
+            pageId
             createdAt
             updatedAt
           }
@@ -1345,16 +1301,16 @@ export class APIService {
     )) as any;
     return <ListArticlesQuery>response.data.listArticles;
   }
-  async ArticlesByCategoryId(
-    categoryId: string,
+  async ArticlesByPageId(
+    pageId: string,
     sortDirection?: ModelSortDirection,
     filter?: ModelArticleFilterInput,
     limit?: number,
     nextToken?: string
-  ): Promise<ArticlesByCategoryIdQuery> {
-    const statement = `query ArticlesByCategoryId($categoryId: ID!, $sortDirection: ModelSortDirection, $filter: ModelArticleFilterInput, $limit: Int, $nextToken: String) {
-        articlesByCategoryId(
-          categoryId: $categoryId
+  ): Promise<ArticlesByPageIdQuery> {
+    const statement = `query ArticlesByPageId($pageId: ID!, $sortDirection: ModelSortDirection, $filter: ModelArticleFilterInput, $limit: Int, $nextToken: String) {
+        articlesByPageId(
+          pageId: $pageId
           sortDirection: $sortDirection
           filter: $filter
           limit: $limit
@@ -1368,10 +1324,9 @@ export class APIService {
             banner
             summary
             permalink
-            categoryId
-            assigned
             featured
             public
+            pageId
             createdAt
             updatedAt
           }
@@ -1379,7 +1334,7 @@ export class APIService {
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      categoryId
+      pageId
     };
     if (sortDirection) {
       gqlAPIServiceArguments.sortDirection = sortDirection;
@@ -1396,7 +1351,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ArticlesByCategoryIdQuery>response.data.articlesByCategoryId;
+    return <ArticlesByPageIdQuery>response.data.articlesByPageId;
   }
   OnCreateMemberListener(
     filter?: ModelSubscriptionMemberFilterInput
@@ -1485,24 +1440,24 @@ export class APIService {
     >;
   }
 
-  OnCreateCategoryListener(
-    filter?: ModelSubscriptionCategoryFilterInput
+  OnCreatePageListener(
+    filter?: ModelSubscriptionPageFilterInput
   ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateCategory">>
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreatePage">>
   > {
-    const statement = `subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-        onCreateCategory(filter: $filter) {
+    const statement = `subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
+        onCreatePage(filter: $filter) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -1514,28 +1469,28 @@ export class APIService {
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateCategory">>
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreatePage">>
     >;
   }
 
-  OnUpdateCategoryListener(
-    filter?: ModelSubscriptionCategoryFilterInput
+  OnUpdatePageListener(
+    filter?: ModelSubscriptionPageFilterInput
   ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateCategory">>
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdatePage">>
   > {
-    const statement = `subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-        onUpdateCategory(filter: $filter) {
+    const statement = `subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
+        onUpdatePage(filter: $filter) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -1547,28 +1502,28 @@ export class APIService {
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateCategory">>
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdatePage">>
     >;
   }
 
-  OnDeleteCategoryListener(
-    filter?: ModelSubscriptionCategoryFilterInput
+  OnDeletePageListener(
+    filter?: ModelSubscriptionPageFilterInput
   ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteCategory">>
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeletePage">>
   > {
-    const statement = `subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
-        onDeleteCategory(filter: $filter) {
+    const statement = `subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
+        onDeletePage(filter: $filter) {
           __typename
           id
+          root_menu
           label
-          title
           description
+          viewer
+          hidden
           articles {
             __typename
             nextToken
           }
-          rank
-          fixed
           createdAt
           updatedAt
         }
@@ -1580,7 +1535,7 @@ export class APIService {
     return API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteCategory">>
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeletePage">>
     >;
   }
 
@@ -1597,18 +1552,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1640,18 +1594,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }
@@ -1683,18 +1636,17 @@ export class APIService {
           banner
           summary
           permalink
-          categoryId
-          assigned
           featured
           public
-          category {
+          pageId
+          page {
             __typename
             id
+            root_menu
             label
-            title
             description
-            rank
-            fixed
+            viewer
+            hidden
             createdAt
             updatedAt
           }

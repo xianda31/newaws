@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Storage } from 'aws-amplify/lib-esm';
-import { Category } from 'src/app/API.service';
-import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { Page } from 'src/app/API.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { FileService } from 'src/app/tools/service/file.service';
 
 
@@ -19,7 +19,7 @@ interface FolderItem {
 })
 export class LinksComponent {
 
-  selectedCategory!: Category;
+  selectedPage!: Page;
 
   bucket!: any;
   folderItems !: FolderItem[];
@@ -28,15 +28,15 @@ export class LinksComponent {
 
   constructor(
     private fileService: FileService,
-    private categoryService: CategoryService,
+    private pageService: PageService,
 
   ) { }
 
 
   ngOnInit(): void {
 
-    this.selectedCategory = this.categoryService.getCategoryByLabel('Liens');
-    // console.log('this.selectedCategory', this.selectedCategory);
+    this.selectedPage = this.pageService.getPageByLabel('Liens');
+    // console.log('this.selectedPage', this.selectedPage);
     // acquiert le bucket S3 et le transforme en arborescence (récursive) 
     this.fileService.loadBucket().subscribe((res) => {
       this.bucket = res;

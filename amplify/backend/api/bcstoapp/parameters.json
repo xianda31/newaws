@@ -1,5 +1,6 @@
 {
   "AppSyncApiName": "bcstoapp",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2023-11-09T08:15:20.315Z"
 }

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { Category } from 'src/app/API.service';
-import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { Page } from 'src/app/API.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
-import { NavigationService } from 'src/app/aws.services/navigation.aws.service';
 import { environment } from 'src/app/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
 
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
 
   menuItems!: Map<string, Menu[]>;
-  menuItems$: Observable<Map<string, Menu[]>> = this.navService.siteMenus$;
+  menuItems$: Observable<Map<string, Menu[]>> = this.pageService.siteMenus$;
 
 
   test_links: boolean = environment.test_links;
@@ -33,19 +32,18 @@ export class HeaderComponent implements OnInit {
   homeMenu!: Menu;
   contactMenu!: Menu;
 
-  categories$: Observable<Category[]> = this.categoryService.categories$;
-  sortedCategories$: Observable<Category[]> = this.categoryService.categories$.pipe(
-    map((categories) => categories.filter((category) => !category.fixed)),
-    map((categories) => categories.sort((a, b) => (a.rank - b.rank)))
+  page$: Observable<Page[]> = this.pageService.pages$;
+  sortedCategories$: Observable<Page[]> = this.pageService.pages$.pipe(
+    // map((page) => page.filter((page) => !page.fixed)),
+    // map((page) => page.sort((a, b) => (a.rank - b.rank)))
   );
 
 
   constructor(
     private cognitoService: CognitoService,
     private router: Router,
-    private categoryService: CategoryService,
+    private pageService: PageService,
     private memberService: MemberService,
-    private navService: NavigationService
   ) { }
 
   get menuKeys() {
@@ -58,9 +56,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.homeMenu = this.navService.getMandatoryItem('Home');
+    this.homeMenu = this.pageService.getMandatoryItem('Home');
 
-    this.navService.siteMenus$.subscribe((menus) => {
+    this.pageService.siteMenus$.subscribe((menus) => {
       this.menuItems = menus;
     });
 

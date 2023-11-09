@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
-import { Article, Category } from 'src/app/API.service';
+import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
-import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 
 @Component({
@@ -14,11 +14,11 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 export class HomeComponent {
   article$!: Observable<Article[]>;
   authenticatedUser: boolean = false;
-  home!: Category;
+  home!: Page;
 
 
   constructor(
-    private categoryService: CategoryService,
+    private pageService: PageService,
     private articleService: ArticleService,
     private router: Router
 
@@ -30,11 +30,11 @@ export class HomeComponent {
       map((articles) => articles.filter((article) => article.featured))
     );
 
-    this.home = this.categoryService.getCategoryByLabel('Home');
+    this.home = this.pageService.getPageByLabel('Home');
 
   }
 
   selectArticle(article: Article) {
-    this.router.navigate(['/page', article.category!.label, article.id]);
+    this.router.navigate(['/page', article.page!.label, article.id]);
   }
 }

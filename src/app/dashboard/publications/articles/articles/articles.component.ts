@@ -54,15 +54,15 @@ export class ArticlesComponent implements OnInit {
   }
 
   onPublish(article: Article) {
-    const { category, createdAt, updatedAt, __typename, ...articleInput } = article;
+    const { page, createdAt, updatedAt, __typename, ...articleInput } = article;
     this.articleService.updateArticle(articleInput);
   }
 
   onUpdate(article: Article) {
-    this.router.navigate(['dashboard/articles', article.id]);
+    this.router.navigate(['dashboard/publisher/articles', article.id]);
   }
 
   onCreate() {
-    this.router.navigate(['dashboard/articles', 'new']);
+    this.router.navigate(['dashboard/publisher/articles/new']);
   }
 }

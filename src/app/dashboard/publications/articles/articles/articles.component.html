@@ -42,9 +42,7 @@
             <!-- <td>{{ article.banner }}</td> -->
             <img [src]="getBannerURL(article)" class="img" alt="bcsto">
             <td>{{ article.summary }} ....</td>
-            <td [class]="article.assigned ? ' ' : 'text-decoration-line-through fst-italic'">{{ article.category!.label
-              ?
-              article.category?.label! : ''}}</td>
+            <td>{{ article.page!.label}}</td>
             <!-- <td>
               <app-toggle-input [(ngModel)]="article.assigned" (click)="onPublish(article)"></app-toggle-input>
             </td> -->

@@ -2,9 +2,9 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
-import { Article, Category } from 'src/app/API.service';
+import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
-import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { Location } from '@angular/common';
 import { Storage } from 'aws-amplify/lib-esm';
 import { HttpClient } from '@angular/common/http';
@@ -24,14 +24,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   creationMode!: boolean;
 
-  categories$: Observable<Category[]> = this.categoryService.categories$ as Observable<Category[]>;
+  pages$: Observable<Page[]> = this.pageService.pages$ as Observable<Page[]>;
   articles$: Observable<Article[]> = this.articleService.articles$ as Observable<Article[]>;
   imgBuffer!: any;
   preview !: string;
 
   // selectedFile!: File;
 
-  selectedCategoryId: string = '';
+  selectedPageId: string = '';
   selectedArticle!: Article | undefined;
   templateLoaded: boolean = false;
 
@@ -51,7 +51,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private categoryService: CategoryService,
+    private pageService: PageService,
     private articleService: ArticleService,
     private fileService: FileService,
     private router: Router,
@@ -127,6 +127,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
       const filename = 'articles/' + article.permalink;
       if (await this.UploadTxtFile(filename, HTMLtext)) {
+        console.log('gonna save %o', article);
         this.articleService.createArticle(article);
       } else {
         console.log("error uploading html file");
@@ -163,8 +164,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       permalink: new FormControl(''),
       banner: new FormControl({ value: '', disabled: true }),
       summary: new FormControl('', [Validators.minLength(2)]),
-      categoryId: new FormControl(''),
-      assigned: new FormControl(true),
+      pageId: new FormControl(''),
       featured: new FormControl(false),
       public: new FormControl(true),
 
@@ -174,12 +174,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   setForm(article: Article) {
 
-    this.articleForm.get('categoryId')?.patchValue(article.categoryId);
-    this.selectedCategoryId = article.categoryId!;
+    this.articleForm.get('pageId')?.patchValue(article.pageId);
+    this.selectedPageId = article.pageId!;
     this.articleForm.get('title')?.setValue(article.title);
     this.articleForm.get('permalink')?.setValue(article.permalink);
     this.articleForm.get('summary')?.setValue(article.summary);
-    this.articleForm.get('assigned')?.setValue(article.assigned);
     this.articleForm.get('featured')?.setValue(article.featured);
     this.articleForm.get('public')?.setValue(article.public);
     this.articleForm.get('banner')?.setValue(article.banner);
@@ -187,7 +186,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   }
   navBack() {
-    this.location.back();
+    this.router.navigate(['dashboard/publisher/articles']);
+    // this.location.back();
   }
 
   // ********* configuration tinymce ***********

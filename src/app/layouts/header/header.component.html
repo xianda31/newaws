@@ -7,8 +7,7 @@
     </button>
 
     <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" [homeMenu.page!.route_path]"
-      [queryParams]=" {title : homeMenu.page!.title, description : homeMenu.page!.description} ">
+    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" [homeMenu.route_path, homeMenu.pageId]">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
@@ -21,16 +20,15 @@
         <!-- boucle sur les menus publisher -->
         <ng-container *ngFor="let item of menuItems$ | async | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
-            <a class="nav-link mx-2" routerLinkActive="active-link" [routerLink]="[item.value[0].page!.route_path]"
-              [queryParams]="{title: item.value[0].page!.title, description:item.value[0].page!.description} ">{{item.key}}</a>
+            <a class="nav-link mx-2" routerLinkActive="active-link"
+              [routerLink]="[item.value[0].route_path,item.value[0].pageId]">{{item.key}}</a>
           </li>
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{item.key}}</a>
             <ul class="dropdown-menu">
               <li *ngFor="let subMenu of item.value">
-                <a class="dropdown-item" [routerLink]=" [subMenu.page!.route_path]"
-                  [queryParams]="{title:subMenu.page!.title, description:subMenu.page!.description}">{{subMenu.label}}</a>
+                <a class="dropdown-item" [routerLink]=" [subMenu.route_path,subMenu.pageId]">{{subMenu.label}}</a>
               </li>
             </ul>
           </li>
@@ -82,7 +80,7 @@
             Publication </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/publisher/articles">Articles</a></li>
-            <li><a class="dropdown-item" routerLink="dashboard/publisher/categories">Catégories</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publisher/pages">Pages</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
         </li>

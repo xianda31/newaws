@@ -4,12 +4,10 @@
 
       <div>
         <ul class="nav justify-content-center  ">
-          <li class="nav-item"> <a class="nav-link" [routerLink]=" [contactMenu.page!.route_path]"
-              [queryParams]=" {title : contactMenu.page!.title, description : contactMenu.page!.description}">
+          <li class="nav-item"> <a class="nav-link" [routerLink]=" [contactMenu.route_path,contactMenu.pageId] ">
               contactez nous</a>
           </li>
-          <li class="nav-item"> <a class="nav-link" [routerLink]=" [legalMenu.page!.route_path] "
-              [queryParams]=" {title : legalMenu.page!.title, description : legalMenu.page!.description}">
+          <li class="nav-item"> <a class="nav-link" [routerLink]=" [legalMenu.route_path,legalMenu.pageId]">
               mentions légales</a> </li>
           <li class="nav-item"> <a class="nav-link " routerLink="signup">s'enregistrer</a> </li>
         </ul>

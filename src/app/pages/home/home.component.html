@@ -1,5 +1,5 @@
 <div class="container-fluid ">
-  <app-headband [title]="home.title" [description]="home.description"> </app-headband>
+  <!-- <app-headband [title]="home.title" [description]="home.description"> </app-headband> -->
 
   <!-- affichage des news en mode horizontal  -->
 
@@ -8,7 +8,7 @@
 
     <div class="container-fluid">
       <div class="row row-cols-1 row-cols-md-5  row-cols-sm-1 justify-content-center">
-        <app-card class=" d-flex pb-2" *ngFor="let article of article$ | async " [catLabel]=" article.category!.label"
+        <app-card class=" d-flex pb-2" *ngFor="let article of article$ | async " [catLabel]=" article.page!.label"
           [article]="article" [displaymode]="'horizontal'" (click)="selectArticle(article)"> </app-card>
       </div>
     </div>

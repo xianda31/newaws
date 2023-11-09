@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Article, Category } from 'src/app/API.service';
+import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
-import { CategoryService } from 'src/app/aws.services/category.aws.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { ToastService } from 'src/app/tools/service/toast.service';
 
@@ -17,18 +17,18 @@ export class SingleCategoryComponent implements OnChanges {  //OncChanges pour p
   @Input('aid') articleId!: string;// @RouteParam()
 
   articles$: Observable<Article[]> = this.articleService.articles$.pipe(
-    map((articles) => articles.filter((article) => article.categoryId === this.selectedCategory.id)),
+    map((articles) => articles.filter((article) => article.pageId === this.selectedPage.id)),
     map((articles) => articles.sort((a, b) => ((a.createdAt > b.createdAt) || (a.id === this.articleId) ? -1 : 1))),
     map((articles) => articles.sort((a, b) => ((a.id === this.articleId) && b.id ? -1 : 1))));
 
-  selectedCategory!: Category;
+  selectedPage!: Page;
   selectedArticle!: Article;
   HTMLstring!: string;
 
   articles !: Article[];
 
   constructor(
-    private categoryService: CategoryService,
+    private categoryService: PageService,
     private articleService: ArticleService,
     private toastService: ToastService
   ) { }
@@ -36,13 +36,13 @@ export class SingleCategoryComponent implements OnChanges {  //OncChanges pour p
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes['categoryLabel']) {
       // console.log('changes categoryLabel', changes['categoryLabel'].currentValue)
-      this.selectedCategory = this.categoryService.getCategoryByLabel(changes['categoryLabel'].currentValue);
-      await this.loadCategory();
+      this.selectedPage = this.categoryService.getPageByLabel(changes['categoryLabel'].currentValue);
+      await this.loadPage();
     }
   }
 
 
-  async loadCategory() {
+  async loadPage() {
     this.articles$.subscribe(async (articles) => {
       if (articles.length !== 0) {
         this.articles = articles;

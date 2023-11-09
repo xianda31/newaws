@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 import { HttpClientModule } from '@angular/common/http';
-import { CategoriesComponent } from '../publications/categories/categories.component';
 import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { ArticleComponent } from '../publications/articles/article/article.component';
@@ -14,19 +13,21 @@ import { ToolsModule } from 'src/app/tools/tools/tools.module';
 import { EditComponent } from '../editor/edit.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { DashHeaderComponent } from '../dash-header/dash-header.component';
+import { PagesComponent } from '../publications/pages/pages.component';
 
 
 
 @NgModule({
   declarations: [
     MembersComponent,
-    CategoriesComponent,
     ArticlesComponent,
     ArticleComponent,
     TestComponent,
     EditComponent,
     FilemgrComponent,
-    DashHeaderComponent
+    DashHeaderComponent,
+    PagesComponent,
+
 
 
   ],

@@ -51,63 +51,63 @@ mutation DeleteMember(
   }
 }
 
-mutation CreateCategory(
-  $input: CreateCategoryInput!
-  $condition: ModelCategoryConditionInput
+mutation CreatePage(
+  $input: CreatePageInput!
+  $condition: ModelPageConditionInput
 ) {
-  createCategory(input: $input, condition: $condition) {
+  createPage(input: $input, condition: $condition) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
   }
 }
 
-mutation UpdateCategory(
-  $input: UpdateCategoryInput!
-  $condition: ModelCategoryConditionInput
+mutation UpdatePage(
+  $input: UpdatePageInput!
+  $condition: ModelPageConditionInput
 ) {
-  updateCategory(input: $input, condition: $condition) {
+  updatePage(input: $input, condition: $condition) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
   }
 }
 
-mutation DeleteCategory(
-  $input: DeleteCategoryInput!
-  $condition: ModelCategoryConditionInput
+mutation DeletePage(
+  $input: DeletePageInput!
+  $condition: ModelPageConditionInput
 ) {
-  deleteCategory(input: $input, condition: $condition) {
+  deletePage(input: $input, condition: $condition) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
@@ -124,17 +124,16 @@ mutation CreateArticle(
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -155,17 +154,16 @@ mutation UpdateArticle(
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -186,17 +184,16 @@ mutation DeleteArticle(
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename

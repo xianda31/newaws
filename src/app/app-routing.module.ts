@@ -11,10 +11,11 @@ import { canActivateGuard } from './guards/can-activate.guard';
 import { MyDataComponent } from './pages/my-data/my-data.component';
 import { MosaikerComponent } from './projectors/mosaiker/mosaiker.component';
 import { TodoComponent } from './pages/todo/todo.component';
+import { PageComponent } from './pages/page/page.component';
 
 export const _compDirectory: any = {
-  "viewer": { path: 'multi', component: MosaikerComponent },
-  // "single": { path: 'multi/:category', component: MosaikerComponent },
+  "viewer": { path: 'site/:pageId', component: MosaikerComponent },
+  "single": { path: 'site/:pageId', component: MosaikerComponent },
 
   // "single": { path: 'page/:cat', component: SingleCategoryComponent },
   "links": { path: 'links', component: LinksComponent },

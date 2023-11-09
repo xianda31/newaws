@@ -42,54 +42,54 @@ subscription OnDeleteMember($filter: ModelSubscriptionMemberFilterInput) {
   }
 }
 
-subscription OnCreateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onCreateCategory(filter: $filter) {
+subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
+  onCreatePage(filter: $filter) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
   }
 }
 
-subscription OnUpdateCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onUpdateCategory(filter: $filter) {
+subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
+  onUpdatePage(filter: $filter) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
   }
 }
 
-subscription OnDeleteCategory($filter: ModelSubscriptionCategoryFilterInput) {
-  onDeleteCategory(filter: $filter) {
+subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
+  onDeletePage(filter: $filter) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
@@ -103,17 +103,16 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -131,17 +130,16 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -159,17 +157,16 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename

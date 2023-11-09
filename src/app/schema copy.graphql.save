@@ -10,24 +10,37 @@ type Member @model @auth(rules: [{ allow: public }]) {
   email: String!
   rights: String!
 }
+# type Category @model @auth(rules: [{ allow: public }]) {
+#   id: ID!
+#   label: String!
+#   title: String!
+#   description: String!
+#   articles: [Article] @hasMany(indexName: "ofCat", fields: ["id"])
+#   rank: Int!
+#   fixed: Boolean
+# }
+
 type Page @model @auth(rules: [{ allow: public }]) {
   id: ID!
   root_menu: String!
   label: String!
   description: String!
   viewer: String!
-  hidden: Boolean!
   articles: [Article] @hasMany(indexName: "ofPage", fields: ["id"])
 }
+
 type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
   banner: String!
   summary: String!
+  # innerHTML: String!
   permalink: String!
-  # assigned: Boolean!
+  assigned: Boolean!
   featured: Boolean!
   public: Boolean!
+  # categoryId: ID! @index(name: "ofCat") #, sortKeyFields: ["summary"])
+  # category: Category @belongsTo(fields: ["categoryId"])
   pageId: ID! @index(name: "ofPage") #, sortKeyFields: ["summary"])
   page: Page @belongsTo(fields: ["pageId"])
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationService } from 'src/app/aws.services/navigation.aws.service';
+import { PageService } from 'src/app/aws.services/page.aws.service';
 import { environment } from 'src/app/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
 
@@ -11,10 +11,10 @@ import { Menu } from 'src/app/interfaces/navigation.interface';
 export class FooterComponent {
 
   constructor(
-    private navService: NavigationService
+    private pageService: PageService
   ) { }
-  contactMenu: Menu = this.navService.getMandatoryItem('Contact');
-  legalMenu: Menu = this.navService.getMandatoryItem('Legal');
+  contactMenu: Menu = this.pageService.getMandatoryItem('Contact');
+  legalMenu: Menu = this.pageService.getMandatoryItem('Legal');
 
 
 

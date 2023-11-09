@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CategoriesComponent } from '../publications/categories/categories.component';
+import { PagesComponent } from '../publications/pages/pages.component';
 import { MembersComponent } from '../members/members.component';
 import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { ArticleComponent } from '../publications/articles/article/article.component';
@@ -21,13 +21,13 @@ const routes: Routes = [
 
   {
     path: 'publisher', canActivate: [canActivateGuard('Publisher')], children: [
-      { path: 'categories', component: CategoriesComponent },
+      { path: 'pages', component: PagesComponent },
       { path: 'articles', component: ArticlesComponent },
+      { path: 'articles/new', component: ArticleComponent },
+      { path: 'articles/:id', component: ArticleComponent },
       { path: 'files', component: FilemgrComponent },]
   },
 
-  { path: 'articles/new', component: ArticleComponent },
-  { path: 'articles/:id', component: ArticleComponent }
 ];
 
 @NgModule({

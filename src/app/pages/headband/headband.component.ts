@@ -7,11 +7,11 @@ import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/cor
 })
 export class HeadbandComponent implements OnChanges {
   @Input() title!: string;
-  @Input() description!: string;
+  // @Input() description!: string;
   subtitle: string[] = [''];
-
+  header!: string;
   ngOnChanges(changes: SimpleChanges): void {
-    this.subtitle = changes['description'].currentValue.split('|');
+    this.subtitle = changes['title'].currentValue.split('|');
+    this.header = this.subtitle.shift()!;
   }
-
 }

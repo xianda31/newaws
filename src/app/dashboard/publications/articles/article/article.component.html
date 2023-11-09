@@ -23,19 +23,18 @@
                   titre de 10 caractères minimum</div>
               </div>
             </div>
-            <!-- category -->
+            <!-- Page -->
             <div class="col-md-4">
-              <label> Rubrique</label>
-              <select class="form-control" formControlName="categoryId">
-                <option value="" disabled selected>--choisissez une categorie--</option>
-                <option *ngFor="let cat of categories$ | async " [ngValue]="cat.id"
-                  [selected]="cat.id === selectedCategoryId">
-                  {{cat.label}}</option>
+              <label> Page</label>
+              <select class="form-control" formControlName="pageId">
+                <option value="" disabled selected>--page de rattachement--</option>
+                <option *ngFor="let page of pages$ | async " [ngValue]="page.id"
+                  [selected]="page.id === selectedPageId">
+                  {{page.label}}</option>
               </select>
-              <div *ngIf="fcontrols['categoryId'].errors?.['required']">
-                <div class="alert alert-danger"
-                  *ngIf="fcontrols['categoryId'].touched && fcontrols['categoryId'].invalid">
-                  choisir la categorie de l'article</div>
+              <div *ngIf="fcontrols['pageId'].errors?.['required']">
+                <div class="alert alert-danger" *ngIf="fcontrols['pageId'].touched && fcontrols['pageId'].invalid">
+                  choisir la page de rattachement de l'article</div>
               </div>
             </div>
           </div>

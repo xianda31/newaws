@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, SecurityContext } from '@angular/core';
 import { Router } from '@angular/router';
-import { Article, Category } from 'src/app/API.service';
+import { Article } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
 
 @Component({

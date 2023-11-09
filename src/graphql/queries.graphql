@@ -36,37 +36,37 @@ query ListMembers(
   }
 }
 
-query GetCategory($id: ID!) {
-  getCategory(id: $id) {
+query GetPage($id: ID!) {
+  getPage(id: $id) {
     id
+    root_menu
     label
-    title
     description
+    viewer
+    hidden
     articles {
       nextToken
       __typename
     }
-    rank
-    fixed
     createdAt
     updatedAt
     __typename
   }
 }
 
-query ListCategories(
-  $filter: ModelCategoryFilterInput
+query ListPages(
+  $filter: ModelPageFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+  listPages(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -83,17 +83,16 @@ query GetArticle($id: ID!) {
     banner
     summary
     permalink
-    categoryId
-    assigned
     featured
     public
-    category {
+    pageId
+    page {
       id
+      root_menu
       label
-      title
       description
-      rank
-      fixed
+      viewer
+      hidden
       createdAt
       updatedAt
       __typename
@@ -116,10 +115,9 @@ query ListArticles(
       banner
       summary
       permalink
-      categoryId
-      assigned
       featured
       public
+      pageId
       createdAt
       updatedAt
       __typename
@@ -129,15 +127,15 @@ query ListArticles(
   }
 }
 
-query ArticlesByCategoryId(
-  $categoryId: ID!
+query ArticlesByPageId(
+  $pageId: ID!
   $sortDirection: ModelSortDirection
   $filter: ModelArticleFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  articlesByCategoryId(
-    categoryId: $categoryId
+  articlesByPageId(
+    pageId: $pageId
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -149,10 +147,9 @@ query ArticlesByCategoryId(
       banner
       summary
       permalink
-      categoryId
-      assigned
       featured
       public
+      pageId
       createdAt
       updatedAt
       __typename

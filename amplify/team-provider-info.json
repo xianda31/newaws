@@ -12,14 +12,17 @@
       "AmplifyAppId": "d35ym193jicjdp"
     },
     "categories": {
-      "api": {
-        "bcstoapp": {}
-      },
       "auth": {
         "bcstoappc14cd35a": {}
       },
       "storage": {
         "bcstore": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
+      },
+      "api": {
+        "bcstoapp": {}
       }
     }
   }
