@@ -1,7 +1,7 @@
 <!-- <div class="col-sm-6"> -->
 
 <!-- <div class="card border-0  m-1" > -->
-<div class="container " (click)="showMore = !showMore">
+<div *ngIf="!data.solo" class="container " (click)="showMore = !showMore">
     <h2 class="hdate" [attr.data-hday]="data.day" [attr.data-hmonth]="data.month">
         {{data.title}}
     </h2>
@@ -9,12 +9,18 @@
         <img [src]="data.bannerURL" class="card-img-left" alt="bcsto">
     </div>
     <div class="text-start ps-2">
-        <p> {{data.summary}}
-            <!-- <button class="btn btn-primary btn-sm" >
-                        {{!showMore?'...en lire plus' : 'fermer'}} </button> -->
+        <p>
+            {{data.summary}}
             <span *ngIf="showMore" [innerHTML]="data.HTMLstring | safeHtml"> </span>
         </p>
     </div>
 </div>
-<!-- </div> -->
-<!-- </div> -->
+
+<div *ngIf="data.solo" class="container ">
+
+    <div class="text-start ps-2">
+        <p>
+            <span [innerHTML]="data.HTMLstring | safeHtml"> </span>
+        </p>
+    </div>
+</div>

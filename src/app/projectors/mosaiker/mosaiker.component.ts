@@ -20,6 +20,7 @@ export class MosaikerComponent implements OnChanges {
   articles$!: Observable<Article[]>;
   authenticatedUser: boolean = false;
   page!: Page;
+  solo !: boolean;
 
   constructor(
     private articleService: ArticleService,
@@ -29,11 +30,18 @@ export class MosaikerComponent implements OnChanges {
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
 
-    // console.log('mosaiker changes', changes['pageId'].currentValue);
-    this.page = this.pageService.sgetPage(changes['pageId'].currentValue);
+    this.page = this.pageService.sgetPage(changes['pageId'].currentValue);    // tant qu'amplify ne gère pas les relations, on doit faire ça
+    console.log('mosaiker page', this.page);
 
     this.articles$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.pageId === this.page.id))
+    );
+
+    this.articles$.subscribe((articles) => {
+      console.log('mosaiker articles', articles.length);
+      this.solo = articles.length === 1;
+
+    }
     );
   }
 

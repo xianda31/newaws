@@ -118,7 +118,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
     const HTMLtext = tinymce.activeEditor!.getContent();
     tinymce.remove();
-    this.navBack();
 
 
     if (this.creationMode) {
@@ -150,6 +149,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       await this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
       this.router.navigate(['dashboard/articles']);
     }
+    this.navBack();
   }
 
   onTitleChanged(event: any) {

@@ -49,9 +49,10 @@ export class PageService {
       .catch((error) => { console.log('Error creating page: ', error); });
   }
 
-  // async agetPage(id: string): Promise<any> {
-  //   return this.api.GetPage(id);
-  // }
+  async agetPage(id: string): Promise<any> {
+    return this.api.GetPage(id);
+  }
+
   sgetPage(id: string): Page {
     return this._pages.find((page) => page.id === id)!;
   }

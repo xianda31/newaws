@@ -16,6 +16,7 @@ import { FlashPluginComponent } from '../../../slider/plugins/flash-plugin/flash
 export class CarderComponent implements OnInit {
 
   @Input() article!: Article;
+  @Input() solo: boolean = false;
   @ViewChild(AdDirective, { static: true }) anchor!: AdDirective;
   viewContainerRef !: ViewContainerRef;
 
@@ -37,7 +38,7 @@ export class CarderComponent implements OnInit {
   async loadComponent(article: Article) {
     const bannerURL = await Storage.get('banners/' + article.banner, { validateObjectExistence: true });
     const HTMLstring = await this.loadHTML(article);
-    const adItem = new AdItem(FlashPluginComponent, { title: article.title, summary: article.summary, bannerURL: bannerURL, HTMLstring: HTMLstring, day: 24, month: 'Dec' });
+    const adItem = new AdItem(FlashPluginComponent, { solo: this.solo, title: article.title, summary: article.summary, bannerURL: bannerURL, HTMLstring: HTMLstring, day: 24, month: 'Dec' });
     const componentRef = this.viewContainerRef.createComponent<AdComponent>(adItem.component);
     componentRef.instance.data = adItem.data;
   }
