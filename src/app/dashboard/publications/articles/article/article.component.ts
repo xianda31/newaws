@@ -218,7 +218,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
         'fullscreen  preview ' +
         ' insertfile image template link ',
 
-      height: '700px',
+      height: '500px',
       format: 'html',
       content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
       editable_root: false,

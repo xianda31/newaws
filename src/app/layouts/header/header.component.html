@@ -7,7 +7,7 @@
     </button>
 
     <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" [homeMenu.route_path, homeMenu.pageId]">
+    <a *ngIf="homePage" class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/accueil']">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
@@ -21,14 +21,14 @@
         <ng-container *ngFor="let item of menuItems$ | async | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
             <a class="nav-link mx-2" routerLinkActive="active-link"
-              [routerLink]="[item.value[0].route_path,item.value[0].pageId]">{{item.key}}</a>
+              [routerLink]="[item.value[0].route_path]">{{item.key}}</a>
           </li>
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{item.key}}</a>
             <ul class="dropdown-menu">
               <li *ngFor="let subMenu of item.value">
-                <a class="dropdown-item" [routerLink]=" [subMenu.route_path,subMenu.pageId]">{{subMenu.label}}</a>
+                <a class="dropdown-item" [routerLink]=" [subMenu.route_path]">{{subMenu.label}}</a>
               </li>
             </ul>
           </li>
@@ -83,6 +83,7 @@
             <li><a class="dropdown-item" routerLink="dashboard/publisher/pages">Pages</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
+
         </li>
         <!-- menu tests -->
         <li class="nav-item mx-2 dropdown" *ngIf="test_links">
@@ -91,6 +92,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/tests/tiny">tiny</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/tests/rights">rights</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/tests/mig-articles">mig-articles</a></li>
           </ul>
         </li>
 

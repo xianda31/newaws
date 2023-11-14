@@ -60,9 +60,24 @@ mutation CreatePage(
     root_menu
     label
     description
-    viewer
+    path
     hidden
     articles {
+      items {
+        id
+        title
+        banner
+        summary
+        permalink
+        content
+        duedate
+        featured
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -81,9 +96,24 @@ mutation UpdatePage(
     root_menu
     label
     description
-    viewer
+    path
     hidden
     articles {
+      items {
+        id
+        title
+        banner
+        summary
+        permalink
+        content
+        duedate
+        featured
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -102,9 +132,24 @@ mutation DeletePage(
     root_menu
     label
     description
-    viewer
+    path
     hidden
     articles {
+      items {
+        id
+        title
+        banner
+        summary
+        permalink
+        content
+        duedate
+        featured
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
       nextToken
       __typename
     }
@@ -124,16 +169,36 @@ mutation CreateArticle(
     banner
     summary
     permalink
+    content
+    duedate
     featured
     public
     pageId
+    images {
+      items {
+        id
+        name
+        description
+        url
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     page {
       id
       root_menu
       label
       description
-      viewer
+      path
       hidden
+      articles {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -154,16 +219,36 @@ mutation UpdateArticle(
     banner
     summary
     permalink
+    content
+    duedate
     featured
     public
     pageId
+    images {
+      items {
+        id
+        name
+        description
+        url
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     page {
       id
       root_menu
       label
       description
-      viewer
+      path
       hidden
+      articles {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -184,20 +269,88 @@ mutation DeleteArticle(
     banner
     summary
     permalink
+    content
+    duedate
     featured
     public
     pageId
+    images {
+      items {
+        id
+        name
+        description
+        url
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     page {
       id
       root_menu
       label
       description
-      viewer
+      path
       hidden
+      articles {
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
     }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateImage(
+  $input: CreateImageInput!
+  $condition: ModelImageConditionInput
+) {
+  createImage(input: $input, condition: $condition) {
+    id
+    name
+    description
+    url
+    articleId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateImage(
+  $input: UpdateImageInput!
+  $condition: ModelImageConditionInput
+) {
+  updateImage(input: $input, condition: $condition) {
+    id
+    name
+    description
+    url
+    articleId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteImage(
+  $input: DeleteImageInput!
+  $condition: ModelImageConditionInput
+) {
+  deleteImage(input: $input, condition: $condition) {
+    id
+    name
+    description
+    url
+    articleId
     createdAt
     updatedAt
     __typename

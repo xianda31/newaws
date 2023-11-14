@@ -15,7 +15,7 @@ type Page @model @auth(rules: [{ allow: public }]) {
   root_menu: String!
   label: String!
   description: String!
-  viewer: String!
+  path: String!
   hidden: Boolean!
   articles: [Article] @hasMany(indexName: "ofPage", fields: ["id"])
 }
@@ -23,11 +23,23 @@ type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
   banner: String!
+
   summary: String!
   permalink: String!
+  content: String
+  duedate: String
   # assigned: Boolean!
   featured: Boolean!
   public: Boolean!
   pageId: ID! @index(name: "ofPage") #, sortKeyFields: ["summary"])
+  images: [Image] @hasMany(indexName: "ofArticle", fields: ["id"])
   page: Page @belongsTo(fields: ["pageId"])
+}
+
+type Image @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  name: String!
+  description: String!
+  url: String!
+  articleId: ID! @index(name: "ofArticle")
 }

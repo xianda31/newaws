@@ -1,6 +1,6 @@
 <app-dash-header title="administration" subtitle="gestion des articles"></app-dash-header>
 
-<div *ngIf="articlesDBloaded" class="container-md">
+<div *ngIf="(articles$ | async) as articles" class="container-md">
 
   <!-- <div class="col-md-12">
     <h3 class="text-center "> Gestion des articles </h3>
@@ -40,7 +40,10 @@
             </td>
             <td>{{ article.title }}</td>
             <!-- <td>{{ article.banner }}</td> -->
-            <img [src]="getBannerURL(article)" class="img" alt="bcsto">
+            <td>
+
+              <img [src]="getBannerURL(article)" class="img" alt="bcsto">
+            </td>
             <td>{{ article.summary }} ....</td>
             <td>{{ article.page!.label}}</td>
             <!-- <td>

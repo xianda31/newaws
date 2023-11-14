@@ -19,25 +19,22 @@ export class ArticleService {
   }
 
   // chargement des articles depuis la base de données ; filtrage vs  public_only 
-  loadArticles(public_only: boolean): Promise<any> {
+  loadArticles(public_only: boolean): void {
+    console.log('gonna load articles');
     this._articles = [];
-    return new Promise(async (resolve) => {
-      const articles = await this.api.ListArticles();
-      if (articles.items) {
-        return await Promise.all(articles.items.map(async (article) => {
-          const articleData = await this.api.GetArticle(article!.id) as Article;
-          if (public_only && !articleData.public) { return; }
-          this._articles.push(articleData);
-        }
-        )).then(() => {
-          resolve(this._articles);
-          // console.log('%s articles: ', this._articles.length, this._articles);
-          this._articles$.next(this._articles);
-        });
+    // return new Promise(async (resolve) => {
+    this.api.ListArticles(public_only ? { public: { eq: true } } : {})
+      .then((articles) => {
+        const articlesItems = articles.items as Article[];
+        console.log('loadArticles', articlesItems);
+        console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
+        this._articles$.next([...articlesItems])
+      })
+      .catch((error) => {
+        console.log('loadArticles error', error);
+      })
 
-      }
-
-    });
+    // });
   }
 
 
@@ -95,4 +92,9 @@ export class ArticleService {
         this.toastService.showErrorToast('aws', 'erreur suppression article');
       });
   }
+
+
+  // utilities
+
+
 }

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { environment } from 'src/app/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
@@ -8,15 +10,23 @@ import { Menu } from 'src/app/interfaces/navigation.interface';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit {
+
+  pages$: Observable<Page[]> = this.pageService.pages$;
+  legalPage!: Page;
+  contactPage!: Page;
 
   constructor(
     private pageService: PageService
   ) { }
-  contactMenu: Menu = this.pageService.getMandatoryItem('Contact');
-  legalMenu: Menu = this.pageService.getMandatoryItem('Legal');
+  ngOnInit(): void {
 
+    this.pages$.subscribe((pages) => {
+      this.contactPage = pages.filter((page) => page.root_menu === 'Contact')[0] ?? null;
+      this.legalPage = pages.filter((page) => page.root_menu === 'Legal')[0] ?? null;
+    });
 
+  }
 
   release: string = environment.version;
 }

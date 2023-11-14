@@ -2,7 +2,7 @@
     <app-headband [title]="page.label + '|' + page.description"> </app-headband>
 
     <div class="p-2">
-        <div class="row row-cols-1 row-cols-md-2  justify-content-center">
+        <div class="row row-cols-1 row-cols-md-3  justify-content-center">
             <app-carder class="d-flex pb-2" *ngFor="let article of articles$ | async " [article]="article"
                 [solo]="solo">
             </app-carder>

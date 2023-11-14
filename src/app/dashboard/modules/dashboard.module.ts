@@ -14,6 +14,7 @@ import { EditComponent } from '../editor/edit.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { DashHeaderComponent } from '../dash-header/dash-header.component';
 import { PagesComponent } from '../publications/pages/pages.component';
+import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
 
 
 
@@ -27,6 +28,7 @@ import { PagesComponent } from '../publications/pages/pages.component';
     FilemgrComponent,
     DashHeaderComponent,
     PagesComponent,
+    MigArticlesComponent
 
 
 

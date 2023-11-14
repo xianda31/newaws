@@ -2,12 +2,12 @@
   <div class="container">
     <div class="col-md-12 text-center">
 
-      <div>
+      <div *ngIf="contactPage && legalPage">
         <ul class="nav justify-content-center  ">
-          <li class="nav-item"> <a class="nav-link" [routerLink]=" [contactMenu.route_path,contactMenu.pageId] ">
+          <li class="nav-item"> <a class="nav-link" routerLink='front/contact'>
               contactez nous</a>
           </li>
-          <li class="nav-item"> <a class="nav-link" [routerLink]=" [legalMenu.route_path,legalMenu.pageId]">
+          <li class="nav-item"> <a class="nav-link" routerLink='front/légal'>
               mentions légales</a> </li>
           <li class="nav-item"> <a class="nav-link " routerLink="signup">s'enregistrer</a> </li>
         </ul>

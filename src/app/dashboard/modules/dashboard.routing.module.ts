@@ -8,6 +8,7 @@ import { TestComponent } from '../tests/test.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { RightsComponent } from 'src/app/tests/rights/rights.component';
 import { canActivateGuard } from 'src/app/guards/can-activate.guard';
+import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
 
 const routes: Routes = [
 
@@ -18,6 +19,7 @@ const routes: Routes = [
 
   { path: 'tests/tiny', component: TestComponent },
   { path: 'tests/rights', component: RightsComponent },
+  { path: 'tests/mig-articles', component: MigArticlesComponent },
 
   {
     path: 'publisher', canActivate: [canActivateGuard('Publisher')], children: [
@@ -25,7 +27,8 @@ const routes: Routes = [
       { path: 'articles', component: ArticlesComponent },
       { path: 'articles/new', component: ArticleComponent },
       { path: 'articles/:id', component: ArticleComponent },
-      { path: 'files', component: FilemgrComponent },]
+      { path: 'files', component: FilemgrComponent },
+    ]
   },
 
 ];

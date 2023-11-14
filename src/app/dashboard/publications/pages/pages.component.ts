@@ -13,10 +13,14 @@ import { PageService } from 'src/app/aws.services/page.aws.service';
 export class PagesComponent implements OnInit {
 
   pageForm!: FormGroup;
-  pages$: Observable<Page[]> = this.pageService.pages$;
-  sortedPages$: Observable<Page[]> = new Observable<Page[]>;
+  // pages$: Observable<Page[]> = this.pageService.pages$;
+  pages$: Observable<Page[]> = this.pageService.pages$.pipe(
+    map((pages) => pages.sort((a, b) => (a.root_menu < b.root_menu ? -1 : 1))),
+    map((pages) => pages.sort((a, b) => (a.hidden ? -1 : 1))),
+  );
 
-  articlesByPageId: { [key: string]: string | number } = {};
+  // articlesByPageId: { [key: string]: string | number } = {};
+  pagesByRootMenu: { [key: string]: number } = {};
   createMode: boolean = true;
   selectedPage!: Page;
   // ticked: string = '✔';
@@ -29,38 +33,52 @@ export class PagesComponent implements OnInit {
   ngOnInit(): void {
 
     this.pages$.subscribe((pages) => {
-      pages.forEach(async (page) => {
-        const array = await this.pageService.articlesByPageId(page.id);
-        this.articlesByPageId[page.label] = array.length ? array.length : '-';
-
+      this.pagesByRootMenu = {};
+      pages.forEach((page) => {
+        this.pagesByRootMenu[page.root_menu] = this.pagesByRootMenu[page.root_menu] ? this.pagesByRootMenu[page.root_menu] + 1 : 1;
         // console.log('page', page.label, this.articlesByPageId[index].length);
       });
+
+      console.log('pagesByRootMenu', this.pagesByRootMenu);
+      this.verifyPath(pages);
     });
 
-    this.sortedPages$ = this.pages$.pipe(
-      map((pages) => pages.sort((a, b) => (a.hidden ? -1 : 1))),
-      map((pages) => pages.sort((a, b) => (a.root_menu === b.root_menu ? -1 : 1)))
-    );
+
 
     this.pageForm = new FormGroup({
-      // rank: new FormControl(0, Validators.required),
       label: new FormControl('', Validators.required),
       root_menu: new FormControl('', Validators.required),
       hidden: new FormControl(false),
-      // fixed: new FormControl(false),
       description: new FormControl('', Validators.required),
-      viewer: new FormControl('', Validators.required),
-      // image: new FormControl('', Validators.required),
+      path: new FormControl('', Validators.required),
     });
 
   }
 
+  verifyPath(pages: Page[]) {
+
+    pages.forEach((page) => {
+      const { articles, ...pageWithoutArticles } = page;
+      const root = (this.pagesByRootMenu[page.root_menu] === 1) ? '' : page.root_menu + '/';
+      const shouldPath = (root + page.label).toLowerCase().replace(/\s/g, '-');
+      if (page.path !== shouldPath) {
+        // console.log('page', page.label, 'path', page.path, 'should be', shouldPath);
+        pageWithoutArticles.path = shouldPath;
+        console.log('correcting  page', pageWithoutArticles);
+        this.pageService.updatePage(pageWithoutArticles as Page);
+      }
+    });
+  }
+
+
+
   get label() { return this.pageForm.get('label')!; }
   get description() { return this.pageForm.get('description')!; }
-  get viewer() { return this.pageForm.get('viewer')!; }
+  get path() { return this.pageForm.get('path')!; }
 
   selectPage(page: Page) {
-    this.pageForm.patchValue(page);
+
+    // this.pageForm.patchValue(this.patchedPage(page));
     this.createMode = false;
     this.selectedPage = page;
   }
@@ -91,6 +109,15 @@ export class PagesComponent implements OnInit {
     this.createMode = true;
   }
 
+  // patchedPage(page: Page): Page {
+  //   const newPage = { ...page };
+  //   if (this.pagesByRootMenu[page.root_menu] === 1) {
+  //     newPage.path = newPage.label.toLowerCase().replace(/\s/g, '-')
+  //   } else {
+  //     newPage.path = (newPage.root_menu + '/' + newPage.label).toLowerCase().replace(/\s/g, '-');
+  //   }
+  //   return newPage;
+  // }
 
   async deletePage(event: any, page: Page) {
     const articles = await this.pageService.articlesByPageId(page.id);

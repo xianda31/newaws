@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { Menu } from '../interfaces/navigation.interface';
-import { _compDirectory } from '../app-routing.module';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +35,8 @@ export class PageService {
   //   return this.pages$ as Observable<Page[]>;
   // }
 
+
+
   // C(R)UD CATEGORIES
 
 
@@ -49,18 +50,20 @@ export class PageService {
       .catch((error) => { console.log('Error creating page: ', error); });
   }
 
-  async agetPage(id: string): Promise<any> {
-    return this.api.GetPage(id);
-  }
+  // async agetPage(id: string): Promise<any> {
+  //   return this.api.GetPage(id);
+  // }
 
   sgetPage(id: string): Page {
     return this._pages.find((page) => page.id === id)!;
   }
 
 
+
   updatePage(page: Page) {
-    this.api.UpdatePage(page).then((result) => {
-      this._pages = this._pages.map((cat) => cat.id === page.id ? page : cat);
+    const { articles, createdAt, updatedAt, __typename, ...pageInput } = page;
+    this.api.UpdatePage(pageInput).then((result) => {
+      this._pages = this._pages.map((item) => item.id === page.id ? page : item);
       this.pages$.next(this._pages);
     })
       .catch((error) => { console.log('Error updating page: ', error); });
@@ -70,7 +73,7 @@ export class PageService {
 
   deletePage(page: Page) {
     this.api.DeletePage({ id: page.id }).then((result) => {
-      this._pages = this._pages.filter((cat) => cat.id !== page.id);
+      this._pages = this._pages.filter((item) => item.id !== page.id);
       this.pages$.next(this._pages);
     })
       .catch((error) => {
@@ -87,54 +90,49 @@ export class PageService {
     return result.items as Article[];
   }
 
-  getPageByLabel(label: string): Page {
-    return this._pages.find((page) => page.label === label)!;
+  sgetPageByLabel(label: string): Page {
+    let page = this._pages.find((page) => page.label === label);
+    if (!page) { console.log('page %s not found ... has been replaced by 404', label) }
+    return page ? page : this._pages.find((page) => page.label === '404')!;
   }
-
+  sgetPageByPath(path: string): Page {
+    let page = this._pages.find((page) => page.path === path);
+    if (!page) { console.log('page %s not found ... has been replaced by 404', path) }
+    return page ? page : this._pages.find((page) => page.path === '404')!;
+  }
 
   // menu utilities
 
-  _components = _compDirectory;
+  // _components = _compDirectory;
 
   _mustHavePages: CreatePageInput[] = [
-    { root_menu: 'Home', hidden: true, label: 'Accueil', description: 'blablabla', viewer: 'viewer' },
-    { root_menu: 'Contact', hidden: true, label: 'Contact', description: 'blablabla', viewer: 'viewer' },
-    { root_menu: 'Legal', hidden: true, label: 'Légal', description: 'la loi la loi', viewer: 'viewer' },
-    { root_menu: '404', hidden: true, label: '404', description: 'blablabla', viewer: 'viewer' },
+    { root_menu: 'Home', hidden: true, label: 'accueil', description: 'blablabla', path: 'home' },
+    { root_menu: 'Contact', hidden: true, label: 'contact', description: 'blablabla', path: 'contact' },
+    { root_menu: 'Legal', hidden: true, label: 'légal', description: 'la loi la loi', path: 'legal' },
+    // { root_menu: '404', hidden: true, label: '404', description: 'blablabla', path: 'notfound' },
   ]
 
   checkMustHavePages() {
-    let mustHavePages = this._pages.filter((page) => page.root_menu === 'Home' || page.root_menu === 'Contact' || page.root_menu === 'Legal' || page.root_menu === '404');
+
     this._mustHavePages.forEach((item) => {
-      if (!mustHavePages.find((page) => page.root_menu === item.root_menu)) {
-        console.log('page %s not found ... has been created', item.root_menu);
-        this.api.CreatePage(item);
+      if (!this._pages.find((page) => page.root_menu === item.root_menu)) {
+        // console.log('page %s not found ... has been created', item.root_menu);
+        const page = this.api.CreatePage(item);
+        page.then((result) => {
+          // console.log('page  created: %o', result);
+          this.pages$.next([...this.pages$.getValue(), result])
+        })
+      } else {
+        console.log('page %s found', item.root_menu);
       }
-    });
+    })
 
   }
 
-  stripParameter(path: string) {
-    return path.split('/:')[0];
-  }
+  // stripParameter(path: string) {
+  //   return path.split('/:')[0];
+  // }
 
-  getMandatoryItem(root_menu: 'Home' | 'Contact' | 'Legal' | '404'): Menu {
-    let menu!: Menu;
-    let page = this._pages.find((page) => page.root_menu === root_menu);
-    page = page ?? this._components['404'];
-    let component = this._components[page!.viewer];
-    if (!component) {
-      console.log('component %s not found', page!.viewer);
-      menu = this.getMandatoryItem('404');
-      return menu;
-    }
-    let strippedPath = this.stripParameter(component.path);
-
-    // console.log('strippedPath for %s : %s', root_menu, strippedPath);
-    // page.route_path = strippedPath;
-    menu = { label: page!.root_menu, route_path: strippedPath, pageId: page!.id, page: page };
-    return menu;
-  }
 
   buildMenu(pageId: string): Menu {
     let menu!: Menu;
@@ -142,17 +140,11 @@ export class PageService {
     if (!page) {
       console.log('page %s not found', pageId);
       // menu = this.getMandatoryItem('404');
-    } else {
-      let component = this._components[page.viewer];
-      if (!component) {
-        console.log('component %s not found', page.viewer);
-        menu = this.getMandatoryItem('404');
-      } else {
-        let strippedPath = this.stripParameter(component.path!);
-        // page.route_path = strippedPath;
-        menu = { label: page.label, route_path: strippedPath, pageId: page.id, page: page };
-      }
+      return menu;
     }
+    menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };
+    // }
+
     return menu;
   }
 

@@ -28,19 +28,19 @@ export class ArticlesComponent implements OnInit {
 
     this.articles$.subscribe((articles) => {
       this.articles = articles;
-      // console.log('%s articles', articles.length, articles);
-      {
-        articles.forEach((article) => {
-          Storage.get('banners/' + article.banner, { validateObjectExistence: true }).then((signedURL) => {
+      console.log('%s articles', articles.length, articles);
 
-            this.bannerURL.set(article.permalink, signedURL);
+      articles.forEach((article) => {
+        Storage.get('banners/' + article.banner, { validateObjectExistence: true }).then((signedURL) => {
+
+          this.bannerURL.set(article.permalink, signedURL);
+        })
+          .catch((error) => {
+            console.log('error %s sur l\'article :', error, article);
           })
-            .catch((error) => {
-              console.log('error %s sur l\'article :', error, article);
-            })
-        });
-        this.articlesDBloaded = true;
-      }
+      });
+      this.articlesDBloaded = true;
+
     });
 
   };

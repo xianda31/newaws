@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, concatAll, take, filter, tap } from 'rxjs';
 import { Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
@@ -29,10 +29,11 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isPublisher: boolean = false;
 
-  homeMenu!: Menu;
-  contactMenu!: Menu;
+  // legalPage!: Page;
+  // contactPage!: Page;
+  homePage!: Page;
 
-  page$: Observable<Page[]> = this.pageService.pages$;
+  pages$: Observable<Page[]> = this.pageService.pages$;
   sortedCategories$: Observable<Page[]> = this.pageService.pages$.pipe(
     // map((page) => page.filter((page) => !page.fixed)),
     // map((page) => page.sort((a, b) => (a.rank - b.rank)))
@@ -56,14 +57,22 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.homeMenu = this.pageService.getMandatoryItem('Home');
+    console.log('header init');
+    this.pages$.pipe(
+      concatAll(),
+      // tap((page) => console.log('page :', page)),
+      filter(page => (page.root_menu === 'Home')),
+      // tap((page) => console.log('home page :', page)),
+      take(1)
+    ).subscribe((page) => {
+      // console.log('home Page found :', page);
+      if (page) this.homePage = page;
+    });
+
 
     this.pageService.siteMenus$.subscribe((menus) => {
       this.menuItems = menus;
     });
-
-    // this.navService.loadSiteMenu;
-
 
 
     this.cognitoService.currentAuthenticatedUser.subscribe((user) => {

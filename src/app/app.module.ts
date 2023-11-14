@@ -25,7 +25,6 @@ import { AdDirective } from './projectors/slider/ad.directive';
 import { MosaikerComponent } from './projectors/mosaiker/mosaiker.component';
 import { CarderComponent } from './projectors/mosaiker/viewers/carder/carder.component';
 import { TodoComponent } from './pages/todo/todo.component';
-// import { RightsInputComponent } from './tools/rights-input/rights-input.component';
 
 @NgModule({
   declarations: [

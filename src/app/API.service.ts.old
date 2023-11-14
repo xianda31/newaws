@@ -19,9 +19,6 @@ export type __SubscriptionContainer = {
   onCreateArticle: OnCreateArticleSubscription;
   onUpdateArticle: OnUpdateArticleSubscription;
   onDeleteArticle: OnDeleteArticleSubscription;
-  onCreateImage: OnCreateImageSubscription;
-  onUpdateImage: OnUpdateImageSubscription;
-  onDeleteImage: OnDeleteImageSubscription;
 };
 
 export type CreateMemberInput = {
@@ -113,7 +110,7 @@ export type CreatePageInput = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
 };
 
@@ -121,7 +118,7 @@ export type ModelPageConditionInput = {
   root_menu?: ModelStringInput | null;
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  path?: ModelStringInput | null;
+  viewer?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
   and?: Array<ModelPageConditionInput | null> | null;
   or?: Array<ModelPageConditionInput | null> | null;
@@ -141,7 +138,7 @@ export type Page = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: ModelArticleConnection | null;
   createdAt: string;
@@ -161,30 +158,10 @@ export type Article = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: ModelImageConnection | null;
   page?: Page | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ModelImageConnection = {
-  __typename: "ModelImageConnection";
-  items: Array<Image | null>;
-  nextToken?: string | null;
-};
-
-export type Image = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -194,7 +171,7 @@ export type UpdatePageInput = {
   root_menu?: string | null;
   label?: string | null;
   description?: string | null;
-  path?: string | null;
+  viewer?: string | null;
   hidden?: boolean | null;
 };
 
@@ -208,8 +185,6 @@ export type CreateArticleInput = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
@@ -220,8 +195,6 @@ export type ModelArticleConditionInput = {
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  content?: ModelStringInput | null;
-  duedate?: ModelStringInput | null;
   featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
@@ -252,44 +225,12 @@ export type UpdateArticleInput = {
   banner?: string | null;
   summary?: string | null;
   permalink?: string | null;
-  content?: string | null;
-  duedate?: string | null;
   featured?: boolean | null;
   public?: boolean | null;
   pageId?: string | null;
 };
 
 export type DeleteArticleInput = {
-  id: string;
-};
-
-export type CreateImageInput = {
-  id?: string | null;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-};
-
-export type ModelImageConditionInput = {
-  name?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  url?: ModelStringInput | null;
-  articleId?: ModelIDInput | null;
-  and?: Array<ModelImageConditionInput | null> | null;
-  or?: Array<ModelImageConditionInput | null> | null;
-  not?: ModelImageConditionInput | null;
-};
-
-export type UpdateImageInput = {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  url?: string | null;
-  articleId?: string | null;
-};
-
-export type DeleteImageInput = {
   id: string;
 };
 
@@ -316,7 +257,7 @@ export type ModelPageFilterInput = {
   root_menu?: ModelStringInput | null;
   label?: ModelStringInput | null;
   description?: ModelStringInput | null;
-  path?: ModelStringInput | null;
+  viewer?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
   and?: Array<ModelPageFilterInput | null> | null;
   or?: Array<ModelPageFilterInput | null> | null;
@@ -335,25 +276,12 @@ export type ModelArticleFilterInput = {
   banner?: ModelStringInput | null;
   summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  content?: ModelStringInput | null;
-  duedate?: ModelStringInput | null;
   featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
-};
-
-export type ModelImageFilterInput = {
-  id?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  description?: ModelStringInput | null;
-  url?: ModelStringInput | null;
-  articleId?: ModelIDInput | null;
-  and?: Array<ModelImageFilterInput | null> | null;
-  or?: Array<ModelImageFilterInput | null> | null;
-  not?: ModelImageFilterInput | null;
 };
 
 export enum ModelSortDirection {
@@ -407,7 +335,7 @@ export type ModelSubscriptionPageFilterInput = {
   root_menu?: ModelSubscriptionStringInput | null;
   label?: ModelSubscriptionStringInput | null;
   description?: ModelSubscriptionStringInput | null;
-  path?: ModelSubscriptionStringInput | null;
+  viewer?: ModelSubscriptionStringInput | null;
   hidden?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionPageFilterInput | null> | null;
   or?: Array<ModelSubscriptionPageFilterInput | null> | null;
@@ -424,23 +352,11 @@ export type ModelSubscriptionArticleFilterInput = {
   banner?: ModelSubscriptionStringInput | null;
   summary?: ModelSubscriptionStringInput | null;
   permalink?: ModelSubscriptionStringInput | null;
-  content?: ModelSubscriptionStringInput | null;
-  duedate?: ModelSubscriptionStringInput | null;
   featured?: ModelSubscriptionBooleanInput | null;
   public?: ModelSubscriptionBooleanInput | null;
   pageId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
   or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
-};
-
-export type ModelSubscriptionImageFilterInput = {
-  id?: ModelSubscriptionIDInput | null;
-  name?: ModelSubscriptionStringInput | null;
-  description?: ModelSubscriptionStringInput | null;
-  url?: ModelSubscriptionStringInput | null;
-  articleId?: ModelSubscriptionIDInput | null;
-  and?: Array<ModelSubscriptionImageFilterInput | null> | null;
-  or?: Array<ModelSubscriptionImageFilterInput | null> | null;
 };
 
 export type CreateMemberMutation = {
@@ -485,7 +401,7 @@ export type CreatePageMutation = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -496,8 +412,6 @@ export type CreatePageMutation = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -516,7 +430,7 @@ export type UpdatePageMutation = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -527,8 +441,6 @@ export type UpdatePageMutation = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -547,7 +459,7 @@ export type DeletePageMutation = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -558,8 +470,6 @@ export type DeletePageMutation = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -579,32 +489,16 @@ export type CreateArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -624,32 +518,16 @@ export type UpdateArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -669,32 +547,16 @@ export type DeleteArticleMutation = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -703,39 +565,6 @@ export type DeleteArticleMutation = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateImageMutation = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateImageMutation = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteImageMutation = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -774,7 +603,7 @@ export type GetPageQuery = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -785,8 +614,6 @@ export type GetPageQuery = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -807,7 +634,7 @@ export type ListPagesQuery = {
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -826,32 +653,16 @@ export type GetArticleQuery = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -873,52 +684,20 @@ export type ListArticlesQuery = {
     banner: string;
     summary: string;
     permalink: string;
-    content?: string | null;
-    duedate?: string | null;
     featured: boolean;
     public: boolean;
     pageId: string;
-    images?: {
-      __typename: "ModelImageConnection";
-      nextToken?: string | null;
-    } | null;
     page?: {
       __typename: "Page";
       id: string;
       root_menu: string;
       label: string;
       description: string;
-      path: string;
+      viewer: string;
       hidden: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type GetImageQuery = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListImagesQuery = {
-  __typename: "ModelImageConnection";
-  items: Array<{
-    __typename: "Image";
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    articleId: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -934,41 +713,20 @@ export type ArticlesByPageIdQuery = {
     banner: string;
     summary: string;
     permalink: string;
-    content?: string | null;
-    duedate?: string | null;
     featured: boolean;
     public: boolean;
     pageId: string;
-    images?: {
-      __typename: "ModelImageConnection";
-      nextToken?: string | null;
-    } | null;
     page?: {
       __typename: "Page";
       id: string;
       root_menu: string;
       label: string;
       description: string;
-      path: string;
+      viewer: string;
       hidden: boolean;
       createdAt: string;
       updatedAt: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ImagesByArticleIdQuery = {
-  __typename: "ModelImageConnection";
-  items: Array<{
-    __typename: "Image";
-    id: string;
-    name: string;
-    description: string;
-    url: string;
-    articleId: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -1017,7 +775,7 @@ export type OnCreatePageSubscription = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -1028,8 +786,6 @@ export type OnCreatePageSubscription = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -1048,7 +804,7 @@ export type OnUpdatePageSubscription = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -1059,8 +815,6 @@ export type OnUpdatePageSubscription = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -1079,7 +833,7 @@ export type OnDeletePageSubscription = {
   root_menu: string;
   label: string;
   description: string;
-  path: string;
+  viewer: string;
   hidden: boolean;
   articles?: {
     __typename: "ModelArticleConnection";
@@ -1090,8 +844,6 @@ export type OnDeletePageSubscription = {
       banner: string;
       summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
       featured: boolean;
       public: boolean;
       pageId: string;
@@ -1111,32 +863,16 @@ export type OnCreateArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -1156,32 +892,16 @@ export type OnUpdateArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -1201,32 +921,16 @@ export type OnDeleteArticleSubscription = {
   banner: string;
   summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
   featured: boolean;
   public: boolean;
   pageId: string;
-  images?: {
-    __typename: "ModelImageConnection";
-    items: Array<{
-      __typename: "Image";
-      id: string;
-      name: string;
-      description: string;
-      url: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
   page?: {
     __typename: "Page";
     id: string;
     root_menu: string;
     label: string;
     description: string;
-    path: string;
+    viewer: string;
     hidden: boolean;
     articles?: {
       __typename: "ModelArticleConnection";
@@ -1235,39 +939,6 @@ export type OnDeleteArticleSubscription = {
     createdAt: string;
     updatedAt: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateImageSubscription = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateImageSubscription = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteImageSubscription = {
-  __typename: "Image";
-  id: string;
-  name: string;
-  description: string;
-  url: string;
-  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -1371,7 +1042,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -1382,8 +1053,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -1418,7 +1087,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -1429,8 +1098,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -1465,7 +1132,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -1476,8 +1143,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -1513,32 +1178,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -1574,32 +1223,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -1635,32 +1268,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -1683,87 +1300,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteArticleMutation>response.data.deleteArticle;
-  }
-  async CreateImage(
-    input: CreateImageInput,
-    condition?: ModelImageConditionInput
-  ): Promise<CreateImageMutation> {
-    const statement = `mutation CreateImage($input: CreateImageInput!, $condition: ModelImageConditionInput) {
-        createImage(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateImageMutation>response.data.createImage;
-  }
-  async UpdateImage(
-    input: UpdateImageInput,
-    condition?: ModelImageConditionInput
-  ): Promise<UpdateImageMutation> {
-    const statement = `mutation UpdateImage($input: UpdateImageInput!, $condition: ModelImageConditionInput) {
-        updateImage(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateImageMutation>response.data.updateImage;
-  }
-  async DeleteImage(
-    input: DeleteImageInput,
-    condition?: ModelImageConditionInput
-  ): Promise<DeleteImageMutation> {
-    const statement = `mutation DeleteImage($input: DeleteImageInput!, $condition: ModelImageConditionInput) {
-        deleteImage(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteImageMutation>response.data.deleteImage;
   }
   async GetMember(id: string): Promise<GetMemberQuery> {
     const statement = `query GetMember($id: ID!) {
@@ -1832,7 +1368,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -1843,8 +1379,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -1879,25 +1413,10 @@ export class APIService {
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
-              items {
-                __typename
-                id
-                title
-                banner
-                summary
-                permalink
-                content
-                duedate
-                featured
-                public
-                pageId
-                createdAt
-                updatedAt
-              }
               nextToken
             }
             createdAt
@@ -1930,32 +1449,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -1991,22 +1494,16 @@ export class APIService {
             banner
             summary
             permalink
-            content
-            duedate
             featured
             public
             pageId
-            images {
-              __typename
-              nextToken
-            }
             page {
               __typename
               id
               root_menu
               label
               description
-              path
+              viewer
               hidden
               createdAt
               updatedAt
@@ -2032,63 +1529,6 @@ export class APIService {
     )) as any;
     return <ListArticlesQuery>response.data.listArticles;
   }
-  async GetImage(id: string): Promise<GetImageQuery> {
-    const statement = `query GetImage($id: ID!) {
-        getImage(id: $id) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetImageQuery>response.data.getImage;
-  }
-  async ListImages(
-    filter?: ModelImageFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListImagesQuery> {
-    const statement = `query ListImages($filter: ModelImageFilterInput, $limit: Int, $nextToken: String) {
-        listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            name
-            description
-            url
-            articleId
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListImagesQuery>response.data.listImages;
-  }
   async ArticlesByPageId(
     pageId: string,
     sortDirection?: ModelSortDirection,
@@ -2112,22 +1552,16 @@ export class APIService {
             banner
             summary
             permalink
-            content
-            duedate
             featured
             public
             pageId
-            images {
-              __typename
-              nextToken
-            }
             page {
               __typename
               id
               root_menu
               label
               description
-              path
+              viewer
               hidden
               createdAt
               updatedAt
@@ -2157,55 +1591,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ArticlesByPageIdQuery>response.data.articlesByPageId;
-  }
-  async ImagesByArticleId(
-    articleId: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelImageFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ImagesByArticleIdQuery> {
-    const statement = `query ImagesByArticleId($articleId: ID!, $sortDirection: ModelSortDirection, $filter: ModelImageFilterInput, $limit: Int, $nextToken: String) {
-        imagesByArticleId(
-          articleId: $articleId
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            name
-            description
-            url
-            articleId
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      articleId
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ImagesByArticleIdQuery>response.data.imagesByArticleId;
   }
   OnCreateMemberListener(
     filter?: ModelSubscriptionMemberFilterInput
@@ -2306,7 +1691,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -2317,8 +1702,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -2354,7 +1737,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -2365,8 +1748,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -2402,7 +1783,7 @@ export class APIService {
           root_menu
           label
           description
-          path
+          viewer
           hidden
           articles {
             __typename
@@ -2413,8 +1794,6 @@ export class APIService {
               banner
               summary
               permalink
-              content
-              duedate
               featured
               public
               pageId
@@ -2451,32 +1830,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -2513,32 +1876,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -2575,32 +1922,16 @@ export class APIService {
           banner
           summary
           permalink
-          content
-          duedate
           featured
           public
           pageId
-          images {
-            __typename
-            items {
-              __typename
-              id
-              name
-              description
-              url
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           page {
             __typename
             id
             root_menu
             label
             description
-            path
+            viewer
             hidden
             articles {
               __typename
@@ -2621,90 +1952,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteArticle">>
-    >;
-  }
-
-  OnCreateImageListener(
-    filter?: ModelSubscriptionImageFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateImage">>
-  > {
-    const statement = `subscription OnCreateImage($filter: ModelSubscriptionImageFilterInput) {
-        onCreateImage(filter: $filter) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateImage">>
-    >;
-  }
-
-  OnUpdateImageListener(
-    filter?: ModelSubscriptionImageFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateImage">>
-  > {
-    const statement = `subscription OnUpdateImage($filter: ModelSubscriptionImageFilterInput) {
-        onUpdateImage(filter: $filter) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateImage">>
-    >;
-  }
-
-  OnDeleteImageListener(
-    filter?: ModelSubscriptionImageFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteImage">>
-  > {
-    const statement = `subscription OnDeleteImage($filter: ModelSubscriptionImageFilterInput) {
-        onDeleteImage(filter: $filter) {
-          __typename
-          id
-          name
-          description
-          url
-          articleId
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteImage">>
     >;
   }
 }
