@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
 
     combineLatest([this.pageService.pages$.pipe(delay(environment.spinner_tempo)),
-    this.memberService.members$], this.articleService.articles$)
+    this.memberService.members$, this.articleService.articles$])
       .subscribe(([pages, members]) => {
         if (members.length > 0) {
           this.DBloaded = true;

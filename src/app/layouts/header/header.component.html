@@ -7,7 +7,7 @@
     </button>
 
     <!-- brand logo -->
-    <a *ngIf="homePage" class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/accueil']">
+    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
@@ -18,10 +18,10 @@
       <ul class="navbar-nav">
 
         <!-- boucle sur les menus publisher -->
-        <ng-container *ngFor="let item of menuItems$ | async | keyvalue">
+        <ng-container *ngFor="let item of menuItems | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
             <a class="nav-link mx-2" routerLinkActive="active-link"
-              [routerLink]="[item.value[0].route_path]">{{item.key}}</a>
+              [routerLink]="[item.value[0].route_path]">{{item.value[0].label}}</a>
           </li>
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">

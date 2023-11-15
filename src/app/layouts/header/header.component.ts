@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map, concatAll, take, filter, tap } from 'rxjs';
-import { Page } from 'src/app/API.service';
+import { Observable, map, concatAll, take, filter, tap, toArray } from 'rxjs';
+import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
@@ -17,10 +17,7 @@ import { Menu } from 'src/app/interfaces/navigation.interface';
 })
 export class HeaderComponent implements OnInit {
 
-
   menuItems!: Map<string, Menu[]>;
-  menuItems$: Observable<Map<string, Menu[]>> = this.pageService.siteMenus$;
-
 
   test_links: boolean = environment.test_links;
   loggedusername !: string;
@@ -29,15 +26,7 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean = false;
   isPublisher: boolean = false;
 
-  // legalPage!: Page;
-  // contactPage!: Page;
-  homePage!: Page;
-
   pages$: Observable<Page[]> = this.pageService.pages$;
-  sortedCategories$: Observable<Page[]> = this.pageService.pages$.pipe(
-    // map((page) => page.filter((page) => !page.fixed)),
-    // map((page) => page.sort((a, b) => (a.rank - b.rank)))
-  );
 
 
   constructor(
@@ -57,27 +46,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log('header init');
-    this.pages$.pipe(
-      concatAll(),
-      // tap((page) => console.log('page :', page)),
-      filter(page => (page.root_menu === 'Home')),
-      // tap((page) => console.log('home page :', page)),
-      take(1)
-    ).subscribe((page) => {
-      // console.log('home Page found :', page);
-      if (page) this.homePage = page;
-    });
-
-
-    this.pageService.siteMenus$.subscribe((menus) => {
-      this.menuItems = menus;
+    this.pages$.subscribe((pages) => {
+      console.log('constructing new menu map');
+      this.checkMustHavePages(pages);
+      this.menuItems = this.buildMenuMap(pages);
     });
 
 
     this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
       if (user) {
-
         this.loggedusername = user.username;
         this.loggeduserlicence = user.license;
         this.isLogged = true;
@@ -86,7 +63,6 @@ export class HeaderComponent implements OnInit {
         const rights = member?.rights!;
         this.isAdmin = rights?.includes('Admin');
         this.isPublisher = rights?.includes('Publisher');
-
       }
     });
   }
@@ -97,5 +73,48 @@ export class HeaderComponent implements OnInit {
     this.isAdmin = false;
     this.isPublisher = false;
     this.router.navigate(['/home']);
+  }
+
+
+  // menu utilities
+
+  // 
+  _mustHavePages: CreatePageInput[] = [
+    { root_menu: 'Home', hidden: true, label: 'home', description: 'blablabla', path: 'home' },
+    { root_menu: 'Contact', hidden: true, label: 'contact', description: 'blablabla', path: 'contact' },
+    { root_menu: 'Legal', hidden: true, label: 'legal', description: 'la loi la loi', path: 'legal' },
+    // { root_menu: '404', hidden: true, label: '404', description: 'blablabla', path: 'notfound' },
+  ]
+
+  checkMustHavePages(pages: Page[]) {
+
+    this._mustHavePages.forEach((item) => {
+      if (!pages.find((page) => page.root_menu === item.root_menu)) {
+        // console.log('page %s not found ... has been created', item.root_menu);
+        this.pageService.createPage(item);
+      }
+    })
+  }
+
+  buildMenuMap(pages: Page[]): Map<string, Menu[]> {
+    let menuMap = new Map<string, Menu[]>([]);
+
+    pages.forEach((page) => {
+      const root = page.root_menu;
+      if (page.hidden) { return; }
+      const menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };
+
+      if (menuMap.has(root)) {
+        let arr = menuMap.get(root)!;
+        arr.push(menu);
+      } else {
+        menuMap.set(root, [menu]);
+      };
+    });
+
+    // console.log('menuMap: %o', menuMap);
+    return menuMap;
+
+
   }
 }

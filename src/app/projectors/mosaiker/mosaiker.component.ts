@@ -29,14 +29,26 @@ export class MosaikerComponent implements OnChanges {
 
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
+    let path = '';
+    if (changes['root']) {
+      path = changes['root'].currentValue ? changes['root'].currentValue + '/' : '';
+      console.log('root : ', changes['root'].currentValue);
+    }
 
+    console.log('menu', changes['menu'].currentValue);
 
-    console.log(changes['root'].currentValue, '/', changes['menu'].currentValue);
-    let path = changes['root'].currentValue ? changes['root'].currentValue + '/' : '';
     path += (changes['menu'].currentValue ?? '');
+    console.log('loading page %s', path);
 
-    this.page = this.pageService.sgetPageByPath(path);
-    // console.log('mosaiker page %s = %o', changes['menu'].currentValue, this.page);
+    let page: Page | undefined;
+    page = this.pageService.sgetPageByPath(path);
+    if (page == undefined) {
+      this.router.navigate(['404']);
+      return;
+    } else {
+      this.page = page;
+      console.log('mosaiker page  = %o', this.page);
+    }
 
     this.articles$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.pageId === this.page.id)),
@@ -47,12 +59,6 @@ export class MosaikerComponent implements OnChanges {
       })
     );
 
-    // this.articles$.subscribe((articles) => {
-    //   console.log('mosaiker articles', articles.length);
-    //   this.solo = articles.length === 1;
-
-    // }
-    // );
   }
 
 

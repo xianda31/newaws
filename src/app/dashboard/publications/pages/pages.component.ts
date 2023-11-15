@@ -39,8 +39,8 @@ export class PagesComponent implements OnInit {
         // console.log('page', page.label, this.articlesByPageId[index].length);
       });
 
+      this.verifyPath(pages);     // correction des paths menu vs sous-menus
       console.log('pagesByRootMenu', this.pagesByRootMenu);
-      this.verifyPath(pages);
     });
 
 
@@ -78,7 +78,7 @@ export class PagesComponent implements OnInit {
 
   selectPage(page: Page) {
 
-    // this.pageForm.patchValue(this.patchedPage(page));
+    this.pageForm.patchValue(page);
     this.createMode = false;
     this.selectedPage = page;
   }
