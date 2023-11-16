@@ -20,7 +20,6 @@ export class ArticleService {
 
   // chargement des articles depuis la base de données ; filtrage vs  public_only 
   loadArticles(public_only: boolean): void {
-    console.log('gonna load articles');
     this._articles = [];
     // return new Promise(async (resolve) => {
     this.api.ListArticles(public_only ? { public: { eq: true } } : {})

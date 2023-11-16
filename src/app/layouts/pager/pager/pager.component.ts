@@ -1,18 +1,16 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, map, tap } from 'rxjs';
 import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
-import { Router } from '@angular/router';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 
-
-
 @Component({
-  selector: 'app-mosaiker',
-  templateUrl: './mosaiker.component.html',
-  styleUrls: ['./mosaiker.component.scss']
+  selector: 'app-pager',
+  templateUrl: './pager.component.html',
+  styleUrls: ['./pager.component.scss']
 })
-export class MosaikerComponent implements OnChanges {
+export class PagerComponent implements OnChanges {
 
   @Input('root') root!: string;
   @Input('menu') menu!: string;
@@ -66,3 +64,4 @@ export class MosaikerComponent implements OnChanges {
     this.router.navigate(['/page', this.page!.label, article.id]);
   }
 }
+

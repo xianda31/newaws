@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
 
     this.pages$.subscribe((pages) => {
       console.log('constructing new menu map');
-      this.checkMustHavePages(pages);
+      // this.checkMustHavePages(pages);
       this.menuItems = this.buildMenuMap(pages);
     });
 
@@ -72,29 +72,29 @@ export class HeaderComponent implements OnInit {
     this.isLogged = false;
     this.isAdmin = false;
     this.isPublisher = false;
-    this.router.navigate(['/home']);
+    this.router.navigate(['front/home']);
   }
 
 
   // menu utilities
 
   // 
-  _mustHavePages: CreatePageInput[] = [
-    { root_menu: 'Home', hidden: true, label: 'home', description: 'blablabla', path: 'home' },
-    { root_menu: 'Contact', hidden: true, label: 'contact', description: 'blablabla', path: 'contact' },
-    { root_menu: 'Legal', hidden: true, label: 'legal', description: 'la loi la loi', path: 'legal' },
-    // { root_menu: '404', hidden: true, label: '404', description: 'blablabla', path: 'notfound' },
-  ]
+  // _mustHavePages: CreatePageInput[] = [
+  //   { root_menu: 'Home', hidden: true, label: 'home', description: 'blablabla', path: 'home' },
+  //   { root_menu: 'Contact', hidden: true, label: 'contact', description: 'blablabla', path: 'contact' },
+  //   { root_menu: 'Legal', hidden: true, label: 'legal', description: 'la loi la loi', path: 'legal' },
+  //   // { root_menu: '404', hidden: true, label: '404', description: 'blablabla', path: 'notfound' },
+  // ]
 
-  checkMustHavePages(pages: Page[]) {
+  // checkMustHavePages(pages: Page[]) {
 
-    this._mustHavePages.forEach((item) => {
-      if (!pages.find((page) => page.root_menu === item.root_menu)) {
-        // console.log('page %s not found ... has been created', item.root_menu);
-        this.pageService.createPage(item);
-      }
-    })
-  }
+  //   this._mustHavePages.forEach((item) => {
+  //     if (!pages.find((page) => page.root_menu === item.root_menu)) {
+  //       // console.log('page %s not found ... has been created', item.root_menu);
+  //       this.pageService.createPage(item);
+  //     }
+  //   })
+  // }
 
   buildMenuMap(pages: Page[]): Map<string, Menu[]> {
     let menuMap = new Map<string, Menu[]>([]);

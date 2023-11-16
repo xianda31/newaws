@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Article } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
-import { AdDirective } from 'src/app/projectors/slider/ad.directive';
-import { AdItem } from 'src/app/projectors/slider/ad-item';
-import { AdComponent } from 'src/app/projectors/slider/ad.component';
-import { FlashPluginComponent } from '../../../slider/plugins/flash-plugin/flash-plugin.component';
+import { AdDirective } from 'src/app/layouts/pager/plugins/ad/ad.directive';
+import { AdItem } from '../plugins/ad/ad-item';
+import { AdComponent } from '../plugins/ad/ad.component';
+import { FlashPluginComponent } from '../plugins/flash-plugin/flash-plugin.component';
 
 
 

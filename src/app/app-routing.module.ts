@@ -7,15 +7,13 @@ import { Page404Component } from './pages/page404/page404.component';
 import { LinksComponent } from './pages/links/links.component';
 import { canActivateGuard } from './guards/can-activate.guard';
 import { MyDataComponent } from './pages/my-data/my-data.component';
-import { MosaikerComponent } from './projectors/mosaiker/mosaiker.component';
+import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { TodoComponent } from './pages/todo/todo.component';
-import { HomeComponent } from './pages/home/home.component';
 
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', component: HomeComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'front/home' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'me', component: MyDataComponent },
@@ -35,10 +33,10 @@ const routes: Routes = [
   //   AppRoutes.unshift(_compDirectory[key]);
   // };
 
-  { path: 'front/:root/:menu', component: MosaikerComponent },
-  { path: 'front/:menu', component: MosaikerComponent },
+  { path: 'front/:root/:menu', component: PagerComponent },
+  { path: 'front/:menu', component: PagerComponent },
 
-  { path: '**', component: HomeComponent },
+  { path: '**', redirectTo: 'front/home' },
 ];
 // return AppRoutes;
 

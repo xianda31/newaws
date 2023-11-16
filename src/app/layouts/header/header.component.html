@@ -66,15 +66,6 @@
         </li>
 
         <!-- menu métier  -->
-        <li class="nav-item mx-2 dropdown" *ngIf="isAdmin">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Administration</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="dashboard/admin/members">Adhérents</a></li>
-            <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
-            <li><a class="dropdown-item" href="#">Autres paiements</a></li>
-          </ul>
-        </li>
         <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Publication </a>
@@ -83,7 +74,15 @@
             <li><a class="dropdown-item" routerLink="dashboard/publisher/pages">Pages</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
-
+        </li>
+        <li class="nav-item mx-2 dropdown" *ngIf="isAdmin">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Administration</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="dashboard/admin/members">Adhérents</a></li>
+            <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
+            <li><a class="dropdown-item" href="#">Autres paiements</a></li>
+          </ul>
         </li>
         <!-- menu tests -->
         <li class="nav-item mx-2 dropdown" *ngIf="test_links">
