@@ -35,9 +35,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
   selectedArticle!: Article | undefined;
   templateLoaded: boolean = false;
 
-  bannerFile!: File;
-  bannerChanged: boolean = false;
-  bannerPreview: string = '';
+  banner_urlFile!: File;
+  banner_urlChanged: boolean = false;
+  banner_urlPreview: string = '';
   externalHtml: string = '';
 
   articleForm!: FormGroup;
@@ -46,8 +46,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     return this.articleForm.controls;
   }
 
-  get bannerControl() { return this.articleForm.get('banner') as FormControl; }
-  get bannerValue() { return this.bannerControl.value; }
+  get banner_urlControl() { return this.articleForm.get('banner_url') as FormControl; }
+  get banner_urlValue() { return this.banner_urlControl.value; }
 
 
   constructor(
@@ -96,7 +96,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
             this.tinymceInit(text);
           });
 
-          this.imgBuffer = await Storage.get('banners/' + article.banner, { validateObjectExistence: true });
+          this.imgBuffer = await Storage.get('banner_urls/' + article.banner_url, { validateObjectExistence: true });
 
         })
         .catch((error) => { console.log('error : ', error); return undefined; });
@@ -145,8 +145,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
       };
     }
 
-    if (this.bannerChanged) {
-      await this.fileService.uploadFile('banners/' + this.bannerFile.name, this.bannerFile);
+    if (this.banner_urlChanged) {
+      await this.fileService.uploadFile('banner_urls/' + this.banner_urlFile.name, this.banner_urlFile);
       this.router.navigate(['dashboard/articles']);
     }
     this.navBack();
@@ -162,8 +162,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.articleForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(1)]),
       permalink: new FormControl(''),
-      banner: new FormControl({ value: '', disabled: true }),
-      summary: new FormControl('', [Validators.minLength(2)]),
+      banner_url: new FormControl({ value: '', disabled: true }),
+      head_html: new FormControl('', [Validators.minLength(2)]),
       pageId: new FormControl(''),
       featured: new FormControl(false),
       public: new FormControl(true),
@@ -178,10 +178,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.selectedPageId = article.pageId!;
     this.articleForm.get('title')?.setValue(article.title);
     this.articleForm.get('permalink')?.setValue(article.permalink);
-    this.articleForm.get('summary')?.setValue(article.summary);
-    this.articleForm.get('featured')?.setValue(article.featured);
+    this.articleForm.get('head_html')?.setValue(article.head_html);
+    // this.articleForm.get('featured')?.setValue(article.featured);
     this.articleForm.get('public')?.setValue(article.public);
-    this.articleForm.get('banner')?.setValue(article.banner);
+    this.articleForm.get('banner_url')?.setValue(article.banner_url);
 
 
   }
@@ -277,7 +277,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
 
 
-  // ************ gestion image (banner)******************
+  // ************ gestion image (banner_url)******************
 
 
 
@@ -295,13 +295,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
-    this.bannerFile = event.target.files[0];
+    this.banner_urlFile = event.target.files[0];
 
-    if (this.bannerFile) {
-      this.getImage64(this.bannerFile).then((image64) => {
+    if (this.banner_urlFile) {
+      this.getImage64(this.banner_urlFile).then((image64) => {
         this.imgBuffer = image64;
-        this.bannerControl.patchValue(this.bannerFile.name);
-        this.bannerChanged = true;
+        this.banner_urlControl.patchValue(this.banner_urlFile.name);
+        this.banner_urlChanged = true;
       });
     }
 

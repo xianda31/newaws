@@ -39,13 +39,13 @@
             </div>
           </div>
           <!-- <div class="row"> -->
-          <!-- URL banner -->
+          <!-- URL banner_url -->
           <!-- <div class="row mb-4"> -->
 
           <div class="col-md-12">
             <label>Banière de l'article</label>
             <div class="input-group">
-              <input type="text" class="form-control" formControlName="banner"
+              <input type="text" class="form-control" formControlName="banner_url"
                 placeholder="URL de l'image de l'article">
               <!-- </div>
                   <div class="col-md-1"> -->
@@ -59,22 +59,22 @@
 
 
           <!-- </div> -->
-          <!-- summary -->
+          <!-- head_html -->
           <div class="col-md-12">
             <div class="form-group">
               <label>résumé de l'article (20 caractères min)</label>
-              <textarea class="form-control" formControlName="summary"
+              <textarea class="form-control" formControlName="head_html"
                 placeholder="Extrait de l'article (50 caractères minimum)" cols="3" rows="2"></textarea>
             </div>
-            <div *ngIf="fcontrols['summary'].errors?.['minlength']">
-              <div class="alert alert-danger" *ngIf="fcontrols['summary'].touched && fcontrols['summary'].invalid">
+            <div *ngIf="fcontrols['head_html'].errors?.['minlength']">
+              <div class="alert alert-danger" *ngIf="fcontrols['head_html'].touched && fcontrols['head_html'].invalid">
                 résumé de 20 caractères minimum</div>
             </div>
           </div>
 
         </div>
 
-        <!-- selecteur &  viewer de l'image banner -->
+        <!-- selecteur &  viewer de l'image banner_url -->
         <div class="col-md-6">
           <input type="file" class="file-input" (change)="onFileSelected($event)" #fileSelect>
           <div class="row">
@@ -94,7 +94,7 @@
     <div class="row">
       <div class="col-md-12 text-center pt-4">
         <button class="btn btn-primary" type="button" (click)="saveArticle()"
-          [disabled]="!articleForm.valid && creationMode && bannerValue !=''">Enregistrer</button>
+          [disabled]="!articleForm.valid && creationMode && banner_urlValue !=''">Enregistrer</button>
         &nbsp;
         <button class="btn btn-info" (click)="navBack()">Abandonner</button>
       </div>

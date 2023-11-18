@@ -1,41 +1,105 @@
-<div class="container p-3">
-    <div class="card p-2 bg-body-secondary">
+<div class="container.fluid p-3">
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card p-2 bg-body-secondary">
+
+                <form [formGroup]="createForm">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label>titre de l'article</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="col-md-6">
+                            <label>permalink</label>
+                            <input type="text" class="form-control" formControlName="permalink">
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                    <label>bannerURL</label>
+                    <input type="text" class="form-control" formControlName="banner_url">
+                    <div class="row">
+                        <div class="col-8">
+                            <label>head_html</label>
+                            <input type="text" class="form-control" formControlName="head_html">
+                        </div>
+                        <div class="col-4">
+                            <button>
+                                <i class="bi bi-chevron-expand" (click)="toggleShowBody()"></i>
+                            </button>
+                        </div>
+                    </div>
 
 
-        <form [formGroup]="migForm">
-            <div class="row">
-                <div class="col">
+                    <!-- 
+                    <button class="btn btn-sm btn-primary col-12 m-3" type="submit" (click)="view()">view
+                        article</button> -->
+                </form>
 
-                    <label>title</label>
-                    <select class="form-control" formControlName="title" (ngModelChange)="loadArticle($event)">
-                        <option value="" disabled selected>--titre de l'article--</option>
-                        <option *ngFor="let article of articles$ | async " [ngValue]="article">
-                            {{article.title}}</option>
-                    </select>
-                </div>
-                <div class="col">
-
-                    <label>permalink</label>
-                    <input type="text" class="form-control" formControlName="permalink">
-                </div>
+                <!-- <div class="w-100" id="headArea">
+                    heading line ...
+                </div> -->
             </div>
-            <label>banner</label>
-            <input type="text" class="form-control" formControlName="banner">
-            <label>summary</label>
-            <input type="text" class="form-control" formControlName="summary">
-        </form>
+        </div>
 
-    </div>
 
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <img [src]="bannerURL" alt="bannerURL">
+
+        <!-- flashplug -->
+        <div class="col-md-8">
+            <div class="card border-0 h-100 ">
+                <div class="card-body">
+                    <div class="container ">
+                        <h2 *ngIf="!data.date">
+                            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
+                        </h2>
+
+                        <h2 *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+                            [attr.data-hmonth]="getMonth(data.date)">
+                            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
+                        </h2>
+
+                        <div class="float-md-start me-4">
+                            <img [src]="data.banner_url" class="card-img-left" alt="bcsto">
+                        </div>
+
+
+                        <div *ngIf="showMore" class="text-start ps-2">
+                            <p>
+                                <span id="bodyArea" [innerHTML]="data.body_html$ | async | safeHtml"></span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-
 </div>
+
+<ng-template #flashplug>
+
+    <div class="container ">
+
+        <h2 *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+            [attr.data-hmonth]="getMonth(data.date)">
+            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
+
+        </h2>
+        <div class="float-md-start me-4">
+            <img [src]="data.banner_url" class="card-img-left" alt="bcsto">
+        </div>
+
+        <button>
+            <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
+        </button>
+        <div *ngIf="showMore" class="text-start ps-2">
+            <p>
+                <span id="headArea" [innerHTML]="data.body_html$ | async | safeHtml"></span>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- </div> -->
+</ng-template>

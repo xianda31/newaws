@@ -25,6 +25,7 @@ import { AdDirective } from './layouts/pager/plugins/ad/ad.directive';
 import { CarderComponent } from './layouts/pager/carder/carder.component';
 import { TodoComponent } from './pages/todo/todo.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -37,15 +38,11 @@ import { PagerComponent } from './layouts/pager/pager/pager.component';
     LoginComponent,
     PswresetComponent,
     CardComponent,
-    SafeHtmlPipe,
     HeadbandComponent,
     Page404Component,
     LinksComponent,
     RightsComponent,
     MyDataComponent,
-    FlashPluginComponent,
-    AdDirective,
-    CarderComponent,
     TodoComponent,
     PagerComponent,
 
@@ -54,11 +51,12 @@ import { PagerComponent } from './layouts/pager/pager/pager.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ToolsModule
+    ToolsModule,
+    NgbModule
   ],
 
 
-  providers: [SafeHtmlPipe],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

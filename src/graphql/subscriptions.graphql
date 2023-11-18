@@ -54,12 +54,11 @@ subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -87,12 +86,11 @@ subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -120,12 +118,11 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -145,12 +142,11 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {
@@ -192,12 +188,11 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onUpdateArticle(filter: $filter) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {
@@ -239,12 +234,11 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
   onDeleteArticle(filter: $filter) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {

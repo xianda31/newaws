@@ -158,12 +158,11 @@ export type Article = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: ModelImageConnection | null;
@@ -205,24 +204,22 @@ export type DeletePageInput = {
 export type CreateArticleInput = {
   id?: string | null;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
 };
 
 export type ModelArticleConditionInput = {
   title?: ModelStringInput | null;
-  banner?: ModelStringInput | null;
-  summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  content?: ModelStringInput | null;
+  banner_url?: ModelStringInput | null;
+  head_html?: ModelStringInput | null;
+  body_html_url?: ModelStringInput | null;
   duedate?: ModelStringInput | null;
-  featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
@@ -249,12 +246,11 @@ export type ModelIDInput = {
 export type UpdateArticleInput = {
   id: string;
   title?: string | null;
-  banner?: string | null;
-  summary?: string | null;
   permalink?: string | null;
-  content?: string | null;
+  banner_url?: string | null;
+  head_html?: string | null;
+  body_html_url?: string | null;
   duedate?: string | null;
-  featured?: boolean | null;
   public?: boolean | null;
   pageId?: string | null;
 };
@@ -332,12 +328,11 @@ export type ModelPageConnection = {
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
-  banner?: ModelStringInput | null;
-  summary?: ModelStringInput | null;
   permalink?: ModelStringInput | null;
-  content?: ModelStringInput | null;
+  banner_url?: ModelStringInput | null;
+  head_html?: ModelStringInput | null;
+  body_html_url?: ModelStringInput | null;
   duedate?: ModelStringInput | null;
-  featured?: ModelBooleanInput | null;
   public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
@@ -421,12 +416,11 @@ export type ModelSubscriptionBooleanInput = {
 export type ModelSubscriptionArticleFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   title?: ModelSubscriptionStringInput | null;
-  banner?: ModelSubscriptionStringInput | null;
-  summary?: ModelSubscriptionStringInput | null;
   permalink?: ModelSubscriptionStringInput | null;
-  content?: ModelSubscriptionStringInput | null;
+  banner_url?: ModelSubscriptionStringInput | null;
+  head_html?: ModelSubscriptionStringInput | null;
+  body_html_url?: ModelSubscriptionStringInput | null;
   duedate?: ModelSubscriptionStringInput | null;
-  featured?: ModelSubscriptionBooleanInput | null;
   public?: ModelSubscriptionBooleanInput | null;
   pageId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
@@ -493,12 +487,11 @@ export type CreatePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -524,12 +517,11 @@ export type UpdatePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -555,12 +547,11 @@ export type DeletePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -576,12 +567,11 @@ export type CreateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -621,12 +611,11 @@ export type UpdateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -666,12 +655,11 @@ export type DeleteArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -782,12 +770,11 @@ export type GetPageQuery = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -823,12 +810,11 @@ export type GetArticleQuery = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -870,12 +856,11 @@ export type ListArticlesQuery = {
     __typename: "Article";
     id: string;
     title: string;
-    banner: string;
-    summary: string;
     permalink: string;
-    content?: string | null;
-    duedate?: string | null;
-    featured: boolean;
+    banner_url: string;
+    head_html: string;
+    body_html_url: string;
+    duedate: string;
     public: boolean;
     pageId: string;
     images?: {
@@ -931,12 +916,11 @@ export type ArticlesByPageIdQuery = {
     __typename: "Article";
     id: string;
     title: string;
-    banner: string;
-    summary: string;
     permalink: string;
-    content?: string | null;
-    duedate?: string | null;
-    featured: boolean;
+    banner_url: string;
+    head_html: string;
+    body_html_url: string;
+    duedate: string;
     public: boolean;
     pageId: string;
     images?: {
@@ -1025,12 +1009,11 @@ export type OnCreatePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -1056,12 +1039,11 @@ export type OnUpdatePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -1087,12 +1069,11 @@ export type OnDeletePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      banner: string;
-      summary: string;
       permalink: string;
-      content?: string | null;
-      duedate?: string | null;
-      featured: boolean;
+      banner_url: string;
+      head_html: string;
+      body_html_url: string;
+      duedate: string;
       public: boolean;
       pageId: string;
       createdAt: string;
@@ -1108,12 +1089,11 @@ export type OnCreateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -1153,12 +1133,11 @@ export type OnUpdateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -1198,12 +1177,11 @@ export type OnDeleteArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  banner: string;
-  summary: string;
   permalink: string;
-  content?: string | null;
-  duedate?: string | null;
-  featured: boolean;
+  banner_url: string;
+  head_html: string;
+  body_html_url: string;
+  duedate: string;
   public: boolean;
   pageId: string;
   images?: {
@@ -1379,12 +1357,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -1426,12 +1403,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -1473,12 +1449,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -1510,12 +1485,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -1571,12 +1545,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -1632,12 +1605,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -1840,12 +1812,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -1883,21 +1854,6 @@ export class APIService {
             hidden
             articles {
               __typename
-              items {
-                __typename
-                id
-                title
-                banner
-                summary
-                permalink
-                content
-                duedate
-                featured
-                public
-                pageId
-                createdAt
-                updatedAt
-              }
               nextToken
             }
             createdAt
@@ -1927,12 +1883,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -1988,12 +1943,11 @@ export class APIService {
             __typename
             id
             title
-            banner
-            summary
             permalink
-            content
+            banner_url
+            head_html
+            body_html_url
             duedate
-            featured
             public
             pageId
             images {
@@ -2109,12 +2063,11 @@ export class APIService {
             __typename
             id
             title
-            banner
-            summary
             permalink
-            content
+            banner_url
+            head_html
+            body_html_url
             duedate
-            featured
             public
             pageId
             images {
@@ -2314,12 +2267,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -2362,12 +2314,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -2410,12 +2361,11 @@ export class APIService {
               __typename
               id
               title
-              banner
-              summary
               permalink
-              content
+              banner_url
+              head_html
+              body_html_url
               duedate
-              featured
               public
               pageId
               createdAt
@@ -2448,12 +2398,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -2510,12 +2459,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {
@@ -2572,12 +2520,11 @@ export class APIService {
           __typename
           id
           title
-          banner
-          summary
           permalink
-          content
+          banner_url
+          head_html
+          body_html_url
           duedate
-          featured
           public
           pageId
           images {

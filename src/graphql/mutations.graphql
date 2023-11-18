@@ -66,12 +66,11 @@ mutation CreatePage(
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -102,12 +101,11 @@ mutation UpdatePage(
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -138,12 +136,11 @@ mutation DeletePage(
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -166,12 +163,11 @@ mutation CreateArticle(
   createArticle(input: $input, condition: $condition) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {
@@ -216,12 +212,11 @@ mutation UpdateArticle(
   updateArticle(input: $input, condition: $condition) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {
@@ -266,12 +261,11 @@ mutation DeleteArticle(
   deleteArticle(input: $input, condition: $condition) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {

@@ -48,12 +48,11 @@ query GetPage($id: ID!) {
       items {
         id
         title
-        banner
-        summary
         permalink
-        content
+        banner_url
+        head_html
+        body_html_url
         duedate
-        featured
         public
         pageId
         createdAt
@@ -99,12 +98,11 @@ query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
     title
-    banner
-    summary
     permalink
-    content
+    banner_url
+    head_html
+    body_html_url
     duedate
-    featured
     public
     pageId
     images {
@@ -151,12 +149,11 @@ query ListArticles(
     items {
       id
       title
-      banner
-      summary
       permalink
-      content
+      banner_url
+      head_html
+      body_html_url
       duedate
-      featured
       public
       pageId
       images {
@@ -234,12 +231,11 @@ query ArticlesByPageId(
     items {
       id
       title
-      banner
-      summary
       permalink
-      content
+      banner_url
+      head_html
+      body_html_url
       duedate
-      featured
       public
       pageId
       images {

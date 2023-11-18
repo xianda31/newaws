@@ -31,7 +31,7 @@ export class ArticlesComponent implements OnInit {
       console.log('%s articles', articles.length, articles);
 
       articles.forEach((article) => {
-        Storage.get('banners/' + article.banner, { validateObjectExistence: true }).then((signedURL) => {
+        Storage.get('banners/' + article.banner_url, { validateObjectExistence: true }).then((signedURL) => {
 
           this.bannerURL.set(article.permalink, signedURL);
         })

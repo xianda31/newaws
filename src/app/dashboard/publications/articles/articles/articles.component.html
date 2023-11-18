@@ -44,7 +44,7 @@
 
               <img [src]="getBannerURL(article)" class="img" alt="bcsto">
             </td>
-            <td>{{ article.summary }} ....</td>
+            <td>{{ article.head_html }} ....</td>
             <td>{{ article.page!.label}}</td>
             <!-- <td>
               <app-toggle-input [(ngModel)]="article.assigned" (click)="onPublish(article)"></app-toggle-input>
@@ -54,7 +54,7 @@
               <app-toggle-input [(ngModel)]="article.public" (click)="onPublish(article)"></app-toggle-input>
             </td>
             <td>
-              <app-toggle-input [(ngModel)]="article.featured" (click)="onPublish(article)"></app-toggle-input>
+              <!-- <app-toggle-input [(ngModel)]="article.featured" (click)="onPublish(article)"></app-toggle-input> -->
             </td>
             <td>
               <button type="button" class="btn btn-sm btn-primary" (click)="onUpdate(article)">
