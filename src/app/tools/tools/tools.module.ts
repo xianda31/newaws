@@ -11,7 +11,6 @@ import { FlashPluginComponent } from 'src/app/layouts/pager/plugins/flash-plugin
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
-import { TinyModalComponent } from '../tiny-modal/tiny-modal.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -26,7 +25,6 @@ import { TinyModalComponent } from '../tiny-modal/tiny-modal.component';
     CarderComponent,
     FilesizePipe,
     SafeHtmlPipe,
-    TinyModalComponent
   ],
   imports: [
     CommonModule,

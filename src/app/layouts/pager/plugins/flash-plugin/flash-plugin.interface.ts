@@ -6,6 +6,7 @@ export interface FlashData {
     banner_url: string;
     head_html: string;
     // body_html_path: string;
-    body_html$: Observable<SafeHtml>;
+    // body_html$: Observable<SafeHtml>;
+    body_html: SafeHtml;
     date: Date | null | undefined;
 }

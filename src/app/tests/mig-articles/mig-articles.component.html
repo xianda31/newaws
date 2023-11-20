@@ -24,11 +24,7 @@
                             <label>head_html</label>
                             <input type="text" class="form-control" formControlName="head_html">
                         </div>
-                        <div class="col-4">
-                            <button>
-                                <i class="bi bi-chevron-expand" (click)="toggleShowBody()"></i>
-                            </button>
-                        </div>
+
                     </div>
 
 
@@ -36,6 +32,18 @@
                     <button class="btn btn-sm btn-primary col-12 m-3" type="submit" (click)="view()">view
                         article</button> -->
                 </form>
+                <div class="col-2">
+                    <button>
+                        <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
+                    </button>
+
+                </div>
+
+                <div class=" col-2 form-check">
+                    <input class="form-check-input" [(ngModel)]="editBody" (ngModelChange)="toggleEditBody()"
+                        type="checkbox">
+                    <label> Edit body </label>
+                </div>
 
                 <!-- <div class="w-100" id="headArea">
                     heading line ...
@@ -46,17 +54,17 @@
 
 
         <!-- flashplug -->
-        <div class="col-md-8">
+        <div *ngIf="data" class="col-md-8">
             <div class="card border-0 h-100 ">
                 <div class="card-body">
                     <div class="container ">
                         <h2 *ngIf="!data.date">
-                            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
+                            <span #headArea id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
                         </h2>
 
                         <h2 *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
                             [attr.data-hmonth]="getMonth(data.date)">
-                            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
+                            <span #headArea id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
                         </h2>
 
                         <div class="float-md-start me-4">
@@ -65,9 +73,11 @@
 
 
                         <div *ngIf="showMore" class="text-start ps-2">
-                            <p>
-                                <span id="bodyArea" [innerHTML]="data.body_html$ | async | safeHtml"></span>
-                            </p>
+                            <!-- <p> -->
+                            <!-- <span #bodyArea id="bodyArea" [innerHTML]="data.body_html$ | async | safeHtml"></span> -->
+                            <span #bodyArea id="bodyArea" [innerHTML]="data.body_html"></span>
+
+                            <!-- </p> -->
                         </div>
                     </div>
                 </div>
@@ -95,7 +105,7 @@
         </button>
         <div *ngIf="showMore" class="text-start ps-2">
             <p>
-                <span id="headArea" [innerHTML]="data.body_html$ | async | safeHtml"></span>
+                <span id="headArea" [innerHTML]="data.body_html"></span>
             </p>
         </div>
     </div>

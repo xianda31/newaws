@@ -1,12 +1,10 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, Sanitizer } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable, from } from 'rxjs';
 import { Article, CreateArticleInput } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { FlashData } from 'src/app/layouts/pager/plugins/flash-plugin/flash-plugin.interface';
-import { SafeHtml } from '@angular/platform-browser';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import tinymce from 'tinymce';
 
 
@@ -15,21 +13,30 @@ import tinymce from 'tinymce';
   templateUrl: './mig-articles.component.html',
   styleUrls: ['./mig-articles.component.scss']
 })
+
+
 export class MigArticlesComponent implements OnInit, AfterViewInit {
 
+  @ViewChildren('bodyArea') bodyArea!: QueryList<any>;
+  @ViewChildren('headArea') headArea!: QueryList<any>;
 
   // flashplug env
   data!: FlashData;
+
+
   showMore: boolean = false;
-  body: string = '';
+  editBody: boolean = false;
+  editorExist: boolean = false;
+  body_html !: SafeHtml;
+  // body: string = '';
 
   // articles$: Observable<Article[]> = this.articleService.articles$;
   createForm !: FormGroup;
   bannerURL!: any;
-  article !: Article;
+  // article !: Article;
 
   article0: CreateArticleInput = {
-    title: 'horaires des tournois',
+    title: 'les cours redémarrent',
     head_html: '<p>headline<\p>',
     body_html_url: '',
     permalink: '',
@@ -41,24 +48,34 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private articleService: ArticleService,
-    private modalService: NgbModal,
-
+    private sanitizer: DomSanitizer,
   ) { }
+
   ngAfterViewInit(): void {
-    this.initHeadLineEditor();
-    // tinymce.EditorManager.get('headArea')!.on('click', (e) => { console.warn('click', e) });
+    this.headArea.changes.subscribe((r) => {
+      this.initHeadLineEditor()
+    });
+    this.bodyArea.changes.subscribe((r) => {
+      if (this.showMore && this.editBody) {
+        this.removeBodyLineEditor();   // au cas ou il existe déjà  
+        this.initBodyEditor()
+      }
+    });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.article0.permalink = this.article0.title.toLowerCase().replace(/\s/g, '-');
-    this.article = this.article0 as Article;
+    // this.article = this.article0 as Article;
     this.initForm();
     this.createForm.patchValue(this.article0);
     const article = this.createForm.getRawValue() as Article;
-    this.data = this.flashData(article);
 
+    this.HTMLcontentPromise('articles/' + article.permalink).then((html) => {
+      this.body_html = html;
+      // console.log('initial body :', this.body_html);
+      this.triggerView(article, this.body_html);
+    });
   }
-
 
 
   initForm() {
@@ -83,19 +100,17 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
 
   }
 
-  toggleShowBody() {
-    this.showMore = !this.showMore;
-    if (this.showMore) {
-      this.initBodyEditor();
-    } else {
-      tinymce.remove('#bodyArea');
-    }
+
+  toggleEditBody() {
+
+    console.log('toggleEditBody', this.editBody, this.showMore);
+    // si editBody = true on force showMore à true s'il ne l'etait pas déjà (et on init l'éditeur)
+    if (this.editBody && !this.showMore) { this.showMore = true; }
+    if (this.editBody && this.showMore) { this.initBodyEditor(); }
+    if (!this.editBody && this.showMore) { this.removeBodyLineEditor(); }
   }
 
-  // view() {
-  //   const article = this.createForm.getRawValue() as Article;
-  //   this.data = this.flashData(article);
-  // }
+
 
   // plugin adds
 
@@ -106,26 +121,31 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
 
   // services 
 
-  getHTMLcontent$(path: string): Observable<SafeHtml> {
+  HTMLcontentPromise(path: string): Promise<SafeHtml> {
 
-    let HTMLdownload: Promise<string> = new Promise(async (resolve, reject) => {
+    let HTMLdownload: Promise<SafeHtml> = new Promise(async (resolve, reject) => {
       const blob = await Storage.get(path, { download: true });
       if (blob.Body === undefined) { reject(); }
-      else { blob.Body.text().then((text) => { resolve(text); }); }
+      else {
+        blob.Body.text().then((text) => {
+          const html: SafeHtml = this.sanitizer.bypassSecurityTrustHtml(text);
+          resolve(html);
+        });
+      }
     });
-    return from(HTMLdownload);
+    return (HTMLdownload);
   }
 
-  flashData(article: Article): FlashData {
+  triggerView(article: Article, body_html: SafeHtml): void {
     const flashData: FlashData = {
       title: article.title,
       banner_url: this.getURL('banners/' + article.banner_url),
       head_html: article.head_html,
-      // body_html_path: 'articles/' + article.permalink,
-      body_html$: this.getHTMLcontent$('articles/' + article.permalink),
+      body_html: body_html, //this.getHTMLcontent$('articles/' + article.permalink),
       date: article.duedate ? new Date(article.duedate) : null,
     };
-    return flashData;
+    console.log('triggerView', flashData);
+    this.data = flashData;
   }
 
   getURL(key: string): string {
@@ -133,23 +153,31 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     const Region = 'eu-west-3';
     const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
 
-    console.log(uri);
+    // console.log(uri);
     return uri;
   }
 
 
   // editor services
 
+
+
+
   initHeadLineEditor() {
     const el = document.getElementById('headArea');
 
-    if (el === null) { return; }
-
+    if (el === null) {
+      console.log('el not found');
+      return;
+    }
+    console.log('create new head editor @', el);
     tinymce.init(
       {
         target: el,
         inline: true,
         menubar: false,
+        content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+
         plugins: ' code  wordcount save',
         toolbar: 'undo redo | bold italic | forecolor | code | save cancel',
         save_onsavecallback: () => {
@@ -164,7 +192,13 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
         }
       });
   }
+  removeBodyLineEditor() {
+    if (this.editorExist) {
+      tinymce.remove('#bodyArea');
+      this.editorExist = false;
+    }
 
+  }
   initBodyEditor() {
     const el = document.getElementById('bodyArea');
 
@@ -173,18 +207,36 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
       return;
     }
 
+    this.editorExist = true;
+    console.log('create new body editor @', el);
+
     tinymce.init(
       {
         target: el,
-        inline: true,
-        menubar: false,
-        plugins: ' code  wordcount save',
-        toolbar: 'undo redo | bold italic | forecolor | code | save cancel',
+        inline: false,
+        menubar: 'file edit table insert view format tools',
+
+        // format: 'html',
+        content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+        editable_root: false,
+        editable_class: 'editable',
+        elementpath: false,
+
+        plugins: 'anchor autolink link lists image code save wordcount table',  //
+        toolbar: 'undo redo save | table | blocks | bold italic strikethrough backcolor | mergetags | link image | align bullist numlist | code ',
+
+        // table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+
+        // valid_elements: 'table,head,p[style],strong,em,span[style],a[href],ul,ol,li',
+        // valid_styles: {
+        //   '*': 'font-size,font-family,color,text-decoration,text-align'
+        // },
+
         save_onsavecallback: () => {
-          // console.log('Saved');
-          this.article0.body_html_url = tinymce.activeEditor!.getContent();
-          // this.createForm.patchValue({body_html_url: this.article0.body_html_url });
-          console.log(this.article0.body_html_url);
+          this.body_html = tinymce.activeEditor!.getContent();
+          // this.createForm.patchValue({body_html_url: this.body_html });
+          console.log(this.body_html);
+          this.data.body_html = this.sanitizer.bypassSecurityTrustHtml(this.body_html as string);
         },
         toolbar_location: 'bottom',
         // valid_elements: 'strong,em,span[style],a[href]',
