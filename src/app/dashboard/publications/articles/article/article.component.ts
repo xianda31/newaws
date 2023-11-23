@@ -35,9 +35,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
   selectedArticle!: Article | undefined;
   templateLoaded: boolean = false;
 
-  banner_urlFile!: File;
-  banner_urlChanged: boolean = false;
-  banner_urlPreview: string = '';
+  image_urlFile!: File;
+  image_urlChanged: boolean = false;
+  image_urlPreview: string = '';
   externalHtml: string = '';
 
   articleForm!: FormGroup;
@@ -46,8 +46,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
     return this.articleForm.controls;
   }
 
-  get banner_urlControl() { return this.articleForm.get('banner_url') as FormControl; }
-  get banner_urlValue() { return this.banner_urlControl.value; }
+  get image_urlControl() { return this.articleForm.get('image_url') as FormControl; }
+  get image_urlValue() { return this.image_urlControl.value; }
 
 
   constructor(
@@ -88,7 +88,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
           this.setForm(article!);
           this.selectedArticle = article;
 
-          const filename = 'articles/' + article!.permalink;
+          const filename = 'articles/' + article!.body;
           const blob = await Storage.get(filename, { download: true });
 
           blob.Body?.text().then(async (text) => {
@@ -96,7 +96,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
             this.tinymceInit(text);
           });
 
-          this.imgBuffer = await Storage.get('banner_urls/' + article.banner_url, { validateObjectExistence: true });
+          this.imgBuffer = await Storage.get('image_urls/' + article.image_url, { validateObjectExistence: true });
 
         })
         .catch((error) => { console.log('error : ', error); return undefined; });
@@ -122,9 +122,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
     if (this.creationMode) {
       // mode 'create'
-      article.permalink = this.articleForm.get('title')?.value.toLowerCase().replace(/\s/g, '-');
+      article.body = this.articleForm.get('title')?.value.toLowerCase().replace(/\s/g, '-');
 
-      const filename = 'articles/' + article.permalink;
+      const filename = 'articles/' + article.body;
       if (await this.UploadTxtFile(filename, HTMLtext)) {
         console.log('gonna save %o', article);
         this.articleService.createArticle(article);
@@ -137,7 +137,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       // mode 'update'
       article.id = this.id;
 
-      const filename = 'articles/' + article.permalink;
+      const filename = 'articles/' + article.body;
       if (await this.UploadTxtFile(filename, HTMLtext)) {
         this.articleService.updateArticle(article);
       } else {
@@ -145,8 +145,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
       };
     }
 
-    if (this.banner_urlChanged) {
-      await this.fileService.uploadFile('banner_urls/' + this.banner_urlFile.name, this.banner_urlFile);
+    if (this.image_urlChanged) {
+      await this.fileService.uploadFile('image_urls/' + this.image_urlFile.name, this.image_urlFile);
       this.router.navigate(['dashboard/articles']);
     }
     this.navBack();
@@ -162,7 +162,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.articleForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(1)]),
       permalink: new FormControl(''),
-      banner_url: new FormControl({ value: '', disabled: true }),
+      image_url: new FormControl({ value: '', disabled: true }),
       head_html: new FormControl('', [Validators.minLength(2)]),
       pageId: new FormControl(''),
       featured: new FormControl(false),
@@ -177,11 +177,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.articleForm.get('pageId')?.patchValue(article.pageId);
     this.selectedPageId = article.pageId!;
     this.articleForm.get('title')?.setValue(article.title);
-    this.articleForm.get('permalink')?.setValue(article.permalink);
-    this.articleForm.get('head_html')?.setValue(article.head_html);
+    this.articleForm.get('permalink')?.setValue(article.body);
+    this.articleForm.get('head_html')?.setValue(article.headline);
     // this.articleForm.get('featured')?.setValue(article.featured);
     this.articleForm.get('public')?.setValue(article.public);
-    this.articleForm.get('banner_url')?.setValue(article.banner_url);
+    this.articleForm.get('image_url')?.setValue(article.image_url);
 
 
   }
@@ -277,7 +277,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
 
 
-  // ************ gestion image (banner_url)******************
+  // ************ gestion image (image_url)******************
 
 
 
@@ -295,13 +295,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
-    this.banner_urlFile = event.target.files[0];
+    this.image_urlFile = event.target.files[0];
 
-    if (this.banner_urlFile) {
-      this.getImage64(this.banner_urlFile).then((image64) => {
+    if (this.image_urlFile) {
+      this.getImage64(this.image_urlFile).then((image64) => {
         this.imgBuffer = image64;
-        this.banner_urlControl.patchValue(this.banner_urlFile.name);
-        this.banner_urlChanged = true;
+        this.image_urlControl.patchValue(this.image_urlFile.name);
+        this.image_urlChanged = true;
       });
     }
 

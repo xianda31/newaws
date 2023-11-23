@@ -36,16 +36,16 @@ export class CarderComponent implements OnInit {
   }
 
   async loadComponent(article: Article) {
-    const bannerURL = await Storage.get('banners/' + article.banner_url, { validateObjectExistence: true });
+    const bannerURL = await Storage.get('banners/' + article.image_url, { validateObjectExistence: true });
     const HTMLstring = await this.loadHTML(article);
-    const adItem = new AdItem(FlashPluginComponent, { solo: this.solo, title: article.title, summary: article.head_html, bannerURL: bannerURL, HTMLstring: HTMLstring, day: 24, month: 'Dec' });
+    const adItem = new AdItem(FlashPluginComponent, { solo: this.solo, title: article.title, summary: article.headline, bannerURL: bannerURL, HTMLstring: HTMLstring, day: 24, month: 'Dec' });
     const componentRef = this.viewContainerRef.createComponent<AdComponent>(adItem.component);
     componentRef.instance.data = adItem.data;
   }
 
   loadHTML(article: Article): Promise<string> {
     return new Promise(async (resolve, reject) => {
-      const blob = await Storage.get('articles/' + article.permalink, { download: true });
+      const blob = await Storage.get('articles/' + article.body, { download: true });
       if (blob.Body === undefined) { reject(); }
       else { blob.Body.text().then((text) => { resolve(text); }); }
     });

@@ -22,10 +22,10 @@ export class CardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    if (this.article.banner_url && this.article.banner_url !== '') {
+    if (this.article.image_url && this.article.image_url !== '') {
       // this.bannerURL = 'assets/images/bcsto.jpg';
 
-      this.bannerURL = await Storage.get('banners/' + this.article.banner_url, { validateObjectExistence: true });
+      this.bannerURL = await Storage.get('banners/' + this.article.image_url, { validateObjectExistence: true });
     } else {
       this.bannerURL = 'assets/images/bcsto.jpg';
     }

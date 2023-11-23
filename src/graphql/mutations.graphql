@@ -67,10 +67,11 @@ mutation CreatePage(
         id
         title
         permalink
-        banner_url
-        head_html
-        body_html_url
-        duedate
+        image_url
+        headline
+        body
+        info
+        rank
         public
         pageId
         createdAt
@@ -102,10 +103,11 @@ mutation UpdatePage(
         id
         title
         permalink
-        banner_url
-        head_html
-        body_html_url
-        duedate
+        image_url
+        headline
+        body
+        info
+        rank
         public
         pageId
         createdAt
@@ -137,10 +139,11 @@ mutation DeletePage(
         id
         title
         permalink
-        banner_url
-        head_html
-        body_html_url
-        duedate
+        image_url
+        headline
+        body
+        info
+        rank
         public
         pageId
         createdAt
@@ -164,41 +167,13 @@ mutation CreateArticle(
     id
     title
     permalink
-    banner_url
-    head_html
-    body_html_url
-    duedate
+    image_url
+    headline
+    body
+    info
+    rank
     public
     pageId
-    images {
-      items {
-        id
-        name
-        description
-        url
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    page {
-      id
-      root_menu
-      label
-      description
-      path
-      hidden
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -213,41 +188,13 @@ mutation UpdateArticle(
     id
     title
     permalink
-    banner_url
-    head_html
-    body_html_url
-    duedate
+    image_url
+    headline
+    body
+    info
+    rank
     public
     pageId
-    images {
-      items {
-        id
-        name
-        description
-        url
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    page {
-      id
-      root_menu
-      label
-      description
-      path
-      hidden
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -262,89 +209,13 @@ mutation DeleteArticle(
     id
     title
     permalink
-    banner_url
-    head_html
-    body_html_url
-    duedate
+    image_url
+    headline
+    body
+    info
+    rank
     public
     pageId
-    images {
-      items {
-        id
-        name
-        description
-        url
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    page {
-      id
-      root_menu
-      label
-      description
-      path
-      hidden
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation CreateImage(
-  $input: CreateImageInput!
-  $condition: ModelImageConditionInput
-) {
-  createImage(input: $input, condition: $condition) {
-    id
-    name
-    description
-    url
-    articleId
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation UpdateImage(
-  $input: UpdateImageInput!
-  $condition: ModelImageConditionInput
-) {
-  updateImage(input: $input, condition: $condition) {
-    id
-    name
-    description
-    url
-    articleId
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation DeleteImage(
-  $input: DeleteImageInput!
-  $condition: ModelImageConditionInput
-) {
-  deleteImage(input: $input, condition: $condition) {
-    id
-    name
-    description
-    url
-    articleId
     createdAt
     updatedAt
     __typename

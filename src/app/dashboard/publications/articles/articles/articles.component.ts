@@ -31,9 +31,9 @@ export class ArticlesComponent implements OnInit {
       console.log('%s articles', articles.length, articles);
 
       articles.forEach((article) => {
-        Storage.get('banners/' + article.banner_url, { validateObjectExistence: true }).then((signedURL) => {
+        Storage.get('banners/' + article.image_url, { validateObjectExistence: true }).then((signedURL) => {
 
-          this.bannerURL.set(article.permalink, signedURL);
+          this.bannerURL.set(article.body, signedURL);
         })
           .catch((error) => {
             console.log('error %s sur l\'article :', error, article);
@@ -46,7 +46,7 @@ export class ArticlesComponent implements OnInit {
   };
 
   getBannerURL(article: Article) {
-    return this.bannerURL.get(article.permalink);
+    return this.bannerURL.get(article.body);
   }
 
   onDelete(article: Article) {
@@ -54,7 +54,7 @@ export class ArticlesComponent implements OnInit {
   }
 
   onPublish(article: Article) {
-    const { page, createdAt, updatedAt, __typename, ...articleInput } = article;
+    const { createdAt, updatedAt, __typename, ...articleInput } = article;
     this.articleService.updateArticle(articleInput);
   }
 

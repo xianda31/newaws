@@ -1,7 +1,7 @@
 <div class="container.fluid p-3">
     <div class="row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card p-2 bg-body-secondary">
 
                 <form [formGroup]="createForm">
@@ -17,33 +17,35 @@
                         </div>
                     </div>
                     <!-- </div> -->
-                    <label>bannerURL</label>
-                    <input type="text" class="form-control" formControlName="banner_url">
+                    <label>imageURL</label>
+                    <input type="text" class="form-control" formControlName="image_url">
                     <div class="row">
                         <div class="col-8">
-                            <label>head_html</label>
-                            <input type="text" class="form-control" formControlName="head_html">
+                            <label>headline</label>
+                            <input type="text" class="form-control" formControlName="headline">
                         </div>
 
                     </div>
-
-
-                    <!-- 
-                    <button class="btn btn-sm btn-primary col-12 m-3" type="submit" (click)="view()">view
-                        article</button> -->
                 </form>
-                <div class="col-2">
-                    <button>
-                        <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
-                    </button>
+
+                <div class="col-12">
+                    édition partie body
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> déplie :</label>
+                            <button>
+                                <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label> édite :</label>
+                            <input class="form-check-input" [(ngModel)]="editBody" (ngModelChange)="toggleEditBody()"
+                                type="checkbox">
+                        </div>
+                    </div>
 
                 </div>
 
-                <div class=" col-2 form-check">
-                    <input class="form-check-input" [(ngModel)]="editBody" (ngModelChange)="toggleEditBody()"
-                        type="checkbox">
-                    <label> Edit body </label>
-                </div>
 
                 <!-- <div class="w-100" id="headArea">
                     heading line ...
@@ -51,65 +53,54 @@
             </div>
         </div>
 
+        <div *ngIf="data" class="col-md-6">
+            <ng-template [ngTemplateOutlet]="event"></ng-template>
+        </div>
+
+        <div *ngIf="data" class="col-md-2">
+            <ng-template [ngTemplateOutlet]="diapo"></ng-template>
+        </div>
+    </div>
+</div>
+
+<ng-template #diapo>
+    <div class="card border-0 w-100 ">
+        <div class="card-header text-center">
+            <img [src]="data.image" class="card-img-portrait-top" alt="title">
+        </div>
+        <div class="card-body text-center">
+            <span id="headArea" [innerHTML]="data.headline | safeHtml"> </span>
+
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #event>
+    <div class="card border-0 h-100 ">
+        <div class="card-body">
+            <div class="container ">
+                <div *ngIf="!data.date">
+                    <section #headArea id="headArea" [innerHTML]="data.headline | safeHtml"> </section>
+                </div>
+
+                <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+                    [attr.data-hmonth]="getMonth(data.date)">
+                    <section #headArea id="headArea" [innerHTML]="data.headline | safeHtml"> </section>
+                </div>
+
+                <!-- <div class="float-md-start me-4">
+                        <img [src]="data.image" class="card-img-left" alt="bcsto">
+                    </div> -->
 
 
-        <!-- flashplug -->
-        <div *ngIf="data" class="col-md-8">
-            <div class="card border-0 h-100 ">
-                <div class="card-body">
-                    <div class="container ">
-                        <h2 *ngIf="!data.date">
-                            <span #headArea id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
-                        </h2>
+                <div *ngIf="showMore" class="text-start ps-2">
+                    <!-- <p> -->
+                    <!-- <span #bodyArea id="bodyArea" [innerHTML]="data.body_html$ | async | safeHtml"></span> -->
+                    <span #bodyArea id="bodyArea" [innerHTML]="data.body  "></span>
 
-                        <h2 *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
-                            [attr.data-hmonth]="getMonth(data.date)">
-                            <span #headArea id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
-                        </h2>
-
-                        <div class="float-md-start me-4">
-                            <img [src]="data.banner_url" class="card-img-left" alt="bcsto">
-                        </div>
-
-
-                        <div *ngIf="showMore" class="text-start ps-2">
-                            <!-- <p> -->
-                            <!-- <span #bodyArea id="bodyArea" [innerHTML]="data.body_html$ | async | safeHtml"></span> -->
-                            <span #bodyArea id="bodyArea" [innerHTML]="data.body_html"></span>
-
-                            <!-- </p> -->
-                        </div>
-                    </div>
+                    <!-- </p> -->
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-
-<ng-template #flashplug>
-
-    <div class="container ">
-
-        <h2 *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
-            [attr.data-hmonth]="getMonth(data.date)">
-            <span id="headArea" [innerHTML]="data.head_html | safeHtml"> </span>
-
-        </h2>
-        <div class="float-md-start me-4">
-            <img [src]="data.banner_url" class="card-img-left" alt="bcsto">
-        </div>
-
-        <button>
-            <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
-        </button>
-        <div *ngIf="showMore" class="text-start ps-2">
-            <p>
-                <span id="headArea" [innerHTML]="data.body_html"></span>
-            </p>
-        </div>
-    </div>
-
-
-    <!-- </div> -->
 </ng-template>

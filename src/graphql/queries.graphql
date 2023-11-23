@@ -49,10 +49,11 @@ query GetPage($id: ID!) {
         id
         title
         permalink
-        banner_url
-        head_html
-        body_html_url
-        duedate
+        image_url
+        headline
+        body
+        info
+        rank
         public
         pageId
         createdAt
@@ -99,41 +100,13 @@ query GetArticle($id: ID!) {
     id
     title
     permalink
-    banner_url
-    head_html
-    body_html_url
-    duedate
+    image_url
+    headline
+    body
+    info
+    rank
     public
     pageId
-    images {
-      items {
-        id
-        name
-        description
-        url
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    page {
-      id
-      root_menu
-      label
-      description
-      path
-      hidden
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename
@@ -150,61 +123,13 @@ query ListArticles(
       id
       title
       permalink
-      banner_url
-      head_html
-      body_html_url
-      duedate
+      image_url
+      headline
+      body
+      info
+      rank
       public
       pageId
-      images {
-        nextToken
-        __typename
-      }
-      page {
-        id
-        root_menu
-        label
-        description
-        path
-        hidden
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
-query GetImage($id: ID!) {
-  getImage(id: $id) {
-    id
-    name
-    description
-    url
-    articleId
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-query ListImages(
-  $filter: ModelImageFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listImages(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      description
-      url
-      articleId
       createdAt
       updatedAt
       __typename
@@ -232,56 +157,13 @@ query ArticlesByPageId(
       id
       title
       permalink
-      banner_url
-      head_html
-      body_html_url
-      duedate
+      image_url
+      headline
+      body
+      info
+      rank
       public
       pageId
-      images {
-        nextToken
-        __typename
-      }
-      page {
-        id
-        root_menu
-        label
-        description
-        path
-        hidden
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
-query ImagesByArticleId(
-  $articleId: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelImageFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  imagesByArticleId(
-    articleId: $articleId
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      name
-      description
-      url
-      articleId
       createdAt
       updatedAt
       __typename

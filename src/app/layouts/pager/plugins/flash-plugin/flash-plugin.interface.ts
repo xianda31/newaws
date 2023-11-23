@@ -3,10 +3,10 @@ import { Observable } from "rxjs";
 
 export interface FlashData {
     title: string;
-    banner_url: string;
-    head_html: string;
+    image: string;
+    headline: string;
     // body_html_path: string;
     // body_html$: Observable<SafeHtml>;
-    body_html: SafeHtml;
+    body: string;
     date: Date | null | undefined;
 }
