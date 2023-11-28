@@ -31,7 +31,7 @@ export class PictureService {
 
   createPicture(picture: Picture | CreatePictureInput) {
 
-    console.log('createPicture : ', picture);
+    // console.log('createPicture : ', picture);
 
     this.api.CreatePicture(picture).then((result) => {
       const picture = result as Picture;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FolderItem } from 'src/app/interfaces/files.interface';
 import { FileService } from 'src/app/tools/service/file.service';
 import { ToastService } from '../service/toast.service';
@@ -11,10 +11,13 @@ import { ToastService } from '../service/toast.service';
   styleUrls: ['./files.component.scss']
 })
 
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, OnChanges {
 
   @Input() root_folder: string = '';
   @Input() full_rights: boolean = false;
+  @Input() arbo_only: boolean = false;
+  @Input() sub_folder: string = '';
+  @Output() newPathEvent = new EventEmitter<string>();
 
   current_folder: string = '';
   folder_level: number = 0;
@@ -26,9 +29,18 @@ export class FilesComponent implements OnInit {
     private toastService: ToastService
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['sub_folder'].firstChange) {
+      this.current_folder = this.root_folder + this.sub_folder;
+      this.folder_level = this.sub_folder.split('/').length;
+      this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    }
+  }
 
   ngOnInit(): void {
     this.current_folder = this.root_folder;
+    this.newPathEvent.emit(this.current_folder);
+
     this.fileService.bucketLoaded.subscribe((loaded) => {
       if (loaded) {
         this.folderItems = this.fileService.genFolderItems(this.current_folder);
@@ -40,6 +52,8 @@ export class FilesComponent implements OnInit {
 
   folderDown(item: FolderItem) {
     this.current_folder += (item.key + '/');
+    this.newPathEvent.emit(this.current_folder);
+
     this.folder_level++;
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
   }
@@ -56,6 +70,8 @@ export class FilesComponent implements OnInit {
     keys.pop();    // suppression du '' final
     keys.pop();    // repA/repB/ => repA/   et repA/ => ''
     this.current_folder = (keys.length === 0) ? '' : keys.join('/') + '/';
+    this.newPathEvent.emit(this.current_folder);
+
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
   }
 

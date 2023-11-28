@@ -70,6 +70,7 @@ export class FileService {
       })
         .then((result) => {
           this.publicBucket.push({ key: key, lastModified: Date.now(), size: file.size, __isFile: true });
+          this.bucketLoaded$.next(true);
           resolve(result);
         })
         .catch((err) => {
