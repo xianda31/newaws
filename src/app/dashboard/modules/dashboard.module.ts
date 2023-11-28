@@ -15,6 +15,7 @@ import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { DashHeaderComponent } from '../dash-header/dash-header.component';
 import { PagesComponent } from '../publications/pages/pages.component';
 import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
+import { PicturesComponent } from '../images/pictures.component';
 
 
 
@@ -28,7 +29,9 @@ import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.co
     FilemgrComponent,
     DashHeaderComponent,
     PagesComponent,
-    MigArticlesComponent
+    MigArticlesComponent,
+    PicturesComponent,
+
 
 
 

@@ -95,6 +95,56 @@ query ListPages(
   }
 }
 
+query GetPicture($id: ID!) {
+  getPicture(id: $id) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListPictures(
+  $filter: ModelPictureFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
 query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
@@ -106,6 +156,18 @@ query GetArticle($id: ID!) {
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
     createdAt
     updatedAt
@@ -129,7 +191,99 @@ query ListArticles(
       info
       rank
       public
+      images {
+        nextToken
+        __typename
+      }
       pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetArticlePictures($id: ID!) {
+  getArticlePictures(id: $id) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListArticlePictures(
+  $filter: ModelArticlePicturesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listArticlePictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      pictureId
+      articleId
+      picture {
+        id
+        title
+        filename
+        path
+        caption
+        createdAt
+        updatedAt
+        __typename
+      }
+      article {
+        id
+        title
+        permalink
+        image_url
+        headline
+        body
+        info
+        rank
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -163,7 +317,115 @@ query ArticlesByPageId(
       info
       rank
       public
+      images {
+        nextToken
+        __typename
+      }
       pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query ArticlePicturesByPictureId(
+  $pictureId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelArticlePicturesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  articlePicturesByPictureId(
+    pictureId: $pictureId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      pictureId
+      articleId
+      picture {
+        id
+        title
+        filename
+        path
+        caption
+        createdAt
+        updatedAt
+        __typename
+      }
+      article {
+        id
+        title
+        permalink
+        image_url
+        headline
+        body
+        info
+        rank
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query ArticlePicturesByArticleId(
+  $articleId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelArticlePicturesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  articlePicturesByArticleId(
+    articleId: $articleId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      pictureId
+      articleId
+      picture {
+        id
+        title
+        filename
+        path
+        caption
+        createdAt
+        updatedAt
+        __typename
+      }
+      article {
+        id
+        title
+        permalink
+        image_url
+        headline
+        body
+        info
+        rank
+        public
+        pageId
+        createdAt
+        updatedAt
+        __typename
+      }
       createdAt
       updatedAt
       __typename

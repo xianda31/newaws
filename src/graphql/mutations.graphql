@@ -159,6 +159,90 @@ mutation DeletePage(
   }
 }
 
+mutation CreatePicture(
+  $input: CreatePictureInput!
+  $condition: ModelPictureConditionInput
+) {
+  createPicture(input: $input, condition: $condition) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdatePicture(
+  $input: UpdatePictureInput!
+  $condition: ModelPictureConditionInput
+) {
+  updatePicture(input: $input, condition: $condition) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeletePicture(
+  $input: DeletePictureInput!
+  $condition: ModelPictureConditionInput
+) {
+  deletePicture(input: $input, condition: $condition) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
 mutation CreateArticle(
   $input: CreateArticleInput!
   $condition: ModelArticleConditionInput
@@ -173,6 +257,18 @@ mutation CreateArticle(
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
     createdAt
     updatedAt
@@ -194,6 +290,18 @@ mutation UpdateArticle(
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
     createdAt
     updatedAt
@@ -215,7 +323,160 @@ mutation DeleteArticle(
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateArticlePictures(
+  $input: CreateArticlePicturesInput!
+  $condition: ModelArticlePicturesConditionInput
+) {
+  createArticlePictures(input: $input, condition: $condition) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateArticlePictures(
+  $input: UpdateArticlePicturesInput!
+  $condition: ModelArticlePicturesConditionInput
+) {
+  updateArticlePictures(input: $input, condition: $condition) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteArticlePictures(
+  $input: DeleteArticlePicturesInput!
+  $condition: ModelArticlePicturesConditionInput
+) {
+  deleteArticlePictures(input: $input, condition: $condition) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

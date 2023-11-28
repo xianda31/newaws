@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, Sanitizer } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren, Sanitizer, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Article, CreateArticleInput } from 'src/app/API.service';
+import { Article, CreateArticleInput, GetArticleQuery } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { FlashData } from 'src/app/layouts/pager/plugins/flash-plugin/flash-plugin.interface';
@@ -19,6 +19,8 @@ import { environment } from 'src/app/environments/environment';
 
 export class MigArticlesComponent implements OnInit, AfterViewInit {
 
+  @Input() id: string = '';// @RouteParam()
+
   @ViewChildren('bodyArea') bodyArea!: QueryList<any>;
   @ViewChildren('headArea') headArea!: QueryList<any>;
 
@@ -29,25 +31,35 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
   showMore: boolean = false;
   editBody: boolean = false;
   editorExist: boolean = false;
-  body !: string;
-  // body: string = '';
+  image_buffer !: any;
 
   // articles$: Observable<Article[]> = this.articleService.articles$;
   createForm !: FormGroup;
-  // imageURL!: any;
-  // article !: Article;
 
-  article0: CreateArticleInput = {
+  article0: GetArticleQuery = {
+    __typename: "Article",
+    id: 'aa',
     title: 'pierre gros',
     permalink: 'pierre-gros',
-    headline: '<p>headline<\p>',
+    headline: '<p>Pierre Gros<\p>',
     body: '<div class="editable"> blblabla   </div>',
-
-    // permalink: '',
     public: true,
     rank: 0,
     pageId: '64a54318-fb22-4dc1-8cad-6b6f738f0689',
-    image_url: 'avatar-2092113_640.png',
+    createdAt: '2021-09-01',
+    updatedAt: '2021-09-01',
+    images: {
+      __typename: "ModelArticlePicturesConnection",
+      items: [
+        {
+          __typename: "ArticlePictures",
+          id: "0",
+          articleId: 'aa',
+          pictureId: 'aa',
+          createdAt: '2021-09-01',
+          updatedAt: '2021-09-01',
+        }],
+    },
     info: '2024-01-01',
   }
 
@@ -75,11 +87,10 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
 
     // chargement article0
     this.createForm.patchValue(this.article0);
-    const article = this.createForm.getRawValue() as Article;
+    const article = { ...this.article0 } as Article;
     this.triggerView(article);
 
   }
-
 
   initForm() {
     this.createForm = new FormGroup({
@@ -92,32 +103,46 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
       rank: new FormControl(0),
 
       // content data
-      image: new FormControl(''),
       headline: new FormControl(''),
       body: new FormControl(''),
       image_url: new FormControl(''),    //  image_url -> S3
       info: new FormControl(''),   // date-like string OR '' (no date)
 
     });
-
-
   }
 
 
-  toggleEditBody() {
-    // si editBody = true on force showMore à true s'il ne l'etait pas déjà (et on init l'éditeur)
-    if (this.editBody && !this.showMore) {
-      // console.log('deploiement du body');
-      this.showMore = true;
-      return;
-    }
-    if (this.editBody && this.showMore) {
-      // console.log('cas2 : déplié et demande d\'édition');
-      this.initBodyEditor();
-      return;
-    }
-    if (!this.editBody && this.showMore) { this.removeBodyEditor(); }
+  saveArticle() {
+    const article = this.createForm.getRawValue() as Article;
+    console.log('saveArticle : article : %o', article);
+    this.articleService.createArticle(article);
   }
+
+  // ************ gestion image (image_url)******************
+
+  fileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file === undefined) { return; }
+    this.getImage64(file).then((image64) => {
+      this.image_buffer = image64;
+      this.data.image = image64;
+    });
+  }
+
+  getImage64(file: File): Promise<string> {
+    var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
+      var image64 = '';
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        image64 = e.target.result;
+        resolve(image64);
+      };
+      reader.readAsDataURL(file);
+    });
+    return promise;
+  }
+
+
 
   // plugin adds
 
@@ -126,22 +151,40 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
   }
 
 
-  // services 
+  // view handling 
 
+  toggleEditBody() {
+    if (this.editBody && !this.showMore) { this.showMore = true; return; }
+    if (this.editBody && this.showMore) { this.initBodyEditor(); return; }
+    if (!this.editBody && this.showMore) { this.removeBodyEditor(); }
+  }
   triggerView(article: Article): void {
+    const images = article.images?.items;
+    if (images && images.length > 0) {
+      const image = images[0];
+      const key = 'images/' + image!.pictureId;
+      Storage.get(key, { level: 'public' })
+        .then((result) => {
+          this.data.image = result as string;
+        })
+        .catch((err) => {
+          console.log('triggerView : error : %o', err);
+        });
+    }
     const flashData: FlashData = {
       title: article.title,
-      image: this.buildURL('images/' + article.image_url),
+      image: this.buildURL('images/' + article.images?.items[0]!.pictureId),
       headline: article.headline,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.info ? new Date(article.info) : null,
     };
+    console.log('triggerView : flashData : %o', flashData)
     this.data = flashData;
   }
 
   buildURL(key: string): string {
-    const BucketName = 'bcstoapp0ee6a242edb74c79a78263aa5cb1473e113936-dev';
-    const Region = 'eu-west-3';
+    const BucketName = environment.BucketName;
+    const Region = environment.Region;
     const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
     return uri;
   }
@@ -214,7 +257,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
         toolbar_location: 'bottom',
 
         save_onsavecallback: () => {
-          // tinymce.activeEditor!.uploadImages();
+          // tinymce.activeEditor!.uploadPictures();
           let content = tinymce.activeEditor!.getContent();
           this.bodySave(content);
         },
@@ -228,8 +271,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
   }
 
   image_upload_handler(blobInfo: { filename: () => string; blob: () => any; }, progress: any): Promise<string> {
-
-    console.log('image_upload_handler : blobInfo:%o ', blobInfo);
+    console.log('image_upload_handler : ', blobInfo.filename(), blobInfo.blob());
 
     const buildURL = (key: string) => {
       const BucketName = environment.BucketName;
@@ -239,7 +281,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     };
 
     let promise: Promise<string> = new Promise((resolve, reject) => {
-      const key = 'images/' + blobInfo.blob().name;
+      const key = 'images/' + blobInfo.filename();
       console.log('image_upload_handler ==> key:%s file:%o ', key, blobInfo.blob());
 
       Storage.put(key, blobInfo.blob(), {
@@ -262,8 +304,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     });
     return (promise);
   }
-
-  ImagePickerCallback(cb: (arg0: string, arg1: { title: string; }) => void, value: any, meta: any): void {
+  ImagePickerCallback(cb: (blobUri: string, arg1: { title: string; }) => void, value: any, meta: any): void {
     // create an off-screen canvas
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -282,11 +323,11 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
         const base64 = image64.split(',')[1];
 
 
-        console.log('ImagePickerCallback : sauvegarde en cache de %o, sous reference id %s', file, id);
+        // console.log('ImagePickerCallback : sauvegarde en cache de %o, sous reference id %s', file, id);
         const blobInfo = blobCache.create(id, file, base64, id, id);
         blobCache.add(blobInfo);
         /* call the callback and populate the Title field with the file name */
-        console.log('ImagePickerCallback : appel du callback avec blobUri %s et title: %s', blobInfo.blobUri(), id);
+        // console.log('ImagePickerCallback : appel du callback avec blobUri %s et title: %s', blobInfo.blobUri(), id);
         cb(blobInfo.blobUri(), { title: id });
       };
 

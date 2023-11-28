@@ -35,7 +35,7 @@ export class FileService {
   };
 
 
-  getFileURL(key: string) {
+  getFileURL(key: string): Promise<string> {
     return Storage.get(key, { level: 'public', validateObjectExistence: true });
   }
 

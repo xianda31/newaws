@@ -19,16 +19,27 @@ type Page @model @auth(rules: [{ allow: public }]) {
   hidden: Boolean!
   articles: [Article] @hasMany(indexName: "ofPage", fields: ["id"])
 }
+
+type Picture @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  title: String!
+  filename: String!
+  path: String!
+  caption: String
+  articles: [Article] @manyToMany(relationName: "ArticlePictures")
+}
+
 type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
-  permalink: String!
-  image_url: String
+  permalink: String
+  image_url: String # pour compiler ... à virer asap
   headline: String!
   body: String
   info: String # YYYY-MM-DD ISO 8601 format
   rank: Int!
   public: Boolean!
+  images: [Picture] @manyToMany(relationName: "ArticlePictures")
   pageId: ID! @index(name: "ofPage") #, sortKeyFields: ["summary"])
   # page: Page @belongsTo(fields: ["pageId"])
 

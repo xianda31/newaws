@@ -141,6 +141,81 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
   }
 }
 
+subscription OnCreatePicture($filter: ModelSubscriptionPictureFilterInput) {
+  onCreatePicture(filter: $filter) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdatePicture($filter: ModelSubscriptionPictureFilterInput) {
+  onUpdatePicture(filter: $filter) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeletePicture($filter: ModelSubscriptionPictureFilterInput) {
+  onDeletePicture(filter: $filter) {
+    id
+    title
+    filename
+    path
+    caption
+    articles {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
 subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
@@ -152,6 +227,18 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
     createdAt
     updatedAt
@@ -170,6 +257,18 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
     createdAt
     updatedAt
@@ -188,7 +287,157 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     info
     rank
     public
+    images {
+      items {
+        id
+        pictureId
+        articleId
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
     pageId
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateArticlePictures(
+  $filter: ModelSubscriptionArticlePicturesFilterInput
+) {
+  onCreateArticlePictures(filter: $filter) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateArticlePictures(
+  $filter: ModelSubscriptionArticlePicturesFilterInput
+) {
+  onUpdateArticlePictures(filter: $filter) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteArticlePictures(
+  $filter: ModelSubscriptionArticlePicturesFilterInput
+) {
+  onDeleteArticlePictures(filter: $filter) {
+    id
+    pictureId
+    articleId
+    picture {
+      id
+      title
+      filename
+      path
+      caption
+      articles {
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      __typename
+    }
+    article {
+      id
+      title
+      permalink
+      image_url
+      headline
+      body
+      info
+      rank
+      public
+      images {
+        nextToken
+        __typename
+      }
+      pageId
+      createdAt
+      updatedAt
+      __typename
+    }
     createdAt
     updatedAt
     __typename

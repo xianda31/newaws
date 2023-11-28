@@ -3,63 +3,72 @@
 
         <div class="col-md-3">
             <div class="card p-2 bg-body-secondary">
-
                 <form [formGroup]="createForm">
-                    <div class="row">
+                    <!-- <div class="row"> -->
 
-                        <div class="col-md-6">
-                            <label>titre de l'article</label>
-                            <input type="text" class="form-control" formControlName="title">
-                        </div>
-                        <div class="col-md-6">
-                            <label>permalink</label>
-                            <input type="text" class="form-control" formControlName="permalink">
-                        </div>
+                    <div class="input-group-sm">
+                        <label>titre de l'article</label>
+                        <input type="text" class="form-control" formControlName="title">
+                    </div>
+                    <div class="input-group-sm">
+                        <label>page de rattachement</label>
+                        <input type="text" class="form-control" formControlName="pageId">
                     </div>
                     <!-- </div> -->
-                    <label>imageURL</label>
-                    <input type="text" class="form-control" formControlName="image_url">
-                    <div class="row">
-                        <div class="col-8">
-                            <label>headline</label>
-                            <input type="text" class="form-control" formControlName="headline">
-                        </div>
+                    <!-- </div> -->
+                    <label>image</label>
+                    <div class="input-grou-sm">
+                        <input type="file" id="file-input" name="file-input" (change)="fileSelected($event)" />
+                        <label id="file-input-label" for="file-input" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-image"></i>
+                            sélectionnez une image
+                        </label>
+                    </div>
 
+                    <div class="input-group-sm">
+                        <label>info complémentaire</label>
+                        <input type="date" class="form-control" formControlName="info">
                     </div>
                 </form>
-
-                <div class="col-12">
-                    édition partie body
-                    <div class="row">
-                        <div class="col-md-6">
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card p-2 bg-body-primary">
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group-sm">
                             <label> déplie :</label>
                             <button>
                                 <i class="bi bi-chevron-expand" (click)="showMore = !showMore"></i>
                             </button>
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                    <div class="col">
+
+                        <div class="input-group-sm">
                             <label> édite :</label>
                             <input class="form-check-input" [(ngModel)]="editBody" (ngModelChange)="toggleEditBody()"
                                 type="checkbox">
                         </div>
                     </div>
+                    <div class="col">
 
+                        <button class="btn btn-outline-primary btn-sm" (click)="saveArticle()">save</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row p-2">
+
+                <div *ngIf="data" class="col-md-6">
+                    <ng-template [ngTemplateOutlet]="event"></ng-template>
                 </div>
 
-
-                <!-- <div class="w-100" id="headArea">
-                    heading line ...
-                </div> -->
+                <div *ngIf="data" class="col-md-2">
+                    <ng-template [ngTemplateOutlet]="diapo"></ng-template>
+                </div>
             </div>
         </div>
 
-        <div *ngIf="data" class="col-md-6">
-            <ng-template [ngTemplateOutlet]="event"></ng-template>
-        </div>
-
-        <div *ngIf="data" class="col-md-2">
-            <ng-template [ngTemplateOutlet]="diapo"></ng-template>
-        </div>
     </div>
 </div>
 

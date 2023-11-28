@@ -9,6 +9,7 @@ import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { RightsComponent } from 'src/app/tests/rights/rights.component';
 import { canActivateGuard } from 'src/app/guards/can-activate.guard';
 import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
+import { PicturesComponent } from '../images/pictures.component';
 
 const routes: Routes = [
 
@@ -27,6 +28,9 @@ const routes: Routes = [
       { path: 'articles', component: ArticlesComponent },
       { path: 'articles/new', component: ArticleComponent },
       { path: 'articles/:id', component: ArticleComponent },
+      { path: 'images', component: PicturesComponent },
+      { path: 'images/new', component: ArticleComponent },
+      { path: 'images/:id', component: ArticleComponent },
       { path: 'files', component: FilemgrComponent },
     ]
   },
