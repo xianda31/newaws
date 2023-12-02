@@ -1,0 +1,101 @@
+<div class="container-fluid ">
+
+    <div class="card m-2">
+        <form [formGroup]="pageForm">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <label> racine </label>
+                        <input type="text" class="form-control" formControlName="root_menu">
+                    </div>
+                    <div class="col">
+                        <label> menu </label>
+                        <input type="text" class="form-control" formControlName="label">
+                    </div>
+                    <div class="col">
+                        <label> descriptif </label>
+                        <input type="text" class="form-control" formControlName="description">
+                    </div>
+                    <div class="col">
+                        <label> type</label>
+                        <input type="text" class="form-control" formControlName="viewer">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- emulation of pager comp -->
+    <!-- <app-headband [title]="page.label + '|' + page.description"> </app-headband> -->
+    <div class="row justify-content-between p-2">
+
+        <div class="col-9">
+            <app-carder class="d-flex pb-2" *ngFor="let item of articles$ | async " [article]="item"
+                [editable]="edit_mode && item.id == article.id" (newArticleItem)="update($event)">
+            </app-carder>
+        </div>
+        <!-- <div *ngIf="!edit_mode" class="col-9">
+            <app-carder class="d-flex pb-2" *ngFor="let item of articles$ | async " [article]="item"
+                [editable]="edit_mode && item.id == article.id">
+            </app-carder>
+        </div> -->
+
+
+
+        <!-- menu articles -->
+        <div class="col-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label>
+                        </div>
+                        <div class="col justify-content-end">
+                            <i class="bi bi-plus-circle-fill" (click)="addArticle()"></i>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-between" *ngFor="let article of articles$ | async">
+                        <div class="col">
+                            <label>{{article.title}}</label>
+                        </div>
+                        <div class="col justify-content-between">
+                            <div class="row">
+
+                                <div class="col">
+                                    <button type="button" class="btn btn-outline-success btn-sm " (click)="up(article)">
+                                        <i class="bi bi-arrow-up-square"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-success btn-sm "
+                                        (click)="down(article)">
+                                        <i class="bi bi-arrow-down-square"></i>
+                                    </button>
+                                    <!-- </div>
+                                <div class="col"> -->
+                                    <button type="button" class="btn btn-primary btn-sm " (click)="modify(article)">
+                                        <i class="bi bi-pencil-square" style="color:white"></i>
+                                    </button>
+                                    <!-- </div>
+                                <div class="col"> -->
+                                    <button type="button" class="btn btn-danger btn-sm " (click)="delete(article)">
+                                        <i class="bi bi-trash3" style="color:white"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
