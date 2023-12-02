@@ -26,6 +26,8 @@ export class PagerComponent implements OnChanges {
     private pageService: PageService,
 
   ) { }
+
+
   ngOnChanges(changes: SimpleChanges): void {
     let path = '';
     if (changes['root']) {

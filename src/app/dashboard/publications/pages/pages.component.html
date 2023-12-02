@@ -11,10 +11,12 @@
                     <!-- <th scope="col" class="col-md-2 "></th> -->
                     <th scope="col" class="col-md-1 ">racine</th>
                     <th scope="col" class="col-md-1 ">menu</th>
-                    <th scope="col" class="col-md-7">descriptif (bandeau)</th>
-                    <!-- <th scope="col" class="col-md-2">route</th> -->
+                    <th scope="col" class="col-md-5">descriptif (bandeau)</th>
+                    <th scope="col" class="col-md-2">type</th>
                     <th scope="col" class="col-md-1 text-center">nb articles</th>
-                    <th scope="col" class="col-md-2 text-center"></th>
+                    <th scope="col" class="col-md-1 text-center"></th>
+                    <th scope="col" class="col-md-1 text-center"></th>
+
                 </tr>
             </thead>
             <tbody>
@@ -22,12 +24,18 @@
                     <td class="col"> {{page.hidden ? '' : page.root_menu }} </td>
                     <td class="col"> {{ page.label }} </td>
                     <td class="col">{{ page.description }}</td>
-                    <!-- <td class="col">{{ page.path }}</td> -->
+                    <td class="col">{{ page.viewer }}</td>
                     <td class="col text-center ">{{ page.articles?.items ? page.articles!.items.length : 0}}</td>
                     <td class="col text-center">
-                        <button *ngIf="!page.hidden" type="button" class="btn btn-light btn-sm "
+                        <button *ngIf="!page.hidden" type="button" class="btn btn-danger btn-sm "
                             (click)="deletePage($event,page)">
-                            <i class="bi bi-trash3" style="color:rgb(116, 5, 27)"></i>
+                            <i class="bi bi-trash3" style="color:white"></i>
+                        </button>
+                    </td>
+                    <td class="col text-center">
+                        <button *ngIf="!page.hidden" type="button" class="btn btn-primary btn-sm "
+                            (click)="editPage(page)">
+                            <i class="bi bi-pencil-square" style="color:white"></i>
                         </button>
                     </td>
                 </tr>
@@ -41,9 +49,9 @@
                     <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
                     <th scope="col" class="col-md-1 "></th>
                     <th scope="col" class="col-md-1 "></th>
-                    <th scope="col" class="col-md-7"></th>
-                    <!-- <th scope="col" class="col-md-2"></th> -->
-                    <th scope="col" class="col-md-1 text-center ">no show</th>
+                    <th scope="col" class="col-md-5"></th>
+                    <th scope="col" class="col-md-2"></th>
+                    <th scope="col" class="col-md-1 text-center ">sans menu</th>
                     <th scope="col" class="col-md-1 "></th>
                     <th scope="col" class="col-md-1 text-center"></th>
                 </tr>
@@ -67,15 +75,14 @@
                         </div>
                     </td>
 
-                    <!-- <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="path" id="path"
-                            [class.is-invalid]="path.invalid && (path.dirty || path.touched)">
+                    <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="viewer" id="viewer"
+                            [class.is-invalid]="viewer.invalid && (viewer.dirty || viewer.touched)">
                         <div class="invalid-feedback">
                             une descriptif doit être fourni
                         </div>
-                    </td> -->
+                    </td>
 
                     <td class="col text-center ">
-                        <!-- <input type="text" class="formcontrol" formControlName="hidden" id="hidden"> -->
                         <app-toggle-input class="formcontrol" formControlName="hidden"></app-toggle-input>
                     </td>
                     <td class="col text-center">
@@ -121,7 +128,7 @@
             <span>le libellé dans la barre de menu (ou sous-menu)</span>
         </div>
         <div class="text-sm-start">
-            <span class="fw-bold">no show : &nbsp;</span>
+            <span class="fw-bold">sans menu : &nbsp;</span>
             <span>si activé, la page n'aura pas de menu dédié dans la barre de menu</span>
         </div>
     </div>

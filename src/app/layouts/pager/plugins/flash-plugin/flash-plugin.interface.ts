@@ -9,4 +9,5 @@ export interface FlashData {
     // body_html$: Observable<SafeHtml>;
     body: string;
     date: Date | null | undefined;
+    index: string;
 }

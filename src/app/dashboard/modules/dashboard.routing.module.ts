@@ -10,6 +10,7 @@ import { RightsComponent } from 'src/app/tests/rights/rights.component';
 import { canActivateGuard } from 'src/app/guards/can-activate.guard';
 import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
 import { PicturesComponent } from '../images/pictures.component';
+import { PageEditorComponent } from '../publications/pages/page.editor/page.editor.component';
 
 const routes: Routes = [
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   {
     path: 'publisher', canActivate: [canActivateGuard('Publisher')], children: [
       { path: 'pages', component: PagesComponent },
+      { path: 'pages/:id', component: PageEditorComponent },
       { path: 'articles', component: ArticlesComponent },
       { path: 'articles/new', component: ArticleComponent },
       { path: 'articles/:id', component: ArticleComponent },

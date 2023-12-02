@@ -1,26 +1,14 @@
-<!-- <div class="col-sm-6"> -->
-
-<!-- <div class="card border-0  m-1" > -->
-<div *ngIf="!data.solo" class="container " (click)="showMore = !showMore">
-    <h2 class="hdate" [attr.data-hday]="data.day" [attr.data-hmonth]="data.month">
-        {{data.title}}
-    </h2>
-    <div class="float-md-start me-4">
-        <img [src]="data.bannerURL" class="card-img-left" alt="bcsto">
+<div class="container " (click)="showMore = !showMore">
+    <div *ngIf="!data.date">
+        <section #headArea id="headArea" [innerHTML]="data.headline | safeHtml"> </section>
     </div>
-    <div class="text-start ps-2">
-        <p>
-            {{data.summary}}
-            <span *ngIf="showMore" [innerHTML]="data.HTMLstring | safeHtml"> </span>
-        </p>
+
+    <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+        [attr.data-hmonth]="getMonth(data.date)">
+        <section #headArea id="headArea" [innerHTML]="data.headline | safeHtml"> </section>
     </div>
-</div>
 
-<div *ngIf="data.solo" class="container ">
-
-    <div class="text-start ps-2">
-        <p>
-            <span [innerHTML]="data.HTMLstring | safeHtml"> </span>
-        </p>
+    <div *ngIf="showMore || solo" class="text-start ps-2">
+        <span #bodyArea id="bodyArea" [innerHTML]="data.body  "></span>
     </div>
 </div>

@@ -16,6 +16,7 @@ import { DashHeaderComponent } from '../dash-header/dash-header.component';
 import { PagesComponent } from '../publications/pages/pages.component';
 import { MigArticlesComponent } from 'src/app/tests/mig-articles/mig-articles.component';
 import { PicturesComponent } from '../images/pictures.component';
+import { PageEditorComponent } from '../publications/pages/page.editor/page.editor.component';
 
 
 
@@ -31,6 +32,7 @@ import { PicturesComponent } from '../images/pictures.component';
     PagesComponent,
     MigArticlesComponent,
     PicturesComponent,
+    PageEditorComponent,
 
 
 

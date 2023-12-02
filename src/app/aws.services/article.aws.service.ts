@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { APIService, Article, UpdateArticleInput } from '../API.service';
+import { APIService, Article, CreateArticleInput, UpdateArticleInput } from '../API.service';
 import { ToastService } from '../tools/service/toast.service';
 import { environment } from '../environments/environment';
 
@@ -27,7 +27,8 @@ export class ArticleService {
         const articlesItems = articles.items as Article[];
         console.log('loadArticles', articlesItems);
         console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
-        this._articles$.next([...articlesItems])
+        this._articles = [...articlesItems];
+        this._articles$.next(this._articles)
       })
       .catch((error) => {
         console.log('loadArticles error', error);
@@ -48,7 +49,8 @@ export class ArticleService {
   // CRUD CATEGORIES
 
 
-  createArticle(article: Article) {
+  createArticle(article: Article | CreateArticleInput) {
+    console.log('createArticle : ', article);
 
     this.api.CreateArticle(article).then((result) => {
       const article = result as Article;
@@ -70,6 +72,7 @@ export class ArticleService {
     this.api.UpdateArticle(articleInput)
       .then((result) => {
         const article = result as Article;
+
         this._articles = this._articles.map((cat) => cat.id === article.id ? article : cat);
         this._articles$.next(this._articles);
       })

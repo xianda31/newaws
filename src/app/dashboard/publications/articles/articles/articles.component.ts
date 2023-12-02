@@ -30,15 +30,15 @@ export class ArticlesComponent implements OnInit {
       this.articles = articles;
       console.log('%s articles', articles.length, articles);
 
-      articles.forEach((article) => {
-        Storage.get('banners/' + article.image_url, { validateObjectExistence: true }).then((signedURL) => {
+      // articles.forEach((article) => {
+      //   Storage.get('banners/' + article.image_url, { validateObjectExistence: true }).then((signedURL) => {
 
-          this.bannerURL.set(article.body, signedURL);
-        })
-          .catch((error) => {
-            console.log('error %s sur l\'article :', error, article);
-          })
-      });
+      //     this.bannerURL.set(article.body, signedURL);
+      //   })
+      //     .catch((error) => {
+      //       console.log('error %s sur l\'article :', error, article);
+      //     })
+      // });
       this.articlesDBloaded = true;
 
     });

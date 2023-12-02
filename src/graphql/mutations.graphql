@@ -62,6 +62,7 @@ mutation CreatePage(
     description
     path
     hidden
+    viewer
     articles {
       items {
         id
@@ -98,6 +99,7 @@ mutation UpdatePage(
     description
     path
     hidden
+    viewer
     articles {
       items {
         id
@@ -134,6 +136,7 @@ mutation DeletePage(
     description
     path
     hidden
+    viewer
     articles {
       items {
         id
@@ -169,18 +172,7 @@ mutation CreatePicture(
     filename
     path
     caption
-    articles {
-      items {
-        id
-        pictureId
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
+    articleId
     createdAt
     updatedAt
     __typename
@@ -197,18 +189,7 @@ mutation UpdatePicture(
     filename
     path
     caption
-    articles {
-      items {
-        id
-        pictureId
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
+    articleId
     createdAt
     updatedAt
     __typename
@@ -225,18 +206,7 @@ mutation DeletePicture(
     filename
     path
     caption
-    articles {
-      items {
-        id
-        pictureId
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
+    articleId
     createdAt
     updatedAt
     __typename
@@ -257,10 +227,13 @@ mutation CreateArticle(
     info
     rank
     public
-    images {
+    pictures {
       items {
         id
-        pictureId
+        title
+        filename
+        path
+        caption
         articleId
         createdAt
         updatedAt
@@ -290,10 +263,13 @@ mutation UpdateArticle(
     info
     rank
     public
-    images {
+    pictures {
       items {
         id
-        pictureId
+        title
+        filename
+        path
+        caption
         articleId
         createdAt
         updatedAt
@@ -323,10 +299,13 @@ mutation DeleteArticle(
     info
     rank
     public
-    images {
+    pictures {
       items {
         id
-        pictureId
+        title
+        filename
+        path
+        caption
         articleId
         createdAt
         updatedAt
@@ -336,147 +315,6 @@ mutation DeleteArticle(
       __typename
     }
     pageId
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation CreateArticlePictures(
-  $input: CreateArticlePicturesInput!
-  $condition: ModelArticlePicturesConditionInput
-) {
-  createArticlePictures(input: $input, condition: $condition) {
-    id
-    pictureId
-    articleId
-    picture {
-      id
-      title
-      filename
-      path
-      caption
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    article {
-      id
-      title
-      permalink
-      image_url
-      headline
-      body
-      info
-      rank
-      public
-      images {
-        nextToken
-        __typename
-      }
-      pageId
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation UpdateArticlePictures(
-  $input: UpdateArticlePicturesInput!
-  $condition: ModelArticlePicturesConditionInput
-) {
-  updateArticlePictures(input: $input, condition: $condition) {
-    id
-    pictureId
-    articleId
-    picture {
-      id
-      title
-      filename
-      path
-      caption
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    article {
-      id
-      title
-      permalink
-      image_url
-      headline
-      body
-      info
-      rank
-      public
-      images {
-        nextToken
-        __typename
-      }
-      pageId
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation DeleteArticlePictures(
-  $input: DeleteArticlePicturesInput!
-  $condition: ModelArticlePicturesConditionInput
-) {
-  deleteArticlePictures(input: $input, condition: $condition) {
-    id
-    pictureId
-    articleId
-    picture {
-      id
-      title
-      filename
-      path
-      caption
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    article {
-      id
-      title
-      permalink
-      image_url
-      headline
-      body
-      info
-      rank
-      public
-      images {
-        nextToken
-        __typename
-      }
-      pageId
-      createdAt
-      updatedAt
-      __typename
-    }
     createdAt
     updatedAt
     __typename

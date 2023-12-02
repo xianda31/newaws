@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { Page } from 'src/app/API.service';
 import { ToastService } from 'src/app/tools/service/toast.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pages',
@@ -27,7 +28,8 @@ export class PagesComponent implements OnInit {
 
   constructor(
     private pageService: PageService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +53,7 @@ export class PagesComponent implements OnInit {
       hidden: new FormControl(false),
       description: new FormControl('', Validators.required),
       path: new FormControl('', Validators.required),
+      viewer: new FormControl(''),
     });
 
   }
@@ -75,6 +78,7 @@ export class PagesComponent implements OnInit {
   get label() { return this.pageForm.get('label')!; }
   get description() { return this.pageForm.get('description')!; }
   get path() { return this.pageForm.get('path')!; }
+  get viewer() { return this.pageForm.get('viewer')!; }
 
   selectPage(page: Page) {
 
@@ -107,6 +111,11 @@ export class PagesComponent implements OnInit {
     this.pageService.updatePage(newPage);
     this.pageForm.reset();
     this.createMode = true;
+  }
+
+  editPage(page: Page) {
+    // this.selectPage(page);
+    this.router.navigate(['dashboard/publisher/pages', page.id]);
   }
 
   // patchedPage(page: Page): Page {

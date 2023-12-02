@@ -1,9 +1,27 @@
 <div class="col">
 
-    <div class="card border-0 h-100 ">
-        <div class="card-body">
+    <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
+        <div *ngIf="data" class="card-body">
+            <!-- <div class="container " (click)="showMore = !showMore"> -->
+            <div *ngIf="!data.date">
+                <section #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml">
+                </section>
+            </div>
 
-            <ng-template anchor></ng-template>
+            <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+                [attr.data-hmonth]="getMonth(data.date)">
+                <section #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml">
+                </section>
+            </div>
+
+            <div *ngIf="!showLess" class="text-start ps-2">
+                <span #bodyArea id="bodyArea" [innerHTML]="data.body  "></span>
+            </div>
+
+            <span>
+                <button *ngIf="editable" type="button" class="btn btn-close btn-sm" (click)="close()"> </button>
+            </span>
+            <!-- </div> -->
         </div>
     </div>
 </div>

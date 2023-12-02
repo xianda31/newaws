@@ -22,9 +22,6 @@ export type __SubscriptionContainer = {
   onCreateArticle: OnCreateArticleSubscription;
   onUpdateArticle: OnUpdateArticleSubscription;
   onDeleteArticle: OnDeleteArticleSubscription;
-  onCreateArticlePictures: OnCreateArticlePicturesSubscription;
-  onUpdateArticlePictures: OnUpdateArticlePicturesSubscription;
-  onDeleteArticlePictures: OnDeleteArticlePicturesSubscription;
 };
 
 export type CreateMemberInput = {
@@ -118,6 +115,7 @@ export type CreatePageInput = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
 };
 
 export type ModelPageConditionInput = {
@@ -126,6 +124,7 @@ export type ModelPageConditionInput = {
   description?: ModelStringInput | null;
   path?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
+  viewer?: ModelStringInput | null;
   and?: Array<ModelPageConditionInput | null> | null;
   or?: Array<ModelPageConditionInput | null> | null;
   not?: ModelPageConditionInput | null;
@@ -146,6 +145,7 @@ export type Page = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: ModelArticleConnection | null;
   createdAt: string;
   updatedAt: string;
@@ -168,27 +168,16 @@ export type Article = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: ModelArticlePicturesConnection | null;
+  pictures?: ModelPictureConnection | null;
   pageId: string;
   createdAt: string;
   updatedAt: string;
 };
 
-export type ModelArticlePicturesConnection = {
-  __typename: "ModelArticlePicturesConnection";
-  items: Array<ArticlePictures | null>;
+export type ModelPictureConnection = {
+  __typename: "ModelPictureConnection";
+  items: Array<Picture | null>;
   nextToken?: string | null;
-};
-
-export type ArticlePictures = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: Picture;
-  article: Article;
-  createdAt: string;
-  updatedAt: string;
 };
 
 export type Picture = {
@@ -198,7 +187,7 @@ export type Picture = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: ModelArticlePicturesConnection | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -210,6 +199,7 @@ export type UpdatePageInput = {
   description?: string | null;
   path?: string | null;
   hidden?: boolean | null;
+  viewer?: string | null;
 };
 
 export type DeletePageInput = {
@@ -222,6 +212,7 @@ export type CreatePictureInput = {
   filename: string;
   path: string;
   caption?: string | null;
+  articleId: string;
 };
 
 export type ModelPictureConditionInput = {
@@ -229,9 +220,26 @@ export type ModelPictureConditionInput = {
   filename?: ModelStringInput | null;
   path?: ModelStringInput | null;
   caption?: ModelStringInput | null;
+  articleId?: ModelIDInput | null;
   and?: Array<ModelPictureConditionInput | null> | null;
   or?: Array<ModelPictureConditionInput | null> | null;
   not?: ModelPictureConditionInput | null;
+};
+
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
 };
 
 export type UpdatePictureInput = {
@@ -240,6 +248,7 @@ export type UpdatePictureInput = {
   filename?: string | null;
   path?: string | null;
   caption?: string | null;
+  articleId?: string | null;
 };
 
 export type DeletePictureInput = {
@@ -286,22 +295,6 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null;
 };
 
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
-};
-
 export type UpdateArticleInput = {
   id: string;
   title?: string | null;
@@ -316,30 +309,6 @@ export type UpdateArticleInput = {
 };
 
 export type DeleteArticleInput = {
-  id: string;
-};
-
-export type CreateArticlePicturesInput = {
-  id?: string | null;
-  pictureId: string;
-  articleId: string;
-};
-
-export type ModelArticlePicturesConditionInput = {
-  pictureId?: ModelIDInput | null;
-  articleId?: ModelIDInput | null;
-  and?: Array<ModelArticlePicturesConditionInput | null> | null;
-  or?: Array<ModelArticlePicturesConditionInput | null> | null;
-  not?: ModelArticlePicturesConditionInput | null;
-};
-
-export type UpdateArticlePicturesInput = {
-  id: string;
-  pictureId?: string | null;
-  articleId?: string | null;
-};
-
-export type DeleteArticlePicturesInput = {
   id: string;
 };
 
@@ -368,6 +337,7 @@ export type ModelPageFilterInput = {
   description?: ModelStringInput | null;
   path?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
+  viewer?: ModelStringInput | null;
   and?: Array<ModelPageFilterInput | null> | null;
   or?: Array<ModelPageFilterInput | null> | null;
   not?: ModelPageFilterInput | null;
@@ -385,15 +355,10 @@ export type ModelPictureFilterInput = {
   filename?: ModelStringInput | null;
   path?: ModelStringInput | null;
   caption?: ModelStringInput | null;
+  articleId?: ModelIDInput | null;
   and?: Array<ModelPictureFilterInput | null> | null;
   or?: Array<ModelPictureFilterInput | null> | null;
   not?: ModelPictureFilterInput | null;
-};
-
-export type ModelPictureConnection = {
-  __typename: "ModelPictureConnection";
-  items: Array<Picture | null>;
-  nextToken?: string | null;
 };
 
 export type ModelArticleFilterInput = {
@@ -410,15 +375,6 @@ export type ModelArticleFilterInput = {
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
   not?: ModelArticleFilterInput | null;
-};
-
-export type ModelArticlePicturesFilterInput = {
-  id?: ModelIDInput | null;
-  pictureId?: ModelIDInput | null;
-  articleId?: ModelIDInput | null;
-  and?: Array<ModelArticlePicturesFilterInput | null> | null;
-  or?: Array<ModelArticlePicturesFilterInput | null> | null;
-  not?: ModelArticlePicturesFilterInput | null;
 };
 
 export enum ModelSortDirection {
@@ -474,6 +430,7 @@ export type ModelSubscriptionPageFilterInput = {
   description?: ModelSubscriptionStringInput | null;
   path?: ModelSubscriptionStringInput | null;
   hidden?: ModelSubscriptionBooleanInput | null;
+  viewer?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionPageFilterInput | null> | null;
   or?: Array<ModelSubscriptionPageFilterInput | null> | null;
 };
@@ -489,6 +446,7 @@ export type ModelSubscriptionPictureFilterInput = {
   filename?: ModelSubscriptionStringInput | null;
   path?: ModelSubscriptionStringInput | null;
   caption?: ModelSubscriptionStringInput | null;
+  articleId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionPictureFilterInput | null> | null;
   or?: Array<ModelSubscriptionPictureFilterInput | null> | null;
 };
@@ -518,14 +476,6 @@ export type ModelSubscriptionIntInput = {
   between?: Array<number | null> | null;
   in?: Array<number | null> | null;
   notIn?: Array<number | null> | null;
-};
-
-export type ModelSubscriptionArticlePicturesFilterInput = {
-  id?: ModelSubscriptionIDInput | null;
-  pictureId?: ModelSubscriptionIDInput | null;
-  articleId?: ModelSubscriptionIDInput | null;
-  and?: Array<ModelSubscriptionArticlePicturesFilterInput | null> | null;
-  or?: Array<ModelSubscriptionArticlePicturesFilterInput | null> | null;
 };
 
 export type CreateMemberMutation = {
@@ -572,6 +522,7 @@ export type CreatePageMutation = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -603,6 +554,7 @@ export type UpdatePageMutation = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -634,6 +586,7 @@ export type DeletePageMutation = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -664,18 +617,7 @@ export type CreatePictureMutation = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -687,18 +629,7 @@ export type UpdatePictureMutation = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -710,18 +641,7 @@ export type DeletePictureMutation = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -737,12 +657,15 @@ export type CreateArticleMutation = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -765,12 +688,15 @@ export type UpdateArticleMutation = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -793,12 +719,15 @@ export type DeleteArticleMutation = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -806,132 +735,6 @@ export type DeleteArticleMutation = {
     nextToken?: string | null;
   } | null;
   pageId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type CreateArticlePicturesMutation = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateArticlePicturesMutation = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteArticlePicturesMutation = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
   createdAt: string;
   updatedAt: string;
 };
@@ -972,6 +775,7 @@ export type GetPageQuery = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1005,6 +809,7 @@ export type ListPagesQuery = {
     description: string;
     path: string;
     hidden: boolean;
+    viewer: string;
     articles?: {
       __typename: "ModelArticleConnection";
       nextToken?: string | null;
@@ -1022,18 +827,7 @@ export type GetPictureQuery = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -1047,10 +841,7 @@ export type ListPicturesQuery = {
     filename: string;
     path: string;
     caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
+    articleId: string;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -1068,12 +859,15 @@ export type GetArticleQuery = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -1098,8 +892,8 @@ export type ListArticlesQuery = {
     info?: string | null;
     rank: number;
     public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
+    pictures?: {
+      __typename: "ModelPictureConnection";
       nextToken?: string | null;
     } | null;
     pageId: string;
@@ -1109,80 +903,16 @@ export type ListArticlesQuery = {
   nextToken?: string | null;
 };
 
-export type GetArticlePicturesQuery = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
+export type PicturesByArticleIdQuery = {
+  __typename: "ModelPictureConnection";
+  items: Array<{
     __typename: "Picture";
     id: string;
     title: string;
     filename: string;
     path: string;
     caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListArticlePicturesQuery = {
-  __typename: "ModelArticlePicturesConnection";
-  items: Array<{
-    __typename: "ArticlePictures";
-    id: string;
-    pictureId: string;
     articleId: string;
-    picture: {
-      __typename: "Picture";
-      id: string;
-      title: string;
-      filename: string;
-      path: string;
-      caption?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    article: {
-      __typename: "Article";
-      id: string;
-      title: string;
-      permalink?: string | null;
-      image_url?: string | null;
-      headline: string;
-      body?: string | null;
-      info?: string | null;
-      rank: number;
-      public: boolean;
-      pageId: string;
-      createdAt: string;
-      updatedAt: string;
-    };
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -1202,87 +932,11 @@ export type ArticlesByPageIdQuery = {
     info?: string | null;
     rank: number;
     public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
+    pictures?: {
+      __typename: "ModelPictureConnection";
       nextToken?: string | null;
     } | null;
     pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ArticlePicturesByPictureIdQuery = {
-  __typename: "ModelArticlePicturesConnection";
-  items: Array<{
-    __typename: "ArticlePictures";
-    id: string;
-    pictureId: string;
-    articleId: string;
-    picture: {
-      __typename: "Picture";
-      id: string;
-      title: string;
-      filename: string;
-      path: string;
-      caption?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    article: {
-      __typename: "Article";
-      id: string;
-      title: string;
-      permalink?: string | null;
-      image_url?: string | null;
-      headline: string;
-      body?: string | null;
-      info?: string | null;
-      rank: number;
-      public: boolean;
-      pageId: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
-export type ArticlePicturesByArticleIdQuery = {
-  __typename: "ModelArticlePicturesConnection";
-  items: Array<{
-    __typename: "ArticlePictures";
-    id: string;
-    pictureId: string;
-    articleId: string;
-    picture: {
-      __typename: "Picture";
-      id: string;
-      title: string;
-      filename: string;
-      path: string;
-      caption?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    };
-    article: {
-      __typename: "Article";
-      id: string;
-      title: string;
-      permalink?: string | null;
-      image_url?: string | null;
-      headline: string;
-      body?: string | null;
-      info?: string | null;
-      rank: number;
-      public: boolean;
-      pageId: string;
-      createdAt: string;
-      updatedAt: string;
-    };
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -1333,6 +987,7 @@ export type OnCreatePageSubscription = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1364,6 +1019,7 @@ export type OnUpdatePageSubscription = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1395,6 +1051,7 @@ export type OnDeletePageSubscription = {
   description: string;
   path: string;
   hidden: boolean;
+  viewer: string;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1425,18 +1082,7 @@ export type OnCreatePictureSubscription = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -1448,18 +1094,7 @@ export type OnUpdatePictureSubscription = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -1471,18 +1106,7 @@ export type OnDeletePictureSubscription = {
   filename: string;
   path: string;
   caption?: string | null;
-  articles?: {
-    __typename: "ModelArticlePicturesConnection";
-    items: Array<{
-      __typename: "ArticlePictures";
-      id: string;
-      pictureId: string;
-      articleId: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
+  articleId: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -1498,12 +1122,15 @@ export type OnCreateArticleSubscription = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -1526,12 +1153,15 @@ export type OnUpdateArticleSubscription = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -1554,12 +1184,15 @@ export type OnDeleteArticleSubscription = {
   info?: string | null;
   rank: number;
   public: boolean;
-  images?: {
-    __typename: "ModelArticlePicturesConnection";
+  pictures?: {
+    __typename: "ModelPictureConnection";
     items: Array<{
-      __typename: "ArticlePictures";
+      __typename: "Picture";
       id: string;
-      pictureId: string;
+      title: string;
+      filename: string;
+      path: string;
+      caption?: string | null;
       articleId: string;
       createdAt: string;
       updatedAt: string;
@@ -1567,132 +1200,6 @@ export type OnDeleteArticleSubscription = {
     nextToken?: string | null;
   } | null;
   pageId: string;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnCreateArticlePicturesSubscription = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateArticlePicturesSubscription = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteArticlePicturesSubscription = {
-  __typename: "ArticlePictures";
-  id: string;
-  pictureId: string;
-  articleId: string;
-  picture: {
-    __typename: "Picture";
-    id: string;
-    title: string;
-    filename: string;
-    path: string;
-    caption?: string | null;
-    articles?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  };
-  article: {
-    __typename: "Article";
-    id: string;
-    title: string;
-    permalink?: string | null;
-    image_url?: string | null;
-    headline: string;
-    body?: string | null;
-    info?: string | null;
-    rank: number;
-    public: boolean;
-    images?: {
-      __typename: "ModelArticlePicturesConnection";
-      nextToken?: string | null;
-    } | null;
-    pageId: string;
-    createdAt: string;
-    updatedAt: string;
-  };
   createdAt: string;
   updatedAt: string;
 };
@@ -1798,6 +1305,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -1845,6 +1353,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -1892,6 +1401,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -1938,18 +1448,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -1977,18 +1476,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -2016,18 +1504,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -2059,12 +1536,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -2103,12 +1583,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -2147,12 +1630,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -2174,180 +1660,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeleteArticleMutation>response.data.deleteArticle;
-  }
-  async CreateArticlePictures(
-    input: CreateArticlePicturesInput,
-    condition?: ModelArticlePicturesConditionInput
-  ): Promise<CreateArticlePicturesMutation> {
-    const statement = `mutation CreateArticlePictures($input: CreateArticlePicturesInput!, $condition: ModelArticlePicturesConditionInput) {
-        createArticlePictures(input: $input, condition: $condition) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateArticlePicturesMutation>response.data.createArticlePictures;
-  }
-  async UpdateArticlePictures(
-    input: UpdateArticlePicturesInput,
-    condition?: ModelArticlePicturesConditionInput
-  ): Promise<UpdateArticlePicturesMutation> {
-    const statement = `mutation UpdateArticlePictures($input: UpdateArticlePicturesInput!, $condition: ModelArticlePicturesConditionInput) {
-        updateArticlePictures(input: $input, condition: $condition) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateArticlePicturesMutation>response.data.updateArticlePictures;
-  }
-  async DeleteArticlePictures(
-    input: DeleteArticlePicturesInput,
-    condition?: ModelArticlePicturesConditionInput
-  ): Promise<DeleteArticlePicturesMutation> {
-    const statement = `mutation DeleteArticlePictures($input: DeleteArticlePicturesInput!, $condition: ModelArticlePicturesConditionInput) {
-        deleteArticlePictures(input: $input, condition: $condition) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteArticlePicturesMutation>response.data.deleteArticlePictures;
   }
   async GetMember(id: string): Promise<GetMemberQuery> {
     const statement = `query GetMember($id: ID!) {
@@ -2418,6 +1730,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -2465,6 +1778,7 @@ export class APIService {
             description
             path
             hidden
+            viewer
             articles {
               __typename
               nextToken
@@ -2499,18 +1813,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -2538,10 +1841,7 @@ export class APIService {
             filename
             path
             caption
-            articles {
-              __typename
-              nextToken
-            }
+            articleId
             createdAt
             updatedAt
           }
@@ -2576,12 +1876,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -2620,7 +1923,7 @@ export class APIService {
             info
             rank
             public
-            images {
+            pictures {
               __typename
               nextToken
             }
@@ -2646,103 +1949,42 @@ export class APIService {
     )) as any;
     return <ListArticlesQuery>response.data.listArticles;
   }
-  async GetArticlePictures(id: string): Promise<GetArticlePicturesQuery> {
-    const statement = `query GetArticlePictures($id: ID!) {
-        getArticlePictures(id: $id) {
+  async PicturesByArticleId(
+    articleId: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelPictureFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<PicturesByArticleIdQuery> {
+    const statement = `query PicturesByArticleId($articleId: ID!, $sortDirection: ModelSortDirection, $filter: ModelPictureFilterInput, $limit: Int, $nextToken: String) {
+        picturesByArticleId(
+          articleId: $articleId
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
           __typename
-          id
-          pictureId
-          articleId
-          picture {
+          items {
             __typename
             id
             title
             filename
             path
             caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetArticlePicturesQuery>response.data.getArticlePictures;
-  }
-  async ListArticlePictures(
-    filter?: ModelArticlePicturesFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListArticlePicturesQuery> {
-    const statement = `query ListArticlePictures($filter: ModelArticlePicturesFilterInput, $limit: Int, $nextToken: String) {
-        listArticlePictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            pictureId
             articleId
-            picture {
-              __typename
-              id
-              title
-              filename
-              path
-              caption
-              createdAt
-              updatedAt
-            }
-            article {
-              __typename
-              id
-              title
-              permalink
-              image_url
-              headline
-              body
-              info
-              rank
-              public
-              pageId
-              createdAt
-              updatedAt
-            }
             createdAt
             updatedAt
           }
           nextToken
         }
       }`;
-    const gqlAPIServiceArguments: any = {};
+    const gqlAPIServiceArguments: any = {
+      articleId
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
     if (filter) {
       gqlAPIServiceArguments.filter = filter;
     }
@@ -2755,7 +1997,7 @@ export class APIService {
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListArticlePicturesQuery>response.data.listArticlePictures;
+    return <PicturesByArticleIdQuery>response.data.picturesByArticleId;
   }
   async ArticlesByPageId(
     pageId: string,
@@ -2784,7 +2026,7 @@ export class APIService {
             info
             rank
             public
-            images {
+            pictures {
               __typename
               nextToken
             }
@@ -2814,154 +2056,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <ArticlesByPageIdQuery>response.data.articlesByPageId;
-  }
-  async ArticlePicturesByPictureId(
-    pictureId: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelArticlePicturesFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ArticlePicturesByPictureIdQuery> {
-    const statement = `query ArticlePicturesByPictureId($pictureId: ID!, $sortDirection: ModelSortDirection, $filter: ModelArticlePicturesFilterInput, $limit: Int, $nextToken: String) {
-        articlePicturesByPictureId(
-          pictureId: $pictureId
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            pictureId
-            articleId
-            picture {
-              __typename
-              id
-              title
-              filename
-              path
-              caption
-              createdAt
-              updatedAt
-            }
-            article {
-              __typename
-              id
-              title
-              permalink
-              image_url
-              headline
-              body
-              info
-              rank
-              public
-              pageId
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      pictureId
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ArticlePicturesByPictureIdQuery>(
-      response.data.articlePicturesByPictureId
-    );
-  }
-  async ArticlePicturesByArticleId(
-    articleId: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelArticlePicturesFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ArticlePicturesByArticleIdQuery> {
-    const statement = `query ArticlePicturesByArticleId($articleId: ID!, $sortDirection: ModelSortDirection, $filter: ModelArticlePicturesFilterInput, $limit: Int, $nextToken: String) {
-        articlePicturesByArticleId(
-          articleId: $articleId
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            pictureId
-            articleId
-            picture {
-              __typename
-              id
-              title
-              filename
-              path
-              caption
-              createdAt
-              updatedAt
-            }
-            article {
-              __typename
-              id
-              title
-              permalink
-              image_url
-              headline
-              body
-              info
-              rank
-              public
-              pageId
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      articleId
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ArticlePicturesByArticleIdQuery>(
-      response.data.articlePicturesByArticleId
-    );
   }
   OnCreateMemberListener(
     filter?: ModelSubscriptionMemberFilterInput
@@ -3064,6 +2158,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -3112,6 +2207,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -3160,6 +2256,7 @@ export class APIService {
           description
           path
           hidden
+          viewer
           articles {
             __typename
             items {
@@ -3207,18 +2304,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -3247,18 +2333,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -3287,18 +2362,7 @@ export class APIService {
           filename
           path
           caption
-          articles {
-            __typename
-            items {
-              __typename
-              id
-              pictureId
-              articleId
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
+          articleId
           createdAt
           updatedAt
         }
@@ -3331,12 +2395,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -3376,12 +2443,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -3421,12 +2491,15 @@ export class APIService {
           info
           rank
           public
-          images {
+          pictures {
             __typename
             items {
               __typename
               id
-              pictureId
+              title
+              filename
+              path
+              caption
               articleId
               createdAt
               updatedAt
@@ -3446,195 +2519,6 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteArticle">>
-    >;
-  }
-
-  OnCreateArticlePicturesListener(
-    filter?: ModelSubscriptionArticlePicturesFilterInput
-  ): Observable<
-    SubscriptionResponse<
-      Pick<__SubscriptionContainer, "onCreateArticlePictures">
-    >
-  > {
-    const statement = `subscription OnCreateArticlePictures($filter: ModelSubscriptionArticlePicturesFilterInput) {
-        onCreateArticlePictures(filter: $filter) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onCreateArticlePictures">
-      >
-    >;
-  }
-
-  OnUpdateArticlePicturesListener(
-    filter?: ModelSubscriptionArticlePicturesFilterInput
-  ): Observable<
-    SubscriptionResponse<
-      Pick<__SubscriptionContainer, "onUpdateArticlePictures">
-    >
-  > {
-    const statement = `subscription OnUpdateArticlePictures($filter: ModelSubscriptionArticlePicturesFilterInput) {
-        onUpdateArticlePictures(filter: $filter) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onUpdateArticlePictures">
-      >
-    >;
-  }
-
-  OnDeleteArticlePicturesListener(
-    filter?: ModelSubscriptionArticlePicturesFilterInput
-  ): Observable<
-    SubscriptionResponse<
-      Pick<__SubscriptionContainer, "onDeleteArticlePictures">
-    >
-  > {
-    const statement = `subscription OnDeleteArticlePictures($filter: ModelSubscriptionArticlePicturesFilterInput) {
-        onDeleteArticlePictures(filter: $filter) {
-          __typename
-          id
-          pictureId
-          articleId
-          picture {
-            __typename
-            id
-            title
-            filename
-            path
-            caption
-            articles {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          article {
-            __typename
-            id
-            title
-            permalink
-            image_url
-            headline
-            body
-            info
-            rank
-            public
-            images {
-              __typename
-              nextToken
-            }
-            pageId
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<
-        Pick<__SubscriptionContainer, "onDeleteArticlePictures">
-      >
     >;
   }
 }

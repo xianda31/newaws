@@ -44,6 +44,7 @@ query GetPage($id: ID!) {
     description
     path
     hidden
+    viewer
     articles {
       items {
         id
@@ -82,6 +83,7 @@ query ListPages(
       description
       path
       hidden
+      viewer
       articles {
         nextToken
         __typename
@@ -102,18 +104,7 @@ query GetPicture($id: ID!) {
     filename
     path
     caption
-    articles {
-      items {
-        id
-        pictureId
-        articleId
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
+    articleId
     createdAt
     updatedAt
     __typename
@@ -132,10 +123,7 @@ query ListPictures(
       filename
       path
       caption
-      articles {
-        nextToken
-        __typename
-      }
+      articleId
       createdAt
       updatedAt
       __typename
@@ -156,10 +144,13 @@ query GetArticle($id: ID!) {
     info
     rank
     public
-    images {
+    pictures {
       items {
         id
-        pictureId
+        title
+        filename
+        path
+        caption
         articleId
         createdAt
         updatedAt
@@ -191,7 +182,7 @@ query ListArticles(
       info
       rank
       public
-      images {
+      pictures {
         nextToken
         __typename
       }
@@ -205,85 +196,27 @@ query ListArticles(
   }
 }
 
-query GetArticlePictures($id: ID!) {
-  getArticlePictures(id: $id) {
-    id
-    pictureId
-    articleId
-    picture {
+query PicturesByArticleId(
+  $articleId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPictureFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  picturesByArticleId(
+    articleId: $articleId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
       id
       title
       filename
       path
       caption
-      articles {
-        nextToken
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    article {
-      id
-      title
-      permalink
-      image_url
-      headline
-      body
-      info
-      rank
-      public
-      images {
-        nextToken
-        __typename
-      }
-      pageId
-      createdAt
-      updatedAt
-      __typename
-    }
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-query ListArticlePictures(
-  $filter: ModelArticlePicturesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listArticlePictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      pictureId
       articleId
-      picture {
-        id
-        title
-        filename
-        path
-        caption
-        createdAt
-        updatedAt
-        __typename
-      }
-      article {
-        id
-        title
-        permalink
-        image_url
-        headline
-        body
-        info
-        rank
-        public
-        pageId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -317,115 +250,11 @@ query ArticlesByPageId(
       info
       rank
       public
-      images {
+      pictures {
         nextToken
         __typename
       }
       pageId
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
-query ArticlePicturesByPictureId(
-  $pictureId: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelArticlePicturesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  articlePicturesByPictureId(
-    pictureId: $pictureId
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      pictureId
-      articleId
-      picture {
-        id
-        title
-        filename
-        path
-        caption
-        createdAt
-        updatedAt
-        __typename
-      }
-      article {
-        id
-        title
-        permalink
-        image_url
-        headline
-        body
-        info
-        rank
-        public
-        pageId
-        createdAt
-        updatedAt
-        __typename
-      }
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
-query ArticlePicturesByArticleId(
-  $articleId: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelArticlePicturesFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  articlePicturesByArticleId(
-    articleId: $articleId
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      pictureId
-      articleId
-      picture {
-        id
-        title
-        filename
-        path
-        caption
-        createdAt
-        updatedAt
-        __typename
-      }
-      article {
-        id
-        title
-        permalink
-        image_url
-        headline
-        body
-        info
-        rank
-        public
-        pageId
-        createdAt
-        updatedAt
-        __typename
-      }
       createdAt
       updatedAt
       __typename

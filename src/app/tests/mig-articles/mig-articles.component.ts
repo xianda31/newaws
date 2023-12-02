@@ -48,14 +48,16 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     pageId: '64a54318-fb22-4dc1-8cad-6b6f738f0689',
     createdAt: '2021-09-01',
     updatedAt: '2021-09-01',
-    images: {
-      __typename: "ModelArticlePicturesConnection",
+    pictures: {
+      __typename: "ModelPictureConnection",
       items: [
         {
-          __typename: "ArticlePictures",
+          __typename: "Picture",
           id: "0",
+          title: 'pierre gros',
+          filename: 'pierre-gros',
+          path: 'pierre-gros',
           articleId: 'aa',
-          pictureId: 'aa',
           createdAt: '2021-09-01',
           updatedAt: '2021-09-01',
         }],
@@ -159,10 +161,10 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     if (!this.editBody && this.showMore) { this.removeBodyEditor(); }
   }
   triggerView(article: Article): void {
-    const images = article.images?.items;
+    const images = article.pictures?.items;
     if (images && images.length > 0) {
       const image = images[0];
-      const key = 'images/' + image!.pictureId;
+      const key = 'images/' + image!.id;
       Storage.get(key, { level: 'public' })
         .then((result) => {
           this.data.image = result as string;
@@ -173,10 +175,11 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     }
     const flashData: FlashData = {
       title: article.title,
-      image: this.buildURL('images/' + article.images?.items[0]!.pictureId),
+      image: this.buildURL('images/' + article.pictures?.items[0]!.id),
       headline: article.headline,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.info ? new Date(article.info) : null,
+      index: article.id
     };
     console.log('triggerView : flashData : %o', flashData)
     this.data = flashData;
