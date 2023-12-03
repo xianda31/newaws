@@ -1,11 +1,10 @@
-<div class="container-fluid ">
+<div class="container-fluid text-center">
     <app-headband [title]="page.label + '|' + page.description"> </app-headband>
 
-    <div class="p-2">
-        <div class="row row-cols-1 row-cols-md-3  justify-content-center">
-            <app-carder class="d-flex pb-2" *ngFor="let article of articles$ | async " [article]="article"
-                [editable]="false">
-            </app-carder>
-        </div>
+    <!-- <div class="col-9 "> -->
+    <div class="row justify-content-center ">
+        <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false">
+        </app-carder>
     </div>
+    <!-- </div> -->
 </div>

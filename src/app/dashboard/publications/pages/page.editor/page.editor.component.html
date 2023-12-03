@@ -20,6 +20,14 @@
                         <label> type</label>
                         <input type="text" class="form-control" formControlName="viewer">
                     </div>
+                    <div class="col">
+                        <div class="row justify-content-space-between">
+                            <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label>
+                            <label> ajout :
+                                <i class="bi bi-plus-circle-fill text-primary text-xl-start" (click)="addArticle()"></i>
+                            </label>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -31,71 +39,41 @@
 
 
     <!-- emulation of pager comp -->
-    <!-- <app-headband [title]="page.label + '|' + page.description"> </app-headband> -->
     <div class="row justify-content-between p-2">
 
-        <div class="col-9">
-            <app-carder class="d-flex pb-2" *ngFor="let item of articles$ | async " [article]="item"
-                [editable]="edit_mode && item.id == article.id" (newArticleItem)="update($event)">
-            </app-carder>
-        </div>
-        <!-- <div *ngIf="!edit_mode" class="col-9">
-            <app-carder class="d-flex pb-2" *ngFor="let item of articles$ | async " [article]="item"
-                [editable]="edit_mode && item.id == article.id">
-            </app-carder>
-        </div> -->
+        <ng-container class="row justify-content-center" *ngFor="let item of articles ; let i = index">
 
-
-
-        <!-- menu articles -->
-        <div class="col-3">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row justify-content-between">
-                        <div class="col">
-                            <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label>
-                        </div>
-                        <div class="col justify-content-end">
-                            <i class="bi bi-plus-circle-fill" (click)="addArticle()"></i>
-                        </div>
-                    </div>
-
+            <div class="col-2 align-content-center ">
+                <div class="row text-end">
+                    <i class="bi bi-arrow-up-square-fill text-primary" (click)="up(i)"></i>
                 </div>
-                <div class="card-body">
-                    <div class="row justify-content-between" *ngFor="let article of articles$ | async">
-                        <div class="col">
-                            <label>{{article.title}}</label>
-                        </div>
-                        <div class="col justify-content-between">
-                            <div class="row">
-
-                                <div class="col">
-                                    <button type="button" class="btn btn-outline-success btn-sm " (click)="up(article)">
-                                        <i class="bi bi-arrow-up-square"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-outline-success btn-sm "
-                                        (click)="down(article)">
-                                        <i class="bi bi-arrow-down-square"></i>
-                                    </button>
-                                    <!-- </div>
-                                <div class="col"> -->
-                                    <button type="button" class="btn btn-primary btn-sm " (click)="modify(article)">
-                                        <i class="bi bi-pencil-square" style="color:white"></i>
-                                    </button>
-                                    <!-- </div>
-                                <div class="col"> -->
-                                    <button type="button" class="btn btn-danger btn-sm " (click)="delete(article)">
-                                        <i class="bi bi-trash3" style="color:white"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+                <div class="row text-end">
+                    <i class="bi bi-arrow-down-square-fill text-primary" (click)="down(i)"></i>
+                </div>
+                <div class="row text-end">
+                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"> -->
+                    <i class="bi bi-info-square-fill text-primary" (click)="openDateModal(item)"
+                        data-bs-target="#infoModal"></i>
+                    <!-- </button> -->
                 </div>
             </div>
 
-        </div>
+            <div class="col-8 article">
+                <app-carder [article]="item" [editable]="edit_mode && item.id == article.id"
+                    (newArticleItem)="update($event)" (click)="modify(item)">
+                </app-carder>
+            </div>
+
+            <div class="col-2 align-content-center">
+                <div class="row text-start">
+                    <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)" (click)="delete(item)"></i>
+                </div>
+            </div>
+            <!-- </div> -->
+        </ng-container>
+        <!-- </div> -->
     </div>
 </div>
+
+
+<!-- Modal -->

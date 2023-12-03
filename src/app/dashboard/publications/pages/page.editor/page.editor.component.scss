@@ -1,0 +1,28 @@
+// .card {
+//     border-radius: 8px;
+//     opacity: 0.9;
+//     cursor: pointer;
+// }
+
+// .card:hover {
+//     transform: scale(1.05);
+//     // background: #b5deb8;
+//     box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+//     opacity: 1.0;
+// }
+
+.article:hover {
+    border-radius: 8px;
+    border: 1px solid #7e1e1e;
+    // opacity: 0.9;
+    cursor: pointer;
+}
+
+#delete:hover {
+    color: #7e1e1e;
+    // transform: scale(1.15);
+}
+
+// background: #b5deb8;
+// box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+// opacity: 1.0;

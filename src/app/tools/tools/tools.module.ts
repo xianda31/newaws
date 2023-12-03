@@ -11,6 +11,7 @@ import { FlashPluginComponent } from 'src/app/layouts/pager/plugins/flash-plugin
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
+import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/get-date.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -21,6 +22,7 @@ import { CommonModule } from '@angular/common';
     FilesComponent,
     RightsInputComponent,
     FlashPluginComponent,
+    GetDateComponent,
     AdDirective,
     CarderComponent,
     FilesizePipe,

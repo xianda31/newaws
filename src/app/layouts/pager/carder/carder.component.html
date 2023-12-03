@@ -1,7 +1,7 @@
 <div class="col">
 
     <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-        <div *ngIf="data" class="card-body">
+        <div *ngIf="data" class="card-body text-start">
             <!-- <div class="container " (click)="showMore = !showMore"> -->
             <div *ngIf="!data.date">
                 <section #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml">
@@ -15,12 +15,12 @@
             </div>
 
             <div *ngIf="!showLess" class="text-start ps-2">
-                <span #bodyArea id="bodyArea" [innerHTML]="data.body  "></span>
+                <span #bodyArea [id]="'bodyArea'+ data.index" [innerHTML]="data.body | safeHtml "></span>
             </div>
 
-            <span>
+            <!-- <span>
                 <button *ngIf="editable" type="button" class="btn btn-close btn-sm" (click)="close()"> </button>
-            </span>
+            </span> -->
             <!-- </div> -->
         </div>
     </div>

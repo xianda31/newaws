@@ -54,8 +54,7 @@ export class ArticlesComponent implements OnInit {
   }
 
   onPublish(article: Article) {
-    const { createdAt, updatedAt, __typename, ...articleInput } = article;
-    this.articleService.updateArticle(articleInput);
+    this.articleService.updateArticle(article);
   }
 
   onUpdate(article: Article) {

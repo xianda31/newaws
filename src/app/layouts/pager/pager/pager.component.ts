@@ -47,13 +47,14 @@ export class PagerComponent implements OnChanges {
       return;
     } else {
       this.page = page;
-      console.log('mosaiker page  = %o', this.page);
+      console.log('pager page  = %o', this.page);
     }
 
     this.articles$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.pageId === this.page.id)),
+      map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
       tap((articles) => {
-        console.log('mosaiker articles', articles);
+        console.log('pager articles', articles);
         this.solo = articles.length === 1;
 
       })

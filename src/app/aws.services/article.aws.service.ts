@@ -67,13 +67,15 @@ export class ArticleService {
     return await this.api.GetArticle(id) as Article;
   }
 
-  updateArticle(articleInput: UpdateArticleInput) {
+  updateArticle(article: Article) {
     // console.log('articleInput: ', articleInput)
-    this.api.UpdateArticle(articleInput)
-      .then((result) => {
-        const article = result as Article;
+    let { __typename, createdAt, updatedAt, pictures, ...newArticleInput } = article;
 
-        this._articles = this._articles.map((cat) => cat.id === article.id ? article : cat);
+    this.api.UpdateArticle(newArticleInput)
+      .then((result) => {
+        const newArticle = result as Article;
+
+        this._articles = this._articles.map((item) => item.id === newArticle.id ? newArticle : item);
         this._articles$.next(this._articles);
       })
       .catch((error) => {
@@ -86,7 +88,7 @@ export class ArticleService {
 
   deleteArticle(article: Article) {
     this.api.DeleteArticle({ id: article.id }).then((result) => {
-      this._articles = this._articles.filter((cat) => cat.id !== article.id);
+      this._articles = this._articles.filter((item) => item.id !== article.id);
       this._articles$.next(this._articles);
     })
       .catch((error) => {
