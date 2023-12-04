@@ -1,5 +1,10 @@
 <div class="col">
+    <ng-template *ngIf="viewMode ==='diapo'" [ngTemplateOutlet]="diapo"></ng-template>
+    <ng-template *ngIf="viewMode ==='textual'" [ngTemplateOutlet]="textual"></ng-template>
 
+</div>
+
+<ng-template #textual>
     <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
         <div *ngIf="data" class="card-body text-start">
             <!-- <div class="container " (click)="showMore = !showMore"> -->
@@ -15,13 +20,19 @@
             </div>
 
             <div *ngIf="!showLess" class="text-start ps-2">
-                <span #bodyArea [id]="'bodyArea'+ data.index" [innerHTML]="data.body | safeHtml "></span>
+                <span #bodyArea [id]="'bodyArea'+ data.index" [innerHTML]="data.body | bucketname | safeHtml "></span>
             </div>
-
-            <!-- <span>
-                <button *ngIf="editable" type="button" class="btn btn-close btn-sm" (click)="close()"> </button>
-            </span> -->
-            <!-- </div> -->
         </div>
     </div>
-</div>
+</ng-template>
+
+<ng-template #diapo>
+    <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
+        <div *ngIf="data" class="card-header text-center">
+            <img [src]="data.image" class="card-img-portrait-top" alt="title">
+        </div>
+        <div *ngIf="data" class="card-body text-center">
+            <span #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml"> </span>
+        </div>
+    </div>
+</ng-template>

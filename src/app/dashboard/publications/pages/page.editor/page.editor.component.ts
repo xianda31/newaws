@@ -25,13 +25,16 @@ export class PageEditorComponent implements OnInit {
   current_page!: Page;
   pageForm!: FormGroup;
 
-  articles$!: Observable<Article[]>;
+  articles$: Observable<Article[]> = this.articleService.articles$.pipe(
+    map((articles) => articles.filter((article) => article.pageId === this.current_page.id)),
+    map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1)))
+  );
   solo !: boolean;
 
   date !: string;
 
   edit_mode: boolean = false;
-  article!: Article;
+  selected_article!: Article;
   articles !: Article[];
   maxRank !: number;
   myModal !: any;
@@ -50,45 +53,23 @@ export class PageEditorComponent implements OnInit {
   ngOnInit(): void {
     this.current_page = this.pageService.sgetPage(this.pageId);
 
-    this.articles$ = this.articleService.articles$.pipe(
-      map((articles) => articles.filter((article) => article.pageId === this.current_page.id)),
-      map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1)))
-    );
-
     this.articles$.subscribe((articles) => {
       this.articles = articles;
       this.maxRank = articles.reduce((max, article) => (article.rank > max ? article.rank : max), 0);
     });
 
+    this.createForm(this.current_page);
+
+  }
+  createForm(page: Page) {
     this.pageForm = new FormGroup({
-      label: new FormControl({ value: '', disabled: true }),
-      root_menu: new FormControl({ value: '', disabled: true }),
-      hidden: new FormControl({ value: '', disabled: true }),
-      description: new FormControl({ value: '', disabled: true }),
-      path: new FormControl({ value: '', disabled: true }),
-      viewer: new FormControl({ value: '', disabled: true }),
+      root_menu: new FormControl({ value: page.root_menu, disabled: true }),
+      label: new FormControl({ value: page.label, disabled: true }),
+      description: new FormControl({ value: page.description, disabled: true }),
+      viewer: new FormControl({ value: page.viewer, disabled: true }),
     });
 
-    this.pageForm.patchValue(this.current_page);
-  }
-
-  addArticle() {
-    // create dummy article
-    const article: CreateArticleInput = {
-      title: 'dummy article',
-      permalink: 'dummy-article',
-      headline: '<h2>Lorem Ipsum dolor sit amet</h2>',
-      body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
-      info: new Date().toISOString(),
-      image_url: 'dummy-article.jpg',
-      rank: this.maxRank + 1,
-      public: true,
-      pageId: this.current_page.id,
-    };
-
-
-    this.articleService.createArticle(article);
-
+    // this.pageForm.patchValue(page);
   }
 
   up(i: number) {
@@ -111,27 +92,24 @@ export class PageEditorComponent implements OnInit {
     this.articleService.updateArticle(this.articles[i + 1]);
 
   }
-  change_info(article: Article) {
-    this.article = article;
+
+  createArticle() {
+    // create dummy article
+    const article: CreateArticleInput = {
+      title: 'dummy article',
+      permalink: 'dummy-article',
+      headline: '<h2>Lorem Ipsum dolor sit amet</h2>',
+      body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
+      info: new Date().toISOString(),
+      image_url: 'dummy-article.jpg',
+      rank: this.maxRank + 1,
+      public: true,
+      pageId: this.current_page.id,
+    };
+    this.articleService.createArticle(article);
   }
 
-  delete(article: Article) {
-    this.articleService.deleteArticle(article);
-  }
-  modify(article: Article) {
-    this.edit_mode = true;
-    this.article = article;
-
-    const el_head = document.getElementById('headArea' + this.article.id);
-    if (el_head === null) { console.log('edit_mode set to true but el not found !!!'); return; }
-    this.initHeadLineEditor(el_head);
-
-    const el_body = document.getElementById('bodyArea' + this.article.id);
-    if (el_body === null) { console.log('edit_mode set to true but el not found !!!'); return; }
-    this.initBodyEditor(el_body);
-  }
-
-  openDateModal(article: Article) {
+  updateArticleInfo(article: Article) {
     const modalRef = this.modalService.open(GetDateComponent, { centered: true });
     modalRef.componentInstance.article = article;
 
@@ -144,24 +122,44 @@ export class PageEditorComponent implements OnInit {
     });
   }
 
-  update(article: Article) {
+  updateArticle(article: Article) {
     this.articleService.updateArticle(article);
-    this.removeEditors();
+    this.removeEditors(article);
 
   }
+
+  deleteArticle(article: Article) {
+    this.articleService.deleteArticle(article);
+  }
+
 
   // tinyMCE
 
+  openEditors(article: Article) {
+    this.edit_mode = true;
+    this.selected_article = article;
+
+    const el_head = document.getElementById('headArea' + this.selected_article.id);
+    if (el_head === null) { console.log('edit_mode set to true but el not found !!!'); return; }
+    this.initHeadLineEditor(el_head);
+
+    const el_body = document.getElementById('bodyArea' + this.selected_article.id);
+    if (el_body === null) { console.log('edit_mode set to true but el not found !!!'); return; }
+    this.initBodyEditor(el_body);
+  }
+  removeEditors(article: Article) {
+    tinymce.EditorManager.remove('#headArea' + article.id);
+    tinymce.EditorManager.remove('#bodyArea' + article.id);
+  }
+
   headSave(html: SafeHtml): void {
-    this.article.headline = html as string;
-    this.article.headline = html.toString();
+    this.selected_article.headline = html.toString();
+    this.updateArticle(this.selected_article);
   }
 
   bodySave(html: SafeHtml): void {
-    this.article.body = html.toString();
-    this.article.body = html.toString();  //this.sanitizer.bypassSecurityTrustHtml(this.body as string);
-    this.update(this.article);
-    // console.log('bodySave %s bytes', this.data.body.length);
+    this.selected_article.body = html.toString();
+    this.updateArticle(this.selected_article);
   }
 
   initHeadLineEditor(el: HTMLElement) {
@@ -170,7 +168,7 @@ export class PageEditorComponent implements OnInit {
         target: el,
         inline: true,
         menubar: false,
-        content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+        // content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
 
         plugins: ' code  wordcount save',
         toolbar: 'undo redo blocks | bold italic | forecolor | code | save cancel',
@@ -187,7 +185,6 @@ export class PageEditorComponent implements OnInit {
         if (editors.length == 0) console.log('initHeadLineEditor failed');
       });
   }
-
 
   initBodyEditor(el: HTMLElement) {
 
@@ -229,7 +226,9 @@ export class PageEditorComponent implements OnInit {
     const buildURL = (key: string) => {
       const BucketName = environment.BucketName;
       const Region = environment.Region;
-      const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
+      // const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
+      const uri = 'SERVER' + '/public/' + key;
+
       return uri;
     };
 
@@ -245,11 +244,12 @@ export class PageEditorComponent implements OnInit {
         },
       })
         .then((result) => {
-          console.log('image_upload_handler : result:%o ', result);
+          console.log('image_upload_handler : S3 result:%o ', result);
           resolve(buildURL(result.key));
 
         })
         .catch((err) => {
+          console.log('image_upload_handler : S3 error:%o ', err);
           reject(err);
         });
 
@@ -270,11 +270,11 @@ export class PageEditorComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        const id = this.article.permalink + '/' + file.name; // + (new Date()).getTime();
+        const id = this.selected_article.permalink + '/' + file.name; // + (new Date()).getTime();
         const image64 = e.target.result;
-        const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
         const base64 = image64.split(',')[1];
 
+        const blobCache = tinymce.activeEditor!.editorUpload.blobCache;
 
         // console.log('ImagePickerCallback : sauvegarde en cache de %o, sous reference id %s', file, id);
         const blobInfo = blobCache.create(id, file, base64, id, id);
@@ -292,13 +292,4 @@ export class PageEditorComponent implements OnInit {
   }
 
 
-
-
-  removeEditors() {
-    // if (this.editorExist) {
-    tinymce.EditorManager.remove('#headArea' + this.article.id);
-    tinymce.EditorManager.remove('#bodyArea' + this.article.id);
-    // tinymce.remove(el);
-    // this.editorExist = false;
-  }
 }

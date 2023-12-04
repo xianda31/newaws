@@ -1,14 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Article } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
-import { AdDirective } from 'src/app/layouts/pager/plugins/ad/ad.directive';
-import { AdItem } from '../plugins/ad/ad-item';
-import { AdComponent } from '../plugins/ad/ad.component';
-import { FlashPluginComponent } from '../plugins/flash-plugin/flash-plugin.component';
 import { FlashData } from '../plugins/flash-plugin/flash-plugin.interface';
 import { environment } from 'src/app/environments/environment';
-import tinymce from 'tinymce';
-import { SafeHtml } from '@angular/platform-browser';
 
 
 
@@ -20,8 +14,10 @@ import { SafeHtml } from '@angular/platform-browser';
 export class CarderComponent implements OnInit {
 
   @Input() article!: Article;
+  @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
-  @Output() newArticleItem = new EventEmitter<Article>();
+  @Input() viewMode: 'textual' | 'diapo' = 'textual';
+  // @Output() newArticleItem = new EventEmitter<Article>();
   // @ViewChild(AdDirective, { static: true }) anchor!: AdDirective;
   // viewContainerRef !: ViewContainerRef;
 
@@ -30,15 +26,10 @@ export class CarderComponent implements OnInit {
 
   bannerURL !: string;
   data!: FlashData;
-  showLess: boolean = false;
 
-  constructor(
-    // private router: Router,
-  ) { }
 
   async ngOnInit(): Promise<void> {
     this.prepView(this.article);
-
   }
 
 
@@ -80,53 +71,4 @@ export class CarderComponent implements OnInit {
     return date.toLocaleString('fr-FR', { month: 'short' });
   }
 
-  // close() {
-  //   this.newArticleItem.emit(this.article);
-  //   this.removeEditors();
-  // }
-
-  // headSave(html: SafeHtml): void {
-  //   this.article.headline = html as string;
-  //   // this.createForm.patchValue({ head_html: this.article0.headline });
-  //   this.data.headline = html.toString();
-  //   console.log('headSave %s bytes', this.data.headline.length);
-  // }
-
-  // initHeadLineEditor() {
-  //   const el = document.getElementById('headArea');
-  //   if (el === null) {
-  //     console.log('el not found');
-  //     return;
-  //   }
-  //   console.log('initHeadLineEditor : el=', el);
-
-  //   tinymce.init(
-  //     {
-  //       target: el,
-  //       inline: true,
-  //       menubar: false,
-  //       content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-
-  //       plugins: ' code  wordcount save',
-  //       toolbar: 'undo redo blocks | bold italic | forecolor | code | save cancel',
-  //       save_onsavecallback: () => {
-  //         this.headSave(tinymce.activeEditor!.getContent());
-  //         // console.log('Saved');
-  //       },
-  //       toolbar_location: 'bottom',
-  //       valid_elements: 'p[style],h*,strong,em,span[style]',
-  //       valid_styles: {
-  //         '*': 'font-size,font-family,color,text-decoration,text-align'
-  //       }
-  //     }).then((editors) => {
-  //       console.log('initHeadLineEditor : %s editors initialised', editors.length);
-  //       // tinymce.activeEditor!.setContent(this.article.headline);
-  //     });
-  // }
-
-  // removeEditors() {
-  //   // if (this.editorExist) {
-  //   tinymce.remove('#headArea');
-  //   // this.editorExist = false;
-  // }
 }

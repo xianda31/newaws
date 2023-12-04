@@ -12,6 +12,7 @@ import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/get-date.component';
+import { BucketnamePipe } from '../../pipes/bucketname.pipe';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -27,6 +28,7 @@ import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/
     CarderComponent,
     FilesizePipe,
     SafeHtmlPipe,
+    BucketnamePipe,
   ],
   imports: [
     CommonModule,

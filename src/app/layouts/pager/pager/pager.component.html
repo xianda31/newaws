@@ -3,7 +3,8 @@
 
     <!-- <div class="col-9 "> -->
     <div class="row justify-content-center ">
-        <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false">
+        <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
+            [showLess]="false">
         </app-carder>
     </div>
     <!-- </div> -->

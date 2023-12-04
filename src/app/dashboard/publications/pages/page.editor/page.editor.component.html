@@ -24,7 +24,8 @@
                         <div class="row justify-content-space-between">
                             <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label>
                             <label> ajout :
-                                <i class="bi bi-plus-circle-fill text-primary text-xl-start" (click)="addArticle()"></i>
+                                <i class="bi bi-plus-circle-fill text-primary text-xl-start"
+                                    (click)="createArticle()"></i>
                             </label>
                         </div>
                     </div>
@@ -52,21 +53,22 @@
                 </div>
                 <div class="row text-end">
                     <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"> -->
-                    <i class="bi bi-info-square-fill text-primary" (click)="openDateModal(item)"
+                    <i class="bi bi-info-square-fill text-primary" (click)="updateArticleInfo(item)"
                         data-bs-target="#infoModal"></i>
                     <!-- </button> -->
                 </div>
             </div>
 
             <div class="col-8 article">
-                <app-carder [article]="item" [editable]="edit_mode && item.id == article.id"
-                    (newArticleItem)="update($event)" (click)="modify(item)">
+                <app-carder [article]="item" [editable]="edit_mode && item.id == selected_article.id"
+                    (click)="openEditors(item)">
                 </app-carder>
             </div>
 
             <div class="col-2 align-content-center">
                 <div class="row text-start">
-                    <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)" (click)="delete(item)"></i>
+                    <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)"
+                        (click)="deleteArticle(item)"></i>
                 </div>
             </div>
             <!-- </div> -->
