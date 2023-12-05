@@ -3,6 +3,7 @@ import { Article } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { FlashData } from '../plugins/flash-plugin/flash-plugin.interface';
 import { environment } from 'src/app/environments/environment';
+import { CardViewMode } from 'src/app/interfaces/page.interface';
 
 
 
@@ -16,7 +17,7 @@ export class CarderComponent implements OnInit {
   @Input() article!: Article;
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
-  @Input() viewMode: 'textual' | 'diapo' = 'textual';
+  @Input() viewMode: CardViewMode = CardViewMode.Textual;
   // @Output() newArticleItem = new EventEmitter<Article>();
   // @ViewChild(AdDirective, { static: true }) anchor!: AdDirective;
   // viewContainerRef !: ViewContainerRef;

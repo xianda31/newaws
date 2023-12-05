@@ -1,6 +1,6 @@
 <div class="col">
-    <ng-template *ngIf="viewMode ==='diapo'" [ngTemplateOutlet]="diapo"></ng-template>
-    <ng-template *ngIf="viewMode ==='textual'" [ngTemplateOutlet]="textual"></ng-template>
+    <ng-template *ngIf="viewMode ==='PICTURAL'" [ngTemplateOutlet]="pictural"></ng-template>
+    <ng-template *ngIf="viewMode ==='TEXTUAL'" [ngTemplateOutlet]="textual"></ng-template>
 
 </div>
 
@@ -26,13 +26,13 @@
     </div>
 </ng-template>
 
-<ng-template #diapo>
+<ng-template #pictural>
     <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-        <div *ngIf="data" class="card-header text-center">
-            <img [src]="data.image" class="card-img-portrait-top" alt="title">
-        </div>
         <div *ngIf="data" class="card-body text-center">
             <span #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml"> </span>
+        </div>
+        <div *ngIf="data.image" class="card-header text-center">
+            <img [src]="data.image" class="card-img-portrait-top" alt="title">
         </div>
     </div>
 </ng-template>

@@ -39,11 +39,10 @@
     </div>
 
 
-    <!-- emulation of pager comp -->
     <div class="row justify-content-between p-2">
 
         <ng-container class="row justify-content-center" *ngFor="let item of articles ; let i = index">
-
+            <!-- edit tools -->
             <div class="col-2 align-content-center ">
                 <div class="row text-end">
                     <i class="bi bi-arrow-up-square-fill text-primary" (click)="up(i)"></i>
@@ -52,16 +51,19 @@
                     <i class="bi bi-arrow-down-square-fill text-primary" (click)="down(i)"></i>
                 </div>
                 <div class="row text-end">
-                    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal"> -->
-                    <i class="bi bi-info-square-fill text-primary" (click)="updateArticleInfo(item)"
-                        data-bs-target="#infoModal"></i>
-                    <!-- </button> -->
+                    <i class="bi bi-info-square-fill text-primary" (click)="setDate(item)"></i>
+                </div>
+                <div *ngIf="viewMode ==='PICTURAL'" class="row text-end">
+                    <i class="bi bi-file-image-fill text-primary" (click)="fileInput.click()"></i>
+                    <input hidden #fileInput type="file" (change)="setPictures($event)" />
+
                 </div>
             </div>
 
+            <!-- emulation of pager comp -->
             <div class="col-8 article">
-                <app-carder [article]="item" [editable]="edit_mode && item.id == selected_article.id"
-                    (click)="openEditors(item)">
+                <app-carder [article]="item" [editable]="edit_mode && item.id === selected_article.id"
+                    [viewMode]="viewMode" (click)="selectArticle(item)">
                 </app-carder>
             </div>
 
