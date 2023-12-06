@@ -12,10 +12,9 @@ import tinymce from 'tinymce';
 import { GetDateComponent } from '../get-date/get-date.component';
 import { environment } from 'src/app/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
-import { CardViewMode } from 'src/app/interfaces/page.interface';
 import { FileService } from 'src/app/tools/service/file.service';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
-import { Editor } from 'dist/bcsto/tinymce/tinymce';
+import { CardType } from 'src/app/interfaces/page.interface';
 
 
 
@@ -27,20 +26,15 @@ import { Editor } from 'dist/bcsto/tinymce/tinymce';
 export class PageEditorComponent implements OnInit {
   @Input('id') pageId!: string;
   current_page!: Page;
-  viewMode: CardViewMode = CardViewMode.Textual;
+  viewMode: CardType = 'Textual';
   pageForm!: FormGroup;
 
   articles$: Observable<Article[]> = this.articleService.articles$.pipe(
     map((articles) => articles.filter((article) => article.pageId === this.current_page.id)),
     map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1)))
   );
-  solo !: boolean;
-
-  date !: string;
 
   edit_mode: boolean = false;
-  // currentHeadLineEditor: any | undefined;
-  // currentBodyEditor: any | undefined;
   force_editor_reload = false;
 
   selected_article!: Article;
@@ -62,7 +56,7 @@ export class PageEditorComponent implements OnInit {
 
 
   isViewMode(viewer: string): boolean {
-    return (viewer === CardViewMode.Textual || viewer === CardViewMode.Pictural);
+    return (viewer === 'Textual' || viewer === 'Pictural');
   }
 
   ngOnInit(): void {
@@ -71,18 +65,12 @@ export class PageEditorComponent implements OnInit {
     if (!this.isViewMode(this.current_page.viewer)) {
       console.log('page mode invalid : ', this.current_page.viewer);
     } else {
-      this.viewMode = this.current_page.viewer as CardViewMode;
+      this.viewMode = this.current_page.viewer as CardType;
       console.log('page mode : ', this.viewMode);
     }
-
-
     this.articles$.subscribe((articles) => {
       this.articles = articles;
       this.maxRank = articles.reduce((max, article) => (article.rank > max ? article.rank : max), 0);
-      // this.force_editor_reload = true // force editor to reload content from article
-      // console.log('force editor reload', this.force_editor_reload);
-
-
     });
 
     this.createForm(this.current_page);
@@ -165,63 +153,49 @@ export class PageEditorComponent implements OnInit {
 
   // C(R)UD PICTURES
 
-  fullUrl(path: string, fname: string) {
-    return 'pictures/' + path + fname;
-  }
-  reducePath(fullPath: string): string {
-    return fullPath.replace('pictures/', '');
 
-  }
-
-  createPicture(filename: string) {
+  createPicture(filename: string, article: Article) {
     console.log('createPicture');
     const picture: CreatePictureInput = {
       filename: filename,
       path: 'toto/',
       title: 'dummy picture',
       caption: 'la légendee',
-      articleId: this.selected_article.id,
+      articleId: article.id,
     };
+    this.pictureService.createPicture(picture);
 
-    // console.log('attempt to upload picture file %o', this.image_file)
-    const url = this.fullUrl('toto/', filename);
-
-    this.fileService.uploadFile(url, filename)
-      .then((result) => {
-        // console.log('uploadFile', result);
-        // this.url.patchValue(url);
-        this.pictureService.createPicture(picture);
-        // this.pictureForm.reset();
-        // this.resetImgBuffer();
-        // this.image_changed = false;
-      })
-      .catch((error) => { console.log('Error creating picture: ', error); });
-
+    this.articleService.readArticle(article.id).then((article) => {
+      console.log('article has now : %s picture', article.pictures?.items.length);
+      this.articleService.updateArticle(article);
+    });
   }
 
   updatePicture() {
+  }
+  deletePicture(picture: Picture) { }
 
+  selectPicture(event: any) {
+    console.log('selectPicture : %s', event.id, event.op);
   }
 
-
-  async deletePicture(picture: Picture) {
-
-  }
-
-
-
-
-  // picture file upload
-
-  setPictures(event: any) {
+  // picture files upload
+  setPictures(event: any, article: Article) {
     const file = event.target.files[0];
     if (file === undefined) { return; }
-    this.getImage64(file).then((image64) => {
-      console.log('here, we\'ll set the image');
-      // this.image_buffer = image64;
-      // this.data.image = image64;
-      this.createPicture(file.name);
+    const key = 'images/' + file.name;
+    Storage.put(key, file, {
+      level: 'public',
+      contentType: file.type,
+      progressCallback(progress: any) {
+      },
+    }).then((result) => {
+      console.log('setPictures : S3 result:%o ', result);
+    }).catch((err) => {
+      console.log('setPictures : S3 error:%o ', err);
     });
+
+    this.createPicture(key, article);
   }
 
   getImage64(file: File): Promise<string> {
@@ -243,6 +217,10 @@ export class PageEditorComponent implements OnInit {
 
   selectArticle(article: Article) {
 
+    this.articleService.readArticle(article.id).then((article) => {
+      console.log('selectArticle : %o', article);
+    })
+
     if (this.selected_article === undefined) {
       this.selected_article = article;
       this.openEditors(this.selected_article);
@@ -261,19 +239,19 @@ export class PageEditorComponent implements OnInit {
   openEditors(article: Article) {
 
     const el_head = document.getElementById('headArea' + article.id);
-    if (el_head === null) { console.log('edit_mode set to true but el not found !!!'); return; }
+    if (el_head === null) { console.log('edit_mode set to true but el_head not found !!!'); return; }
     this.initHeadLineEditor(el_head);
 
-    // if (this.viewMode === CardViewMode.Textual) {
-    const el_body = document.getElementById('bodyArea' + article.id);
-    if (el_body === null) { console.log('edit_mode set to true but el not found !!!'); return; }
-    this.initBodyEditor(el_body);
-    // }
+    if (this.viewMode === 'Textual') {
+      const el_body = document.getElementById('bodyArea' + article.id);
+      if (el_body === null) { console.log('edit_mode set to true but el_body not found !!!'); return; }
+      this.initBodyEditor(el_body);
+    }
   }
   removeEditors(article: Article) {
     tinymce.EditorManager.remove('#headArea' + article.id);
 
-    if (this.viewMode === CardViewMode.Textual) {
+    if (this.viewMode === 'Textual') {
       tinymce.EditorManager.remove('#bodyArea' + article.id);
     }
   }
@@ -359,15 +337,11 @@ export class PageEditorComponent implements OnInit {
       const BucketName = environment.BucketName;
       const Region = environment.Region;
       const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
-
-
       return uri;
     };
 
     let promise: Promise<string> = new Promise((resolve, reject) => {
       const key = 'images/' + blobInfo.filename();
-      // console.log('image_upload_handler ==> key:%s file:%o ', key, blobInfo.blob());
-
       Storage.put(key, blobInfo.blob(), {
         level: 'public',
         // contentType: blobInfo.blob().type,

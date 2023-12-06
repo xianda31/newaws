@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
-import { Article } from 'src/app/API.service';
+import { Article, Picture } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { FlashData } from '../plugins/flash-plugin/flash-plugin.interface';
 import { environment } from 'src/app/environments/environment';
-import { CardViewMode } from 'src/app/interfaces/page.interface';
+import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
+import { FileService } from '../../../tools/service/file.service';
 
 
 
@@ -17,8 +18,8 @@ export class CarderComponent implements OnInit {
   @Input() article!: Article;
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
-  @Input() viewMode: CardViewMode = CardViewMode.Textual;
-  // @Output() newArticleItem = new EventEmitter<Article>();
+  @Input() viewMode: CardType = 'Textual';
+  @Output() pictureId = new EventEmitter<{ id: string, op: PictureOp }>();
   // @ViewChild(AdDirective, { static: true }) anchor!: AdDirective;
   // viewContainerRef !: ViewContainerRef;
 
@@ -29,44 +30,44 @@ export class CarderComponent implements OnInit {
   data!: FlashData;
 
 
+  constructor(
+    private fileService: FileService,
+  ) { }
+
   async ngOnInit(): Promise<void> {
     this.prepView(this.article);
   }
 
 
-  prepView(article: Article): void {
+  async prepView(article: Article): Promise<void> {
     let flashData: FlashData = {
       title: article.title,
-      image: "",
+      // image: "",
       headline: article.headline,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.info ? new Date(article.info) : null,
-      index: article.id
+      id: article.id
     };
-    const images = article.pictures?.items;
-    if (images && images.length > 0) {
-      const image = images[0];
-      const key = 'images/' + image!.id;
-      Storage.get(key, { level: 'public' })
-        .then((result) => {
-          flashData.image = result as string;
-          this.data = { ...flashData };
-        })
-        .catch((err) => {
-          console.log('triggerView : error : %o', err);
-        });
-    } else {
+    // const images = article.pictures?.items;
+    if (article.pictures?.items) {
+      console.log('...retrieving image from S3');
+
+      flashData.pictures = article.pictures?.items.map((item) => {
+        return {
+          id: item!.id,
+          uri: this.fileService.getFileURL(item!.filename),
+          caption: item?.caption?.toString() ?? ''
+        }
+      });
+      // flashData.pictures = pictures;
       this.data = { ...flashData };
     }
+
   }
 
-  buildURL(key: string): string {
-    const BucketName = environment.BucketName;
-    const Region = environment.Region;
-    const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
-    return uri;
+  onPictureClick(op: PictureOp, id: string) {
+    this.pictureId.emit({ id: id, op: op });
   }
-
 
   getMonth(date: Date): string {
     return date.toLocaleString('fr-FR', { month: 'short' });

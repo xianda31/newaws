@@ -1925,6 +1925,17 @@ export class APIService {
             public
             pictures {
               __typename
+              items {
+              __typename
+              id
+              title
+              filename
+              path
+              caption
+              articleId
+              createdAt
+              updatedAt
+            }
               nextToken
             }
             pageId

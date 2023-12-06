@@ -75,7 +75,7 @@
 <ng-template #diapo>
     <div class="card border-0 w-100 ">
         <div class="card-header text-center">
-            <img [src]="data.image" class="card-img-portrait-top" alt="title">
+            <img [src]="data.pictures![0].uri" class="card-img-portrait-top" alt="title">
         </div>
         <div class="card-body text-center">
             <span id="headArea" [innerHTML]="data.headline | safeHtml"> </span>

@@ -53,17 +53,17 @@
                 <div class="row text-end">
                     <i class="bi bi-info-square-fill text-primary" (click)="setDate(item)"></i>
                 </div>
-                <div *ngIf="viewMode ==='PICTURAL'" class="row text-end">
+                <div *ngIf="viewMode ==='Pictural'" class="row text-end">
                     <i class="bi bi-file-image-fill text-primary" (click)="fileInput.click()"></i>
-                    <input hidden #fileInput type="file" (change)="setPictures($event)" />
+                    <input hidden #fileInput type="file" (change)="setPictures($event,item)" />
 
                 </div>
             </div>
 
             <!-- emulation of pager comp -->
             <div class="col-8 article">
-                <app-carder [article]="item" [editable]="edit_mode && item.id === selected_article.id"
-                    [viewMode]="viewMode" (click)="selectArticle(item)">
+                <app-carder [article]="item" [editable]="true" [viewMode]="viewMode" (click)="selectArticle(item)"
+                    (pictureId)="selectPicture($event)">
                 </app-carder>
             </div>
 

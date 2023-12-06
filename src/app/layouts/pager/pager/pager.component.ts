@@ -4,6 +4,7 @@ import { Observable, map, tap } from 'rxjs';
 import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
+import { CardType } from 'src/app/interfaces/page.interface';
 
 @Component({
   selector: 'app-pager',
@@ -19,6 +20,8 @@ export class PagerComponent implements OnChanges {
   authenticatedUser: boolean = false;
   page!: Page;
   solo !: boolean;
+  viewMode: CardType = 'Textual';
+
 
   constructor(
     private articleService: ArticleService,
@@ -47,6 +50,7 @@ export class PagerComponent implements OnChanges {
       return;
     } else {
       this.page = page;
+      this.viewMode = this.page.viewer as CardType;
       console.log('pager page  = %o', this.page);
     }
 

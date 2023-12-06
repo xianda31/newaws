@@ -1,6 +1,15 @@
 import { Page } from '../API.service';
-export enum CardViewMode {
+export enum CardTypeEnum {
     Textual = 'TEXTUAL',
     Pictural = 'PICTURAL'
 }
-export type CardViewModeStrings = keyof typeof CardViewMode;
+export type CardType = keyof typeof CardTypeEnum;
+
+export enum PictureOpEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    Up = 'UP',
+    Down = 'DOWN',
+    Edit = 'EDIT'
+}
+export type PictureOp = keyof typeof PictureOpEnum;

@@ -127,7 +127,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     if (file === undefined) { return; }
     this.getImage64(file).then((image64) => {
       this.image_buffer = image64;
-      this.data.image = image64;
+      // this.data.pictures![0].image = image64;
     });
   }
 
@@ -167,7 +167,7 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
       const key = 'images/' + image!.id;
       Storage.get(key, { level: 'public' })
         .then((result) => {
-          this.data.image = result as string;
+          // this.data.image = result as string;
         })
         .catch((err) => {
           console.log('triggerView : error : %o', err);
@@ -175,11 +175,11 @@ export class MigArticlesComponent implements OnInit, AfterViewInit {
     }
     const flashData: FlashData = {
       title: article.title,
-      image: this.buildURL('images/' + article.pictures?.items[0]!.id),
+      // image: this.buildURL('images/' + article.pictures?.items[0]!.id),
       headline: article.headline,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.info ? new Date(article.info) : null,
-      index: article.id
+      id: article.id
     };
     console.log('triggerView : flashData : %o', flashData)
     this.data = flashData;

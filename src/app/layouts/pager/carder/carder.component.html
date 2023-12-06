@@ -1,6 +1,6 @@
 <div class="col">
-    <ng-template *ngIf="viewMode ==='PICTURAL'" [ngTemplateOutlet]="pictural"></ng-template>
-    <ng-template *ngIf="viewMode ==='TEXTUAL'" [ngTemplateOutlet]="textual"></ng-template>
+    <ng-template *ngIf="viewMode ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
+    <ng-template *ngIf="viewMode ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
 
 </div>
 
@@ -9,18 +9,18 @@
         <div *ngIf="data" class="card-body text-start">
             <!-- <div class="container " (click)="showMore = !showMore"> -->
             <div *ngIf="!data.date">
-                <section #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml">
+                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
                 </section>
             </div>
 
             <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
                 [attr.data-hmonth]="getMonth(data.date)">
-                <section #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml">
+                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
                 </section>
             </div>
 
             <div *ngIf="!showLess" class="text-start ps-2">
-                <span #bodyArea [id]="'bodyArea'+ data.index" [innerHTML]="data.body | bucketname | safeHtml "></span>
+                <span #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></span>
             </div>
         </div>
     </div>
@@ -28,11 +28,37 @@
 
 <ng-template #pictural>
     <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-        <div *ngIf="data" class="card-body text-center">
-            <span #headArea [id]="'headArea' + data.index" [innerHTML]="data.headline | safeHtml"> </span>
-        </div>
-        <div *ngIf="data.image" class="card-header text-center">
-            <img [src]="data.image" class="card-img-portrait-top" alt="title">
+        <div *ngIf="data" class="card-body">
+            <div class="text-start">
+                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
+            </div>
+            <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 g-2">
+                <div *ngFor="let picture of data.pictures" class="col">
+                    <div class="card h-100">
+                        <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.caption">
+                        <div class="card-body text-center p-0">
+                            <div class="text-primary"> {{picture.caption}}
+                            </div>
+                            <div>
+                                <small class="text-muted"> Enseignat </small>
+                            </div>
+                        </div>
+                        <div *ngIf="editable" class="card-footer p-0">
+                            <div class="d-flex justify-content-around">
+                                <i class="bi bi-trash-fill text-danger"
+                                    (click)="onPictureClick('Remove',picture.id)"></i>
+                                <i class="bi bi-arrow-up-square-fill text-primary"
+                                    (click)="onPictureClick('Up',picture.id)"></i>
+                                <i class="bi bi-arrow-down-square-fill text-primary"
+                                    (click)="onPictureClick('Down',picture.id)"></i>
+                                <i class="bi bi-file-image-fill text-primary"
+                                    (click)="onPictureClick('Edit',picture.id)"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </ng-template>

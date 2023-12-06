@@ -1,39 +1,26 @@
-// .card-img-top {
-//     width: 100%;
-//     max-height: 10vh;
-//     object-fit: cover;
-//     border-radius: 8px;
-//     // align-self: center;
-// }
-
-// .card-img-left {
+// .card-img-portrait-top {
 //     // width: 40%;
-//     width: 8vh;
-//     max-height: 10vh;
+//     // width: 15vh;
+//     max-height: 45rem;
+//     max-width: 18rem;
 //     object-fit: cover;
 //     border-radius: 8px;
 // }
 
-// .card {
-//     border-radius: 8px;
-//     opacity: 0.9;
-//     cursor: pointer;
-// }
+.card .img-fit {
+    // aspect-ratio: 9/16;
+    aspect-ratio: 1/1.45;
+    object-fit: cover;
+}
 
-// .card-shadow {
-//     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
-// }
-
-// .card:hover {
-//     transform: scale(1.05);
-//     // background: #b5deb8;
-//     box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
-//     opacity: 1.0;
-// }
+@media (max-width: 768px) {
+    .card .img-fit {
+        aspect-ratio: 1.45/1;
+        object-fit: cover;
+    }
+}
 
 // copyrights BCSH via Lauyan Toweb
-
 
 .hdate {
     position: relative;
