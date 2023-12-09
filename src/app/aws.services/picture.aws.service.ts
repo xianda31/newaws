@@ -9,6 +9,7 @@ import { Menu } from '../interfaces/navigation.interface';
 export class PictureService {
   private _pictures: Picture[] = [];
   pictures$: BehaviorSubject<Picture[]> = new BehaviorSubject<Picture[]>(this._pictures);
+  onUpdatePicture$ = new BehaviorSubject<string>('');
 
 
   constructor(
@@ -52,6 +53,7 @@ export class PictureService {
     this.api.UpdatePicture(pictureInput).then((result) => {
       this._pictures = this._pictures.map((item) => item.id === picture.id ? picture : item);
       this.pictures$.next(this._pictures);
+      this.onUpdatePicture$.next(picture.articleId);
     })
       .catch((error) => { console.log('Error updating picture: ', error); });
 
@@ -62,6 +64,7 @@ export class PictureService {
     this.api.DeletePicture({ id: picture.id }).then((result) => {
       this._pictures = this._pictures.filter((item) => item.id !== picture.id);
       this.pictures$.next(this._pictures);
+      this.onUpdatePicture$.next(picture.articleId);
     })
       .catch((error) => {
         console.log('Error deleting picture: ', error);

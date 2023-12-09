@@ -55,9 +55,8 @@ subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -89,9 +88,8 @@ subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -123,9 +121,8 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -147,11 +144,11 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
 subscription OnCreatePicture($filter: ModelSubscriptionPictureFilterInput) {
   onCreatePicture(filter: $filter) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -161,11 +158,11 @@ subscription OnCreatePicture($filter: ModelSubscriptionPictureFilterInput) {
 subscription OnUpdatePicture($filter: ModelSubscriptionPictureFilterInput) {
   onUpdatePicture(filter: $filter) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -175,11 +172,11 @@ subscription OnUpdatePicture($filter: ModelSubscriptionPictureFilterInput) {
 subscription OnDeletePicture($filter: ModelSubscriptionPictureFilterInput) {
   onDeletePicture(filter: $filter) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -190,9 +187,8 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -200,11 +196,11 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename
@@ -223,9 +219,8 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onUpdateArticle(filter: $filter) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -233,11 +228,11 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename
@@ -256,9 +251,8 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
   onDeleteArticle(filter: $filter) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -266,11 +260,11 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename

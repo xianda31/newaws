@@ -161,9 +161,8 @@ export type Article = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -183,11 +182,11 @@ export type ModelPictureConnection = {
 export type Picture = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -208,22 +207,34 @@ export type DeletePageInput = {
 
 export type CreatePictureInput = {
   id?: string | null;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
 };
 
 export type ModelPictureConditionInput = {
-  title?: ModelStringInput | null;
   filename?: ModelStringInput | null;
-  path?: ModelStringInput | null;
-  caption?: ModelStringInput | null;
+  rank?: ModelIntInput | null;
   articleId?: ModelIDInput | null;
+  caption1?: ModelStringInput | null;
+  caption2?: ModelStringInput | null;
   and?: Array<ModelPictureConditionInput | null> | null;
   or?: Array<ModelPictureConditionInput | null> | null;
   not?: ModelPictureConditionInput | null;
+};
+
+export type ModelIntInput = {
+  ne?: number | null;
+  eq?: number | null;
+  le?: number | null;
+  lt?: number | null;
+  ge?: number | null;
+  gt?: number | null;
+  between?: Array<number | null> | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
 };
 
 export type ModelIDInput = {
@@ -244,11 +255,11 @@ export type ModelIDInput = {
 
 export type UpdatePictureInput = {
   id: string;
-  title?: string | null;
   filename?: string | null;
-  path?: string | null;
-  caption?: string | null;
+  rank?: number | null;
   articleId?: string | null;
+  caption1?: string | null;
+  caption2?: string | null;
 };
 
 export type DeletePictureInput = {
@@ -258,9 +269,8 @@ export type DeletePictureInput = {
 export type CreateArticleInput = {
   id?: string | null;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -270,9 +280,8 @@ export type CreateArticleInput = {
 
 export type ModelArticleConditionInput = {
   title?: ModelStringInput | null;
-  permalink?: ModelStringInput | null;
-  image_url?: ModelStringInput | null;
   headline?: ModelStringInput | null;
+  layout?: ModelStringInput | null;
   body?: ModelStringInput | null;
   info?: ModelStringInput | null;
   rank?: ModelIntInput | null;
@@ -283,24 +292,11 @@ export type ModelArticleConditionInput = {
   not?: ModelArticleConditionInput | null;
 };
 
-export type ModelIntInput = {
-  ne?: number | null;
-  eq?: number | null;
-  le?: number | null;
-  lt?: number | null;
-  ge?: number | null;
-  gt?: number | null;
-  between?: Array<number | null> | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-};
-
 export type UpdateArticleInput = {
   id: string;
   title?: string | null;
-  permalink?: string | null;
-  image_url?: string | null;
   headline?: string | null;
+  layout?: string | null;
   body?: string | null;
   info?: string | null;
   rank?: number | null;
@@ -351,11 +347,11 @@ export type ModelPageConnection = {
 
 export type ModelPictureFilterInput = {
   id?: ModelIDInput | null;
-  title?: ModelStringInput | null;
   filename?: ModelStringInput | null;
-  path?: ModelStringInput | null;
-  caption?: ModelStringInput | null;
+  rank?: ModelIntInput | null;
   articleId?: ModelIDInput | null;
+  caption1?: ModelStringInput | null;
+  caption2?: ModelStringInput | null;
   and?: Array<ModelPictureFilterInput | null> | null;
   or?: Array<ModelPictureFilterInput | null> | null;
   not?: ModelPictureFilterInput | null;
@@ -364,9 +360,8 @@ export type ModelPictureFilterInput = {
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
-  permalink?: ModelStringInput | null;
-  image_url?: ModelStringInput | null;
   headline?: ModelStringInput | null;
+  layout?: ModelStringInput | null;
   body?: ModelStringInput | null;
   info?: ModelStringInput | null;
   rank?: ModelIntInput | null;
@@ -442,28 +437,13 @@ export type ModelSubscriptionBooleanInput = {
 
 export type ModelSubscriptionPictureFilterInput = {
   id?: ModelSubscriptionIDInput | null;
-  title?: ModelSubscriptionStringInput | null;
   filename?: ModelSubscriptionStringInput | null;
-  path?: ModelSubscriptionStringInput | null;
-  caption?: ModelSubscriptionStringInput | null;
+  rank?: ModelSubscriptionIntInput | null;
   articleId?: ModelSubscriptionIDInput | null;
+  caption1?: ModelSubscriptionStringInput | null;
+  caption2?: ModelSubscriptionStringInput | null;
   and?: Array<ModelSubscriptionPictureFilterInput | null> | null;
   or?: Array<ModelSubscriptionPictureFilterInput | null> | null;
-};
-
-export type ModelSubscriptionArticleFilterInput = {
-  id?: ModelSubscriptionIDInput | null;
-  title?: ModelSubscriptionStringInput | null;
-  permalink?: ModelSubscriptionStringInput | null;
-  image_url?: ModelSubscriptionStringInput | null;
-  headline?: ModelSubscriptionStringInput | null;
-  body?: ModelSubscriptionStringInput | null;
-  info?: ModelSubscriptionStringInput | null;
-  rank?: ModelSubscriptionIntInput | null;
-  public?: ModelSubscriptionBooleanInput | null;
-  pageId?: ModelSubscriptionIDInput | null;
-  and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
-  or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
 };
 
 export type ModelSubscriptionIntInput = {
@@ -476,6 +456,20 @@ export type ModelSubscriptionIntInput = {
   between?: Array<number | null> | null;
   in?: Array<number | null> | null;
   notIn?: Array<number | null> | null;
+};
+
+export type ModelSubscriptionArticleFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  title?: ModelSubscriptionStringInput | null;
+  headline?: ModelSubscriptionStringInput | null;
+  layout?: ModelSubscriptionStringInput | null;
+  body?: ModelSubscriptionStringInput | null;
+  info?: ModelSubscriptionStringInput | null;
+  rank?: ModelSubscriptionIntInput | null;
+  public?: ModelSubscriptionBooleanInput | null;
+  pageId?: ModelSubscriptionIDInput | null;
+  and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
+  or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
 };
 
 export type CreateMemberMutation = {
@@ -529,9 +523,8 @@ export type CreatePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -561,9 +554,8 @@ export type UpdatePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -593,9 +585,8 @@ export type DeletePageMutation = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -613,11 +604,11 @@ export type DeletePageMutation = {
 export type CreatePictureMutation = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -625,11 +616,11 @@ export type CreatePictureMutation = {
 export type UpdatePictureMutation = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -637,11 +628,11 @@ export type UpdatePictureMutation = {
 export type DeletePictureMutation = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -650,9 +641,8 @@ export type CreateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -662,11 +652,11 @@ export type CreateArticleMutation = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -681,9 +671,8 @@ export type UpdateArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -693,11 +682,11 @@ export type UpdateArticleMutation = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -712,9 +701,8 @@ export type DeleteArticleMutation = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -724,11 +712,11 @@ export type DeleteArticleMutation = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -782,9 +770,8 @@ export type GetPageQuery = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -823,11 +810,11 @@ export type ListPagesQuery = {
 export type GetPictureQuery = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -837,11 +824,11 @@ export type ListPicturesQuery = {
   items: Array<{
     __typename: "Picture";
     id: string;
-    title: string;
     filename: string;
-    path: string;
-    caption?: string | null;
+    rank: number;
     articleId: string;
+    caption1?: string | null;
+    caption2?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -852,9 +839,8 @@ export type GetArticleQuery = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -864,11 +850,11 @@ export type GetArticleQuery = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -885,9 +871,8 @@ export type ListArticlesQuery = {
     __typename: "Article";
     id: string;
     title: string;
-    permalink?: string | null;
-    image_url?: string | null;
     headline: string;
+    layout: string;
     body?: string | null;
     info?: string | null;
     rank: number;
@@ -908,11 +893,11 @@ export type PicturesByArticleIdQuery = {
   items: Array<{
     __typename: "Picture";
     id: string;
-    title: string;
     filename: string;
-    path: string;
-    caption?: string | null;
+    rank: number;
     articleId: string;
+    caption1?: string | null;
+    caption2?: string | null;
     createdAt: string;
     updatedAt: string;
   } | null>;
@@ -925,9 +910,8 @@ export type ArticlesByPageIdQuery = {
     __typename: "Article";
     id: string;
     title: string;
-    permalink?: string | null;
-    image_url?: string | null;
     headline: string;
+    layout: string;
     body?: string | null;
     info?: string | null;
     rank: number;
@@ -994,9 +978,8 @@ export type OnCreatePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -1026,9 +1009,8 @@ export type OnUpdatePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -1058,9 +1040,8 @@ export type OnDeletePageSubscription = {
       __typename: "Article";
       id: string;
       title: string;
-      permalink?: string | null;
-      image_url?: string | null;
       headline: string;
+      layout: string;
       body?: string | null;
       info?: string | null;
       rank: number;
@@ -1078,11 +1059,11 @@ export type OnDeletePageSubscription = {
 export type OnCreatePictureSubscription = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1090,11 +1071,11 @@ export type OnCreatePictureSubscription = {
 export type OnUpdatePictureSubscription = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1102,11 +1083,11 @@ export type OnUpdatePictureSubscription = {
 export type OnDeletePictureSubscription = {
   __typename: "Picture";
   id: string;
-  title: string;
   filename: string;
-  path: string;
-  caption?: string | null;
+  rank: number;
   articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
   createdAt: string;
   updatedAt: string;
 };
@@ -1115,9 +1096,8 @@ export type OnCreateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -1127,11 +1107,11 @@ export type OnCreateArticleSubscription = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -1146,9 +1126,8 @@ export type OnUpdateArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -1158,11 +1137,11 @@ export type OnUpdateArticleSubscription = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -1177,9 +1156,8 @@ export type OnDeleteArticleSubscription = {
   __typename: "Article";
   id: string;
   title: string;
-  permalink?: string | null;
-  image_url?: string | null;
   headline: string;
+  layout: string;
   body?: string | null;
   info?: string | null;
   rank: number;
@@ -1189,11 +1167,11 @@ export type OnDeleteArticleSubscription = {
     items: Array<{
       __typename: "Picture";
       id: string;
-      title: string;
       filename: string;
-      path: string;
-      caption?: string | null;
+      rank: number;
       articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
       createdAt: string;
       updatedAt: string;
     } | null>;
@@ -1312,9 +1290,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -1360,9 +1337,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -1408,9 +1384,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -1444,11 +1419,11 @@ export class APIService {
         createPicture(input: $input, condition: $condition) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -1472,11 +1447,11 @@ export class APIService {
         updatePicture(input: $input, condition: $condition) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -1500,11 +1475,11 @@ export class APIService {
         deletePicture(input: $input, condition: $condition) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -1529,9 +1504,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -1541,11 +1515,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -1576,9 +1550,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -1588,11 +1561,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -1623,9 +1596,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -1635,11 +1607,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -1737,9 +1709,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -1781,6 +1752,20 @@ export class APIService {
             viewer
             articles {
               __typename
+              items {
+              __typename
+              id
+              title
+              headline
+              layout
+              body
+              info
+              rank
+              public
+              pageId
+              createdAt
+              updatedAt
+            }
               nextToken
             }
             createdAt
@@ -1809,11 +1794,11 @@ export class APIService {
         getPicture(id: $id) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -1837,11 +1822,11 @@ export class APIService {
           items {
             __typename
             id
-            title
             filename
-            path
-            caption
+            rank
             articleId
+            caption1
+            caption2
             createdAt
             updatedAt
           }
@@ -1869,9 +1854,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -1881,11 +1865,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -1916,9 +1900,8 @@ export class APIService {
             __typename
             id
             title
-            permalink
-            image_url
             headline
+            layout
             body
             info
             rank
@@ -1928,11 +1911,11 @@ export class APIService {
               items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -1979,11 +1962,11 @@ export class APIService {
           items {
             __typename
             id
-            title
             filename
-            path
-            caption
+            rank
             articleId
+            caption1
+            caption2
             createdAt
             updatedAt
           }
@@ -2030,9 +2013,8 @@ export class APIService {
             __typename
             id
             title
-            permalink
-            image_url
             headline
+            layout
             body
             info
             rank
@@ -2176,9 +2158,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -2225,9 +2206,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -2274,9 +2254,8 @@ export class APIService {
               __typename
               id
               title
-              permalink
-              image_url
               headline
+              layout
               body
               info
               rank
@@ -2311,11 +2290,11 @@ export class APIService {
         onCreatePicture(filter: $filter) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -2340,11 +2319,11 @@ export class APIService {
         onUpdatePicture(filter: $filter) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -2369,11 +2348,11 @@ export class APIService {
         onDeletePicture(filter: $filter) {
           __typename
           id
-          title
           filename
-          path
-          caption
+          rank
           articleId
+          caption1
+          caption2
           createdAt
           updatedAt
         }
@@ -2399,9 +2378,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -2411,11 +2389,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -2447,9 +2425,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -2459,11 +2436,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }
@@ -2495,9 +2472,8 @@ export class APIService {
           __typename
           id
           title
-          permalink
-          image_url
           headline
+          layout
           body
           info
           rank
@@ -2507,11 +2483,11 @@ export class APIService {
             items {
               __typename
               id
-              title
               filename
-              path
-              caption
+              rank
               articleId
+              caption1
+              caption2
               createdAt
               updatedAt
             }

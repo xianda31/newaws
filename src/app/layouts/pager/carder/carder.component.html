@@ -1,6 +1,6 @@
-<div class="col">
-    <ng-template *ngIf="viewMode ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
-    <ng-template *ngIf="viewMode ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
+<div *ngIf="data" class="col">
+    <ng-template *ngIf="data.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
+    <ng-template *ngIf="data.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
 
 </div>
 
@@ -32,27 +32,28 @@
             <div class="text-start">
                 <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
             </div>
-            <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 g-2">
-                <div *ngFor="let picture of data.pictures" class="col">
+            <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 justify-content-around g-2">
+                <div *ngFor="let picture of data.pictures ; let i=index" class="col">
                     <div class="card h-100">
-                        <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.caption">
+                        <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.uri">
                         <div class="card-body text-center p-0">
-                            <div class="text-primary"> {{picture.caption}}
+                            <div *ngIf="picture.caption1" class="text-primary"> {{picture.caption1}}
                             </div>
-                            <div>
-                                <small class="text-muted"> Enseignat </small>
+                            <div *ngIf="picture.caption2">
+                                <small class="text-muted"> {{picture.caption2}} </small>
                             </div>
                         </div>
                         <div *ngIf="editable" class="card-footer p-0">
                             <div class="d-flex justify-content-around">
                                 <i class="bi bi-trash-fill text-danger"
-                                    (click)="onPictureClick('Remove',picture.id)"></i>
-                                <i class="bi bi-arrow-up-square-fill text-primary"
-                                    (click)="onPictureClick('Up',picture.id)"></i>
-                                <i class="bi bi-arrow-down-square-fill text-primary"
-                                    (click)="onPictureClick('Down',picture.id)"></i>
-                                <i class="bi bi-file-image-fill text-primary"
-                                    (click)="onPictureClick('Edit',picture.id)"></i>
+                                    (click)="onPictureClick('Delete',picture.id,i)"></i>
+                                <i class="bi bi-arrow-left-square-fill text-primary"
+                                    (click)="onPictureClick('Left',picture.id,i)"></i>
+                                <i class="bi bi-arrow-right-square-fill text-primary"
+                                    (click)="onPictureClick('Right',picture.id,i)"></i>
+                                <i class="bi bi-info-square-fill text-primary"
+                                    (click)="onPictureClick('Edit',picture.id,i)"></i>
+                                <small class="text-muted"> {{picture.rank}} </small>
                             </div>
                         </div>
                     </div>

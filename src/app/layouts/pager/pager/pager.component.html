@@ -4,7 +4,7 @@
     <!-- <div class="col-9 "> -->
     <div class="row justify-content-center ">
         <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
-            [viewMode]="viewMode" [showLess]="false">
+            [showLess]="false">
         </app-carder>
     </div>
     <!-- </div> -->

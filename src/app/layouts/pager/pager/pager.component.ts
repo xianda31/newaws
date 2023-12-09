@@ -20,7 +20,6 @@ export class PagerComponent implements OnChanges {
   authenticatedUser: boolean = false;
   page!: Page;
   solo !: boolean;
-  viewMode: CardType = 'Textual';
 
 
   constructor(
@@ -50,7 +49,7 @@ export class PagerComponent implements OnChanges {
       return;
     } else {
       this.page = page;
-      this.viewMode = this.page.viewer as CardType;
+      // this.viewMode = this.page.viewer as CardType;
       console.log('pager page  = %o', this.page);
     }
 

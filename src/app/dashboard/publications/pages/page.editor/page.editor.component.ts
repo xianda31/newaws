@@ -14,7 +14,8 @@ import { environment } from 'src/app/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
 import { FileService } from 'src/app/tools/service/file.service';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
-import { CardType } from 'src/app/interfaces/page.interface';
+import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
+import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
 
 
 
@@ -26,7 +27,7 @@ import { CardType } from 'src/app/interfaces/page.interface';
 export class PageEditorComponent implements OnInit {
   @Input('id') pageId!: string;
   current_page!: Page;
-  viewMode: CardType = 'Textual';
+  // viewMode: CardType = 'Textual';
   pageForm!: FormGroup;
 
   articles$: Observable<Article[]> = this.articleService.articles$.pipe(
@@ -55,19 +56,10 @@ export class PageEditorComponent implements OnInit {
   ) { }
 
 
-  isViewMode(viewer: string): boolean {
-    return (viewer === 'Textual' || viewer === 'Pictural');
-  }
 
   ngOnInit(): void {
     this.current_page = this.pageService.sgetPage(this.pageId);
 
-    if (!this.isViewMode(this.current_page.viewer)) {
-      console.log('page mode invalid : ', this.current_page.viewer);
-    } else {
-      this.viewMode = this.current_page.viewer as CardType;
-      console.log('page mode : ', this.viewMode);
-    }
     this.articles$.subscribe((articles) => {
       this.articles = articles;
       this.maxRank = articles.reduce((max, article) => (article.rank > max ? article.rank : max), 0);
@@ -95,8 +87,8 @@ export class PageEditorComponent implements OnInit {
     this.articles[i - 1].rank = tmp;
     this.articleService.updateArticle(this.articles[i]);
     this.articleService.updateArticle(this.articles[i - 1]);
-
   }
+
   down(i: number) {
     if (i === (this.articles.length - 1)) return;
     // swap [i] and [i+1]
@@ -123,20 +115,20 @@ export class PageEditorComponent implements OnInit {
 
   // C(R)UD ARTICLES
 
-  createArticle() {
+  createArticle(layout: CardType) {
     // create dummy article
     const article: CreateArticleInput = {
-      title: 'dummy article',
-      permalink: 'dummy-article',
+      title: this.current_page.label + ' - ' + layout + (this.maxRank + 1),
       headline: '<h2>Lorem Ipsum dolor sit amet</h2>',
+      layout: layout,
       body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
       info: new Date().toISOString(),
-      image_url: 'dummy-article.jpg',
       rank: this.maxRank + 1,
       public: true,
       pageId: this.current_page.id,
     };
     this.articleService.createArticle(article);
+
   }
 
   updateArticle(article: Article) {
@@ -155,32 +147,73 @@ export class PageEditorComponent implements OnInit {
 
 
   createPicture(filename: string, article: Article) {
-    console.log('createPicture');
+    let max = 0;
+    if (article.pictures) {
+      max = article.pictures.items.reduce(
+        (max, item) => (item!.rank > max) ? item!.rank : max,
+        0,
+      );
+    }
+    console.log('article %o createPicture , max rank : %s', article, max);
     const picture: CreatePictureInput = {
       filename: filename,
-      path: 'toto/',
-      title: 'dummy picture',
-      caption: 'la légendee',
+      caption1: '',
+      caption2: '',
+      rank: max + 1,
       articleId: article.id,
     };
     this.pictureService.createPicture(picture);
 
     this.articleService.readArticle(article.id).then((article) => {
-      console.log('article has now : %s picture', article.pictures?.items.length);
+      console.log('article has now : %s picture(s)', article.pictures?.items.length);
       this.articleService.updateArticle(article);
     });
   }
 
-  updatePicture() {
-  }
-  deletePicture(picture: Picture) { }
+  // updatePicture() {
+  // }
 
-  selectPicture(event: any) {
-    console.log('selectPicture : %s', event.id, event.op);
+  deletePicture(picture: Picture) {
+    this.pictureService.deletePicture(picture);
+  }
+
+  pictureClickHandler(event: { op: PictureOp, id: string, co_id: string }) {
+    // console.log('pictureClickHandler : %o', event);
+    switch (event.op) {
+      case 'Delete':
+        this.deletePicture(this.pictureService.sgetPicture(event.id));
+        break;
+      case 'Edit':
+        const modalRef = this.modalService.open(GetPictureInfoComponent, { centered: true });
+        modalRef.componentInstance.picture = this.pictureService.sgetPicture(event.id);
+
+        modalRef.result.then((picture) => {
+          console.log('result', picture);
+          this.pictureService.updatePicture(picture);
+
+        }).catch((error) => {
+          console.log('error', error);
+        });
+        break;
+      case 'Left':
+      case 'Right':
+        const picture = this.pictureService.sgetPicture(event.id);
+        const co_picture = this.pictureService.sgetPicture(event.co_id);
+        const tmp = picture.rank;
+        picture.rank = co_picture.rank;
+        co_picture.rank = tmp;
+        this.pictureService.updatePicture(picture);
+        this.pictureService.updatePicture(co_picture);
+        break;
+      default:
+        console.log('editPicture : unknown op %s', event.op);
+        break;
+    }
+
   }
 
   // picture files upload
-  setPictures(event: any, article: Article) {
+  pictureUpload(event: any, article: Article) {
     const file = event.target.files[0];
     if (file === undefined) { return; }
     const key = 'images/' + file.name;
@@ -242,7 +275,7 @@ export class PageEditorComponent implements OnInit {
     if (el_head === null) { console.log('edit_mode set to true but el_head not found !!!'); return; }
     this.initHeadLineEditor(el_head);
 
-    if (this.viewMode === 'Textual') {
+    if (article.layout === 'Textual') {
       const el_body = document.getElementById('bodyArea' + article.id);
       if (el_body === null) { console.log('edit_mode set to true but el_body not found !!!'); return; }
       this.initBodyEditor(el_body);
@@ -251,7 +284,7 @@ export class PageEditorComponent implements OnInit {
   removeEditors(article: Article) {
     tinymce.EditorManager.remove('#headArea' + article.id);
 
-    if (this.viewMode === 'Textual') {
+    if (article.layout === 'Textual') {
       tinymce.EditorManager.remove('#bodyArea' + article.id);
     }
   }
@@ -376,7 +409,7 @@ export class PageEditorComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        const id = this.selected_article.permalink + '/' + file.name; // + (new Date()).getTime();
+        const id = file.name + (new Date()).getTime();
         const image64 = e.target.result;
         const base64 = image64.split(',')[1];
 

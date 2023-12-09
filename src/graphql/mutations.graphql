@@ -67,9 +67,8 @@ mutation CreatePage(
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -104,9 +103,8 @@ mutation UpdatePage(
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -141,9 +139,8 @@ mutation DeletePage(
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -168,11 +165,11 @@ mutation CreatePicture(
 ) {
   createPicture(input: $input, condition: $condition) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -185,11 +182,11 @@ mutation UpdatePicture(
 ) {
   updatePicture(input: $input, condition: $condition) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -202,11 +199,11 @@ mutation DeletePicture(
 ) {
   deletePicture(input: $input, condition: $condition) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -220,9 +217,8 @@ mutation CreateArticle(
   createArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -230,11 +226,11 @@ mutation CreateArticle(
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename
@@ -256,9 +252,8 @@ mutation UpdateArticle(
   updateArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -266,11 +261,11 @@ mutation UpdateArticle(
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename
@@ -292,9 +287,8 @@ mutation DeleteArticle(
   deleteArticle(input: $input, condition: $condition) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -302,11 +296,11 @@ mutation DeleteArticle(
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename

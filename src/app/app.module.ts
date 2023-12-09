@@ -11,7 +11,7 @@ import { ToasterComponent } from './toaster/components/toaster/toaster.component
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
-import { CardComponent } from './layouts/card/card.component';
+// import { CardComponent } from './layouts/card/card.component';
 import { SafeHtmlPipe } from './pipes/safe-html.pipe';
 import { ToolsModule } from './tools/tools/tools.module';
 // import { HomeComponent } from './pages/home/home.component';
@@ -26,6 +26,7 @@ import { CarderComponent } from './layouts/pager/carder/carder.component';
 import { TodoComponent } from './pages/todo/todo.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+// import { GetPictureInfoComponent } from './dashboard/publications/pages/get-picture-info/get-picture-info.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SignupComponent,
     LoginComponent,
     PswresetComponent,
-    CardComponent,
+    // CardComponent,
     HeadbandComponent,
     Page404Component,
     LinksComponent,

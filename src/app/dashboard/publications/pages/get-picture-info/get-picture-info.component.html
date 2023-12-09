@@ -1,0 +1,37 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">
+        <h6>paramètres image </h6>
+    </h5>
+    <i class="bi bi-check-circle-fill" (click)="infoChanged()"></i>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="pictureForm">
+        <div class="row">
+
+            <div class="col">
+                <label> légende principale </label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-bi-x-circle-fill" (click)="clear_caption1()"></i>
+                    </span>
+                    <input type="text" class="form-control" formControlName="caption1">
+                </div>
+            </div>
+            <div class="col">
+                <label> sous-titre légende </label>
+                <div class="input-group">
+                    <span class="input-group-text">
+                        <i class="bi bi-bi-x-circle-fill" (click)="clear_caption2()"></i>
+                    </span>
+                    <input type="text" class="form-control" formControlName="caption2">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <!-- <button (click)="withDate = !withDate" type="button" class="btn btn-secondary">{{date ? 'sans date':'avec date'}}
+    </button> -->
+</div>

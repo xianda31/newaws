@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { APIService, Article, CreateArticleInput, UpdateArticleInput } from '../API.service';
 import { ToastService } from '../tools/service/toast.service';
 import { environment } from '../environments/environment';
+import { PictureService } from './picture.aws.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,23 @@ export class ArticleService {
 
   constructor(
     private api: APIService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private pictureService: PictureService,
   ) {
     this.loadArticles(!environment.logging_bypass);
+
+    this.pictureService.onUpdatePicture$.subscribe((id) => {
+      if (id === '') return;
+      // console.log('articleService : pictures of articleid %s changed...');
+      this.api.GetArticle(id).then((result) => {
+        const article = result as Article;
+        this._articles = this._articles.map((item) => item.id === article.id ? article : item);
+        this._articles$.next(this._articles);
+      });
+    });
+
   }
+
 
   // chargement des articles depuis la base de données ; filtrage vs  public_only 
   loadArticles(public_only: boolean): void {
@@ -32,6 +46,7 @@ export class ArticleService {
       })
       .catch((error) => {
         console.log('loadArticles error', error);
+
       })
 
     // });

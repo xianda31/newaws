@@ -18,15 +18,12 @@ export class CarderComponent implements OnInit {
   @Input() article!: Article;
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
-  @Input() viewMode: CardType = 'Textual';
-  @Output() pictureId = new EventEmitter<{ id: string, op: PictureOp }>();
-  // @ViewChild(AdDirective, { static: true }) anchor!: AdDirective;
-  // viewContainerRef !: ViewContainerRef;
+  @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
 
-  @ViewChildren('bodyArea') bodyArea!: QueryList<any>;
-  @ViewChildren('headArea') headArea!: QueryList<any>;
+  // @ViewChildren('bodyArea') bodyArea!: QueryList<any>;
+  // @ViewChildren('headArea') headArea!: QueryList<any>;
 
-  bannerURL !: string;
+  // bannerURL !: string;
   data!: FlashData;
 
 
@@ -44,6 +41,7 @@ export class CarderComponent implements OnInit {
       title: article.title,
       // image: "",
       headline: article.headline,
+      layout: article.layout as CardType,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.info ? new Date(article.info) : null,
       id: article.id
@@ -52,21 +50,37 @@ export class CarderComponent implements OnInit {
     if (article.pictures?.items) {
       console.log('...retrieving image from S3');
 
-      flashData.pictures = article.pictures?.items.map((item) => {
-        return {
-          id: item!.id,
-          uri: this.fileService.getFileURL(item!.filename),
-          caption: item?.caption?.toString() ?? ''
-        }
-      });
+      flashData.pictures = article.pictures?.items
+        .map((item) => {
+          return {
+            id: item!.id,
+            uri: this.fileService.getFileURL(item!.filename),
+            caption1: item?.caption1 ?? '',
+            caption2: item?.caption2 ?? '',
+            rank: item?.rank ?? 0,
+          }
+        })
+        .sort((a, b) => (a.rank < b.rank ? 1 : -1));
       // flashData.pictures = pictures;
-      this.data = { ...flashData };
     }
+    // console.log('flashData', flashData);
+    this.data = { ...flashData };
 
   }
 
-  onPictureClick(op: PictureOp, id: string) {
-    this.pictureId.emit({ id: id, op: op });
+  onPictureClick(op: PictureOp, id: string, i: number) {
+    let co_id = id;
+    switch (op) {
+      case 'Left':
+        co_id = (i === 0 ? id : this.data.pictures![i - 1].id);
+        break;
+      case 'Right':
+        co_id = (i === this.data.pictures!.length - 1 ? id : this.data.pictures![i + 1].id);
+        break;
+      default:
+        break;
+    }
+    this.pictureClick.emit({ op: op, id: id, co_id: co_id });
   }
 
   getMonth(date: Date): string {

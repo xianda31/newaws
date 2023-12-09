@@ -49,9 +49,8 @@ query GetPage($id: ID!) {
       items {
         id
         title
-        permalink
-        image_url
         headline
+        layout
         body
         info
         rank
@@ -100,11 +99,11 @@ query ListPages(
 query GetPicture($id: ID!) {
   getPicture(id: $id) {
     id
-    title
     filename
-    path
-    caption
+    rank
     articleId
+    caption1
+    caption2
     createdAt
     updatedAt
     __typename
@@ -119,11 +118,11 @@ query ListPictures(
   listPictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      title
       filename
-      path
-      caption
+      rank
       articleId
+      caption1
+      caption2
       createdAt
       updatedAt
       __typename
@@ -137,9 +136,8 @@ query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
     title
-    permalink
-    image_url
     headline
+    layout
     body
     info
     rank
@@ -147,11 +145,11 @@ query GetArticle($id: ID!) {
     pictures {
       items {
         id
-        title
         filename
-        path
-        caption
+        rank
         articleId
+        caption1
+        caption2
         createdAt
         updatedAt
         __typename
@@ -175,9 +173,8 @@ query ListArticles(
     items {
       id
       title
-      permalink
-      image_url
       headline
+      layout
       body
       info
       rank
@@ -212,11 +209,11 @@ query PicturesByArticleId(
   ) {
     items {
       id
-      title
       filename
-      path
-      caption
+      rank
       articleId
+      caption1
+      caption2
       createdAt
       updatedAt
       __typename
@@ -243,9 +240,8 @@ query ArticlesByPageId(
     items {
       id
       title
-      permalink
-      image_url
       headline
+      layout
       body
       info
       rank

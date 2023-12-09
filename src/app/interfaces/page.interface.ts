@@ -6,10 +6,9 @@ export enum CardTypeEnum {
 export type CardType = keyof typeof CardTypeEnum;
 
 export enum PictureOpEnum {
-    Add = 'ADD',
-    Remove = 'REMOVE',
-    Up = 'UP',
-    Down = 'DOWN',
+    Delete = 'DELETE',
+    Left = 'LEFT',
+    Right = 'RIGHT',
     Edit = 'EDIT'
 }
 export type PictureOp = keyof typeof PictureOpEnum;
