@@ -31,16 +31,17 @@ export class PagerComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('pager changes', changes);
     let path = '';
     if (changes['root']) {
       path = changes['root'].currentValue ? changes['root'].currentValue + '/' : '';
-      console.log('root : ', changes['root'].currentValue);
+      // console.log('root : ', changes['root'].currentValue);
     }
 
-    console.log('menu', changes['menu'].currentValue);
+    // console.log('menu', changes['menu'].currentValue);
 
     path += (changes['menu'].currentValue ?? '');
-    console.log('loading page %s', path);
+    // console.log('loading page %s', path);
 
     let page: Page | undefined;
     page = this.pageService.sgetPageByPath(path);
@@ -50,7 +51,7 @@ export class PagerComponent implements OnChanges {
     } else {
       this.page = page;
       // this.viewMode = this.page.viewer as CardType;
-      console.log('pager page  = %o', this.page);
+      // console.log('pager page  = %o', this.page);
     }
 
     this.articles$ = this.articleService.articles$.pipe(

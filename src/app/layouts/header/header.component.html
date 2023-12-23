@@ -45,25 +45,6 @@
           <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="login">Se connecter</a>
         </li>
 
-        <li *ngIf="isLogged" class="nav-item mx-5 dropdown">
-          <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <button type="button" class="btn  btn-sm btn-primary">
-              <i class="bi bi-person-circle"></i>
-            </button>
-            {{loggedusername}}
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
-            <li class="dropdown-item" (click)="onLogout()">
-              <button type="button" class="btn btn-primary">
-                <i class="bi bi-box-arrow-left"></i>
-              </button>
-              Déconnexion
-
-            </li>
-          </ul>
-
-        </li>
 
         <!-- menu métier  -->
         <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
@@ -94,6 +75,24 @@
           </ul>
         </li>
 
+        <li *ngIf="isLogged" class="nav-item mx-5 dropdown">
+          <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <button type="button" class="btn  btn-sm btn-primary">
+              <i class="bi bi-person-circle"></i>
+            </button>
+            {{loggedusername}}
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
+            <li class="dropdown-item" (click)="onLogout()">
+              <button type="button" class="btn btn-primary">
+                <i class="bi bi-box-arrow-left"></i>
+              </button>
+              Déconnexion
+
+            </li>
+          </ul>
+        </li>
 
       </ul>
     </div>

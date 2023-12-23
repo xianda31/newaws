@@ -1,92 +1,89 @@
 <div class="container-fluid ">
 
-    <div class="card m-2">
-        <form [formGroup]="pageForm">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <label> racine </label>
-                        <input type="text" class="form-control" formControlName="root_menu">
-                    </div>
-                    <div class="col">
-                        <label> menu </label>
-                        <input type="text" class="form-control" formControlName="label">
-                    </div>
-                    <div class="col">
-                        <label> descriptif </label>
-                        <input type="text" class="form-control" formControlName="description">
-                    </div>
-                    <div class="col">
-                        <label> type</label>
-                        <input type="text" class="form-control" formControlName="viewer">
-                    </div>
-                    <div class="col">
-                        <div class="row justify-content-space-between">
-                            <!-- <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label> -->
-                            <label> ajout type Textuel:
-                                <i class="bi bi-plus-circle-fill text-primary text-xl-start"
-                                    (click)="createArticle('Textual')"></i>
-                            </label>
-                            <label> ajout type Photo:
-                                <i class="bi bi-plus-circle-fill text-primary text-xl-start"
-                                    (click)="createArticle('Pictural')"></i>
-                            </label>
-                        </div>
-                    </div>
+  <div class="card m-2">
+    <form [formGroup]="pageForm">
+      <div class="card-body">
+        <div class="row">
+          <div class="col">
+            <label> racine </label>
+            <input type="text" class="form-control" formControlName="root_menu">
+          </div>
+          <div class="col">
+            <label> menu </label>
+            <input type="text" class="form-control" formControlName="label">
+          </div>
+          <div class="col">
+            <label> descriptif </label>
+            <input type="text" class="form-control" formControlName="description">
+          </div>
+          <div class="col">
+            <label> type</label>
+            <input type="text" class="form-control" formControlName="viewer">
+          </div>
+          <div class="col">
+            <div class="row justify-content-space-between">
+              <!-- <label>nb articles : {{(articles$ | async)? (articles$ | async)!.length : 0}}</label> -->
+              <label> ajout type Textuel:
+                <i class="bi bi-plus-circle-fill text-primary text-xl-start" (click)="createArticle('Textual')"></i>
+              </label>
+              <label> ajout type Photo:
+                <i class="bi bi-plus-circle-fill text-primary text-xl-start" (click)="createArticle('Pictural')"></i>
+              </label>
+            </div>
+          </div>
 
-                </div>
+        </div>
 
+      </div>
+
+    </form>
+
+  </div>
+
+
+  <div class="row justify-content-between p-2">
+
+    <ng-container class="row justify-content-center" *ngFor="let article of articles ; let i = index">
+      <!-- article's edit tools -->
+      <div class="col-2 align-content-center ">
+        <div class="row justify-content-end">
+
+          <div class="col-auto align-self-end">
+            <div class="row text-end">
+              <i class="bi bi-arrow-up-square-fill text-primary" (click)="up(i)"></i>
+            </div>
+            <div class="row text-end">
+              <i class="bi bi-arrow-down-square-fill text-primary" (click)="down(i)"></i>
+            </div>
+          </div>
+
+          <div class="col-auto align-self-end">
+            <div class="row text-end">
+              <i class="bi bi-info-square-fill text-primary" (click)="setDate(article)"></i>
+            </div>
+            <div *ngIf="article.layout ==='Pictural'" class="row text-end">
+              <i class="bi bi-file-image-fill text-primary" (click)="fileInput.click()"></i>
+              <input hidden multiple #fileInput type="file" (change)="pictureUpload($event,article)" />
             </div>
 
-        </form>
+          </div>
+        </div>
+      </div>
 
-    </div>
+      <!-- emulation of pager comp -->
+      <div class="col-8 article">
+        <app-carder [article]="article" [editable]="current_article !== undefined && article.id === current_article.id"
+          (click)="selectArticle(article)" (pictureClick)="pictureClickHandler($event)">
+        </app-carder>
+      </div>
 
-
-    <div class="row justify-content-between p-2">
-
-        <ng-container class="row justify-content-center" *ngFor="let article of articles ; let i = index">
-            <!-- article's edit tools -->
-            <div class="col-2 align-content-center ">
-                <div class="row justify-content-end">
-
-                    <div class="col-auto align-self-end">
-                        <div class="row text-end">
-                            <i class="bi bi-arrow-up-square-fill text-primary" (click)="up(i)"></i>
-                        </div>
-                        <div class="row text-end">
-                            <i class="bi bi-arrow-down-square-fill text-primary" (click)="down(i)"></i>
-                        </div>
-                    </div>
-
-                    <div class="col-auto align-self-end">
-                        <div class="row text-end">
-                            <i class="bi bi-info-square-fill text-primary" (click)="setDate(article)"></i>
-                        </div>
-                        <div *ngIf="article.layout ==='Pictural'" class="row text-end">
-                            <i class="bi bi-file-image-fill text-primary" (click)="fileInput.click()"></i>
-                            <input hidden #fileInput type="file" (change)="pictureUpload($event,article)" />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- emulation of pager comp -->
-            <div class="col-8 article">
-                <app-carder [article]="article" [editable]="true" (click)="selectArticle(article)"
-                    (pictureClick)="pictureClickHandler($event)">
-                </app-carder>
-            </div>
-
-            <div class="col-2 align-content-center">
-                <div class="row text-start">
-                    <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)"
-                        (click)="deleteArticle(article)"></i>
-                </div>
-            </div>
-            <!-- </div> -->
-        </ng-container>
-        <!-- </div> -->
-    </div>
+      <div class="col-2 align-content-center">
+        <div class="row text-start">
+          <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)" (click)="deleteArticle(article)"></i>
+        </div>
+      </div>
+      <!-- </div> -->
+    </ng-container>
+    <!-- </div> -->
+  </div>
 </div>

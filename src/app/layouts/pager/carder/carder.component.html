@@ -1,65 +1,62 @@
 <div *ngIf="data" class="col">
-    <ng-template *ngIf="data.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
-    <ng-template *ngIf="data.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
+  <ng-template *ngIf="data.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
+  <ng-template *ngIf="data.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
 
 </div>
 
 <ng-template #textual>
-    <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-        <div *ngIf="data" class="card-body text-start">
-            <!-- <div class="container " (click)="showMore = !showMore"> -->
-            <div *ngIf="!data.date">
-                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
-                </section>
-            </div>
+  <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
+    <div *ngIf="data" class="card-body text-start">
+      <!-- <div class="container " (click)="showMore = !showMore"> -->
+      <div *ngIf="!data.date">
+        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+        </section>
+      </div>
 
-            <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
-                [attr.data-hmonth]="getMonth(data.date)">
-                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
-                </section>
-            </div>
+      <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+        [attr.data-hmonth]="getMonth(data.date)">
+        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+        </section>
+      </div>
 
-            <div *ngIf="!showLess" class="text-start ps-2">
-                <span #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></span>
-            </div>
-        </div>
+      <div *ngIf="!showLess" class="text-start ps-2">
+        <section #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></section>
+      </div>
     </div>
+  </div>
 </ng-template>
 
 <ng-template #pictural>
-    <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-        <div *ngIf="data" class="card-body">
-            <div class="text-start">
-                <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
+  <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
+    <div *ngIf="data" class="card-body">
+      <div class="text-start">
+        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
+      </div>
+      <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 justify-content-around g-2">
+        <div *ngFor="let picture of data.pictures ; let i=index" class="col">
+          <div class="card h-100">
+            <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.alt">
+            <div class="card-body text-center p-0">
+              <div *ngIf="picture.caption1" class="text-primary"> {{picture.caption1}}
+              </div>
+              <div *ngIf="picture.caption2">
+                <small class="text-muted"> {{picture.caption2}} </small>
+              </div>
             </div>
-            <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 justify-content-around g-2">
-                <div *ngFor="let picture of data.pictures ; let i=index" class="col">
-                    <div class="card h-100">
-                        <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.uri">
-                        <div class="card-body text-center p-0">
-                            <div *ngIf="picture.caption1" class="text-primary"> {{picture.caption1}}
-                            </div>
-                            <div *ngIf="picture.caption2">
-                                <small class="text-muted"> {{picture.caption2}} </small>
-                            </div>
-                        </div>
-                        <div *ngIf="editable" class="card-footer p-0">
-                            <div class="d-flex justify-content-around">
-                                <i class="bi bi-trash-fill text-danger"
-                                    (click)="onPictureClick('Delete',picture.id,i)"></i>
-                                <i class="bi bi-arrow-left-square-fill text-primary"
-                                    (click)="onPictureClick('Left',picture.id,i)"></i>
-                                <i class="bi bi-arrow-right-square-fill text-primary"
-                                    (click)="onPictureClick('Right',picture.id,i)"></i>
-                                <i class="bi bi-info-square-fill text-primary"
-                                    (click)="onPictureClick('Edit',picture.id,i)"></i>
-                                <small class="text-muted"> {{picture.rank}} </small>
-                            </div>
-                        </div>
-                    </div>
+            <div *ngIf="editable" class="card-footer p-0">
+              <div class="d-flex justify-content-around">
+                <i class="bi bi-trash-fill text-danger" (click)="onPictureClick('Delete',picture.id,i)"></i>
+                <i class="bi bi-arrow-left-square-fill text-primary" (click)="onPictureClick('Left',picture.id,i)"></i>
+                <i class="bi bi-arrow-right-square-fill text-primary"
+                  (click)="onPictureClick('Right',picture.id,i)"></i>
+                <i class="bi bi-info-square-fill text-primary" (click)="onPictureClick('Edit',picture.id,i)"></i>
+                <small class="text-muted"> {{picture.rank}} </small>
+              </div>
+            </div>
+          </div>
 
-                </div>
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 </ng-template>

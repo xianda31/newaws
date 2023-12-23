@@ -21,10 +21,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
 
-    combineLatest([this.pageService.pages$.pipe(delay(environment.spinner_tempo)),
+    combineLatest([this.pageService.pagesReady$,
     this.memberService.members$, this.articleService.articles$])
-      .subscribe(([pages, members]) => {
-        if (members.length > 0) {
+      .subscribe(([pagesReady, members, articles]) => {
+        if (members.length > 0 && pagesReady) {
           this.DBloaded = true;
         }
       });

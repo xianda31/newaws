@@ -36,6 +36,7 @@ export class FileService {
 
 
   getFileURL(key: string): Promise<string> {
+    // console.log("retrieve file signed url : ", key);
     return Storage.get(key, { level: 'public', validateObjectExistence: true, download: false });
   }
 
@@ -109,7 +110,7 @@ export class FileService {
       const source = key.replace(root, '');
       const elements = source.split('/');
       const element = elements.shift();
-      if (!element) return; // blank  
+      if (!element) return; // blank
 
       target[element] = target[element] || { __data: item }; // element
       target[element].__isFile = false;   // à priori

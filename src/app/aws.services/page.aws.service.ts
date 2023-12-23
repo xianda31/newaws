@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { Menu } from '../interfaces/navigation.interface';
+import { CanActivateFn } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { Menu } from '../interfaces/navigation.interface';
 export class PageService {
   private _pages: Page[] = [];
   pages$: BehaviorSubject<Page[]> = new BehaviorSubject<Page[]>(this._pages);
+  pagesReady$: Observable<boolean> = this.pages$.pipe(map((pages) => pages.length > 0),
+    tap((pagesReady) => console.log('pagesReady : ', pagesReady)));
 
 
   constructor(
@@ -26,6 +29,8 @@ export class PageService {
       .catch((error) => { console.log('init pages failed !!', error) });
 
   }
+
+
 
   // C(R)UD CATEGORIES
 

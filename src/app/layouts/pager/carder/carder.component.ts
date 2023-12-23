@@ -47,14 +47,15 @@ export class CarderComponent implements OnInit {
       id: article.id
     };
     // const images = article.pictures?.items;
-    if (article.pictures?.items) {
-      console.log('...retrieving image from S3');
-
+    if (article.pictures?.items && article.pictures?.items.length > 0) {
+      // console.log('...retrieving image from S3 for article', article);
+      let getFn = (path: string) => { const keys = path.split('/'); return keys[keys.length - 1]; };
       flashData.pictures = article.pictures?.items
         .map((item) => {
           return {
             id: item!.id,
             uri: this.fileService.getFileURL(item!.filename),
+            alt: getFn(item!.filename),
             caption1: item?.caption1 ?? '',
             caption2: item?.caption2 ?? '',
             rank: item?.rank ?? 0,

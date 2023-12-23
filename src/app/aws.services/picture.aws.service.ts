@@ -35,9 +35,11 @@ export class PictureService {
     // console.log('createPicture : ', picture);
 
     this.api.CreatePicture(picture).then((result) => {
+      // console.log('%s createPicture result : ', result)
       const picture = result as Picture;
       this._pictures.push(picture);
       this.pictures$.next(this._pictures);
+      this.onUpdatePicture$.next(picture.articleId);
     })
       .catch((error) => { console.log('Error creating picture: ', error); });
   }

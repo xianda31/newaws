@@ -38,7 +38,7 @@ export class PageEditorComponent implements OnInit {
   edit_mode: boolean = false;
   force_editor_reload = false;
 
-  selected_article!: Article;
+  current_article!: Article;
   articles !: Article[];
   maxRank !: number;
   myModal !: any;
@@ -104,7 +104,7 @@ export class PageEditorComponent implements OnInit {
     modalRef.componentInstance.article = article;
 
     modalRef.result.then((article) => {
-      console.log('result', article);
+      // console.log('result', article);
       this.articleService.updateArticle(article);
 
     }).catch((error) => {
@@ -118,7 +118,7 @@ export class PageEditorComponent implements OnInit {
   createArticle(layout: CardType) {
     // create dummy article
     const article: CreateArticleInput = {
-      title: this.current_page.label + ' - ' + layout + (this.maxRank + 1),
+      title: this.current_page.label + '/' + layout + (this.maxRank + 1),
       headline: '<h2>Lorem Ipsum dolor sit amet</h2>',
       layout: layout,
       body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
@@ -146,7 +146,7 @@ export class PageEditorComponent implements OnInit {
   // C(R)UD PICTURES
 
 
-  createPicture(filename: string, article: Article) {
+  createPicture(filename: string, article: Article, rankOffset: number) {
     let max = 0;
     if (article.pictures) {
       max = article.pictures.items.reduce(
@@ -154,20 +154,16 @@ export class PageEditorComponent implements OnInit {
         0,
       );
     }
-    console.log('article %o createPicture , max rank : %s', article, max);
     const picture: CreatePictureInput = {
       filename: filename,
       caption1: '',
       caption2: '',
-      rank: max + 1,
+      rank: max + 1 + rankOffset,
       articleId: article.id,
     };
     this.pictureService.createPicture(picture);
 
-    this.articleService.readArticle(article.id).then((article) => {
-      console.log('article has now : %s picture(s)', article.pictures?.items.length);
-      this.articleService.updateArticle(article);
-    });
+
   }
 
   // updatePicture() {
@@ -214,35 +210,31 @@ export class PageEditorComponent implements OnInit {
 
   // picture files upload
   pictureUpload(event: any, article: Article) {
-    const file = event.target.files[0];
-    if (file === undefined) { return; }
-    const key = 'images/' + file.name;
-    Storage.put(key, file, {
-      level: 'public',
-      contentType: file.type,
-      progressCallback(progress: any) {
-      },
-    }).then((result) => {
-      console.log('setPictures : S3 result:%o ', result);
-    }).catch((err) => {
-      console.log('setPictures : S3 error:%o ', err);
-    });
+    const files = Array.from(event.target.files) as File[];
+    if (files === undefined) { return; }
+    // console.log('pictureUpload : %o', files);
 
-    this.createPicture(key, article);
+    function uploadPromise(key: string, file: File): Promise<any> { { return Storage.put(key, file, { level: 'public' }) } };
+
+    // S3 files uploading
+    let uploadPromises: Promise<any>[] = [];
+    files.forEach((file: any) => {
+      const key = 'confidential/' + article.title + '/' + file.name;
+      uploadPromises.push(uploadPromise(key, file))
+    });
+    Promise.all(uploadPromises)
+      .then(() => {
+        // create associated pictures within dynamodb
+        files.forEach((file: any, index: number) => {
+          const key = 'confidential/' + article.title + '/' + file.name;
+          this.createPicture(key, article, index);
+        });
+      })
+      .catch((err) => {
+        console.log('setPictures : S3 error:%o ', err);
+      });
   }
 
-  getImage64(file: File): Promise<string> {
-    var promise: Promise<string> = new Promise((resolve: (arg0: string) => void) => {
-      var image64 = '';
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        image64 = e.target.result;
-        resolve(image64);
-      };
-      reader.readAsDataURL(file);
-    });
-    return promise;
-  }
 
 
   // tinyMCE
@@ -251,25 +243,29 @@ export class PageEditorComponent implements OnInit {
   selectArticle(article: Article) {
 
     this.articleService.readArticle(article.id).then((article) => {
-      console.log('selectArticle : %o', article);
-    })
+      // console.log('selectArticle : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
 
-    if (this.selected_article === undefined) {
-      this.selected_article = article;
-      this.openEditors(this.selected_article);
-      return;
-    }
-    if ((this.selected_article.id === article.id) && !this.force_editor_reload) {
-      return;
-    }
-    this.force_editor_reload = false;
-    this.removeEditors(this.selected_article);
-    this.selected_article = article;
-    this.openEditors(this.selected_article);
+      if (this.current_article !== undefined) {
+        if ((this.current_article.id === article.id)) {
+          if (this.force_editor_reload) {
+            this.removeEditors(article);
+          } else { return; }   // same article, no need to reload editors
+        } else {
+          this.removeEditors(this.current_article);
+          this.force_editor_reload = false;
+        }
+      }
+
+      this.current_article = article;
+      this.openEditors(article);
+
+    });
   }
 
 
   openEditors(article: Article) {
+
+    // console.log('openEditors : %s', article.id);
 
     const el_head = document.getElementById('headArea' + article.id);
     if (el_head === null) { console.log('edit_mode set to true but el_head not found !!!'); return; }
@@ -285,13 +281,14 @@ export class PageEditorComponent implements OnInit {
     tinymce.EditorManager.remove('#headArea' + article.id);
 
     if (article.layout === 'Textual') {
+      console.log('removing bodyArea editor');
       tinymce.EditorManager.remove('#bodyArea' + article.id);
     }
   }
 
   headSave(html: SafeHtml): void {
-    this.selected_article.headline = html.toString();
-    this.updateArticle(this.selected_article);
+    this.current_article.headline = html.toString();
+    this.updateArticle(this.current_article);
 
 
   }
@@ -300,8 +297,8 @@ export class PageEditorComponent implements OnInit {
     const BucketName = environment.BucketName;
     const Region = environment.Region;
     const hostname = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com';
-    this.selected_article.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
-    this.updateArticle(this.selected_article);
+    this.current_article.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
+    this.updateArticle(this.current_article);
   }
 
   initHeadLineEditor(el: HTMLElement) {
@@ -324,7 +321,11 @@ export class PageEditorComponent implements OnInit {
           '*': 'font-size,font-family,color,text-decoration,text-align'
         }
       }).then((editors) => {
-        if (editors.length === 0) console.log('initHeadLineEditor failed');
+        if (editors.length === 0) {
+
+          console.log('initHeadLineEditor failed with', el);
+
+        }
       });
   }
 
@@ -336,7 +337,7 @@ export class PageEditorComponent implements OnInit {
         inline: false,
 
         // content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-        editable_root: false,
+        // editable_root: false,
         editable_class: 'editable',
 
         plugins: 'anchor autolink link lists image code save wordcount table',  //
@@ -354,48 +355,49 @@ export class PageEditorComponent implements OnInit {
 
         file_picker_callback: (callback, value, meta) => { this.ImagePickerCallback(callback, value, meta) },
 
-        images_upload_handler: this.image_upload_handler,
+        images_upload_handler: (blobInfo: { filename: () => string; blob: () => any; }, progress: any): Promise<string> => {
+          // console.log('image_upload_handler : ', blobInfo.filename(), blobInfo.blob());
+
+          const buildURL = (key: string) => {
+            const BucketName = environment.BucketName;
+            const Region = environment.Region;
+            const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
+            return uri;
+          };
+
+          let promise: Promise<string> = new Promise((resolve, reject) => {
+            const key = 'images/' + this.current_article.title + '/' + blobInfo.filename();
+            console.log('storage.put(%s)', key);
+            Storage.put(key, blobInfo.blob(), {
+              level: 'public',
+              // contentType: blobInfo.blob().type,
+              progressCallback(progress: any) {
+                console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+              },
+            })
+              .then((result) => {
+                // console.log('image_upload_handler : S3 result:%o ', result);
+                resolve(buildURL(result.key));
+
+              })
+              .catch((err) => {
+                console.log('image_upload_handler : S3 error:%o ', err);
+                reject(err);
+              });
+
+
+          });
+          return (promise);
+        },
 
         image_caption: true,
       }).then((editors) => {
         // console.log('initBodyEditor : %s editors initialised', editors.length);
-        if (editors.length === 0) console.log('initBodyEditor failed');
+        if (editors.length === 0) console.log('initBodyEditor failed on', el);
       });
   }
 
-  image_upload_handler(blobInfo: { filename: () => string; blob: () => any; }, progress: any): Promise<string> {
-    // console.log('image_upload_handler : ', blobInfo.filename(), blobInfo.blob());
 
-    const buildURL = (key: string) => {
-      const BucketName = environment.BucketName;
-      const Region = environment.Region;
-      const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
-      return uri;
-    };
-
-    let promise: Promise<string> = new Promise((resolve, reject) => {
-      const key = 'images/' + blobInfo.filename();
-      Storage.put(key, blobInfo.blob(), {
-        level: 'public',
-        // contentType: blobInfo.blob().type,
-        progressCallback(progress: any) {
-          console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
-        },
-      })
-        .then((result) => {
-          // console.log('image_upload_handler : S3 result:%o ', result);
-          resolve(buildURL(result.key));
-
-        })
-        .catch((err) => {
-          console.log('image_upload_handler : S3 error:%o ', err);
-          reject(err);
-        });
-
-
-    });
-    return (promise);
-  }
   ImagePickerCallback(cb: (blobUri: string, arg1: { title: string; }) => void, value: any, meta: any): void {
     // create an off-screen canvas
     const canvas = document.createElement('canvas');
@@ -409,7 +411,7 @@ export class PageEditorComponent implements OnInit {
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
-        const id = file.name + (new Date()).getTime();
+        const id = file.name;  //+ (new Date()).getTime();
         const image64 = e.target.result;
         const base64 = image64.split(',')[1];
 

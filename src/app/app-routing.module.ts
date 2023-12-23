@@ -9,11 +9,12 @@ import { canActivateGuard } from './guards/can-activate.guard';
 import { MyDataComponent } from './pages/my-data/my-data.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { TodoComponent } from './pages/todo/todo.component';
+import { PageService } from './aws.services/page.aws.service';
 
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'front/home' },
+  { path: '', pathMatch: 'full', redirectTo: '/todo' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'me', component: MyDataComponent },
@@ -27,20 +28,12 @@ const routes: Routes = [
   { path: 'todo', component: TodoComponent },
   { path: '404', component: Page404Component },
 
-  // // add site's modifiable pages to the routes
-  // for (let key in _compDirectory) {
-  //   // console.log('component', key, _compDirectory[key]);
-  //   AppRoutes.unshift(_compDirectory[key]);
-  // };
 
   { path: 'front/:root/:menu', component: PagerComponent },
   { path: 'front/:menu', component: PagerComponent },
 
-  { path: '**', redirectTo: 'front/home' },
+  { path: '**', redirectTo: '404' },
 ];
-// return AppRoutes;
-
-// }
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
