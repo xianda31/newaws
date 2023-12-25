@@ -242,24 +242,27 @@ export class PageEditorComponent implements OnInit {
 
   selectArticle(article: Article) {
 
-    this.articleService.readArticle(article.id).then((article) => {
-      // console.log('selectArticle : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
+    // this.articleService.readArticle(article.id).then((article) => {
+    // console.log('selectArticle : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
 
-      if (this.current_article !== undefined) {
-        if ((this.current_article.id === article.id)) {
-          if (this.force_editor_reload) {
-            this.removeEditors(article);
-          } else { return; }   // same article, no need to reload editors
+    if (this.current_article !== undefined) {
+      if ((this.current_article.id === article.id)) {
+        if (this.force_editor_reload) {
+          this.removeEditors(article);
         } else {
-          this.removeEditors(this.current_article);
-          this.force_editor_reload = false;
+          // this.renderEditors(article);
+          return;// same article, no need to reload editors
         }
+      } else {
+        this.removeEditors(this.current_article);
       }
+    }
 
-      this.current_article = article;
-      this.openEditors(article);
+    this.force_editor_reload = false;
+    this.current_article = article;
+    this.openEditors(article);
 
-    });
+    // });
   }
 
 
@@ -277,8 +280,15 @@ export class PageEditorComponent implements OnInit {
       this.initBodyEditor(el_body);
     }
   }
+
+  // renderEditors(article: Article) {
+  //   console.log('renderEditors : %s', article.id);
+  //   // tinymce.EditorManager.resetContext();
+  // }
+
   removeEditors(article: Article) {
     tinymce.EditorManager.remove('#headArea' + article.id);
+    console.log('removing headArea editor');
 
     if (article.layout === 'Textual') {
       console.log('removing bodyArea editor');
@@ -307,25 +317,16 @@ export class PageEditorComponent implements OnInit {
         target: el,
         inline: true,
         menubar: false,
-        // content_css: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
-
         plugins: ' code  wordcount save',
         toolbar: 'undo redo blocks | bold italic | forecolor | code | save cancel',
-        save_onsavecallback: () => {
-          this.headSave(tinymce.activeEditor!.getContent());
-          // console.log('Saved');
-        },
+        save_onsavecallback: () => { this.headSave(tinymce.activeEditor!.getContent()); },
         toolbar_location: 'bottom',
         valid_elements: 'p[style],h*,strong,em,span[style]',
-        valid_styles: {
-          '*': 'font-size,font-family,color,text-decoration,text-align'
-        }
+        valid_styles: { '*': 'font-size,font-family,color,text-decoration,text-align' }
       }).then((editors) => {
         if (editors.length === 0) {
-
           console.log('initHeadLineEditor failed with', el);
-
-        }
+        } else { console.log('initHeadLineEditor  initialised'); }
       });
   }
 

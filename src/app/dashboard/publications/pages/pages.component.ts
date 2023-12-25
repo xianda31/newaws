@@ -42,22 +42,23 @@ export class PagesComponent implements OnInit {
       });
 
       this.verifyPath(pages);     // correction des paths menu vs sous-menus
-      console.log('pagesByRootMenu', this.pagesByRootMenu);
+      // console.log('pagesByRootMenu', this.pagesByRootMenu);
     });
 
 
-
+    // initialisation du formulaire
     this.pageForm = new FormGroup({
-      label: new FormControl('', Validators.required),
       root_menu: new FormControl('', Validators.required),
+      label: new FormControl('', Validators.required),
       hidden: new FormControl(false),
       description: new FormControl('', Validators.required),
-      path: new FormControl('', Validators.required),
+      path: new FormControl('tbd'),
       viewer: new FormControl(''),
     });
 
   }
 
+  // verification des paths menu vs sous-menus
   verifyPath(pages: Page[]) {
 
     pages.forEach((page) => {
@@ -67,7 +68,7 @@ export class PagesComponent implements OnInit {
       if (page.path !== shouldPath) {
         // console.log('page', page.label, 'path', page.path, 'should be', shouldPath);
         pageWithoutArticles.path = shouldPath;
-        console.log('correcting  page', pageWithoutArticles);
+        // console.log('correcting  page', pageWithoutArticles);
         this.pageService.updatePage(pageWithoutArticles as Page);
       }
     });
@@ -97,7 +98,10 @@ export class PagesComponent implements OnInit {
       this.pageForm.markAllAsTouched();
       return;
     }
-    this.pageService.createPage(this.pageForm.value);
+    let newPage: Page = this.pageForm.value;
+    newPage.hidden = false;
+    newPage.path = (this.pagesByRootMenu[newPage.root_menu] === 1) ? newPage.label.toLowerCase().replace(/\s/g, '-') : (newPage.root_menu + '/' + newPage.label).toLowerCase().replace(/\s/g, '-');
+    this.pageService.createPage(newPage);
     this.pageForm.reset();
   }
 

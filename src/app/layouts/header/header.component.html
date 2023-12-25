@@ -17,7 +17,7 @@
 
       <ul class="navbar-nav">
 
-        <!-- boucle sur les menus publisher -->
+        <!-- boucle sur les menus customisables -->
         <ng-container *ngFor="let item of menuItems | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
             <a class="nav-link mx-2" routerLinkActive="active-link"
@@ -53,6 +53,7 @@
           <ul class="dropdown-menu">
             <!-- <li><a class="dropdown-item" routerLink="dashboard/publisher/articles">Articles</a></li> -->
             <li><a class="dropdown-item" routerLink="dashboard/publisher/pages">Pages</a></li>
+            <li><a class="dropdown-item" routerLink="dashboard/publisher/cleanup">CleanUp</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
         </li>

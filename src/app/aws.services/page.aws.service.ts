@@ -41,7 +41,7 @@ export class PageService {
       this._pages.push(page);
       this.pages$.next(this._pages);
     })
-      .catch((error) => { console.log('Error creating page: ', error); });
+      .catch((error) => { console.log('Error creating page %o : err: %o', page, error); });
   }
 
   sgetPage(id: string): Page {

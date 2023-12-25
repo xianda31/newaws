@@ -1,0 +1,26 @@
+<p>cleanup utility</p>
+<button *ngIf="orphanExists" class="btn btn-danger" (click)="deleteOrphanPictures()"> supprimer les vignettes
+  orphelines</button>
+<div *ngIf="pictures">
+  <thead>
+    <tr>
+      <th scope="col-2">#</th>
+      <th scope="col-2">filename</th>
+      <th scope="col-2">caption1</th>
+      <th scope="col-2">caption2</th>
+      <th scope="col-2">image</th>
+      <th scope="col-2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let picture of pictures ; let i=index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{picture.filename}}</td>
+      <td>{{picture.caption1}}</td>
+      <td>{{picture.caption2}}</td>
+      <td> <img class="img-fit" [src]="geturi(picture.filename) | async"> </td>
+      <td class="text-danger">{{isOrphan(picture) ? 'orpheline !' : ''}}</td>
+    </tr>
+  </tbody>
+
+</div>

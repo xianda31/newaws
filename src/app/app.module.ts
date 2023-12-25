@@ -26,6 +26,7 @@ import { CarderComponent } from './layouts/pager/carder/carder.component';
 import { TodoComponent } from './pages/todo/todo.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
 // import { GetPictureInfoComponent } from './dashboard/publications/pages/get-picture-info/get-picture-info.component';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MyDataComponent,
     TodoComponent,
     PagerComponent,
+    CleanupComponent,
 
 
   ],

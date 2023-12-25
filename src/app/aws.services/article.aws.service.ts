@@ -32,7 +32,7 @@ export class ArticleService {
   }
 
 
-  // chargement des articles depuis la base de données ; filtrage vs  public_only 
+  // chargement des articles depuis la base de données ; filtrage vs  public_only
   loadArticles(public_only: boolean): void {
     this._articles = [];
     // return new Promise(async (resolve) => {
@@ -65,7 +65,7 @@ export class ArticleService {
 
 
   createArticle(article: Article | CreateArticleInput) {
-    console.log('createArticle : ', article);
+    // console.log('createArticle : ', article);
 
     this.api.CreateArticle(article).then((result) => {
       const article = result as Article;

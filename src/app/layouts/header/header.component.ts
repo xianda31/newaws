@@ -78,23 +78,7 @@ export class HeaderComponent implements OnInit {
 
   // menu utilities
 
-  // 
-  // _mustHavePages: CreatePageInput[] = [
-  //   { root_menu: 'Home', hidden: true, label: 'home', description: 'blablabla', path: 'home' },
-  //   { root_menu: 'Contact', hidden: true, label: 'contact', description: 'blablabla', path: 'contact' },
-  //   { root_menu: 'Legal', hidden: true, label: 'legal', description: 'la loi la loi', path: 'legal' },
-  //   // { root_menu: '404', hidden: true, label: '404', description: 'blablabla', path: 'notfound' },
-  // ]
 
-  // checkMustHavePages(pages: Page[]) {
-
-  //   this._mustHavePages.forEach((item) => {
-  //     if (!pages.find((page) => page.root_menu === item.root_menu)) {
-  //       // console.log('page %s not found ... has been created', item.root_menu);
-  //       this.pageService.createPage(item);
-  //     }
-  //   })
-  // }
 
   buildMenuMap(pages: Page[]): Map<string, Menu[]> {
     let menuMap = new Map<string, Menu[]>([]);

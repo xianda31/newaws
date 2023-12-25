@@ -36,7 +36,7 @@ export class FileService {
 
 
   getFileURL(key: string): Promise<string> {
-    // console.log("retrieve file signed url : ", key);
+    // console.log("retrieving file signed url : ", key);
     return Storage.get(key, { level: 'public', validateObjectExistence: true, download: false });
   }
 
