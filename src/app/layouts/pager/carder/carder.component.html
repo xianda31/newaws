@@ -32,7 +32,7 @@
       <div class="text-start">
         <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
       </div>
-      <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-4 justify-content-around g-2">
+      <div *ngIf="data.pictures" class="row row-cols-1 row-cols-md-6 justify-content-around g-2">
         <div *ngFor="let picture of data.pictures ; let i=index" class="col">
           <div class="card h-100">
             <img class="card-img-top img-fit" [src]="picture.uri | async" [alt]="picture.alt">

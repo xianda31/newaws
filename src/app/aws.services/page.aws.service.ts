@@ -87,7 +87,7 @@ export class PageService {
   }
   sgetPageByPath(path: string): Page | undefined {
     let page = this._pages.find((page) => page.path === path);
-    if (!page) { console.log('page %s not found ... has been replaced by 404', path) }
+    if (!page) { console.log('page %s not found within %o ... has been replaced by 404', path, this._pages) }
     return page;
   }
 

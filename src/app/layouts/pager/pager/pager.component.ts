@@ -31,21 +31,20 @@ export class PagerComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('pager changes', changes);
+    // console.log('pager changes', changes);
     let path = '';
     if (changes['root']) {
-      path = changes['root'].currentValue ? changes['root'].currentValue + '/' : '';
-      // console.log('root : ', changes['root'].currentValue);
+      path = changes['root'].currentValue === undefined ? '' : changes['root'].currentValue + '/';
+    } else {
+      path = this.root === undefined ? '' : this.root + '/';
     }
 
-    // console.log('menu', changes['menu'].currentValue);
-
     path += (changes['menu'].currentValue ?? '');
-    // console.log('loading page %s', path);
 
     let page: Page | undefined;
     page = this.pageService.sgetPageByPath(path);
-    if (page == undefined) {
+    if (page === undefined) {
+      console.log('%s not found :o( ', path)
       this.router.navigate(['404']);
       return;
     } else {
@@ -58,7 +57,7 @@ export class PagerComponent implements OnChanges {
       map((articles) => articles.filter((article) => article.pageId === this.page.id)),
       map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
       tap((articles) => {
-        console.log('pager articles', articles);
+        // console.log('pager articles', articles);
         this.solo = articles.length === 1;
 
       })
