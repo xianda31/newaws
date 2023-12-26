@@ -11,6 +11,7 @@ import { PictureService } from './picture.aws.service';
 export class ArticleService {
   private _articles: Article[] = [];
   _articles$: BehaviorSubject<Article[]> = new BehaviorSubject<Article[]>(this._articles);
+  onUpdateArticle$ = new BehaviorSubject<string>('');
 
   constructor(
     private api: APIService,
@@ -71,6 +72,7 @@ export class ArticleService {
       const article = result as Article;
       this._articles.push(article);
       this._articles$.next(this._articles);
+      this.onUpdateArticle$.next(article.pageId);
     })
       .catch((error) => {
         console.log('Error creating article: ', error);
@@ -105,6 +107,8 @@ export class ArticleService {
     this.api.DeleteArticle({ id: article.id }).then((result) => {
       this._articles = this._articles.filter((item) => item.id !== article.id);
       this._articles$.next(this._articles);
+      this.onUpdateArticle$.next(article.pageId);
+
     })
       .catch((error) => {
         console.log('Error deleting article: ', error);

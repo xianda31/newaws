@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { Menu } from '../interfaces/navigation.interface';
 import { CanActivateFn } from '@angular/router';
+import { ArticleService } from './article.aws.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,10 @@ export class PageService {
 
   constructor(
     private api: APIService,
+    private articleService: ArticleService,
   ) {
 
-    // READ ALL CATEGORIES
+    // READ ALL PAGES
 
     this.api.ListPages().then((result) => {
       this._pages = result.items as Page[];
@@ -28,11 +30,21 @@ export class PageService {
     })
       .catch((error) => { console.log('init pages failed !!', error) });
 
+    this.articleService.onUpdateArticle$.subscribe((id) => {
+      if (id === '') return;
+      // console.log('articleService : pictures of articleid %s changed...');
+      this.api.GetPage(id).then((result) => {
+        const page = result as Page;
+        this._pages = this._pages.map((item) => item.id === page.id ? page : item);
+        this.pages$.next(this._pages);
+      });
+    });
+
   }
 
 
 
-  // C(R)UD CATEGORIES
+  // C(R)UD PAGES
 
   createPage(page: Page | CreatePageInput) {
 

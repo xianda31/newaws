@@ -43,14 +43,13 @@ export class PagerComponent implements OnChanges {
 
     let page: Page | undefined;
     page = this.pageService.sgetPageByPath(path);
+
     if (page === undefined) {
       console.log('%s not found :o( ', path)
       this.router.navigate(['404']);
       return;
     } else {
       this.page = page;
-      // this.viewMode = this.page.viewer as CardType;
-      // console.log('pager page  = %o', this.page);
     }
 
     this.articles$ = this.articleService.articles$.pipe(
