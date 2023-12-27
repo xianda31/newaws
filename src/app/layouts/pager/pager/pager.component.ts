@@ -17,9 +17,16 @@ export class PagerComponent implements OnChanges {
   @Input('menu') menu!: string;
 
   articles$!: Observable<Article[]>;
+  articleList$: Observable<Article[]> = this.articleService.articles$.pipe(
+    map((articles) => articles.filter((article) => article.pageId === this.page.id)),
+    map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
+    map((articles) => articles.filter((article) => article.id !== this.selectedArticle?.id)),
+  );
+
   authenticatedUser: boolean = false;
   page!: Page;
   solo !: boolean;
+  selectedArticle!: Article;
 
 
   constructor(
@@ -66,7 +73,8 @@ export class PagerComponent implements OnChanges {
 
 
   selectArticle(article: Article) {
-    this.router.navigate(['/page', this.page!.label, article.id]);
+    console.log('selectArticle', article);
+    this.selectedArticle = article;
   }
 }
 

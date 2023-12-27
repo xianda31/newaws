@@ -11,8 +11,7 @@ import { ArticleService } from './article.aws.service';
 export class PageService {
   private _pages: Page[] = [];
   pages$: BehaviorSubject<Page[]> = new BehaviorSubject<Page[]>(this._pages);
-  pagesReady$: Observable<boolean> = this.pages$.pipe(map((pages) => pages.length > 0),
-    tap((pagesReady) => console.log('pagesReady : ', pagesReady)));
+  pagesReady$: Observable<boolean> = this.pages$.pipe(map((pages) => pages.length > 0));
 
 
   constructor(

@@ -3,8 +3,8 @@
 
   <ng-container *ngIf="page.viewer === 'slider'">
     <div class="row justify-content-left ">
-      <app-carder class="col-lg-4" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
-        [showLess]="false">
+      <app-carder class="col-lg-4" *ngFor="let article of articleList$ | async " [article]="article" [editable]="false"
+        [showLess]="false" (click)="selectArticle(article)">
       </app-carder>
     </div>
   </ng-container>
