@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       return;
     }
-
     this.cognitoService.signIn({ email: this.email.value, password: this.password.value })
       .then((result) => {
         if (!result) {
@@ -49,7 +48,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.toastService.showSuccessToast('login success', 'Bonjour ' + result.attributes.name);
           this.articleService.loadArticles(false);
-          this.router.navigate(['/home']);
+          this.router.navigate(['front/home']);
 
         }
       })

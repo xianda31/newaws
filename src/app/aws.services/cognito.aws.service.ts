@@ -13,6 +13,7 @@ export class CognitoService {
     (environment.logging_bypass ? { username: 'Christian', license: '02439752' } : null);
 
   private _currentAuthenticatedUser$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
+
   get currentAuthenticatedUser() {
     return this._currentAuthenticatedUser$.asObservable();
   }
@@ -25,6 +26,7 @@ export class CognitoService {
     try {
       const result = await Auth.signIn(user.email, user.password);
       this.currentUser = { username: result.attributes.name, license: result.attributes['custom:license'] };
+      console.log('this.currentUser : ', result, this.currentUser);
       this._currentAuthenticatedUser$.next(this.currentUser);
       return (result);
     } catch (error) {

@@ -37,7 +37,7 @@
 
 
 
-        <!-- login -->
+
 
         <li *ngIf="!isLogged" class="nav-item">
           <!-- <button type="button" class="btn btn-primary" routerLink="login"> -->
@@ -75,6 +75,8 @@
             <li><a class="dropdown-item" routerLink="dashboard/tests/rights">rights</a></li>
           </ul>
         </li>
+
+        <!-- login -->
 
         <li *ngIf="isLogged" class="nav-item mx-5 dropdown">
           <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
