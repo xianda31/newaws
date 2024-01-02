@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit {
   isLogged: boolean = environment.logging_bypass;
   isAdmin: boolean = false;
   isPublisher: boolean = false;
+  hasRole: boolean = false;
 
   pages$: Observable<Page[]> = this.pageService.pages$;
 
@@ -63,6 +64,7 @@ export class HeaderComponent implements OnInit {
         const rights = member?.rights!;
         this.isAdmin = rights?.includes('Admin');
         this.isPublisher = rights?.includes('Publisher');
+        this.hasRole = this.isAdmin || this.isPublisher;
       }
     });
   }

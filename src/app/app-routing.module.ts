@@ -10,6 +10,7 @@ import { MyDataComponent } from './pages/my-data/my-data.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { TodoComponent } from './pages/todo/todo.component';
 import { PageService } from './aws.services/page.aws.service';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [canActivateGuard('any right')],
+    component: DashboardComponent,
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
   },
   { path: 'links', component: LinksComponent },

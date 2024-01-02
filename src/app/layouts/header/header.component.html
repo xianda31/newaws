@@ -47,17 +47,16 @@
 
 
         <!-- menu métier  -->
-        <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
+        <!-- <li class="nav-item mx-2 dropdown" *ngIf="isPublisher">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Publication </a>
           <ul class="dropdown-menu">
-            <!-- <li><a class="dropdown-item" routerLink="dashboard/publisher/articles">Articles</a></li> -->
             <li><a class="dropdown-item" routerLink="dashboard/publisher/pages">Pages</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/cleanup">CleanUp</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/publisher/files">Fichiers</a></li>
           </ul>
-        </li>
-        <li class="nav-item mx-2 dropdown" *ngIf="isAdmin">
+        </li> -->
+        <!-- <li class="nav-item mx-2 dropdown" *ngIf="isAdmin">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Administration</a>
           <ul class="dropdown-menu">
@@ -65,16 +64,16 @@
             <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
             <li><a class="dropdown-item" href="#">Autres paiements</a></li>
           </ul>
-        </li>
+        </li> -->
         <!-- menu tests -->
-        <li class="nav-item mx-2 dropdown" *ngIf="test_links">
+        <!-- <li class="nav-item mx-2 dropdown" *ngIf="test_links">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Tests </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="dashboard/tests/tiny">tiny</a></li>
             <li><a class="dropdown-item" routerLink="dashboard/tests/rights">rights</a></li>
           </ul>
-        </li>
+        </li> -->
 
         <!-- login -->
 
@@ -87,12 +86,12 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
+            <li *ngIf="hasRole"><a class="dropdown-item" routerLink="dashboard">Mes roles</a></li>
             <li class="dropdown-item" (click)="onLogout()">
               <button type="button" class="btn btn-primary">
                 <i class="bi bi-box-arrow-left"></i>
               </button>
               Déconnexion
-
             </li>
           </ul>
         </li>
