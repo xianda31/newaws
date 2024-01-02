@@ -1,18 +1,15 @@
-import { AfterViewChecked, AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, map, tap } from 'rxjs';
-import { Article, CreateArticleInput, CreatePictureInput, Page, Picture, UpdateArticleInput } from 'src/app/API.service';
+import { Observable, map } from 'rxjs';
+import { Article, CreateArticleInput, CreatePictureInput, Page, Picture } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { ToastService } from 'src/app/tools/service/toast.service';
 import tinymce from 'tinymce';
 import { GetDateComponent } from '../get-date/get-date.component';
 import { environment } from 'src/app/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
-import { FileService } from 'src/app/tools/service/file.service';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
@@ -27,8 +24,9 @@ import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.co
 export class PageEditorComponent implements OnInit {
   @Input('id') pageId!: string;
   current_page!: Page;
+  path !: string;
   // viewMode: CardType = 'Textual';
-  pageForm!: FormGroup;
+  // pageForm!: FormGroup;
 
   articles$: Observable<Article[]> = this.articleService.articles$.pipe(
     map((articles) => articles.filter((article) => article.pageId === this.current_page.id)),
@@ -47,37 +45,35 @@ export class PageEditorComponent implements OnInit {
   constructor(
     private pageService: PageService,
     private articleService: ArticleService,
-    private fileService: FileService,
     private pictureService: PictureService,
 
     private modalService: NgbModal,
-    private toastService: ToastService,
-    private router: Router,
   ) { }
 
 
 
   ngOnInit(): void {
     this.current_page = this.pageService.sgetPage(this.pageId);
+    this.path = this.current_page.root_menu + (this.current_page.label ? '/' + this.current_page.label : '');
 
     this.articles$.subscribe((articles) => {
       this.articles = articles;
       this.maxRank = articles.reduce((max, article) => (article.rank > max ? article.rank : max), 0);
     });
 
-    this.createForm(this.current_page);
+    // this.createForm(this.current_page);
 
   }
-  createForm(page: Page) {
-    this.pageForm = new FormGroup({
-      root_menu: new FormControl({ value: page.root_menu, disabled: true }),
-      label: new FormControl({ value: page.label, disabled: true }),
-      description: new FormControl({ value: page.description, disabled: true }),
-      viewer: new FormControl({ value: page.viewer, disabled: true }),
-    });
+  // createForm(page: Page) {
+  //   this.pageForm = new FormGroup({
+  //     root_menu: new FormControl({ value: page.root_menu, disabled: true }),
+  //     label: new FormControl({ value: page.label, disabled: true }),
+  //     description: new FormControl({ value: page.description, disabled: true }),
+  //     viewer: new FormControl({ value: page.viewer, disabled: true }),
+  //   });
 
-    // this.pageForm.patchValue(page);
-  }
+  //   // this.pageForm.patchValue(page);
+  // }
 
   up(i: number) {
     if (i === 0) return;
@@ -281,11 +277,6 @@ export class PageEditorComponent implements OnInit {
     }
   }
 
-  // renderEditors(article: Article) {
-  //   console.log('renderEditors : %s', article.id);
-  //   // tinymce.EditorManager.resetContext();
-  // }
-
   removeEditors(article: Article) {
     tinymce.EditorManager.remove('#headArea' + article.id);
     console.log('removing headArea editor');
@@ -356,7 +347,7 @@ export class PageEditorComponent implements OnInit {
 
         file_picker_callback: (callback, value, meta) => { this.ImagePickerCallback(callback, value, meta) },
 
-        images_upload_handler: (blobInfo: { filename: () => string; blob: () => any; }, progress: any): Promise<string> => {
+        images_upload_handler: (blobInfo: { filename: () => string; blob: () => any; }): Promise<string> => {
           // console.log('image_upload_handler : ', blobInfo.filename(), blobInfo.blob());
 
           const buildURL = (key: string) => {
@@ -402,7 +393,6 @@ export class PageEditorComponent implements OnInit {
   ImagePickerCallback(cb: (blobUri: string, arg1: { title: string; }) => void, value: any, meta: any): void {
     // create an off-screen canvas
     const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
 
     const input = document.createElement('input');
     input.setAttribute('type', 'file');

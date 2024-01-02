@@ -9,7 +9,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { ToolsModule } from 'src/app/tools/tools/tools.module';
 import { EditComponent } from '../editor/edit.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
-import { PagesComponent } from '../publications/pages/pages.component';
+import { PagesComponent } from '../publications/pages/pages/pages.component';
 import { PageEditorComponent } from '../publications/pages/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../publications/pages/get-picture-info/get-picture-info.component';
 

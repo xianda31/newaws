@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PagesComponent } from '../publications/pages/pages.component';
+import { PagesComponent } from '../publications/pages/pages/pages.component';
 import { MembersComponent } from '../members/members.component';
 import { TestComponent } from '../tests/test.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
