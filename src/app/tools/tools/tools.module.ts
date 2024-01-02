@@ -13,6 +13,7 @@ import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-boo
 import { CommonModule } from '@angular/common';
 import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/get-date.component';
 import { BucketnamePipe } from '../../pipes/bucketname.pipe';
+import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -29,6 +30,7 @@ import { BucketnamePipe } from '../../pipes/bucketname.pipe';
     FilesizePipe,
     SafeHtmlPipe,
     BucketnamePipe,
+    SmallerPipe,
   ],
   imports: [
     CommonModule,

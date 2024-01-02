@@ -13,7 +13,7 @@ import { FileService } from '../../../tools/service/file.service';
   templateUrl: './carder.component.html',
   styleUrls: ['./carder.component.scss']
 })
-export class CarderComponent implements OnInit {
+export class CarderComponent implements OnChanges {
 
   @Input() article!: Article;
   @Input() showLess: boolean = false;
@@ -31,7 +31,7 @@ export class CarderComponent implements OnInit {
     private fileService: FileService,
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnChanges(): Promise<void> {
     this.prepView(this.article);
   }
 

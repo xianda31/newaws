@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
@@ -17,15 +17,10 @@ export class PagerComponent implements OnChanges {
   @Input('menu') menu!: string;
 
   articles$!: Observable<Article[]>;
-  articleList$: Observable<Article[]> = this.articleService.articles$.pipe(
-    map((articles) => articles.filter((article) => article.pageId === this.page.id)),
-    map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
-    map((articles) => articles.filter((article) => article.id !== this.selectedArticle?.id)),
-  );
 
   authenticatedUser: boolean = false;
   page!: Page;
-  solo !: boolean;
+  // solo !: boolean;
   selectedArticle!: Article;
 
 
@@ -64,7 +59,8 @@ export class PagerComponent implements OnChanges {
       map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
       tap((articles) => {
         // console.log('pager articles', articles);
-        this.solo = articles.length === 1;
+        // this.solo = articles.length === 1;
+        this.selectedArticle = articles[0];
 
       })
     );
@@ -73,7 +69,7 @@ export class PagerComponent implements OnChanges {
 
 
   selectArticle(article: Article) {
-    console.log('selectArticle', article);
+    // console.log('selectArticle', article);
     this.selectedArticle = article;
   }
 }

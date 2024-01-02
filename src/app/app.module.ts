@@ -22,7 +22,6 @@ import { RightsComponent } from './tests/rights/rights.component';
 import { MyDataComponent } from './pages/my-data/my-data.component';
 import { FlashPluginComponent } from './layouts/pager/plugins/flash-plugin/flash-plugin.component';
 import { AdDirective } from './layouts/pager/plugins/ad/ad.directive';
-import { CarderComponent } from './layouts/pager/carder/carder.component';
 import { TodoComponent } from './pages/todo/todo.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -50,6 +49,7 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
     PagerComponent,
     CleanupComponent,
     DashboardComponent,
+
 
 
   ],

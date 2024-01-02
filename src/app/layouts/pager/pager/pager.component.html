@@ -1,13 +1,25 @@
 <app-headband [title]="page.label + '|' + page.description"> </app-headband>
 <div class="container text-center">
 
-  <ng-container *ngIf="page.viewer === 'slider'">
-    <div class="row justify-content-left ">
-      <app-carder class="col-lg-4" *ngFor="let article of articleList$ | async " [article]="article" [editable]="false"
-        [showLess]="false" (click)="selectArticle(article)">
-      </app-carder>
+  <div *ngIf="page.viewer === 'slider'">
+    <div class="row">
+      <div class="col-4 mt-3">
+        <ng-container *ngFor="let article of articles$ | async ">
+          <app-carder *ngIf="article.id !== selectedArticle.id" class="col-lg-4" [article]="article" [editable]="false"
+            [showLess]="true" (click)="selectArticle(article)">
+          </app-carder>
+        </ng-container>
+      </div>
+
+      <div class="col-8">
+        <!-- selectedArticle.id : {{selectedArticle.id}} -->
+        <app-carder [article]="selectedArticle" [editable]="false" [showLess]="false">
+        </app-carder>
+      </div>
+
     </div>
-  </ng-container>
+  </div>
+
   <div *ngIf="page.viewer !== 'slider'" class="row justify-content-center ">
     <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
       [showLess]="false">
