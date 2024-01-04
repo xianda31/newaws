@@ -23,7 +23,7 @@ export class PageService {
 
     this.api.ListPages().then((result) => {
       this._pages = result.items as Page[];
-      console.log('%s pages identifiées : ', this._pages.length, this._pages);
+      // console.log('%s pages identifiées : ', this._pages.length, this._pages);
       this.pages$.next(this._pages);
 
     })

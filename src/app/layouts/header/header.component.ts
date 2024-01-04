@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
     this.pages$.subscribe((pages) => {
-      console.log('constructing new menu map');
+      // console.log('constructing new menu map');
       // this.checkMustHavePages(pages);
       this.menuItems = this.buildMenuMap(pages);
     });

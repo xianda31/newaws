@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SmallerPipe implements PipeTransform {
 
   transform(string: string,): string {
-    return string.replace("h2>", "h4>");
+    return string.replace("h4>", "h6>").replace("h2>", "h4>");
   }
 
 }

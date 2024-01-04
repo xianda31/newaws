@@ -7,29 +7,26 @@
 <ng-template #textual>
   <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
 
-    <div *ngIf="data" class="card-body text-start">
-      <ng-container *ngIf="!showLess">
-        <div *ngIf="!data.date">
-          <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
-          </section>
-        </div>
+    <div *ngIf="data  && !showLess" class="card-body text-start">
+      <div *ngIf="!data.date">
+        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+        </section>
+      </div>
 
-        <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
-          [attr.data-hmonth]="getMonth(data.date)">
-          <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
-          </section>
-        </div>
+      <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
+        [attr.data-hmonth]="getMonth(data.date)">
+        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+        </section>
+      </div>
 
-        <div class="text-start ps-2">
-          <section #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></section>
-        </div>
-      </ng-container>
-
-      <ng-container *ngIf="showLess">
-        <section [innerHTML]="data.headline | smaller | safeHtml"></section>
-      </ng-container>
-
+      <div class="text-start ps-2">
+        <section #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></section>
+      </div>
     </div>
+    <div *ngIf="data  && showLess" class="card-body bg-body-secondary m-1" id="sidebar">
+      <section [innerHTML]="data.headline | smaller | smaller | safeHtml"></section>
+    </div>
+
   </div>
 </ng-template>
 

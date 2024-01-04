@@ -279,10 +279,10 @@ export class PageEditorComponent implements OnInit {
 
   removeEditors(article: Article) {
     tinymce.EditorManager.remove('#headArea' + article.id);
-    console.log('removing headArea editor');
+    // console.log('removing headArea editor');
 
     if (article.layout === 'Textual') {
-      console.log('removing bodyArea editor');
+      // console.log('removing bodyArea editor');
       tinymce.EditorManager.remove('#bodyArea' + article.id);
     }
   }
@@ -317,7 +317,8 @@ export class PageEditorComponent implements OnInit {
       }).then((editors) => {
         if (editors.length === 0) {
           console.log('initHeadLineEditor failed with', el);
-        } else { console.log('initHeadLineEditor  initialised'); }
+        }
+        // else { console.log('initHeadLineEditor  initialised'); }
       });
   }
 
@@ -359,12 +360,11 @@ export class PageEditorComponent implements OnInit {
 
           let promise: Promise<string> = new Promise((resolve, reject) => {
             const key = 'images/' + this.current_article.title + '/' + blobInfo.filename();
-            console.log('storage.put(%s)', key);
             Storage.put(key, blobInfo.blob(), {
               level: 'public',
               // contentType: blobInfo.blob().type,
               progressCallback(progress: any) {
-                console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+                // console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
               },
             })
               .then((result) => {

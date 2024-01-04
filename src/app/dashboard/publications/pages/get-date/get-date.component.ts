@@ -16,7 +16,7 @@ export class GetDateComponent implements OnInit {
 
   ) { }
   ngOnInit(): void {
-    console.log('GetDateComponent', this.article);
+    // console.log('GetDateComponent', this.article);
     this.date = this.article.info ?? '';
     this.withDate = this.article.info ? true : false;
 
@@ -24,7 +24,7 @@ export class GetDateComponent implements OnInit {
 
 
   dateChanged() {
-    console.log('GetDateComponent : dateChanged', this.date);
+    // console.log('GetDateComponent : dateChanged', this.date);
     this.article.info = this.withDate ? this.date : '';
     this.activeModal.close(this.article);
   }

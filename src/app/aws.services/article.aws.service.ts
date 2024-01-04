@@ -40,8 +40,8 @@ export class ArticleService {
     this.api.ListArticles(public_only ? { public: { eq: true } } : {})
       .then((articles) => {
         const articlesItems = articles.items as Article[];
-        console.log('loadArticles', articlesItems);
-        console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
+        // console.log('loadArticles', articlesItems);
+        // console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
         this._articles = [...articlesItems];
         this._articles$.next(this._articles)
       })

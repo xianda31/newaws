@@ -20,7 +20,7 @@ export class PictureService {
 
     this.api.ListPictures().then((result) => {
       this._pictures = result.items as Picture[];
-      console.log('%s pictures identifiées : ', this._pictures.length, this._pictures);
+      // console.log('%s pictures identifiées : ', this._pictures.length, this._pictures);
       this.pictures$.next(this._pictures);
 
     })
