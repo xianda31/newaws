@@ -18,6 +18,7 @@ type Page @model @auth(rules: [{ allow: public }]) {
   path: String!
   hidden: Boolean!
   viewer: String!
+  public: Boolean
   articles: [Article] @hasMany(indexName: "ofPage", fields: ["id"])
 }
 
