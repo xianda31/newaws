@@ -1,7 +1,8 @@
 .outer-wrapper {
     display: flex;
     flex-flow: column;
-    height: calc(100vh - 10px); //viewport height - app-navbar height
+    height: calc(100vh - 30px); //viewport height - app-navbar height
+    background-color: rgb(252, 250, 250);
 }
 
 .inner-wrapper {
