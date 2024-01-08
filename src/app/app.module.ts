@@ -26,8 +26,9 @@ import { TodoComponent } from './pages/todo/todo.component';
 import { PagerComponent } from './layouts/pager/pager/pager.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+// import { SidebarComponent } from './dashboard/sidebar/sidebar.component';
 // import { GetPictureInfoComponent } from './dashboard/publications/pages/get-picture-info/get-picture-info.component';
 
 @NgModule({

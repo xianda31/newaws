@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, concatAll, take, filter, tap, toArray } from 'rxjs';
 import { CreatePageInput, Page } from 'src/app/API.service';
@@ -7,6 +7,7 @@ import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
 import { environment } from 'src/app/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
+import { LoggedUser } from 'src/app/interfaces/user.interface';
 
 
 
@@ -16,16 +17,13 @@ import { Menu } from 'src/app/interfaces/navigation.interface';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Input() loggedUser!: LoggedUser | null;
+  @Input() showSideMenu: boolean = false;
+  @Output() showSideMenuChange = new EventEmitter<boolean>();
+
 
   menuItems!: Map<string, Menu[]>;
-
-  test_links: boolean = environment.test_links;
-  loggedusername !: string;
-  loggeduserlicence !: string;
-  isLogged: boolean = environment.logging_bypass;
-  isAdmin: boolean = false;
-  isPublisher: boolean = false;
-  hasRole: boolean = false;
+  // test_links: boolean = environment.test_links;
 
   pages$: Observable<Page[]> = this.pageService.pages$;
 
@@ -53,30 +51,24 @@ export class HeaderComponent implements OnInit {
       this.menuItems = this.buildMenuMap(pages);
     });
 
+    console.log('loggedUser: %o', this.loggedUser);
 
-    this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
-      if (user) {
-        this.loggedusername = user.username;
-        this.loggeduserlicence = user.license;
-        this.isLogged = true;
-
-        let member = this.memberService.getMemberByLicense(user.license);
-        const rights = member?.rights!;
-        this.isAdmin = rights?.includes('Admin');
-        this.isPublisher = rights?.includes('Publisher');
-        this.hasRole = this.isAdmin || this.isPublisher;
-      }
-    });
   }
 
   onLogout() {
     this.cognitoService._signOut();
-    this.isLogged = false;
-    this.isAdmin = false;
-    this.isPublisher = false;
+    // this.isLogged = false;
+    // this.isAdmin = false;
+    // this.isPublisher = false;
     this.router.navigate(['front/home']);
   }
 
+
+  toggleSideMenuVisibility() {
+    this.showSideMenu = !this.showSideMenu;
+    this.showSideMenuChange.emit(this.showSideMenu);
+    console.log('showSideMenu: %o', this.showSideMenu);
+  }
 
   // menu utilities
 

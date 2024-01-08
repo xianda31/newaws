@@ -39,7 +39,7 @@
 
 
 
-        <li *ngIf="!isLogged" class="nav-item">
+        <li *ngIf="!loggedUser" class="nav-item">
           <!-- <button type="button" class="btn btn-primary" routerLink="login"> -->
           <!-- <i class="bi bi-person-circle"></i> -->
           <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="login">Se connecter</a>
@@ -49,14 +49,14 @@
 
         <!-- login -->
 
-        <li *ngIf="isLogged" class="nav-item mx-5 dropdown">
+        <li *ngIf="loggedUser" class="nav-item mx-5 dropdown">
           <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle"> </i>
-            {{loggedusername}}
+            {{loggedUser.firstname}}
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
-            <li *ngIf="hasRole"><a class="dropdown-item" routerLink="back">admin site</a></li>
+            <li *ngIf="loggedUser" class="dropdown-item" (click)="toggleSideMenuVisibility()">menu admin</li>
             <li class="dropdown-item" (click)="onLogout()">
               déconnexion
             </li>

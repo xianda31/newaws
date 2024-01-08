@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Auth } from 'aws-amplify';
-import { User } from "../interfaces/user.interface";
+import { LoggedUser } from "../interfaces/user.interface";
 import { BehaviorSubject, Observable } from "rxjs";
 import { environment } from "../environments/environment";
 
@@ -22,7 +22,7 @@ export class CognitoService {
     return this._currentAuthenticatedUser$.value;
   }
 
-  async signIn(user: User): Promise<any> {
+  async signIn(user: LoggedUser): Promise<any> {
     try {
       const result = await Auth.signIn(user.email, user.password);
       this.currentUser = { username: result.attributes.name, license: result.attributes['custom:license'] };
@@ -36,10 +36,10 @@ export class CognitoService {
   }
 
 
-  _signUp(user: User): Promise<any> {
+  _signUp(user: LoggedUser): Promise<any> {
     return Auth.signUp({
       username: user.email,
-      password: user.password,
+      password: user.password ?? '',
       attributes: {
         email: user.email,
         name: user.firstname,
@@ -49,7 +49,7 @@ export class CognitoService {
     });
   }
 
-  _confirmSignUp(user: User): Promise<any> {
+  _confirmSignUp(user: LoggedUser): Promise<any> {
     return Auth.confirmSignUp(user.email, user.code ? user.code : '');
   }
 
@@ -57,7 +57,7 @@ export class CognitoService {
     return Auth.deleteUser();
   }
 
-  _signIn(user: User): Promise<any> {
+  _signIn(user: LoggedUser): Promise<any> {
     return Auth.signIn(user.email, user.password);
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
@@ -10,7 +10,11 @@ import { environment } from 'src/app/environments/environment';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+
+  @Input() showSideMenu: boolean = false;
+
+
   test_links: boolean = environment.test_links;
   loggedusername !: string;
   loggeduserlicence !: string;
@@ -24,6 +28,7 @@ export class SidebarComponent {
     private pageService: PageService,
     private memberService: MemberService,
   ) { }
+
 
   ngOnInit(): void {
 

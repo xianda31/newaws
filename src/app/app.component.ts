@@ -4,6 +4,9 @@ import { combineLatest, delay } from 'rxjs';
 import { MemberService } from './aws.services/member.aws.service';
 import { environment } from './environments/environment';
 import { ArticleService } from './aws.services/article.aws.service';
+import { CognitoService } from './aws.services/cognito.aws.service';
+import { User } from 'parse';
+import { LoggedUser } from './interfaces/user.interface';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +15,16 @@ import { ArticleService } from './aws.services/article.aws.service';
 })
 export class AppComponent implements OnInit {
   DBloaded: boolean = false;
+  test_links: boolean = environment.test_links;
+  showSideMenu: boolean = true;
+  loggedUser: LoggedUser | null = null;
 
   constructor(
     private pageService: PageService,
     private articleService: ArticleService,
     private memberService: MemberService,
+    private cognitoService: CognitoService,
+
   ) { }
   ngOnInit(): void {
 
@@ -28,6 +36,22 @@ export class AppComponent implements OnInit {
           this.DBloaded = true;
         }
       });
+
+    this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
+
+      // this.loggedUser = user;
+
+      if (user) {
+        let member = this.memberService.getMemberByLicense(user.license);
+        this.loggedUser = { email: user.email, firstname: user.username, lastname: member?.lastname, license: user.license, credentials: member?.rights! };
+        const rights = member?.rights!;
+        console.log('loggedUser: %o', this.loggedUser);
+
+        // this.isAdmin = rights?.includes('Admin');
+        // this.isPublisher = rights?.includes('Publisher');
+      }
+    });
+
   }
 
   title = 'bcsto';
