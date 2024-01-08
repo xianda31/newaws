@@ -1,0 +1,17 @@
+<p>sidebar works!</p>
+<ng-container *ngIf="isPublisher">
+    <!-- <li class="nav-item mx-2 dropdown" *ngIf="isPublisher"> -->
+    <!-- <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Publication </a>
+                                            <ul class="dropdown-menu"> -->
+    <!-- <li><a class="dropdown-item" routerLink="back/publisher/articles">Articles</a></li> -->
+    <li class="nav-item"><a class="nav-link mx-2" routerLinkActive="active-link" routerLink="publisher/pages">Edition
+            pages</a></li>
+    <li class="nav-item"><a class="nav-link mx-2" routerLinkActive="active-link" routerLink="publisher/files">Edition
+            fichiers</a></li>
+    <li class="nav-item"><a class="nav-link mx-2" routerLinkActive="active-link" routerLink="publisher/cleanup">Edition
+            images</a>
+    </li>
+    <!-- </ul> -->
+    <!-- </li> -->
+</ng-container>

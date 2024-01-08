@@ -1,14 +1,14 @@
 .outer-wrapper {
-    display: flex;
-    flex-flow: column;
-    height: calc(100vh - 30px); //viewport height - app-navbar height
+    // max-width: 1600px;
+    min-height: calc(100vh - 90px); //viewport height - app-navbar height
     background-color: rgb(252, 250, 250);
 }
 
-.inner-wrapper {
-    flex: 1; // if you want center container large space else will take size of the content or apply flex-basis
+// .inner-wrapper {
+//     flex: 1; // if you want center container large space else will take size of the content or apply flex-basis
 
-}
+// }
+
 
 
 // pulse animation
