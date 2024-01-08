@@ -3,110 +3,116 @@
 <div class="container p-2">
 
 
+  <table class="table table-responsive-sm align-items-center table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" class="col-md-2 ">menu</th>
+        <th scope="col" class="col-md-2 ">sous-menu</th>
+        <th scope="col" class="col-md-2">descriptif </th>
+        <th scope="col" class="col-md-2 text-center">présentation</th>
+        <th scope="col" class="col-md-1 text-center">nb articles</th>
+        <th scope="col" class="col-md-1 text-center">public</th>
+        <th scope="col" class="col-md-1 text-center">sup.</th>
+        <th scope="col" class="col-md-1 text-center">mod.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="table-info" *ngFor="let page of pages$ | async" (click)="selectPage(page)">
+        <td class="col"> {{page.hidden ? '' : page.root_menu }} </td>
+        <td class="col"> {{ page.label }} </td>
+        <td class="col">{{ page.description }}</td>
+        <td class="col text-center bg">
+          <button type="button" class="btn btn-primary btn-sm ">
+            <i [class]="page.viewer" style="font-weight: bolder; color:white"></i>
+          </button>
+        </td>
+        <td class="col text-center ">{{ page.articles?.items ? page.articles!.items.length : ''}}</td>
+        <td class="col text-center ">
+          <app-toggle-input [(ngModel)]="page.public" (click)="toggle(page)"></app-toggle-input>
+        <td class="col text-center">
+          <button *ngIf="!page.hidden" type="button" class="btn btn-danger btn-sm " (click)="deletePage($event,page)">
+            <i class="bi bi-trash3" style="color:white"></i>
+          </button>
+        </td>
+        <td class="col text-center">
+          <button type="button" class="btn btn-primary btn-sm " (click)="editPage(page)">
+            <i class="bi bi-pencil-square" style="color:white"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- menu de saisie nouvelle page -->
   <form [formGroup]="pageForm">
     <table class="table table-responsive-sm align-items-center table-hover">
       <thead class="thead-light">
         <tr>
           <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
-          <!-- <th scope="col" class="col-md-2 "></th> -->
-          <th scope="col" class="col-md-1 ">menu</th>
-          <th scope="col" class="col-md-1 ">sous-menu</th>
-          <th scope="col" class="col-md-5">descriptif (bandeau)</th>
-          <th scope="col" class="col-md-2">présentation</th>
-          <th scope="col" class="col-md-1 text-center">nb articles</th>
-          <th scope="col" class="col-md-1 text-center"></th>
-          <th scope="col" class="col-md-1 text-center"></th>
-
+          <th scope="col" class="col-md-2 ">menu</th>
+          <th scope="col" class="col-md-2 ">sous-menu</th>
+          <th scope="col" class="col-md-2">descriptif</th>
+          <th scope="col" class="col-md-2 text-center"> présentation</th>
+          <th scope="col" class="col-md-1 text-center ">sans menu</th>
+          <th scope="col" class="col-md-1 text-center ">public</th>
+          <th scope="col" class="col-md-1 text-center"> aband.</th>
+          <th scope="col" class="col-md-1 text-center">valid.</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let page of pages$ | async" (click)="selectPage(page)">
-          <td class="col"> {{page.hidden ? '' : page.root_menu }} </td>
-          <td class="col"> {{ page.label }} </td>
-          <td class="col">{{ page.description }}</td>
-          <td class="col">{{ page.viewer }}</td>
-          <td class="col text-center ">{{ page.articles?.items ? page.articles!.items.length : ''}}</td>
-          <td class="col text-center">
-            <button *ngIf="!page.hidden" type="button" class="btn btn-danger btn-sm " (click)="deletePage($event,page)">
-              <i class="bi bi-trash3" style="color:white"></i>
-            </button>
-          </td>
-          <td class="col text-center">
-            <button type="button" class="btn btn-primary btn-sm " (click)="editPage(page)">
-              <i class="bi bi-pencil-square" style="color:white"></i>
-            </button>
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="6"></td> <!-- saute une ligne -->
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
-          <th scope="col" class="col-md-1 "></th>
-          <th scope="col" class="col-md-1 "></th>
-          <th scope="col" class="col-md-5"></th>
-          <th scope="col" class="col-md-2"></th>
-          <th scope="col" class="col-md-1 text-center ">sans menu</th>
-          <th scope="col" class="col-md-1 "></th>
-          <th scope="col" class="col-md-1 text-center"></th>
-        </tr>
-        <tr class="table-info px-0">
-          <td class="col text-center ">
-            <input type="text" class="formcontrol" formControlName="root_menu" id="root_menu">
+        <tr class="table-info">
+          <td class="col">
+            <input type="text" class="formcontrol w-100" formControlName="root_menu" id="root_menu">
           </td>
 
-          <td class="px-1"><input type="text" class="formcontrol " formControlName="label" id="label"
+          <td class="col">
+            <input type="text" class="formcontrol w-100 " formControlName="label" id="label"
               [class.is-invalid]="label.invalid && (label.dirty || label.touched)">
             <div class="invalid-feedback">
-              un titre de page doit être fourni
+              un label de menu doit être fourni
             </div>
           </td>
 
-          <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="description" id="description"
+          <td class="col">
+            <input type="text" class="formcontrol w-100" formControlName="description" id="description"
               [class.is-invalid]="description.invalid && (description.dirty || description.touched)">
             <div class="invalid-feedback">
               une descriptif doit être fourni
             </div>
           </td>
 
-          <td class="px-1"><input type="text" class="formcontrol w-100" formControlName="viewer" id="viewer"
-              [class.is-invalid]="viewer.invalid && (viewer.dirty || viewer.touched)">
-            <div class="invalid-feedback">
-              une descriptif doit être fourni
-            </div>
+          <td class="col text-center">
+            <app-viewer-input formControlName="viewer"></app-viewer-input>
           </td>
 
           <td class="col text-center ">
             <app-toggle-input class="formcontrol" formControlName="hidden"></app-toggle-input>
           </td>
+          <td class="col text-center ">
+            <app-toggle-input class="formcontrol" formControlName="public"></app-toggle-input>
+          </td>
           <td class="col text-center">
             <button type="submit" class="btn btn-sm btn-warning " (click)="cancel()">
               <i class="bi bi-x-circle"></i>
             </button>
-
           </td>
 
           <td class="col text-center">
             <!-- &nbsp; -->
             <button *ngIf="createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
               (click)="createPage()" [disabled]="pageForm.invalid">
-              Ajouter
+              <i class="bi bi-check-square-fill"></i>
             </button>
 
             <button *ngIf="!createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
               (click)="updatePage()" [disabled]="pageForm.invalid">
-              Valider
+              <i class="bi bi-check-square-fill"></i>
             </button>
           </td>
 
 
         </tr>
-      </tfoot>
-
-
+      </tbody>
     </table>
   </form>
 

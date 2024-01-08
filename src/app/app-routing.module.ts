@@ -14,13 +14,13 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/todo' },
+  { path: '', pathMatch: 'full', redirectTo: '/front/home' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'me', component: MyDataComponent },
   { path: 'pswreset/:email', component: PswresetComponent },
   {
-    path: 'dashboard',
+    path: 'back',
     canActivate: [canActivateGuard('any right')],
     component: DashboardComponent,
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)

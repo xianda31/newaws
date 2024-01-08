@@ -58,10 +58,10 @@ export class ArticlesComponent implements OnInit {
   }
 
   onUpdate(article: Article) {
-    this.router.navigate(['dashboard/publisher/articles', article.id]);
+    this.router.navigate(['back/publisher/articles', article.id]);
   }
 
   onCreate() {
-    this.router.navigate(['dashboard/publisher/articles/new']);
+    this.router.navigate(['back/publisher/articles/new']);
   }
 }

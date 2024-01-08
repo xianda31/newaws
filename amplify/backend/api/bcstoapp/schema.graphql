@@ -38,10 +38,10 @@ type Article @model @auth(rules: [{ allow: public }]) {
   title: String!
   headline: String!
   layout: String!
-  body: String
-  info: String # YYYY-MM-DD ISO 8601 format
+  body: String!
+  info: String! # YYYY-MM-DD ISO 8601 format
   rank: Int!
-  public: Boolean!
+  # public: Boolean!
   pictures: [Picture] @hasMany(indexName: "ofArticle", fields: ["id"])
   pageId: ID! @index(name: "ofPage")
 }

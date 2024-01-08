@@ -116,6 +116,7 @@ export type CreatePageInput = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
 };
 
 export type ModelPageConditionInput = {
@@ -125,6 +126,7 @@ export type ModelPageConditionInput = {
   path?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
   viewer?: ModelStringInput | null;
+  public?: ModelBooleanInput | null;
   and?: Array<ModelPageConditionInput | null> | null;
   or?: Array<ModelPageConditionInput | null> | null;
   not?: ModelPageConditionInput | null;
@@ -146,6 +148,7 @@ export type Page = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: ModelArticleConnection | null;
   createdAt: string;
   updatedAt: string;
@@ -163,10 +166,9 @@ export type Article = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: ModelPictureConnection | null;
   pageId: string;
   createdAt: string;
@@ -199,6 +201,7 @@ export type UpdatePageInput = {
   path?: string | null;
   hidden?: boolean | null;
   viewer?: string | null;
+  public?: boolean | null;
 };
 
 export type DeletePageInput = {
@@ -271,10 +274,9 @@ export type CreateArticleInput = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pageId: string;
 };
 
@@ -285,7 +287,6 @@ export type ModelArticleConditionInput = {
   body?: ModelStringInput | null;
   info?: ModelStringInput | null;
   rank?: ModelIntInput | null;
-  public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
   or?: Array<ModelArticleConditionInput | null> | null;
@@ -300,7 +301,6 @@ export type UpdateArticleInput = {
   body?: string | null;
   info?: string | null;
   rank?: number | null;
-  public?: boolean | null;
   pageId?: string | null;
 };
 
@@ -334,6 +334,7 @@ export type ModelPageFilterInput = {
   path?: ModelStringInput | null;
   hidden?: ModelBooleanInput | null;
   viewer?: ModelStringInput | null;
+  public?: ModelBooleanInput | null;
   and?: Array<ModelPageFilterInput | null> | null;
   or?: Array<ModelPageFilterInput | null> | null;
   not?: ModelPageFilterInput | null;
@@ -365,7 +366,6 @@ export type ModelArticleFilterInput = {
   body?: ModelStringInput | null;
   info?: ModelStringInput | null;
   rank?: ModelIntInput | null;
-  public?: ModelBooleanInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
   or?: Array<ModelArticleFilterInput | null> | null;
@@ -426,6 +426,7 @@ export type ModelSubscriptionPageFilterInput = {
   path?: ModelSubscriptionStringInput | null;
   hidden?: ModelSubscriptionBooleanInput | null;
   viewer?: ModelSubscriptionStringInput | null;
+  public?: ModelSubscriptionBooleanInput | null;
   and?: Array<ModelSubscriptionPageFilterInput | null> | null;
   or?: Array<ModelSubscriptionPageFilterInput | null> | null;
 };
@@ -466,7 +467,6 @@ export type ModelSubscriptionArticleFilterInput = {
   body?: ModelSubscriptionStringInput | null;
   info?: ModelSubscriptionStringInput | null;
   rank?: ModelSubscriptionIntInput | null;
-  public?: ModelSubscriptionBooleanInput | null;
   pageId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
   or?: Array<ModelSubscriptionArticleFilterInput | null> | null;
@@ -517,6 +517,7 @@ export type CreatePageMutation = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -525,10 +526,9 @@ export type CreatePageMutation = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -548,6 +548,7 @@ export type UpdatePageMutation = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -556,10 +557,9 @@ export type UpdatePageMutation = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -579,6 +579,7 @@ export type DeletePageMutation = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -587,10 +588,9 @@ export type DeletePageMutation = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -643,10 +643,9 @@ export type CreateArticleMutation = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -673,10 +672,9 @@ export type UpdateArticleMutation = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -703,10 +701,9 @@ export type DeleteArticleMutation = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -764,6 +761,7 @@ export type GetPageQuery = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -772,10 +770,9 @@ export type GetPageQuery = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -797,8 +794,22 @@ export type ListPagesQuery = {
     path: string;
     hidden: boolean;
     viewer: string;
+    public?: boolean | null;
     articles?: {
       __typename: "ModelArticleConnection";
+      items: Array<{
+        __typename: "Article";
+        id: string;
+        title: string;
+        headline: string;
+        layout: string;
+        body: string;
+        info: string;
+        rank: number;
+        pageId: string;
+        createdAt: string;
+        updatedAt: string;
+      } | null>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -841,10 +852,9 @@ export type GetArticleQuery = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -873,10 +883,9 @@ export type ListArticlesQuery = {
     title: string;
     headline: string;
     layout: string;
-    body?: string | null;
-    info?: string | null;
+    body: string;
+    info: string;
     rank: number;
-    public: boolean;
     pictures?: {
       __typename: "ModelPictureConnection";
       nextToken?: string | null;
@@ -912,10 +921,9 @@ export type ArticlesByPageIdQuery = {
     title: string;
     headline: string;
     layout: string;
-    body?: string | null;
-    info?: string | null;
+    body: string;
+    info: string;
     rank: number;
-    public: boolean;
     pictures?: {
       __typename: "ModelPictureConnection";
       nextToken?: string | null;
@@ -972,6 +980,7 @@ export type OnCreatePageSubscription = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -980,10 +989,9 @@ export type OnCreatePageSubscription = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -1003,6 +1011,7 @@ export type OnUpdatePageSubscription = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1011,10 +1020,9 @@ export type OnUpdatePageSubscription = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -1034,6 +1042,7 @@ export type OnDeletePageSubscription = {
   path: string;
   hidden: boolean;
   viewer: string;
+  public?: boolean | null;
   articles?: {
     __typename: "ModelArticleConnection";
     items: Array<{
@@ -1042,10 +1051,9 @@ export type OnDeletePageSubscription = {
       title: string;
       headline: string;
       layout: string;
-      body?: string | null;
-      info?: string | null;
+      body: string;
+      info: string;
       rank: number;
-      public: boolean;
       pageId: string;
       createdAt: string;
       updatedAt: string;
@@ -1098,10 +1106,9 @@ export type OnCreateArticleSubscription = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -1128,10 +1135,9 @@ export type OnUpdateArticleSubscription = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -1158,10 +1164,9 @@ export type OnDeleteArticleSubscription = {
   title: string;
   headline: string;
   layout: string;
-  body?: string | null;
-  info?: string | null;
+  body: string;
+  info: string;
   rank: number;
-  public: boolean;
   pictures?: {
     __typename: "ModelPictureConnection";
     items: Array<{
@@ -1284,6 +1289,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -1295,7 +1301,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -1331,6 +1336,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -1342,7 +1348,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -1378,6 +1383,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -1389,7 +1395,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -1509,7 +1514,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -1555,7 +1559,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -1601,7 +1604,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -1703,6 +1705,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -1714,7 +1717,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -1750,22 +1752,22 @@ export class APIService {
             path
             hidden
             viewer
+            public
             articles {
               __typename
               items {
-              __typename
-              id
-              title
-              headline
-              layout
-              body
-              info
-              rank
-              public
-              pageId
-              createdAt
-              updatedAt
-            }
+                __typename
+                id
+                title
+                headline
+                layout
+                body
+                info
+                rank
+                pageId
+                createdAt
+                updatedAt
+              }
               nextToken
             }
             createdAt
@@ -1859,7 +1861,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -1905,10 +1906,9 @@ export class APIService {
             body
             info
             rank
-            public
             pictures {
               __typename
-              items {
+             items {
               __typename
               id
               filename
@@ -2018,7 +2018,6 @@ export class APIService {
             body
             info
             rank
-            public
             pictures {
               __typename
               nextToken
@@ -2152,6 +2151,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -2163,7 +2163,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -2200,6 +2199,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -2211,7 +2211,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -2248,6 +2247,7 @@ export class APIService {
           path
           hidden
           viewer
+          public
           articles {
             __typename
             items {
@@ -2259,7 +2259,6 @@ export class APIService {
               body
               info
               rank
-              public
               pageId
               createdAt
               updatedAt
@@ -2383,7 +2382,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -2430,7 +2428,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {
@@ -2477,7 +2474,6 @@ export class APIService {
           body
           info
           rank
-          public
           pictures {
             __typename
             items {

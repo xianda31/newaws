@@ -5,6 +5,7 @@ import { Page } from 'src/app/API.service';
 import { ToastService } from 'src/app/tools/service/toast.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { Router } from '@angular/router';
+import { pageViews } from '../interfaces/page-interface';
 
 @Component({
   selector: 'app-pages',
@@ -12,6 +13,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./pages.component.scss']
 })
 export class PagesComponent implements OnInit {
+
+  arg: string = 'argh';
 
   pageForm!: FormGroup;
   // pages$: Observable<Page[]> = this.pageService.pages$;
@@ -54,6 +57,7 @@ export class PagesComponent implements OnInit {
       description: new FormControl('', Validators.required),
       path: new FormControl('tbd'),
       viewer: new FormControl(''),
+      public: new FormControl(true),
     });
 
   }
@@ -119,18 +123,8 @@ export class PagesComponent implements OnInit {
 
   editPage(page: Page) {
     // this.selectPage(page);
-    this.router.navigate(['dashboard/publisher/pages', page.id]);
+    this.router.navigate(['back/publisher/pages', page.id]);
   }
-
-  // patchedPage(page: Page): Page {
-  //   const newPage = { ...page };
-  //   if (this.pagesByRootMenu[page.root_menu] === 1) {
-  //     newPage.path = newPage.label.toLowerCase().replace(/\s/g, '-')
-  //   } else {
-  //     newPage.path = (newPage.root_menu + '/' + newPage.label).toLowerCase().replace(/\s/g, '-');
-  //   }
-  //   return newPage;
-  // }
 
   async deletePage(event: any, page: Page) {
     const articles = await this.pageService.articlesByPageId(page.id);
@@ -149,6 +143,11 @@ export class PagesComponent implements OnInit {
   cancel() {
     this.pageForm.reset();
     this.createMode = true;
+  }
+
+  toggle(page: Page) {
+    // console.log('toggle', page.public);
+    this.pageService.updatePage(page);
   }
 }
 

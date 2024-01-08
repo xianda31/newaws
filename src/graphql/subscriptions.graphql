@@ -51,6 +51,7 @@ subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
     path
     hidden
     viewer
+    public
     articles {
       items {
         id
@@ -60,7 +61,6 @@ subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
         body
         info
         rank
-        public
         pageId
         createdAt
         updatedAt
@@ -84,6 +84,7 @@ subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
     path
     hidden
     viewer
+    public
     articles {
       items {
         id
@@ -93,7 +94,6 @@ subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
         body
         info
         rank
-        public
         pageId
         createdAt
         updatedAt
@@ -117,6 +117,7 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
     path
     hidden
     viewer
+    public
     articles {
       items {
         id
@@ -126,7 +127,6 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
         body
         info
         rank
-        public
         pageId
         createdAt
         updatedAt
@@ -192,7 +192,6 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     body
     info
     rank
-    public
     pictures {
       items {
         id
@@ -224,7 +223,6 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     body
     info
     rank
-    public
     pictures {
       items {
         id
@@ -256,7 +254,6 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     body
     info
     rank
-    public
     pictures {
       items {
         id

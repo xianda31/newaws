@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MembersComponent } from '../members/members.component';
-import { ArticlesComponent } from '../publications/articles/articles/articles.component';
+// import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { TestComponent } from '../tests/test.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ToolsModule } from 'src/app/tools/tools/tools.module';
@@ -18,7 +18,7 @@ import { GetPictureInfoComponent } from '../publications/pages/get-picture-info/
 @NgModule({
   declarations: [
     MembersComponent,
-    ArticlesComponent,
+    // ArticlesComponent,
     TestComponent,
     EditComponent,
     FilemgrComponent,

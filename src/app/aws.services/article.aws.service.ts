@@ -33,15 +33,14 @@ export class ArticleService {
   }
 
 
-  // chargement des articles depuis la base de données ; filtrage vs  public_only
+  // chargement des articles depuis la base de données 
   loadArticles(public_only: boolean): void {
     this._articles = [];
-    // return new Promise(async (resolve) => {
-    this.api.ListArticles(public_only ? { public: { eq: true } } : {})
+    this.api.ListArticles() //public_only ? { public: { eq: true } } : {})
       .then((articles) => {
         const articlesItems = articles.items as Article[];
         // console.log('loadArticles', articlesItems);
-        // console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
+        console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
         this._articles = [...articlesItems];
         this._articles$.next(this._articles)
       })
@@ -50,7 +49,6 @@ export class ArticleService {
 
       })
 
-    // });
   }
 
 
