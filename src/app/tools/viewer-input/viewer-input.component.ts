@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { pageViews } from 'src/app/dashboard/publications/pages/interfaces/page-interface';
+import { pageViewIcons } from 'src/app/interfaces/page.interface';
+// import { pageViews } from 'src/app/dashboard/publications/pages/interfaces/page-interface';
 
-interface ViewsArray { [key: string]: boolean }
+interface ViewsArray { [key: string]: string }
 
 
 @Component({
@@ -20,7 +21,8 @@ interface ViewsArray { [key: string]: boolean }
 
 export class ViewerInputComponent implements ControlValueAccessor {
 
-  options = pageViews;
+
+  options: ViewsArray = pageViewIcons;
   selectedOption!: string;
   disabled = false;
 

@@ -5,7 +5,7 @@ import { Page } from 'src/app/API.service';
 import { ToastService } from 'src/app/tools/service/toast.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { Router } from '@angular/router';
-import { pageViews } from '../interfaces/page-interface';
+import { pageViewIcons } from 'src/app/interfaces/page.interface';
 
 @Component({
   selector: 'app-pages',
@@ -14,7 +14,6 @@ import { pageViews } from '../interfaces/page-interface';
 })
 export class PagesComponent implements OnInit {
 
-  arg: string = 'argh';
 
   pageForm!: FormGroup;
   // pages$: Observable<Page[]> = this.pageService.pages$;
@@ -24,6 +23,7 @@ export class PagesComponent implements OnInit {
   );
 
   // articlesByPageId: { [key: string]: string | number } = {};
+  viewIcons: { [key: string]: string } = pageViewIcons;
   pagesByRootMenu: { [key: string]: number } = {};
   createMode: boolean = true;
   selectedPage!: Page;
@@ -41,11 +41,9 @@ export class PagesComponent implements OnInit {
       this.pagesByRootMenu = {};
       pages.forEach((page) => {
         this.pagesByRootMenu[page.root_menu] = this.pagesByRootMenu[page.root_menu] ? this.pagesByRootMenu[page.root_menu] + 1 : 1;
-        // console.log('page', page.label, this.articlesByPageId[index].length);
       });
 
       this.verifyPath(pages);     // correction des paths menu vs sous-menus
-      // console.log('pagesByRootMenu', this.pagesByRootMenu);
     });
 
 

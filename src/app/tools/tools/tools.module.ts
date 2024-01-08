@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/get-date.component';
 import { BucketnamePipe } from '../../pipes/bucketname.pipe';
 import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
-import { ViewerInputComponent } from '../rights-input copy/viewer-input.component';
+import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 

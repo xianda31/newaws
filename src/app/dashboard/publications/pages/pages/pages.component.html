@@ -23,7 +23,7 @@
         <td class="col">{{ page.description }}</td>
         <td class="col text-center bg">
           <button type="button" class="btn btn-primary btn-sm ">
-            <i [class]="page.viewer" style="font-weight: bolder; color:white"></i>
+            <i [class]="viewIcons[page.viewer]" style="font-weight: bolder; color:white"></i>
           </button>
         </td>
         <td class="col text-center ">{{ page.articles?.items ? page.articles!.items.length : ''}}</td>

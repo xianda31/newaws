@@ -1,1 +1,0 @@
-export const pageViews = ['bi bi-layout-text-sidebar-reverse', 'bi bi-view-stacked', 'bi bi-layout-three-columns'];

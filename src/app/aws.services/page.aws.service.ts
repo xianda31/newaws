@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
-import { APIService, Article, CreatePageInput, Page } from '../API.service';
+import { APIService, Article, CreatePageInput, Page, UpdatePageInput } from '../API.service';
 import { Menu } from '../interfaces/navigation.interface';
 import { CanActivateFn } from '@angular/router';
 import { ArticleService } from './article.aws.service';
@@ -23,7 +23,7 @@ export class PageService {
 
     this.api.ListPages().then((result) => {
       this._pages = result.items as Page[];
-      console.log('%s pages identifiées : ', this._pages.length, this._pages);
+      // console.log('%s pages identifiées : ', this._pages.length, this._pages);
       this.pages$.next(this._pages);
 
     })
@@ -64,7 +64,7 @@ export class PageService {
   updatePage(page: Page) {
     const { articles, createdAt, updatedAt, __typename, ...pageInput } = page;
     this.api.UpdatePage(pageInput).then((result) => {
-      this._pages = this._pages.map((item) => item.id === page.id ? page : item);
+      this._pages = this._pages.map((item) => item.id === result.id ? result : item);
       this.pages$.next(this._pages);
     })
       .catch((error) => { console.log('Error updating page: ', error); });
