@@ -66,7 +66,7 @@ export class PagesComponent implements OnInit {
     pages.forEach((page) => {
       const { articles, ...pageWithoutArticles } = page;
       const root = (this.pagesByRootMenu[page.root_menu] === 1) ? '' : page.root_menu + '/';
-      const shouldPath = (root + page.label).toLowerCase().replace(/\s/g, '-');
+      const shouldPath = (root + page.label).toLowerCase().replace(/^\w\#/g, '').replace(/\s/g, '-');
       if (page.path !== shouldPath) {
         // console.log('page', page.label, 'path', page.path, 'should be', shouldPath);
         pageWithoutArticles.path = shouldPath;

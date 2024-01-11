@@ -77,7 +77,9 @@ export class HeaderComponent implements OnInit {
   }
   // menu utilities
 
-
+  stripOrder(root: string): string {
+    return root.replace(/^\w\#/g, '');
+  }
 
   buildMenuMap(pages: Page[]): Map<string, Menu[]> {
     let menuMap = new Map<string, Menu[]>([]);

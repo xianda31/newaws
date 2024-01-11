@@ -27,7 +27,7 @@
 
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{item.key}}</a>
+              {{stripOrder(item.key)}}</a>
             <ul class="dropdown-menu">
               <li *ngFor="let subMenu of item.value">
                 <a class="dropdown-item" [routerLink]=" [subMenu.route_path]">{{subMenu.label}}</a>
