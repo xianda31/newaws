@@ -5,7 +5,6 @@ import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
-import { environment } from 'src/app/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
 import { LoggedUser } from 'src/app/interfaces/user.interface';
 
@@ -18,9 +17,12 @@ import { LoggedUser } from 'src/app/interfaces/user.interface';
 })
 export class HeaderComponent implements OnInit {
   @Input() loggedUser!: LoggedUser | null;
-  @Input() showSideMenu: boolean = false;
-  @Output() showSideMenuChange = new EventEmitter<boolean>();
 
+  frontMenuShow: boolean = true;
+
+  isAdmin: boolean = true;
+  isPublisher: boolean = true;
+  isSeller: boolean = true;
 
   menuItems!: Map<string, Menu[]>;
   // test_links: boolean = environment.test_links;
@@ -45,9 +47,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const route = this.router.url;
+    this.frontMenuShow = !route.includes('back');
+
     this.pages$.subscribe((pages) => {
-      // console.log('constructing new menu map');
-      // this.checkMustHavePages(pages);
       this.menuItems = this.buildMenuMap(pages);
     });
 
@@ -64,12 +67,14 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  toggleSideMenuVisibility() {
-    this.showSideMenu = !this.showSideMenu;
-    this.showSideMenuChange.emit(this.showSideMenu);
-    console.log('showSideMenu: %o', this.showSideMenu);
+  toggleFrontMenuVisibility() {
+    this.frontMenuShow = !this.frontMenuShow;
+    if (!this.frontMenuShow) {
+      this.router.navigate(['back']);
+    } else {
+      this.router.navigate(['front/home']);
+    }
   }
-
   // menu utilities
 
 

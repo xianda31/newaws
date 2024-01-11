@@ -1,23 +1,17 @@
 <div *ngIf="DBloaded">
+
     <div class="container-fluid outer-wrapper pt-1">
-        <div class="row">
-            <div class="col-2">
-                <app-sidebar [showSideMenu]="showSideMenu"></app-sidebar>
-            </div>
-            <div class="col-8">
-                <app-header [loggedUser]="loggedUser" [(showSideMenu)]="showSideMenu"></app-header>
-                <div class=" g-0">
-                    <router-outlet></router-outlet>
-                    <app-toaster></app-toaster>
-                </div>
-            </div>
+        <div class="offset-md-1 col-md-10 ">
+            <app-header [loggedUser]="loggedUser"></app-header>
+
+            <router-outlet></router-outlet>
+            <app-toaster></app-toaster>
         </div>
     </div>
     <app-footer></app-footer>
-</div>
 
-
-<div *ngIf="!DBloaded" class=" d-flex bg-success justify-content-center align-items-center" style="height: 100%">
-    <img src="../assets/images/bcsto.jpg" class=" row img-pulse" alt="logo">
+    <div *ngIf="!DBloaded" class=" d-flex bg-success justify-content-center align-items-center" style="height: 100%">
+        <img src="../assets/images/bcsto.jpg" class=" row img-pulse" alt="logo">
+    </div>
 
 </div>

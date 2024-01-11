@@ -1,28 +1,30 @@
-<!-- bandeau menu -->
 <div class="navbar  navbar-expand-lg bg-success navbar-dark  rounded-2">
-  <div class="container-md g-1">
+  <div class="container">
     <!-- toggler button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
+    <a *ngIf="frontMenuShow" class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
+    <a *ngIf="!frontMenuShow" class="text-white text-decoration-none">outils backend</a>
 
     <!-- collapsible bar -->
-    <div class="collapse navbar-collapse fs-5  justify-content-around" id="collapsibleNavbar">
+    <div class="collapse navbar-collapse fs-5  justify-content-center" id="collapsibleNavbar">
 
-      <ul class="navbar-nav">
+      <!-- frontend menu -->
+      <ul [id]="frontMenuShow ? 'show' : 'noShow'" class="navbar-nav">
 
-        <!-- boucle sur les menus customisables -->
+        <!-- menu customisable -->
         <ng-container *ngFor="let item of menuItems | keyvalue">
           <li *ngIf="item.value.length === 1" class="nav-item ">
             <a class="nav-link mx-2" routerLinkActive="active-link"
               [routerLink]="[item.value[0].route_path]">{{item.value[0].label}}</a>
           </li>
+
           <li *ngIf="item.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{item.key}}</a>
@@ -34,36 +36,72 @@
           </li>
         </ng-container>
 
-
-
-
-
-
+        <!-- login -->
         <li *ngIf="!loggedUser" class="nav-item">
-          <!-- <button type="button" class="btn btn-primary" routerLink="login"> -->
-          <!-- <i class="bi bi-person-circle"></i> -->
           <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="login">Se connecter</a>
         </li>
-
-
-
-        <!-- login -->
 
         <li *ngIf="loggedUser" class="nav-item mx-5 dropdown">
           <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle"> </i>
             {{loggedUser.firstname}}
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu ">
             <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
-            <li *ngIf="loggedUser" class="dropdown-item" (click)="toggleSideMenuVisibility()">menu admin</li>
             <li class="dropdown-item" (click)="onLogout()">
               déconnexion
             </li>
           </ul>
         </li>
+      </ul>
+
+      <!-- backend menu -->
+      <ul [id]="!frontMenuShow ? 'show':'noShow'" class="navbar-nav">
+        <li *ngIf="isAdmin" class="nav-item mx-5 dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-people-fill"></i>
+            Administration
+          </a>
+          <ul class="dropdown-menu ">
+            <li><a class="dropdown-item" routerLink="back/admin/members">Adhérents</a></li>
+
+          </ul>
+        </li>
+
+        <li *ngIf="isPublisher" class="nav-item mx-5 dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-window-stack"></i>
+            Publication </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="back/publisher/pages">Edition pages</a></li>
+            <li><a class="dropdown-item" routerLink="back/publisher/files">Edition fichiers</a>
+            </li>
+            <li><a class="dropdown-item" routerLink="back/publisher/cleanup">Edition images</a>
+            </li>
+          </ul>
+        </li>
+
+        <li *ngIf="isSeller" class="nav-item mx-5 dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-cart4"></i>
+            Ventes </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
+          </ul>
+        </li>
 
       </ul>
+
     </div>
+    <ul class="navbar-nav  ">
+      <!-- <div id="back-menu"> -->
+      <li class="nav-item text-end">
+        <a id="trigger" class="navbar-brand">
+          <i [class]="frontMenuShow ? 'bi bi-gear-fill' : 'bi bi-house-up-fill'"
+            (click)="toggleFrontMenuVisibility()"></i>
+        </a>
+      </li>
+      <!-- </div> -->
+    </ul>
   </div>
 </div>
