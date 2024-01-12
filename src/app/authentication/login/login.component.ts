@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
   ) { }
 
   loginForm !: FormGroup;
-  // loginRefused: boolean = false;
-  // resetMode: boolean = false;
+  pswInputType: string = 'password';
+  pswVisible: boolean = false;
 
   ngOnInit(): void {
 
@@ -60,6 +60,10 @@ export class LoginComponent implements OnInit {
       );
   }
 
+  togglePswInputType() {
+    this.pswVisible = !this.pswVisible;
+    this.pswInputType = this.pswVisible ? 'text' : 'password';
+  }
 
   confirmSignIn(code: string) {
     console.log('confirmSignIn code : ', code);

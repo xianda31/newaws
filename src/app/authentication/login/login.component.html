@@ -1,23 +1,27 @@
 <div class="container pt-5">
   <div class="row justify-content-center">
-    <div class="col col-md-8">
-      <div class="card">
+    <div class="col col-md-6">
+      <div class="card border-0">
 
-        <div class="card-body ">
+        <div class="card-body justify-content-center">
 
-          <div class="row">
-            <span class="h3 text-center pb-4"> s'identifier
-            </span>
+          <div class=" col-md-8 offset-md-2">
+            <figure class="text-center">
+              <blockquote class="blockquote">
+                <img src="../../../assets/images/bcsto.jpg" class="figure-img img-fluid " alt="logo">
+                <p class="h1">Bienvenue</p>
+              </blockquote>
+            </figure>
           </div>
 
-          <form [formGroup]="loginForm" novalidate>
+          <form [formGroup]="loginForm" autocomplete="on">
 
             <div class="container ">
 
               <div class="row justify-content-center pt-2">
                 <div class="col-md-8">
-                  <label class="form-label">email :</label>
-                  <input type="mail" class="form-control form-control-sm" placeholder="adresse mail"
+                  <label class="form-label">email</label>
+                  <input type="mail" class="form-control form-control-sm" placeholder="adresse mail" id="email"
                     formControlName="email" [class.is-invalid]="email.invalid && (email.dirty || email.touched)" />
                   <div class="invalid-feedback">
                     une adresse mail doit être fournie
@@ -27,12 +31,19 @@
 
               <div class="row justify-content-center pt-2">
                 <div class="col-md-8">
-                  <label class="form-label">mot de passe</label>
-                  <input type="password" class="form-control form-control-sm" placeholder="mot de passe"
-                    formControlName="password"
-                    [class.is-invalid]="password.invalid && (password.dirty || password.touched)" />
-                  <div class="invalid-feedback">
-                    mot de passe absent
+                  <div class="input-group">
+
+                    <label class="form-label">mot de passe</label>
+                    <input [type]="pswInputType" class="form-control form-control-sm" placeholder="mot de passe"
+                      formControlName="password"
+                      [class.is-invalid]="password.invalid && (password.dirty || password.touched)" />
+                    <div class="invalid-feedback">
+                      mot de passe absent
+                    </div>
+                    <button type="button" class="btn btn-sm btn-info" (click)="togglePswInputType()">
+                      <i *ngIf="!pswVisible" class="bi bi-eye-fill"></i>
+                      <i *ngIf="pswVisible" class="bi bi-eye-slash-fill"></i>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -40,7 +51,8 @@
 
 
               <div class="row justify-content-around pt-4">
-                <button class="btn btn-sm btn-primary col-4" type="submit" (click)="onLogin()">log in</button>
+                <button class="btn btn-sm btn-primary col-4" type="submit" (click)="onLogin()"
+                  [disabled]="loginForm.invalid">log in</button>
                 <button class="btn btn-sm btn-info col-4" type="submit" (click)="onReset()">mot de passe
                   oublié</button>
               </div>

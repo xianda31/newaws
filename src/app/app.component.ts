@@ -44,12 +44,12 @@ export class AppComponent implements OnInit {
       if (user) {
         let member = this.memberService.getMemberByLicense(user.license);
         this.loggedUser = { email: user.email, firstname: user.username, lastname: member?.lastname, license: user.license, credentials: member?.rights! };
-        const rights = member?.rights!;
-        console.log('loggedUser: %o', this.loggedUser);
+        // const rights = member?.rights!;
 
-        // this.isAdmin = rights?.includes('Admin');
-        // this.isPublisher = rights?.includes('Publisher');
+      } else {
+        this.loggedUser = null;
       }
+      console.log('loggedUser: %o', this.loggedUser);
     });
 
   }

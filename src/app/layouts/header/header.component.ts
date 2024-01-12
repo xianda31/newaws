@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, concatAll, take, filter, tap, toArray } from 'rxjs';
 import { CreatePageInput, Page } from 'src/app/API.service';
@@ -15,14 +15,17 @@ import { LoggedUser } from 'src/app/interfaces/user.interface';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnChanges {
   @Input() loggedUser!: LoggedUser | null;
 
   frontMenuShow: boolean = true;
 
-  isAdmin: boolean = true;
-  isPublisher: boolean = true;
-  isSeller: boolean = true;
+  isLogged!: boolean;
+  isAdmin!: boolean;
+  isPublisher!: boolean;
+  isSeller!: boolean;
+
+
 
   menuItems!: Map<string, Menu[]>;
   // test_links: boolean = environment.test_links;
@@ -36,6 +39,15 @@ export class HeaderComponent implements OnInit {
     private pageService: PageService,
     private memberService: MemberService,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['loggedUser']) {
+      this.isLogged = !!this.loggedUser;
+      this.isAdmin = this.loggedUser?.credentials?.includes('Admin')!;
+      this.isPublisher = this.loggedUser?.credentials?.includes('Publisher')!;
+      this.isSeller = this.loggedUser?.credentials?.includes('Seller')!;
+    }
+  }
 
   get menuKeys() {
     return Array.from(this.menuItems.keys());
@@ -60,9 +72,9 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.cognitoService._signOut();
-    // this.isLogged = false;
-    // this.isAdmin = false;
-    // this.isPublisher = false;
+    this.isLogged = false;
+    this.isAdmin = false;
+    this.isPublisher = false;
     this.router.navigate(['front/home']);
   }
 
@@ -85,6 +97,7 @@ export class HeaderComponent implements OnInit {
     let menuMap = new Map<string, Menu[]>([]);
 
     pages.forEach((page) => {
+      if (!this.isLogged && !page.public) { return; }
       const root = page.root_menu;
       if (page.hidden) { return; }
       const menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };

@@ -13,6 +13,7 @@ import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
+import { ToastService } from 'src/app/tools/service/toast.service';
 
 
 
@@ -46,6 +47,7 @@ export class PageEditorComponent implements OnInit {
     private pageService: PageService,
     private articleService: ArticleService,
     private pictureService: PictureService,
+    private toastService: ToastService,
 
     private modalService: NgbModal,
   ) { }
@@ -228,6 +230,7 @@ export class PageEditorComponent implements OnInit {
       })
       .catch((err) => {
         console.log('setPictures : S3 error:%o ', err);
+        this.toastService.showErrorToast('Error uploading pictures', err);
       });
   }
 
