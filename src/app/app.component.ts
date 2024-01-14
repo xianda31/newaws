@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
+    if (environment.logging_bypass) this.cognitoService.signIn(environment.john_doe);
 
     combineLatest([this.pageService.pagesReady$,
     this.memberService.members$, this.articleService.articles$])

@@ -6,14 +6,14 @@
   <table class="table table-responsive-sm align-items-center table-hover">
     <thead class="thead-light">
       <tr>
-        <th scope="col" class="col-md-2 ">menu</th>
+        <th scope="col" class="col-md-1 ">menu</th>
         <th scope="col" class="col-md-2 ">sous-menu</th>
-        <th scope="col" class="col-md-2">descriptif </th>
+        <th scope="col" class="col-md-4">descriptif </th>
         <th scope="col" class="col-md-2 text-center">présentation</th>
         <th scope="col" class="col-md-1 text-center">nb articles</th>
         <th scope="col" class="col-md-1 text-center">public</th>
-        <th scope="col" class="col-md-1 text-center">sup.</th>
-        <th scope="col" class="col-md-1 text-center">mod.</th>
+        <th scope="col" class="col-md-1 text-center">action</th>
+        <!-- <th scope="col" class="col-md-1 text-center">mod.</th> -->
       </tr>
     </thead>
     <tbody>
@@ -29,15 +29,19 @@
         <td class="col text-center ">{{ page.articles?.items ? page.articles!.items.length : ''}}</td>
         <td class="col text-center ">
           <app-toggle-input [(ngModel)]="page.public" (click)="toggle(page)"></app-toggle-input>
+
         <td class="col text-center">
-          <button *ngIf="!page.hidden" type="button" class="btn btn-danger btn-sm " (click)="deletePage($event,page)">
-            <i class="bi bi-trash3" style="color:white"></i>
-          </button>
-        </td>
-        <td class="col text-center">
-          <button type="button" class="btn btn-primary btn-sm " (click)="editPage(page)">
-            <i class="bi bi-pencil-square" style="color:white"></i>
-          </button>
+          <div class="d-inline-flex gap-1">
+
+            <button *ngIf="!page.hidden" type="button" class="btn btn-danger btn-sm text-white "
+              (click)="deletePage($event,page)">
+              <i class="bi bi-trash3"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-sm text-white " (click)="editPage(page)">
+              <i class="bi bi-pencil-square"></i>
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -49,14 +53,14 @@
       <thead class="thead-light">
         <tr>
           <!-- <th scope="col" class="col-md-1 text-center">rang</th> -->
-          <th scope="col" class="col-md-2 ">menu</th>
+          <th scope="col" class="col-md-1 ">menu</th>
           <th scope="col" class="col-md-2 ">sous-menu</th>
-          <th scope="col" class="col-md-2">descriptif</th>
+          <th scope="col" class="col-md-4">descriptif</th>
           <th scope="col" class="col-md-2 text-center"> présentation</th>
           <th scope="col" class="col-md-1 text-center ">sans menu</th>
           <th scope="col" class="col-md-1 text-center ">public</th>
-          <th scope="col" class="col-md-1 text-center"> aband.</th>
-          <th scope="col" class="col-md-1 text-center">valid.</th>
+          <th scope="col" class="col-md-1 text-center"> action</th>
+          <!-- <th scope="col" class="col-md-1 text-center">valid.</th> -->
         </tr>
       </thead>
       <tbody>
@@ -91,23 +95,25 @@
           <td class="col text-center ">
             <app-toggle-input class="formcontrol" formControlName="public"></app-toggle-input>
           </td>
-          <td class="col text-center">
-            <button type="submit" class="btn btn-sm btn-warning " (click)="cancel()">
-              <i class="bi bi-x-circle"></i>
-            </button>
-          </td>
 
           <td class="col text-center">
-            <!-- &nbsp; -->
-            <button *ngIf="createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
-              (click)="createPage()" [disabled]="pageForm.invalid">
-              <i class="bi bi-check-square-fill"></i>
-            </button>
+            <div class="d-inline-flex gap-1">
+              <!-- <td class="col text-center"> -->
+              <button type="submit" class="btn btn-sm btn-warning " (click)="cancel()">
+                <i class="bi bi-x-circle"></i>
+              </button>
+              <!-- </td> -->
 
-            <button *ngIf="!createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
-              (click)="updatePage()" [disabled]="pageForm.invalid">
-              <i class="bi bi-check-square-fill"></i>
-            </button>
+              <button *ngIf="createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
+                (click)="createPage()" [disabled]="pageForm.invalid">
+                <i class="bi bi-check-square-fill"></i>
+              </button>
+
+              <button *ngIf="!createMode" type="submit" id="validation" class="btn btn-sm btn-primary text-white "
+                (click)="updatePage()" [disabled]="pageForm.invalid">
+                <i class="bi bi-check-square-fill"></i>
+              </button>
+            </div>
           </td>
 
 

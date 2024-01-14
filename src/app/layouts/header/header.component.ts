@@ -31,6 +31,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   // test_links: boolean = environment.test_links;
 
   pages$: Observable<Page[]> = this.pageService.pages$;
+  private _pages: Page[] = [];
+
 
 
   constructor(
@@ -46,6 +48,9 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.isAdmin = this.loggedUser?.credentials?.includes('Admin')!;
       this.isPublisher = this.loggedUser?.credentials?.includes('Publisher')!;
       this.isSeller = this.loggedUser?.credentials?.includes('Seller')!;
+      if (this.isLogged) {
+        this.menuItems = this.buildMenuMap(this._pages);
+      }
     }
   }
 
@@ -63,7 +68,8 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.frontMenuShow = !route.includes('back');
 
     this.pages$.subscribe((pages) => {
-      this.menuItems = this.buildMenuMap(pages);
+      this._pages = pages;
+      this.menuItems = this.buildMenuMap(this._pages);
     });
 
     console.log('loggedUser: %o', this.loggedUser);

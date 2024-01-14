@@ -2,7 +2,8 @@
 
 export const environment = {
   test_links: true,  // true => masque le menu test
-  logging_bypass: false,  // true => permet d'afficher tous les menus de Christian
+  logging_bypass: true,
+  john_doe: { email: 'chrrenoux@yahoo.fr', password: 'Bogomol2024!!' },
   rights: ['Admin', 'Publisher', 'Sales'],
   version: '3.0.0',
   spinner_tempo: 500,
