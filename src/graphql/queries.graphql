@@ -101,6 +101,7 @@ query GetPicture($id: ID!) {
   getPicture(id: $id) {
     id
     filename
+    orientation
     rank
     articleId
     caption1
@@ -120,6 +121,45 @@ query ListPictures(
     items {
       id
       filename
+      orientation
+      rank
+      articleId
+      caption1
+      caption2
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query GetDocument($id: ID!) {
+  getDocument(id: $id) {
+    id
+    filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+query ListDocuments(
+  $filter: ModelDocumentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listDocuments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      filename
+      orientation
       rank
       articleId
       caption1
@@ -146,6 +186,23 @@ query GetArticle($id: ID!) {
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1
@@ -182,6 +239,10 @@ query ListArticles(
         nextToken
         __typename
       }
+      documents {
+        nextToken
+        __typename
+      }
       pageId
       createdAt
       updatedAt
@@ -209,6 +270,38 @@ query PicturesByArticleId(
     items {
       id
       filename
+      orientation
+      rank
+      articleId
+      caption1
+      caption2
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+
+query DocumentsByArticleId(
+  $articleId: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelDocumentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  documentsByArticleId(
+    articleId: $articleId
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      filename
+      orientation
       rank
       articleId
       caption1
@@ -245,6 +338,10 @@ query ArticlesByPageId(
       info
       rank
       pictures {
+        nextToken
+        __typename
+      }
+      documents {
         nextToken
         __typename
       }

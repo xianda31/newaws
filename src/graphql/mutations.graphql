@@ -166,6 +166,7 @@ mutation CreatePicture(
   createPicture(input: $input, condition: $condition) {
     id
     filename
+    orientation
     rank
     articleId
     caption1
@@ -183,6 +184,7 @@ mutation UpdatePicture(
   updatePicture(input: $input, condition: $condition) {
     id
     filename
+    orientation
     rank
     articleId
     caption1
@@ -200,6 +202,61 @@ mutation DeletePicture(
   deletePicture(input: $input, condition: $condition) {
     id
     filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation CreateDocument(
+  $input: CreateDocumentInput!
+  $condition: ModelDocumentConditionInput
+) {
+  createDocument(input: $input, condition: $condition) {
+    id
+    filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation UpdateDocument(
+  $input: UpdateDocumentInput!
+  $condition: ModelDocumentConditionInput
+) {
+  updateDocument(input: $input, condition: $condition) {
+    id
+    filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+mutation DeleteDocument(
+  $input: DeleteDocumentInput!
+  $condition: ModelDocumentConditionInput
+) {
+  deleteDocument(input: $input, condition: $condition) {
+    id
+    filename
+    orientation
     rank
     articleId
     caption1
@@ -226,6 +283,23 @@ mutation CreateArticle(
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1
@@ -260,6 +334,23 @@ mutation UpdateArticle(
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1
@@ -294,6 +385,23 @@ mutation DeleteArticle(
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1

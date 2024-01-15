@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
-import { APIService, Article, CreatePageInput, Page, UpdatePageInput } from '../API.service';
-import { Menu } from '../interfaces/navigation.interface';
-import { CanActivateFn } from '@angular/router';
+import { BehaviorSubject, Observable, map } from 'rxjs';
+import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { ArticleService } from './article.aws.service';
 
 @Injectable({
@@ -23,7 +21,7 @@ export class PageService {
 
     this.api.ListPages().then((result) => {
       this._pages = result.items as Page[];
-      // console.log('%s pages identifiées : ', this._pages.length, this._pages);
+      console.log('%s pages identifiées : ', this._pages.length, this._pages);
       this.pages$.next(this._pages);
 
     })

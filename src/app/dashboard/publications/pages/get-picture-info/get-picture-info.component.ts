@@ -18,7 +18,6 @@ export class GetPictureInfoComponent {
 
   ) { }
   ngOnInit(): void {
-    console.log('GetPictureInfoComponent', this.picture);
     this.initForm(this.picture);
     // this.date = this.article.info ?? '';
     // this.withDate = this.article.info ? true : false;
@@ -29,15 +28,17 @@ export class GetPictureInfoComponent {
     this.pictureForm = new FormGroup({
       caption1: new FormControl(picture.caption1),
       caption2: new FormControl(picture.caption2),
+      orientation: new FormControl(picture.orientation),
     });
   }
   clear_caption1() { this.pictureForm.get('caption1')!.patchValue(''); }
   clear_caption2() { this.pictureForm.get('caption2')!.patchValue(''); }
+  clear_orientation() { this.pictureForm.get('orientation')!.patchValue('PORTRAIT'); }
 
   infoChanged() {
     this.picture.caption1 = this.pictureForm.get('caption1')!.value;
     this.picture.caption2 = this.pictureForm.get('caption2')!.value;
-    console.log('GetPictureInfoComponent : infoChanged', this.picture);
+    this.picture.orientation = this.pictureForm.get('orientation')!.value;
     this.activeModal.close(this.picture);
   }
 

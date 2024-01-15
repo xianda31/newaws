@@ -5,6 +5,7 @@ import { FlashData } from '../plugins/flash-plugin/flash-plugin.interface';
 import { environment } from 'src/app/environments/environment';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { FileService } from '../../../tools/service/file.service';
+import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 
 
 
@@ -19,16 +20,12 @@ export class CarderComponent implements OnChanges {
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
-
-  // @ViewChildren('bodyArea') bodyArea!: QueryList<any>;
-  // @ViewChildren('headArea') headArea!: QueryList<any>;
-
-  // bannerURL !: string;
   data!: FlashData;
 
 
   constructor(
     private fileService: FileService,
+    // private http: HttpClient,
   ) { }
 
   async ngOnChanges(): Promise<void> {
@@ -46,9 +43,7 @@ export class CarderComponent implements OnChanges {
       date: article.info ? new Date(article.info) : null,
       id: article.id
     };
-    // const images = article.pictures?.items;
     if (article.pictures?.items && article.pictures?.items.length > 0) {
-      // console.log('...retrieving image from S3 for article', article);
       let getFn = (path: string) => { const keys = path.split('/'); return keys[keys.length - 1]; };
       flashData.pictures = article.pictures?.items
         .map((item) => {
@@ -58,15 +53,30 @@ export class CarderComponent implements OnChanges {
             alt: getFn(item!.filename),
             caption1: item?.caption1 ?? '',
             caption2: item?.caption2 ?? '',
+            orientation: item?.orientation as PictureOrientationTypeEnum ?? 'PORTRAIT',
             rank: item?.rank ?? 0,
           }
         })
         .sort((a, b) => (a.rank < b.rank ? 1 : -1));
-      // flashData.pictures = pictures;
+    } else {
+      const default_image = {
+        id: 'default_image',
+        uri: new Promise<string>((resolve, reject) => {
+          resolve('../../../../assets/images/no_image.jpg');
+        }),
+        alt: 'no_image',
+        caption1: '',
+        caption2: '',
+        orientation: 'PORTRAIT' as PictureOrientationTypeEnum,
+        rank: 0,
+      }
+      console.log('...', default_image);
+      flashData.pictures = [];
+      flashData.pictures.push(default_image);
     }
+
     // console.log('flashData', flashData);
     this.data = { ...flashData };
-
   }
 
   onPictureClick(op: PictureOp, id: string, i: number) {
@@ -78,9 +88,14 @@ export class CarderComponent implements OnChanges {
       case 'Right':
         co_id = (i === this.data.pictures!.length - 1 ? id : this.data.pictures![i + 1].id);
         break;
+      case 'Edit':
+        co_id = id;
+
+        break;
       default:
         break;
     }
+    console.log('onPictureClick', op, id, co_id);
     this.pictureClick.emit({ op: op, id: id, co_id: co_id });
   }
 

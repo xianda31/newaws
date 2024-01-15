@@ -1,5 +1,5 @@
-export enum PictureFormatTypeEnum {
+export enum PictureOrientationTypeEnum {
     Portrait = 'PORTRAIT',
     Landscape = 'LANDSCAPE',
 }
-export type PictureFormatTypee = keyof typeof PictureFormatTypeEnum;
+export type PictureOrientationType = keyof typeof PictureOrientationTypeEnum;

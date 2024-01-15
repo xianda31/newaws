@@ -1,4 +1,5 @@
 import { CardType } from "src/app/interfaces/page.interface";
+import { PictureOrientationTypeEnum } from "src/app/interfaces/picture.interface";
 
 
 
@@ -11,6 +12,7 @@ export interface FlashData {
     alt: string;
     caption1: string;
     caption2: string;
+    orientation: PictureOrientationTypeEnum;
     rank: number;
 
   }>;

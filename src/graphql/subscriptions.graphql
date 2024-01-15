@@ -145,6 +145,7 @@ subscription OnCreatePicture($filter: ModelSubscriptionPictureFilterInput) {
   onCreatePicture(filter: $filter) {
     id
     filename
+    orientation
     rank
     articleId
     caption1
@@ -159,6 +160,7 @@ subscription OnUpdatePicture($filter: ModelSubscriptionPictureFilterInput) {
   onUpdatePicture(filter: $filter) {
     id
     filename
+    orientation
     rank
     articleId
     caption1
@@ -173,6 +175,52 @@ subscription OnDeletePicture($filter: ModelSubscriptionPictureFilterInput) {
   onDeletePicture(filter: $filter) {
     id
     filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnCreateDocument($filter: ModelSubscriptionDocumentFilterInput) {
+  onCreateDocument(filter: $filter) {
+    id
+    filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnUpdateDocument($filter: ModelSubscriptionDocumentFilterInput) {
+  onUpdateDocument(filter: $filter) {
+    id
+    filename
+    orientation
+    rank
+    articleId
+    caption1
+    caption2
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+
+subscription OnDeleteDocument($filter: ModelSubscriptionDocumentFilterInput) {
+  onDeleteDocument(filter: $filter) {
+    id
+    filename
+    orientation
     rank
     articleId
     caption1
@@ -196,6 +244,23 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1
@@ -227,6 +292,23 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1
@@ -258,6 +340,23 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
       items {
         id
         filename
+        orientation
+        rank
+        articleId
+        caption1
+        caption2
+        createdAt
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+    documents {
+      items {
+        id
+        filename
+        orientation
         rank
         articleId
         caption1

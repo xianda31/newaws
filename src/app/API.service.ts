@@ -19,6 +19,9 @@ export type __SubscriptionContainer = {
   onCreatePicture: OnCreatePictureSubscription;
   onUpdatePicture: OnUpdatePictureSubscription;
   onDeletePicture: OnDeletePictureSubscription;
+  onCreateDocument: OnCreateDocumentSubscription;
+  onUpdateDocument: OnUpdateDocumentSubscription;
+  onDeleteDocument: OnDeleteDocumentSubscription;
   onCreateArticle: OnCreateArticleSubscription;
   onUpdateArticle: OnUpdateArticleSubscription;
   onDeleteArticle: OnDeleteArticleSubscription;
@@ -170,6 +173,7 @@ export type Article = {
   info: string;
   rank: number;
   pictures?: ModelPictureConnection | null;
+  documents?: ModelDocumentConnection | null;
   pageId: string;
   createdAt: string;
   updatedAt: string;
@@ -185,6 +189,26 @@ export type Picture = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ModelDocumentConnection = {
+  __typename: "ModelDocumentConnection";
+  items: Array<Document | null>;
+  nextToken?: string | null;
+};
+
+export type Document = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -211,6 +235,7 @@ export type DeletePageInput = {
 export type CreatePictureInput = {
   id?: string | null;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -219,6 +244,7 @@ export type CreatePictureInput = {
 
 export type ModelPictureConditionInput = {
   filename?: ModelStringInput | null;
+  orientation?: ModelStringInput | null;
   rank?: ModelIntInput | null;
   articleId?: ModelIDInput | null;
   caption1?: ModelStringInput | null;
@@ -259,6 +285,7 @@ export type ModelIDInput = {
 export type UpdatePictureInput = {
   id: string;
   filename?: string | null;
+  orientation?: string | null;
   rank?: number | null;
   articleId?: string | null;
   caption1?: string | null;
@@ -266,6 +293,42 @@ export type UpdatePictureInput = {
 };
 
 export type DeletePictureInput = {
+  id: string;
+};
+
+export type CreateDocumentInput = {
+  id?: string | null;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+};
+
+export type ModelDocumentConditionInput = {
+  filename?: ModelStringInput | null;
+  orientation?: ModelStringInput | null;
+  rank?: ModelIntInput | null;
+  articleId?: ModelIDInput | null;
+  caption1?: ModelStringInput | null;
+  caption2?: ModelStringInput | null;
+  and?: Array<ModelDocumentConditionInput | null> | null;
+  or?: Array<ModelDocumentConditionInput | null> | null;
+  not?: ModelDocumentConditionInput | null;
+};
+
+export type UpdateDocumentInput = {
+  id: string;
+  filename?: string | null;
+  orientation?: string | null;
+  rank?: number | null;
+  articleId?: string | null;
+  caption1?: string | null;
+  caption2?: string | null;
+};
+
+export type DeleteDocumentInput = {
   id: string;
 };
 
@@ -349,6 +412,7 @@ export type ModelPageConnection = {
 export type ModelPictureFilterInput = {
   id?: ModelIDInput | null;
   filename?: ModelStringInput | null;
+  orientation?: ModelStringInput | null;
   rank?: ModelIntInput | null;
   articleId?: ModelIDInput | null;
   caption1?: ModelStringInput | null;
@@ -356,6 +420,19 @@ export type ModelPictureFilterInput = {
   and?: Array<ModelPictureFilterInput | null> | null;
   or?: Array<ModelPictureFilterInput | null> | null;
   not?: ModelPictureFilterInput | null;
+};
+
+export type ModelDocumentFilterInput = {
+  id?: ModelIDInput | null;
+  filename?: ModelStringInput | null;
+  orientation?: ModelStringInput | null;
+  rank?: ModelIntInput | null;
+  articleId?: ModelIDInput | null;
+  caption1?: ModelStringInput | null;
+  caption2?: ModelStringInput | null;
+  and?: Array<ModelDocumentFilterInput | null> | null;
+  or?: Array<ModelDocumentFilterInput | null> | null;
+  not?: ModelDocumentFilterInput | null;
 };
 
 export type ModelArticleFilterInput = {
@@ -439,6 +516,7 @@ export type ModelSubscriptionBooleanInput = {
 export type ModelSubscriptionPictureFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   filename?: ModelSubscriptionStringInput | null;
+  orientation?: ModelSubscriptionStringInput | null;
   rank?: ModelSubscriptionIntInput | null;
   articleId?: ModelSubscriptionIDInput | null;
   caption1?: ModelSubscriptionStringInput | null;
@@ -457,6 +535,18 @@ export type ModelSubscriptionIntInput = {
   between?: Array<number | null> | null;
   in?: Array<number | null> | null;
   notIn?: Array<number | null> | null;
+};
+
+export type ModelSubscriptionDocumentFilterInput = {
+  id?: ModelSubscriptionIDInput | null;
+  filename?: ModelSubscriptionStringInput | null;
+  orientation?: ModelSubscriptionStringInput | null;
+  rank?: ModelSubscriptionIntInput | null;
+  articleId?: ModelSubscriptionIDInput | null;
+  caption1?: ModelSubscriptionStringInput | null;
+  caption2?: ModelSubscriptionStringInput | null;
+  and?: Array<ModelSubscriptionDocumentFilterInput | null> | null;
+  or?: Array<ModelSubscriptionDocumentFilterInput | null> | null;
 };
 
 export type ModelSubscriptionArticleFilterInput = {
@@ -605,6 +695,7 @@ export type CreatePictureMutation = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -617,6 +708,7 @@ export type UpdatePictureMutation = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -629,6 +721,46 @@ export type DeletePictureMutation = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type CreateDocumentMutation = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateDocumentMutation = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteDocumentMutation = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -652,6 +784,23 @@ export type CreateArticleMutation = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -681,6 +830,23 @@ export type UpdateArticleMutation = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -710,6 +876,23 @@ export type DeleteArticleMutation = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -797,19 +980,6 @@ export type ListPagesQuery = {
     public?: boolean | null;
     articles?: {
       __typename: "ModelArticleConnection";
-      items: Array<{
-        __typename: "Article";
-        id: string;
-        title: string;
-        headline: string;
-        layout: string;
-        body: string;
-        info: string;
-        rank: number;
-        pageId: string;
-        createdAt: string;
-        updatedAt: string;
-      } | null>;
       nextToken?: string | null;
     } | null;
     createdAt: string;
@@ -822,6 +992,7 @@ export type GetPictureQuery = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -836,6 +1007,37 @@ export type ListPicturesQuery = {
     __typename: "Picture";
     id: string;
     filename: string;
+    orientation?: string | null;
+    rank: number;
+    articleId: string;
+    caption1?: string | null;
+    caption2?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type GetDocumentQuery = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListDocumentsQuery = {
+  __typename: "ModelDocumentConnection";
+  items: Array<{
+    __typename: "Document";
+    id: string;
+    filename: string;
+    orientation: string;
     rank: number;
     articleId: string;
     caption1?: string | null;
@@ -861,6 +1063,23 @@ export type GetArticleQuery = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -890,6 +1109,10 @@ export type ListArticlesQuery = {
       __typename: "ModelPictureConnection";
       nextToken?: string | null;
     } | null;
+    documents?: {
+      __typename: "ModelDocumentConnection";
+      nextToken?: string | null;
+    } | null;
     pageId: string;
     createdAt: string;
     updatedAt: string;
@@ -903,6 +1126,24 @@ export type PicturesByArticleIdQuery = {
     __typename: "Picture";
     id: string;
     filename: string;
+    orientation?: string | null;
+    rank: number;
+    articleId: string;
+    caption1?: string | null;
+    caption2?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null>;
+  nextToken?: string | null;
+};
+
+export type DocumentsByArticleIdQuery = {
+  __typename: "ModelDocumentConnection";
+  items: Array<{
+    __typename: "Document";
+    id: string;
+    filename: string;
+    orientation: string;
     rank: number;
     articleId: string;
     caption1?: string | null;
@@ -926,6 +1167,10 @@ export type ArticlesByPageIdQuery = {
     rank: number;
     pictures?: {
       __typename: "ModelPictureConnection";
+      nextToken?: string | null;
+    } | null;
+    documents?: {
+      __typename: "ModelDocumentConnection";
       nextToken?: string | null;
     } | null;
     pageId: string;
@@ -1068,6 +1313,7 @@ export type OnCreatePictureSubscription = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -1080,6 +1326,7 @@ export type OnUpdatePictureSubscription = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -1092,6 +1339,46 @@ export type OnDeletePictureSubscription = {
   __typename: "Picture";
   id: string;
   filename: string;
+  orientation?: string | null;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnCreateDocumentSubscription = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateDocumentSubscription = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
+  rank: number;
+  articleId: string;
+  caption1?: string | null;
+  caption2?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteDocumentSubscription = {
+  __typename: "Document";
+  id: string;
+  filename: string;
+  orientation: string;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -1115,6 +1402,23 @@ export type OnCreateArticleSubscription = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1144,6 +1448,23 @@ export type OnUpdateArticleSubscription = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1173,6 +1494,23 @@ export type OnDeleteArticleSubscription = {
       __typename: "Picture";
       id: string;
       filename: string;
+      orientation?: string | null;
+      rank: number;
+      articleId: string;
+      caption1?: string | null;
+      caption2?: string | null;
+      createdAt: string;
+      updatedAt: string;
+    } | null>;
+    nextToken?: string | null;
+  } | null;
+  documents?: {
+    __typename: "ModelDocumentConnection";
+    items: Array<{
+      __typename: "Document";
+      id: string;
+      filename: string;
+      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1425,6 +1763,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -1453,6 +1792,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -1481,6 +1821,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -1499,6 +1840,93 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
     return <DeletePictureMutation>response.data.deletePicture;
+  }
+  async CreateDocument(
+    input: CreateDocumentInput,
+    condition?: ModelDocumentConditionInput
+  ): Promise<CreateDocumentMutation> {
+    const statement = `mutation CreateDocument($input: CreateDocumentInput!, $condition: ModelDocumentConditionInput) {
+        createDocument(input: $input, condition: $condition) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateDocumentMutation>response.data.createDocument;
+  }
+  async UpdateDocument(
+    input: UpdateDocumentInput,
+    condition?: ModelDocumentConditionInput
+  ): Promise<UpdateDocumentMutation> {
+    const statement = `mutation UpdateDocument($input: UpdateDocumentInput!, $condition: ModelDocumentConditionInput) {
+        updateDocument(input: $input, condition: $condition) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateDocumentMutation>response.data.updateDocument;
+  }
+  async DeleteDocument(
+    input: DeleteDocumentInput,
+    condition?: ModelDocumentConditionInput
+  ): Promise<DeleteDocumentMutation> {
+    const statement = `mutation DeleteDocument($input: DeleteDocumentInput!, $condition: ModelDocumentConditionInput) {
+        deleteDocument(input: $input, condition: $condition) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteDocumentMutation>response.data.deleteDocument;
   }
   async CreateArticle(
     input: CreateArticleInput,
@@ -1520,6 +1948,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -1565,6 +2010,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -1610,6 +2072,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -1754,22 +2233,22 @@ export class APIService {
             viewer
             public
             articles {
+            __typename
+            items {
               __typename
-              items {
-                __typename
-                id
-                title
-                headline
-                layout
-                body
-                info
-                rank
-                pageId
-                createdAt
-                updatedAt
-              }
-              nextToken
+              id
+              title
+              headline
+              layout
+              body
+              info
+              rank
+              pageId
+              createdAt
+              updatedAt
             }
+            nextToken
+          }
             createdAt
             updatedAt
           }
@@ -1797,6 +2276,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -1825,6 +2305,7 @@ export class APIService {
             __typename
             id
             filename
+            orientation
             rank
             articleId
             caption1
@@ -1850,6 +2331,67 @@ export class APIService {
     )) as any;
     return <ListPicturesQuery>response.data.listPictures;
   }
+  async GetDocument(id: string): Promise<GetDocumentQuery> {
+    const statement = `query GetDocument($id: ID!) {
+        getDocument(id: $id) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetDocumentQuery>response.data.getDocument;
+  }
+  async ListDocuments(
+    filter?: ModelDocumentFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListDocumentsQuery> {
+    const statement = `query ListDocuments($filter: ModelDocumentFilterInput, $limit: Int, $nextToken: String) {
+        listDocuments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            filename
+            orientation
+            rank
+            articleId
+            caption1
+            caption2
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListDocumentsQuery>response.data.listDocuments;
+  }
   async GetArticle(id: string): Promise<GetArticleQuery> {
     const statement = `query GetArticle($id: ID!) {
         getArticle(id: $id) {
@@ -1867,6 +2409,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -1907,11 +2466,12 @@ export class APIService {
             info
             rank
             pictures {
-              __typename
-             items {
+            __typename
+            items {
               __typename
               id
               filename
+              orientation
               rank
               articleId
               caption1
@@ -1919,8 +2479,24 @@ export class APIService {
               createdAt
               updatedAt
             }
-              nextToken
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
             }
+            nextToken
+          }
             pageId
             createdAt
             updatedAt
@@ -1963,6 +2539,7 @@ export class APIService {
             __typename
             id
             filename
+            orientation
             rank
             articleId
             caption1
@@ -1993,6 +2570,57 @@ export class APIService {
     )) as any;
     return <PicturesByArticleIdQuery>response.data.picturesByArticleId;
   }
+  async DocumentsByArticleId(
+    articleId: string,
+    sortDirection?: ModelSortDirection,
+    filter?: ModelDocumentFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<DocumentsByArticleIdQuery> {
+    const statement = `query DocumentsByArticleId($articleId: ID!, $sortDirection: ModelSortDirection, $filter: ModelDocumentFilterInput, $limit: Int, $nextToken: String) {
+        documentsByArticleId(
+          articleId: $articleId
+          sortDirection: $sortDirection
+          filter: $filter
+          limit: $limit
+          nextToken: $nextToken
+        ) {
+          __typename
+          items {
+            __typename
+            id
+            filename
+            orientation
+            rank
+            articleId
+            caption1
+            caption2
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      articleId
+    };
+    if (sortDirection) {
+      gqlAPIServiceArguments.sortDirection = sortDirection;
+    }
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DocumentsByArticleIdQuery>response.data.documentsByArticleId;
+  }
   async ArticlesByPageId(
     pageId: string,
     sortDirection?: ModelSortDirection,
@@ -2019,6 +2647,10 @@ export class APIService {
             info
             rank
             pictures {
+              __typename
+              nextToken
+            }
+            documents {
               __typename
               nextToken
             }
@@ -2290,6 +2922,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -2319,6 +2952,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -2348,6 +2982,7 @@ export class APIService {
           __typename
           id
           filename
+          orientation
           rank
           articleId
           caption1
@@ -2364,6 +2999,96 @@ export class APIService {
       graphqlOperation(statement, gqlAPIServiceArguments)
     ) as Observable<
       SubscriptionResponse<Pick<__SubscriptionContainer, "onDeletePicture">>
+    >;
+  }
+
+  OnCreateDocumentListener(
+    filter?: ModelSubscriptionDocumentFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateDocument">>
+  > {
+    const statement = `subscription OnCreateDocument($filter: ModelSubscriptionDocumentFilterInput) {
+        onCreateDocument(filter: $filter) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateDocument">>
+    >;
+  }
+
+  OnUpdateDocumentListener(
+    filter?: ModelSubscriptionDocumentFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateDocument">>
+  > {
+    const statement = `subscription OnUpdateDocument($filter: ModelSubscriptionDocumentFilterInput) {
+        onUpdateDocument(filter: $filter) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateDocument">>
+    >;
+  }
+
+  OnDeleteDocumentListener(
+    filter?: ModelSubscriptionDocumentFilterInput
+  ): Observable<
+    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteDocument">>
+  > {
+    const statement = `subscription OnDeleteDocument($filter: ModelSubscriptionDocumentFilterInput) {
+        onDeleteDocument(filter: $filter) {
+          __typename
+          id
+          filename
+          orientation
+          rank
+          articleId
+          caption1
+          caption2
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    return API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    ) as Observable<
+      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteDocument">>
     >;
   }
 
@@ -2388,6 +3113,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -2434,6 +3176,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1
@@ -2480,6 +3239,23 @@ export class APIService {
               __typename
               id
               filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          documents {
+            __typename
+            items {
+              __typename
+              id
+              filename
+              orientation
               rank
               articleId
               caption1

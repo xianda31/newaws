@@ -117,13 +117,14 @@ export class PageEditorComponent implements OnInit {
     // create dummy article
     const article: CreateArticleInput = {
       title: this.current_page.label + '/' + layout + (this.maxRank + 1),
-      headline: '<h2>Lorem Ipsum dolor sit amet</h2>',
+      headline: '<h2> Le titre du paragraphe type ' + layout + '</h2>',
       layout: layout,
       body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
       info: new Date().toISOString(),
       rank: this.maxRank + 1,
       // public: true,
       pageId: this.current_page.id,
+
     };
     this.articleService.createArticle(article);
 
@@ -156,6 +157,7 @@ export class PageEditorComponent implements OnInit {
       filename: filename,
       caption1: '',
       caption2: '',
+      orientation: 'Portrait',
       rank: max + 1 + rankOffset,
       articleId: article.id,
     };

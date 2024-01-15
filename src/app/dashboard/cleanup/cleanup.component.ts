@@ -5,6 +5,7 @@ import { Picture } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
+import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 import { FileService } from 'src/app/tools/service/file.service';
 
 @Component({
@@ -30,12 +31,24 @@ export class CleanupComponent implements OnInit {
     this.pictureService.pictures$.subscribe((pictures) => {
       this.pictures = pictures;
       this.pictures.forEach(async (picture) => {
+        // recuperation d'une url pour chaque image
         this.uries.set(picture.filename, this.fileService.getFileURL(picture.filename));
+        // verification si l'image est orpheline ie sans article père
         if (this.isOrphan(picture)) {
           this.orphanExists = true;
         }
+        // verfication du champ format
+        if (!picture.orientation) {
+          let Orientation = 'PORTRAIT' as PictureOrientationTypeEnum;
+          if (Orientation) {
+            picture.orientation = Orientation;
+            this.pictureService.updatePicture(picture);
+          }
+        }
       });
     }
+
+
     );
   }
 

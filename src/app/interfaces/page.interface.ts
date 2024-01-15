@@ -1,7 +1,8 @@
 import { Page } from '../API.service';
 export enum CardTypeEnum {
     Textual = 'TEXTUAL',
-    Pictural = 'PICTURAL'
+    Pictural = 'PICTURAL',
+    File = 'FILE'
 }
 export type CardType = keyof typeof CardTypeEnum;
 
