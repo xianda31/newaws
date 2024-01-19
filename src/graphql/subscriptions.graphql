@@ -59,7 +59,9 @@ subscription OnCreatePage($filter: ModelSubscriptionPageFilterInput) {
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -92,7 +94,9 @@ subscription OnUpdatePage($filter: ModelSubscriptionPageFilterInput) {
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -125,7 +129,9 @@ subscription OnDeletePage($filter: ModelSubscriptionPageFilterInput) {
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -186,51 +192,6 @@ subscription OnDeletePicture($filter: ModelSubscriptionPictureFilterInput) {
   }
 }
 
-subscription OnCreateDocument($filter: ModelSubscriptionDocumentFilterInput) {
-  onCreateDocument(filter: $filter) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnUpdateDocument($filter: ModelSubscriptionDocumentFilterInput) {
-  onUpdateDocument(filter: $filter) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-subscription OnDeleteDocument($filter: ModelSubscriptionDocumentFilterInput) {
-  onDeleteDocument(filter: $filter) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
 subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
   onCreateArticle(filter: $filter) {
     id
@@ -238,25 +199,11 @@ subscription OnCreateArticle($filter: ModelSubscriptionArticleFilterInput) {
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename
@@ -286,25 +233,11 @@ subscription OnUpdateArticle($filter: ModelSubscriptionArticleFilterInput) {
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename
@@ -334,25 +267,11 @@ subscription OnDeleteArticle($filter: ModelSubscriptionArticleFilterInput) {
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename

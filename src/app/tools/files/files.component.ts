@@ -30,16 +30,20 @@ export class FilesComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['sub_folder'].firstChange) {
+    if (changes['sub_folder'] && !changes['sub_folder'].firstChange) {
       this.current_folder = this.root_folder + this.sub_folder;
-      this.folder_level = this.sub_folder.split('/').length;
+      this.folder_level = this.sub_folder.split('/').length - 1;
+      // console.log('FilesComponent : ngOnChanges :%o', changes);
       this.folderItems = this.fileService.genFolderItems(this.current_folder);
     }
   }
 
   ngOnInit(): void {
-    this.current_folder = this.root_folder;
-    this.newPathEvent.emit(this.current_folder);
+    this.current_folder = this.root_folder + this.sub_folder;
+    this.folder_level = this.sub_folder.split('/').length - 1;
+
+    // console.log('*********** ngOnInit : root_folder = %s \n sub_folder = %s \n prof=%s', this.root_folder, this.sub_folder, this.folder_level);
+    // this.newPathEvent.emit(this.current_folder);
 
     this.fileService.bucketLoaded.subscribe((loaded) => {
       if (loaded) {

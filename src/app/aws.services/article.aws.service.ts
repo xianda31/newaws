@@ -84,7 +84,7 @@ export class ArticleService {
 
   updateArticle(article: Article) {
     // console.log('articleInput: ', articleInput)
-    let { __typename, createdAt, updatedAt, pictures, documents, ...newArticleInput } = article;
+    let { __typename, createdAt, updatedAt, pictures, ...newArticleInput } = article;
 
     this.api.UpdateArticle(newArticleInput)
       .then((result) => {

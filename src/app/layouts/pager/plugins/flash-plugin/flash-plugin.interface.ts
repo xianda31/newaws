@@ -14,10 +14,12 @@ export interface FlashData {
     caption2: string;
     orientation: PictureOrientationTypeEnum;
     rank: number;
-
   }>;
+
   headline: string;
   body: string;
   date: Date | null | undefined;
+  root: string;
+  sub_folder: string;
   id: string;
 }

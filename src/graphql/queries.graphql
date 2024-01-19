@@ -53,7 +53,9 @@ query GetPage($id: ID!) {
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -135,44 +137,6 @@ query ListPictures(
   }
 }
 
-query GetDocument($id: ID!) {
-  getDocument(id: $id) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-query ListDocuments(
-  $filter: ModelDocumentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listDocuments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      filename
-      orientation
-      rank
-      articleId
-      caption1
-      caption2
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
 query GetArticle($id: ID!) {
   getArticle(id: $id) {
     id
@@ -180,25 +144,11 @@ query GetArticle($id: ID!) {
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename
@@ -233,13 +183,11 @@ query ListArticles(
       headline
       layout
       body
-      info
+      date
+      directory
+      expiry_date
       rank
       pictures {
-        nextToken
-        __typename
-      }
-      documents {
         nextToken
         __typename
       }
@@ -284,37 +232,6 @@ query PicturesByArticleId(
   }
 }
 
-query DocumentsByArticleId(
-  $articleId: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelDocumentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  documentsByArticleId(
-    articleId: $articleId
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      filename
-      orientation
-      rank
-      articleId
-      caption1
-      caption2
-      createdAt
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-
 query ArticlesByPageId(
   $pageId: ID!
   $sortDirection: ModelSortDirection
@@ -335,13 +252,11 @@ query ArticlesByPageId(
       headline
       layout
       body
-      info
+      date
+      directory
+      expiry_date
       rank
       pictures {
-        nextToken
-        __typename
-      }
-      documents {
         nextToken
         __typename
       }

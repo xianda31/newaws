@@ -14,6 +14,9 @@ import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
 import { ToastService } from 'src/app/tools/service/toast.service';
+import { GetDirectoryComponent } from '../get-directory/get-directory.component';
+import { FileService } from 'src/app/tools/service/file.service';
+import { FolderItem } from 'src/app/interfaces/files.interface';
 
 
 
@@ -43,12 +46,14 @@ export class PageEditorComponent implements OnInit {
   myModal !: any;
 
 
+
+
+
   constructor(
     private pageService: PageService,
     private articleService: ArticleService,
     private pictureService: PictureService,
     private toastService: ToastService,
-
     private modalService: NgbModal,
   ) { }
 
@@ -61,21 +66,13 @@ export class PageEditorComponent implements OnInit {
     this.articles$.subscribe((articles) => {
       this.articles = articles;
       this.maxRank = articles.reduce((max, article) => (article.rank > max ? article.rank : max), 0);
+      // console.log('articles updated : %o', this.articles);
+
     });
 
-    // this.createForm(this.current_page);
 
   }
-  // createForm(page: Page) {
-  //   this.pageForm = new FormGroup({
-  //     root_menu: new FormControl({ value: page.root_menu, disabled: true }),
-  //     label: new FormControl({ value: page.label, disabled: true }),
-  //     description: new FormControl({ value: page.description, disabled: true }),
-  //     viewer: new FormControl({ value: page.viewer, disabled: true }),
-  //   });
 
-  //   // this.pageForm.patchValue(page);
-  // }
 
   up(i: number) {
     if (i === 0) return;
@@ -110,6 +107,30 @@ export class PageEditorComponent implements OnInit {
     });
   }
 
+  directorySelectHandler(event: { id: string, folder: string }) {
+    // console.log('directorySelectHandler : ~~> %o ', event);
+    let article = this.articleService.getArticleById(event.id)!;
+    article.directory = event.folder;
+    // this.updateArticle(article);  // will force editor reload
+  }
+
+  validateDirectory(article: Article) {
+    // console.log('validateDirectory : %o ', article);
+    this.updateArticle(article);
+  }
+
+  setDirectory(article: Article) {
+    const modalRef = this.modalService.open(GetDirectoryComponent, { centered: true });
+    modalRef.componentInstance.article = article;
+
+    modalRef.result.then((article) => {
+      // console.log('result', article);
+      this.articleService.updateArticle(article);
+
+    }).catch((error) => {
+      console.log('error', error);
+    });
+  }
 
   // C(R)UD ARTICLES
 
@@ -117,14 +138,14 @@ export class PageEditorComponent implements OnInit {
     // create dummy article
     const article: CreateArticleInput = {
       title: this.current_page.label + '/' + layout + (this.maxRank + 1),
-      headline: '<h2> Le titre du paragraphe type ' + layout + '</h2>',
+      headline: '<h2> Le titre </h2>',
       layout: layout,
       body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
-      info: new Date().toISOString(),
+      date: new Date().toISOString(),
       rank: this.maxRank + 1,
       // public: true,
       pageId: this.current_page.id,
-
+      directory: 'documents/'
     };
     this.articleService.createArticle(article);
 
@@ -241,26 +262,35 @@ export class PageEditorComponent implements OnInit {
   // tinyMCE
 
 
-  selectArticle(article: Article) {
+  cardClickHandler(article: Article) {
 
-    // this.articleService.readArticle(article.id).then((article) => {
-    // console.log('selectArticle : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
+    // console.log('cardClickHandler : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
 
     if (this.current_article !== undefined) {
-      if ((this.current_article.id === article.id)) {
+      if ((this.current_article.id === article.id)) {   // if same article
         if (this.force_editor_reload) {
-          this.removeEditors(article);
+          // console.log('cardClickHandler : regenerate editors on same article');
+          this.removeEditors(article);                       // remove & reload editors on explicit need
         } else {
-          // this.renderEditors(article);
-          return;// same article, no need to reload editors
+          // console.log('cardClickHandler : same article, no need to reload editors');
+          return;                                            // otherwise no need to remove & reload editors
         }
-      } else {
-        this.removeEditors(this.current_article);
+      } else {                                        // if different article
+        // console.log('cardClickHandler : different article, remove editors on previous article');
+        this.removeEditors(this.current_article);         //  remove editors on previous article
       }
+    } else {
+      // console.log('cardClickHandler : no previous article, nothing to remove');
     }
 
     this.force_editor_reload = false;
     this.current_article = article;
+    //                                           problème potentiel de timing !!!!
+    // leave time for the DOM to be updated
+    // setTimeout(() => {
+    //   this.openEditors(article);
+    //   console.log('leave time for the DOM to be updated');
+    // }, 100);
     this.openEditors(article);
 
     // });
@@ -308,6 +338,7 @@ export class PageEditorComponent implements OnInit {
   }
 
   initHeadLineEditor(el: HTMLElement) {
+    // console.log('initHeadLineEditor : %o', el);
     tinymce.init(
       {
         target: el,

@@ -8,38 +8,28 @@
 
 
       <ul class="list-group list-group-flush ">
-        <li class="list-group-item bg-success-subtle text-white">
+        <li class="list-group-item bg-success-subtle w-100">
           <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('Textual')">
             <i class="bi bi-card-text"></i>
             <span> Titre & article </span>
           </button>
         </li>
-        <li class="list-group-item bg-success-subtle">
+        <li class="list-group-item bg-success-subtle w-100">
           <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('Pictural')">
             <i class="bi bi-card-image"></i>
-            <span> Titre et image(s) </span>
+            <span> Sujet et image(s) </span>
           </button>
         </li>
-        <li class="list-group-item bg-success-subtle">
+        <li class="list-group-item bg-success-subtle w-100">
           <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('File')">
             <i class="bi bi-file-pdf-fill"></i>
-            <span> Titre et fichier(s) </span>
+            <span>Dossier et fichier(s) </span>
           </button>
         </li>
       </ul>
     </div>
 
 
-    <!-- <div class="row text-primary justify-content-space-between" (click)="createArticle('Textual')">
-        <i class="bi bi-plus-circle-fill text-xl-start"></i>
-        <label> Article de type Textuel </label>
-      </div>
-
-      <div class="text-primary justify-content-space-between" (click)="createArticle('Pictural')">
-        <i class="bi bi-plus-circle-fill text-xl-start"></i>
-        <label> Article de type Image(s) </label>
-      </div> -->
-    <!-- </div> -->
     <div class="col-10">
       <div class="row justify-content-between p-2">
 
@@ -65,10 +55,12 @@
                   <i class="bi bi-file-image-fill text-primary" (click)="fileInput.click()"></i>
                   <input hidden multiple #fileInput type="file" (change)="pictureUpload($event,article)" />
                 </div>
-                <div class="row text-end">
+                <div *ngIf="article.layout ==='Textual'" class="row text-end">
                   <i class="bi bi-calendar2-date-fill text-primary" (click)="setDate(article)"></i>
                 </div>
-
+                <div *ngIf="article.layout ==='File'" class="row text-end">
+                  <i class="bi bi-file-earmark-check-fill text-primary" (click)="validateDirectory(article)"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -76,8 +68,9 @@
           <!-- affichage contenu -->
           <div class="col-8 article">
             <app-carder [article]="article"
-              [editable]="current_article !== undefined && article.id === current_article.id"
-              (click)="selectArticle(article)" (pictureClick)="pictureClickHandler($event)">
+              [editable]="current_article !== undefined && article.id === current_article.id && !force_editor_reload"
+              (click)="cardClickHandler(article)" (pictureClick)="pictureClickHandler($event)"
+              (directoryClick)="directorySelectHandler($event)">
             </app-carder>
           </div>
 

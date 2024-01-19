@@ -32,26 +32,17 @@ type Picture @model @auth(rules: [{ allow: public }]) {
   caption2: String
 }
 
-type Document @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  filename: String!
-  orientation: String!
-  rank: Int!
-  articleId: ID! @index(name: "ofArticle")
-  caption1: String
-  caption2: String
-}
-
 type Article @model @auth(rules: [{ allow: public }]) {
   id: ID!
   title: String!
   headline: String!
   layout: String!
   body: String!
-  info: String! # YYYY-MM-DD ISO 8601 format
+  date: String # YYYY-MM-DD ISO 8601 format
+  directory: String # article of type document
+  expiry_date: String # YYYY-MM-DD ISO 8601 format
   rank: Int!
   # public: Boolean!
   pictures: [Picture] @hasMany(indexName: "ofArticle", fields: ["id"])
-  documents: [Document] @hasMany(indexName: "ofArticle", fields: ["id"])
   pageId: ID! @index(name: "ofPage")
 }

@@ -19,9 +19,6 @@ export type __SubscriptionContainer = {
   onCreatePicture: OnCreatePictureSubscription;
   onUpdatePicture: OnUpdatePictureSubscription;
   onDeletePicture: OnDeletePictureSubscription;
-  onCreateDocument: OnCreateDocumentSubscription;
-  onUpdateDocument: OnUpdateDocumentSubscription;
-  onDeleteDocument: OnDeleteDocumentSubscription;
   onCreateArticle: OnCreateArticleSubscription;
   onUpdateArticle: OnUpdateArticleSubscription;
   onDeleteArticle: OnDeleteArticleSubscription;
@@ -170,10 +167,11 @@ export type Article = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: ModelPictureConnection | null;
-  documents?: ModelDocumentConnection | null;
   pageId: string;
   createdAt: string;
   updatedAt: string;
@@ -190,25 +188,6 @@ export type Picture = {
   id: string;
   filename: string;
   orientation?: string | null;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ModelDocumentConnection = {
-  __typename: "ModelDocumentConnection";
-  items: Array<Document | null>;
-  nextToken?: string | null;
-};
-
-export type Document = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
   rank: number;
   articleId: string;
   caption1?: string | null;
@@ -296,49 +275,15 @@ export type DeletePictureInput = {
   id: string;
 };
 
-export type CreateDocumentInput = {
-  id?: string | null;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-};
-
-export type ModelDocumentConditionInput = {
-  filename?: ModelStringInput | null;
-  orientation?: ModelStringInput | null;
-  rank?: ModelIntInput | null;
-  articleId?: ModelIDInput | null;
-  caption1?: ModelStringInput | null;
-  caption2?: ModelStringInput | null;
-  and?: Array<ModelDocumentConditionInput | null> | null;
-  or?: Array<ModelDocumentConditionInput | null> | null;
-  not?: ModelDocumentConditionInput | null;
-};
-
-export type UpdateDocumentInput = {
-  id: string;
-  filename?: string | null;
-  orientation?: string | null;
-  rank?: number | null;
-  articleId?: string | null;
-  caption1?: string | null;
-  caption2?: string | null;
-};
-
-export type DeleteDocumentInput = {
-  id: string;
-};
-
 export type CreateArticleInput = {
   id?: string | null;
   title: string;
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pageId: string;
 };
@@ -348,7 +293,9 @@ export type ModelArticleConditionInput = {
   headline?: ModelStringInput | null;
   layout?: ModelStringInput | null;
   body?: ModelStringInput | null;
-  info?: ModelStringInput | null;
+  date?: ModelStringInput | null;
+  directory?: ModelStringInput | null;
+  expiry_date?: ModelStringInput | null;
   rank?: ModelIntInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleConditionInput | null> | null;
@@ -362,7 +309,9 @@ export type UpdateArticleInput = {
   headline?: string | null;
   layout?: string | null;
   body?: string | null;
-  info?: string | null;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank?: number | null;
   pageId?: string | null;
 };
@@ -422,26 +371,15 @@ export type ModelPictureFilterInput = {
   not?: ModelPictureFilterInput | null;
 };
 
-export type ModelDocumentFilterInput = {
-  id?: ModelIDInput | null;
-  filename?: ModelStringInput | null;
-  orientation?: ModelStringInput | null;
-  rank?: ModelIntInput | null;
-  articleId?: ModelIDInput | null;
-  caption1?: ModelStringInput | null;
-  caption2?: ModelStringInput | null;
-  and?: Array<ModelDocumentFilterInput | null> | null;
-  or?: Array<ModelDocumentFilterInput | null> | null;
-  not?: ModelDocumentFilterInput | null;
-};
-
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
   headline?: ModelStringInput | null;
   layout?: ModelStringInput | null;
   body?: ModelStringInput | null;
-  info?: ModelStringInput | null;
+  date?: ModelStringInput | null;
+  directory?: ModelStringInput | null;
+  expiry_date?: ModelStringInput | null;
   rank?: ModelIntInput | null;
   pageId?: ModelIDInput | null;
   and?: Array<ModelArticleFilterInput | null> | null;
@@ -537,25 +475,15 @@ export type ModelSubscriptionIntInput = {
   notIn?: Array<number | null> | null;
 };
 
-export type ModelSubscriptionDocumentFilterInput = {
-  id?: ModelSubscriptionIDInput | null;
-  filename?: ModelSubscriptionStringInput | null;
-  orientation?: ModelSubscriptionStringInput | null;
-  rank?: ModelSubscriptionIntInput | null;
-  articleId?: ModelSubscriptionIDInput | null;
-  caption1?: ModelSubscriptionStringInput | null;
-  caption2?: ModelSubscriptionStringInput | null;
-  and?: Array<ModelSubscriptionDocumentFilterInput | null> | null;
-  or?: Array<ModelSubscriptionDocumentFilterInput | null> | null;
-};
-
 export type ModelSubscriptionArticleFilterInput = {
   id?: ModelSubscriptionIDInput | null;
   title?: ModelSubscriptionStringInput | null;
   headline?: ModelSubscriptionStringInput | null;
   layout?: ModelSubscriptionStringInput | null;
   body?: ModelSubscriptionStringInput | null;
-  info?: ModelSubscriptionStringInput | null;
+  date?: ModelSubscriptionStringInput | null;
+  directory?: ModelSubscriptionStringInput | null;
+  expiry_date?: ModelSubscriptionStringInput | null;
   rank?: ModelSubscriptionIntInput | null;
   pageId?: ModelSubscriptionIDInput | null;
   and?: Array<ModelSubscriptionArticleFilterInput | null> | null;
@@ -617,7 +545,9 @@ export type CreatePageMutation = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -648,7 +578,9 @@ export type UpdatePageMutation = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -679,7 +611,9 @@ export type DeletePageMutation = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -730,45 +664,6 @@ export type DeletePictureMutation = {
   updatedAt: string;
 };
 
-export type CreateDocumentMutation = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type UpdateDocumentMutation = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type DeleteDocumentMutation = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type CreateArticleMutation = {
   __typename: "Article";
   id: string;
@@ -776,7 +671,9 @@ export type CreateArticleMutation = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -785,22 +682,6 @@ export type CreateArticleMutation = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -822,7 +703,9 @@ export type UpdateArticleMutation = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -831,22 +714,6 @@ export type UpdateArticleMutation = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -868,7 +735,9 @@ export type DeleteArticleMutation = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -877,22 +746,6 @@ export type DeleteArticleMutation = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -954,7 +807,9 @@ export type GetPageQuery = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -1018,36 +873,6 @@ export type ListPicturesQuery = {
   nextToken?: string | null;
 };
 
-export type GetDocumentQuery = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListDocumentsQuery = {
-  __typename: "ModelDocumentConnection";
-  items: Array<{
-    __typename: "Document";
-    id: string;
-    filename: string;
-    orientation: string;
-    rank: number;
-    articleId: string;
-    caption1?: string | null;
-    caption2?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
 export type GetArticleQuery = {
   __typename: "Article";
   id: string;
@@ -1055,7 +880,9 @@ export type GetArticleQuery = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -1064,22 +891,6 @@ export type GetArticleQuery = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1103,14 +914,12 @@ export type ListArticlesQuery = {
     headline: string;
     layout: string;
     body: string;
-    info: string;
+    date?: string | null;
+    directory?: string | null;
+    expiry_date?: string | null;
     rank: number;
     pictures?: {
       __typename: "ModelPictureConnection";
-      nextToken?: string | null;
-    } | null;
-    documents?: {
-      __typename: "ModelDocumentConnection";
       nextToken?: string | null;
     } | null;
     pageId: string;
@@ -1137,23 +946,6 @@ export type PicturesByArticleIdQuery = {
   nextToken?: string | null;
 };
 
-export type DocumentsByArticleIdQuery = {
-  __typename: "ModelDocumentConnection";
-  items: Array<{
-    __typename: "Document";
-    id: string;
-    filename: string;
-    orientation: string;
-    rank: number;
-    articleId: string;
-    caption1?: string | null;
-    caption2?: string | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null>;
-  nextToken?: string | null;
-};
-
 export type ArticlesByPageIdQuery = {
   __typename: "ModelArticleConnection";
   items: Array<{
@@ -1163,14 +955,12 @@ export type ArticlesByPageIdQuery = {
     headline: string;
     layout: string;
     body: string;
-    info: string;
+    date?: string | null;
+    directory?: string | null;
+    expiry_date?: string | null;
     rank: number;
     pictures?: {
       __typename: "ModelPictureConnection";
-      nextToken?: string | null;
-    } | null;
-    documents?: {
-      __typename: "ModelDocumentConnection";
       nextToken?: string | null;
     } | null;
     pageId: string;
@@ -1235,7 +1025,9 @@ export type OnCreatePageSubscription = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -1266,7 +1058,9 @@ export type OnUpdatePageSubscription = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -1297,7 +1091,9 @@ export type OnDeletePageSubscription = {
       headline: string;
       layout: string;
       body: string;
-      info: string;
+      date?: string | null;
+      directory?: string | null;
+      expiry_date?: string | null;
       rank: number;
       pageId: string;
       createdAt: string;
@@ -1348,45 +1144,6 @@ export type OnDeletePictureSubscription = {
   updatedAt: string;
 };
 
-export type OnCreateDocumentSubscription = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnUpdateDocumentSubscription = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type OnDeleteDocumentSubscription = {
-  __typename: "Document";
-  id: string;
-  filename: string;
-  orientation: string;
-  rank: number;
-  articleId: string;
-  caption1?: string | null;
-  caption2?: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
 export type OnCreateArticleSubscription = {
   __typename: "Article";
   id: string;
@@ -1394,7 +1151,9 @@ export type OnCreateArticleSubscription = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -1403,22 +1162,6 @@ export type OnCreateArticleSubscription = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1440,7 +1183,9 @@ export type OnUpdateArticleSubscription = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -1449,22 +1194,6 @@ export type OnUpdateArticleSubscription = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1486,7 +1215,9 @@ export type OnDeleteArticleSubscription = {
   headline: string;
   layout: string;
   body: string;
-  info: string;
+  date?: string | null;
+  directory?: string | null;
+  expiry_date?: string | null;
   rank: number;
   pictures?: {
     __typename: "ModelPictureConnection";
@@ -1495,22 +1226,6 @@ export type OnDeleteArticleSubscription = {
       id: string;
       filename: string;
       orientation?: string | null;
-      rank: number;
-      articleId: string;
-      caption1?: string | null;
-      caption2?: string | null;
-      createdAt: string;
-      updatedAt: string;
-    } | null>;
-    nextToken?: string | null;
-  } | null;
-  documents?: {
-    __typename: "ModelDocumentConnection";
-    items: Array<{
-      __typename: "Document";
-      id: string;
-      filename: string;
-      orientation: string;
       rank: number;
       articleId: string;
       caption1?: string | null;
@@ -1637,7 +1352,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -1684,7 +1401,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -1731,7 +1450,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -1841,93 +1562,6 @@ export class APIService {
     )) as any;
     return <DeletePictureMutation>response.data.deletePicture;
   }
-  async CreateDocument(
-    input: CreateDocumentInput,
-    condition?: ModelDocumentConditionInput
-  ): Promise<CreateDocumentMutation> {
-    const statement = `mutation CreateDocument($input: CreateDocumentInput!, $condition: ModelDocumentConditionInput) {
-        createDocument(input: $input, condition: $condition) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateDocumentMutation>response.data.createDocument;
-  }
-  async UpdateDocument(
-    input: UpdateDocumentInput,
-    condition?: ModelDocumentConditionInput
-  ): Promise<UpdateDocumentMutation> {
-    const statement = `mutation UpdateDocument($input: UpdateDocumentInput!, $condition: ModelDocumentConditionInput) {
-        updateDocument(input: $input, condition: $condition) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateDocumentMutation>response.data.updateDocument;
-  }
-  async DeleteDocument(
-    input: DeleteDocumentInput,
-    condition?: ModelDocumentConditionInput
-  ): Promise<DeleteDocumentMutation> {
-    const statement = `mutation DeleteDocument($input: DeleteDocumentInput!, $condition: ModelDocumentConditionInput) {
-        deleteDocument(input: $input, condition: $condition) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteDocumentMutation>response.data.deleteDocument;
-  }
   async CreateArticle(
     input: CreateArticleInput,
     condition?: ModelArticleConditionInput
@@ -1940,25 +1574,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -2002,25 +1622,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -2064,25 +1670,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -2194,7 +1786,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -2241,7 +1835,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -2331,67 +1927,6 @@ export class APIService {
     )) as any;
     return <ListPicturesQuery>response.data.listPictures;
   }
-  async GetDocument(id: string): Promise<GetDocumentQuery> {
-    const statement = `query GetDocument($id: ID!) {
-        getDocument(id: $id) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      id
-    };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetDocumentQuery>response.data.getDocument;
-  }
-  async ListDocuments(
-    filter?: ModelDocumentFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListDocumentsQuery> {
-    const statement = `query ListDocuments($filter: ModelDocumentFilterInput, $limit: Int, $nextToken: String) {
-        listDocuments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            filename
-            orientation
-            rank
-            articleId
-            caption1
-            caption2
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <ListDocumentsQuery>response.data.listDocuments;
-  }
   async GetArticle(id: string): Promise<GetArticleQuery> {
     const statement = `query GetArticle($id: ID!) {
         getArticle(id: $id) {
@@ -2401,25 +1936,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -2463,40 +1984,14 @@ export class APIService {
             headline
             layout
             body
-            info
+            date
+            directory
+            expiry_date
             rank
             pictures {
-            __typename
-            items {
               __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
+              nextToken
             }
-            nextToken
-          }
-          documents {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
             pageId
             createdAt
             updatedAt
@@ -2570,57 +2065,6 @@ export class APIService {
     )) as any;
     return <PicturesByArticleIdQuery>response.data.picturesByArticleId;
   }
-  async DocumentsByArticleId(
-    articleId: string,
-    sortDirection?: ModelSortDirection,
-    filter?: ModelDocumentFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<DocumentsByArticleIdQuery> {
-    const statement = `query DocumentsByArticleId($articleId: ID!, $sortDirection: ModelSortDirection, $filter: ModelDocumentFilterInput, $limit: Int, $nextToken: String) {
-        documentsByArticleId(
-          articleId: $articleId
-          sortDirection: $sortDirection
-          filter: $filter
-          limit: $limit
-          nextToken: $nextToken
-        ) {
-          __typename
-          items {
-            __typename
-            id
-            filename
-            orientation
-            rank
-            articleId
-            caption1
-            caption2
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      articleId
-    };
-    if (sortDirection) {
-      gqlAPIServiceArguments.sortDirection = sortDirection;
-    }
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DocumentsByArticleIdQuery>response.data.documentsByArticleId;
-  }
   async ArticlesByPageId(
     pageId: string,
     sortDirection?: ModelSortDirection,
@@ -2644,13 +2088,11 @@ export class APIService {
             headline
             layout
             body
-            info
+            date
+            directory
+            expiry_date
             rank
             pictures {
-              __typename
-              nextToken
-            }
-            documents {
               __typename
               nextToken
             }
@@ -2793,7 +2235,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -2841,7 +2285,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -2889,7 +2335,9 @@ export class APIService {
               headline
               layout
               body
-              info
+              date
+              directory
+              expiry_date
               rank
               pageId
               createdAt
@@ -3002,96 +2450,6 @@ export class APIService {
     >;
   }
 
-  OnCreateDocumentListener(
-    filter?: ModelSubscriptionDocumentFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateDocument">>
-  > {
-    const statement = `subscription OnCreateDocument($filter: ModelSubscriptionDocumentFilterInput) {
-        onCreateDocument(filter: $filter) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onCreateDocument">>
-    >;
-  }
-
-  OnUpdateDocumentListener(
-    filter?: ModelSubscriptionDocumentFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateDocument">>
-  > {
-    const statement = `subscription OnUpdateDocument($filter: ModelSubscriptionDocumentFilterInput) {
-        onUpdateDocument(filter: $filter) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onUpdateDocument">>
-    >;
-  }
-
-  OnDeleteDocumentListener(
-    filter?: ModelSubscriptionDocumentFilterInput
-  ): Observable<
-    SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteDocument">>
-  > {
-    const statement = `subscription OnDeleteDocument($filter: ModelSubscriptionDocumentFilterInput) {
-        onDeleteDocument(filter: $filter) {
-          __typename
-          id
-          filename
-          orientation
-          rank
-          articleId
-          caption1
-          caption2
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    return API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    ) as Observable<
-      SubscriptionResponse<Pick<__SubscriptionContainer, "onDeleteDocument">>
-    >;
-  }
-
   OnCreateArticleListener(
     filter?: ModelSubscriptionArticleFilterInput
   ): Observable<
@@ -3105,25 +2463,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -3168,25 +2512,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename
@@ -3231,25 +2561,11 @@ export class APIService {
           headline
           layout
           body
-          info
+          date
+          directory
+          expiry_date
           rank
           pictures {
-            __typename
-            items {
-              __typename
-              id
-              filename
-              orientation
-              rank
-              articleId
-              caption1
-              caption2
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          documents {
             __typename
             items {
               __typename

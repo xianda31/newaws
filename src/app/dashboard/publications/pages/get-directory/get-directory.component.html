@@ -1,19 +1,22 @@
 <form [formGroup]="dirForm" (ngSubmit)="onSubmit()">
     <div class="modal-header">
-        <h5 class="modal-title" id="modal-basic-title">
-            <h6>donner un nom de répertoire </h6>
-        </h5>
+        <div class="col">
 
-        <div class="modal-body">
-            <input type="text" class="form-control" formControlName="directory">
+            <div>
+                <h5 class="modal-title" id="modal-basic-title">
+                    <h6>donner le nom du répertoire associé</h6>
+                </h5>
+            </div>
+
+            <div class="modal-body">
+                <select class="form-control" formControlName="directory">
+                    <option *ngFor="let folder of folderItems" (click)="folderDown(folder)" [value]="folder.key">
+                        {{folder.key}}</option>
+                </select>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Valider</button>
-        </div>
-
-        <div class="modal-footer">
-            <!-- <button (click)="withdirectory = !withdirectory" type="button" class="btn btn-secondary">{{directory ? 'sans directory':'avec directory'}}
-        </button> -->
         </div>
     </div>
 </form>

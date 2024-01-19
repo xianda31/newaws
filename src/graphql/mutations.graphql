@@ -71,7 +71,9 @@ mutation CreatePage(
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -107,7 +109,9 @@ mutation UpdatePage(
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -143,7 +147,9 @@ mutation DeletePage(
         headline
         layout
         body
-        info
+        date
+        directory
+        expiry_date
         rank
         pageId
         createdAt
@@ -213,60 +219,6 @@ mutation DeletePicture(
   }
 }
 
-mutation CreateDocument(
-  $input: CreateDocumentInput!
-  $condition: ModelDocumentConditionInput
-) {
-  createDocument(input: $input, condition: $condition) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation UpdateDocument(
-  $input: UpdateDocumentInput!
-  $condition: ModelDocumentConditionInput
-) {
-  updateDocument(input: $input, condition: $condition) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
-mutation DeleteDocument(
-  $input: DeleteDocumentInput!
-  $condition: ModelDocumentConditionInput
-) {
-  deleteDocument(input: $input, condition: $condition) {
-    id
-    filename
-    orientation
-    rank
-    articleId
-    caption1
-    caption2
-    createdAt
-    updatedAt
-    __typename
-  }
-}
-
 mutation CreateArticle(
   $input: CreateArticleInput!
   $condition: ModelArticleConditionInput
@@ -277,25 +229,11 @@ mutation CreateArticle(
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename
@@ -328,25 +266,11 @@ mutation UpdateArticle(
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename
@@ -379,25 +303,11 @@ mutation DeleteArticle(
     headline
     layout
     body
-    info
+    date
+    directory
+    expiry_date
     rank
     pictures {
-      items {
-        id
-        filename
-        orientation
-        rank
-        articleId
-        caption1
-        caption2
-        createdAt
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-    documents {
       items {
         id
         filename

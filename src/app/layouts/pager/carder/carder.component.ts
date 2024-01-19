@@ -20,6 +20,7 @@ export class CarderComponent implements OnChanges {
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
+  @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
   data!: FlashData;
 
 
@@ -28,7 +29,12 @@ export class CarderComponent implements OnChanges {
     // private http: HttpClient,
   ) { }
 
-  async ngOnChanges(): Promise<void> {
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    if (changes['editable'] && changes['editable'].currentValue) {
+      // console.log(' ngOnChanges ...  editable changed : %o', changes['editable'].currentValue);
+    } else {
+    }
+
     this.prepView(this.article);
   }
 
@@ -40,9 +46,14 @@ export class CarderComponent implements OnChanges {
       headline: article.headline,
       layout: article.layout as CardType,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
-      date: article.info ? new Date(article.info) : null,
+      date: article.date ? new Date(article.date) : null,
+      root: this.editable ? 'documents/' : article.directory ?? '',
+      sub_folder: this.editable ? (article.directory ? article.directory.replace('documents/', '') : '') : '',
       id: article.id
     };
+
+    // console.log('prepView : root ->sub_folder = %s%s', flashData.root, flashData.sub_folder);
+
     if (article.pictures?.items && article.pictures?.items.length > 0) {
       let getFn = (path: string) => { const keys = path.split('/'); return keys[keys.length - 1]; };
       flashData.pictures = article.pictures?.items
@@ -70,13 +81,19 @@ export class CarderComponent implements OnChanges {
         orientation: 'PORTRAIT' as PictureOrientationTypeEnum,
         rank: 0,
       }
-      console.log('...', default_image);
+      // console.log('...', default_image);
       flashData.pictures = [];
       flashData.pictures.push(default_image);
     }
 
     // console.log('flashData', flashData);
     this.data = { ...flashData };
+  }
+
+  onFolderClick(folder: string) {
+    // console.log('onFolderClick', folder)
+    this.data.sub_folder = folder.replace('documents/', '');
+    this.directoryClick.emit({ id: this.data.id, folder: folder });
   }
 
   onPictureClick(op: PictureOp, id: string, i: number) {

@@ -130,6 +130,7 @@ export class FileService {
   }
 
   genFolderItems(folder_path: string): FolderItem[] {
+
     const bucket: any[] = [];
     this.publicBucket.forEach((item: any) => {
       if (item.key.startsWith(folder_path)) { bucket.push(item); }

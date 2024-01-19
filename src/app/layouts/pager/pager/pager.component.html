@@ -8,7 +8,7 @@
   </div>
 
   <div class="card shadow ">
-    <div *ngIf="page.viewer === 'slider'">
+    <div *ngIf="page.viewer === 'SIDE'">
       <div class="row">
         <div class="col-4 mt-3">
           <ng-container *ngFor="let article of articles$ | async ">
@@ -18,7 +18,7 @@
           </ng-container>
         </div>
 
-        <div class="col-8">
+        <div class="col-8 text-start">
           <!-- selectedArticle.id : {{selectedArticle.id}} -->
           <app-carder *ngIf="selectedArticle" [article]="selectedArticle" [editable]="false" [showLess]="false">
           </app-carder>
@@ -27,7 +27,7 @@
       </div>
     </div>
 
-    <div *ngIf="page.viewer !== 'slider'" class="row justify-content-center ">
+    <div *ngIf="page.viewer !== 'SIDE'" class="row justify-content-center ">
       <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
         [showLess]="false">
       </app-carder>
