@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   DBloaded: boolean = false;
   test_links: boolean = environment.test_links;
   showSideMenu: boolean = true;
-  loggedUser: LoggedUser | null = null;
+  loggedUser!: LoggedUser | null;
 
   constructor(
     private pageService: PageService,
@@ -33,28 +33,22 @@ export class AppComponent implements OnInit {
     if (environment.logging_bypass) this.cognitoService.signIn(environment.john_doe);
 
     combineLatest([this.pageService.pagesReady$,
-    this.memberService.members$, this.articleService.articles$, this.fileService.bucketLoaded$])
-      .subscribe(([pagesReady, members, articles, bucketLoaded]) => {
+    this.memberService.members$,
+    this.articleService.articles$,
+    this.fileService.bucketLoaded$,
+    this.cognitoService.currentAuthenticatedUser])
+      .subscribe(([pagesReady, members, articles, bucketLoaded, user]) => {
+        if (user) {
+          let member = this.memberService.getMemberByLicense(user.license);
+          this.loggedUser = { email: user.email, firstname: user.username, lastname: member?.lastname, license: user.license, credentials: member?.rights! };
+        } else {
+          this.loggedUser = null;
+        }
+
         if (members.length > 0 && pagesReady && bucketLoaded) {
           this.DBloaded = true;
         }
       });
-
-    this.cognitoService.currentAuthenticatedUser.subscribe((user) => {
-
-      // this.loggedUser = user;
-
-      if (user) {
-        let member = this.memberService.getMemberByLicense(user.license);
-        this.loggedUser = { email: user.email, firstname: user.username, lastname: member?.lastname, license: user.license, credentials: member?.rights! };
-        // const rights = member?.rights!;
-
-      } else {
-        this.loggedUser = null;
-      }
-      console.log('loggedUser: %o', this.loggedUser);
-    });
-
   }
 
   title = 'bcsto';

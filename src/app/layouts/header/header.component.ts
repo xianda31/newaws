@@ -71,9 +71,13 @@ export class HeaderComponent implements OnInit, OnChanges {
       this._pages = pages;
       this.menuItems = this.buildMenuMap(this._pages);
     });
+    this.setRights(this.loggedUser!);
+  }
 
-    console.log('loggedUser: %o', this.loggedUser);
-
+  setRights(user: LoggedUser) {
+    this.isAdmin = user.credentials?.includes('Admin')!;
+    this.isPublisher = user.credentials?.includes('Publisher')!;
+    this.isSeller = user.credentials?.includes('Seller')!;
   }
 
   onLogout() {

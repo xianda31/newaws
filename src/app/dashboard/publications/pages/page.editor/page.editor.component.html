@@ -68,9 +68,9 @@
           <!-- affichage contenu -->
           <div class="col-8 article">
             <app-carder [article]="article"
-              [editable]="current_article !== undefined && article.id === current_article.id && !force_editor_reload"
+              [editable]="current_article === null? false : (article.id === current_article.id && !force_editor_reload)"
               (click)="cardClickHandler(article)" (pictureClick)="pictureClickHandler($event)"
-              (directoryClick)="directorySelectHandler($event)" (validateDirectoryClick)="DirectoryValidated(article)">
+              (validateDirectoryClick)="directoryValidated(article)">
             </app-carder>
           </div>
 
@@ -79,6 +79,7 @@
               <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)"
                 (click)="deleteArticle(article)"></i>
             </div>
+
           </div>
           <!-- </div> -->
         </ng-container>

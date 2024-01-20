@@ -20,7 +20,7 @@ export class CarderComponent implements OnChanges {
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
-  @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
+  // @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
   @Output() validateDirectoryClick = new EventEmitter<{ id: string, folder: string }>();
   data!: FlashData;
 
@@ -32,7 +32,7 @@ export class CarderComponent implements OnChanges {
 
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (changes['editable'] && changes['editable'].currentValue) {
-      // console.log(' ngOnChanges ...  editable changed : %o', changes['editable'].currentValue);
+      console.log(' ngOnChanges ...  editable changed : %o', changes['editable'].currentValue);
     } else {
     }
 
@@ -91,11 +91,11 @@ export class CarderComponent implements OnChanges {
     this.data = { ...flashData };
   }
 
-  onFolderClick(folder: string) {
-    // console.log('onFolderClick', folder)
-    this.data.sub_folder = folder.replace('documents/', '');
-    this.directoryClick.emit({ id: this.data.id, folder: folder });
-  }
+  // onFolderClick(folder: string) {
+  //   // console.log('onFolderClick', folder)
+  //   this.data.sub_folder = folder.replace('documents/', '');
+  //   this.directoryClick.emit({ id: this.data.id, folder: folder });
+  // }
 
   onPictureClick(op: PictureOp, id: string, i: number) {
     let co_id = id;
@@ -117,9 +117,9 @@ export class CarderComponent implements OnChanges {
     this.pictureClick.emit({ op: op, id: id, co_id: co_id });
   }
 
-  onValidateDirectoryClick() {
-    console.log('onValidateDirectoryClick', this.data.root + this.data.sub_folder);
+  onValidateDirectoryClick(event: any) {
     this.validateDirectoryClick.emit({ id: this.data.id, folder: this.data.root + this.data.sub_folder });
+    event.stopPropagation();
   }
 
   getMonth(date: Date): string {

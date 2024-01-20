@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { SafeHtml } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, map } from 'rxjs';
@@ -14,9 +13,6 @@ import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
 import { ToastService } from 'src/app/tools/service/toast.service';
-import { GetDirectoryComponent } from '../get-directory/get-directory.component';
-import { FileService } from 'src/app/tools/service/file.service';
-import { FolderItem } from 'src/app/interfaces/files.interface';
 
 
 
@@ -29,8 +25,7 @@ export class PageEditorComponent implements OnInit {
   @Input('id') pageId!: string;
   current_page!: Page;
   path !: string;
-  // viewMode: CardType = 'Textual';
-  // pageForm!: FormGroup;
+
 
   articles$: Observable<Article[]> = this.articleService.articles$.pipe(
     map((articles) => articles.filter((article) => article.pageId === this.current_page.id)),
@@ -40,7 +35,7 @@ export class PageEditorComponent implements OnInit {
   edit_mode: boolean = false;
   force_editor_reload = false;
 
-  current_article!: Article;
+  current_article: Article | null = null;
   articles !: Article[];
   maxRank !: number;
   myModal !: any;
@@ -114,23 +109,15 @@ export class PageEditorComponent implements OnInit {
     // this.updateArticle(article);  // will force editor reload
   }
 
-  DirectoryValidated(article: Article) {
-    console.log('validateDirectory : %o ', article);
+  directoryValidated(article: Article) {
+    // console.log('validateDirectory : %o ', article);
+    this.removeEditors(article);
+    this.current_article = null;  // deselct article
     this.updateArticle(article);
   }
 
-  setDirectory(article: Article) {
-    const modalRef = this.modalService.open(GetDirectoryComponent, { centered: true });
-    modalRef.componentInstance.article = article;
 
-    modalRef.result.then((article) => {
-      // console.log('result', article);
-      this.articleService.updateArticle(article);
 
-    }).catch((error) => {
-      console.log('error', error);
-    });
-  }
 
   // C(R)UD ARTICLES
 
@@ -266,7 +253,7 @@ export class PageEditorComponent implements OnInit {
 
     // console.log('cardClickHandler : %s , force_editor_reload : %s', article.id, this.force_editor_reload);
 
-    if (this.current_article !== undefined) {
+    if (this.current_article !== null) {
       if ((this.current_article.id === article.id)) {   // if same article
         if (this.force_editor_reload) {
           // console.log('cardClickHandler : regenerate editors on same article');
@@ -323,8 +310,8 @@ export class PageEditorComponent implements OnInit {
   }
 
   headSave(html: SafeHtml): void {
-    this.current_article.headline = html.toString();
-    this.updateArticle(this.current_article);
+    this.current_article!.headline = html.toString();
+    this.updateArticle(this.current_article!);
 
 
   }
@@ -333,8 +320,8 @@ export class PageEditorComponent implements OnInit {
     const BucketName = environment.BucketName;
     const Region = environment.Region;
     const hostname = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com';
-    this.current_article.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
-    this.updateArticle(this.current_article);
+    this.current_article!.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
+    this.updateArticle(this.current_article!);
   }
 
   initHeadLineEditor(el: HTMLElement) {
@@ -395,7 +382,7 @@ export class PageEditorComponent implements OnInit {
           };
 
           let promise: Promise<string> = new Promise((resolve, reject) => {
-            const key = 'images/' + this.current_article.title + '/' + blobInfo.filename();
+            const key = 'images/' + this.current_article!.title + '/' + blobInfo.filename();
             Storage.put(key, blobInfo.blob(), {
               level: 'public',
               // contentType: blobInfo.blob().type,

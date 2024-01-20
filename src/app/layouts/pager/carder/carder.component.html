@@ -76,12 +76,12 @@
         <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
       </div>
       <app-files [root_folder]="data.root" [sub_folder]="data.sub_folder" [full_rights]="editable"
-        [arbo_only]="!editable" (newPathEvent)="onFolderClick($event)">
+        [arbo_only]="!editable">
       </app-files>
       <h6 *ngIf="editable" class="fs-6 fst-italic">
-        répertoire : {{data.root}} {{data.sub_folder}}
+        validation du contenu
         <span>
-          <i class="bi bi-file-earmark-check-fill text-primary" (click)="onValidateDirectoryClick()"></i>
+          <i class="bi bi-file-earmark-check-fill text-primary" (click)="onValidateDirectoryClick($event)"></i>
         </span>
       </h6>
     </div>
