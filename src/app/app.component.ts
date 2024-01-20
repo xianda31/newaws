@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
     this.fileService.bucketLoaded$,
     this.cognitoService.currentAuthenticatedUser])
       .subscribe(([pagesReady, members, articles, bucketLoaded, user]) => {
-        console.log('app.component :  user', user);
         if (user !== null) {
           let member = this.memberService.getMemberByLicense(user.license)!;
           this.loggedUser = { email: user.email, firstname: user.username, lastname: member.lastname, license: user.license, credentials: member?.rights! };

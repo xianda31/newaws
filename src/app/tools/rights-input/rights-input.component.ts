@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { environment } from 'src/app/environments/environment';
+import { RightTypeEnum } from 'src/app/interfaces/rights.interface';
 
 interface RightsArray { [key: string]: boolean }
 
@@ -20,7 +20,7 @@ interface RightsArray { [key: string]: boolean }
 
 export class RightsInputComponent implements OnInit, ControlValueAccessor {
 
-  env_rights = environment.rights;
+  env_rights = Object.keys(RightTypeEnum);
   credentials: string = '';
   rights: RightsArray = {};
   disabled = false;
@@ -63,7 +63,7 @@ export class RightsInputComponent implements OnInit, ControlValueAccessor {
   }
 
   readRights(credentials: string): RightsArray {
-    const rightsDef = environment.rights;
+    const rightsDef = Object.keys(RightTypeEnum);;
     let rights: any = {};
     rightsDef.forEach((right) => {
       rights[right] = credentials.includes(right);
@@ -72,7 +72,7 @@ export class RightsInputComponent implements OnInit, ControlValueAccessor {
   }
 
   genCredentials(rights: any): string {
-    const rightsDef = environment.rights;
+    const rightsDef = Object.keys(RightTypeEnum);;
     let credentials = '';
     rightsDef.forEach((right) => {
       if (rights[right]) {

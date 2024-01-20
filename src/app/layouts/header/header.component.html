@@ -1,4 +1,4 @@
-<div class="navbar  navbar-expand-lg bg-success navbar-dark  rounded-2">
+<div [class]="'navbar  navbar-expand-lg navbar-dark rounded-2 ' + (frontMenuShow ? 'bg-success' : 'bg-secondary')">
   <div class="container">
     <!-- toggler button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
