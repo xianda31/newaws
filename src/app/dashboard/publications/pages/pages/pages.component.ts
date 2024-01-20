@@ -127,7 +127,7 @@ export class PagesComponent implements OnInit {
   async deletePage(event: any, page: Page) {
     const articles = await this.pageService.articlesByPageId(page.id);
     if (articles.length > 0) {
-      this.toastService.showWarningToast('Page not empty', 'la rubrique n\'est pas vide');
+      this.toastService.showWarningToast('Page not empty', 'la page contient des articles');
       return
     } else {
       event.stopPropagation();

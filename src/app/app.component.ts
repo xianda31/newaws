@@ -7,6 +7,7 @@ import { ArticleService } from './aws.services/article.aws.service';
 import { CognitoService } from './aws.services/cognito.aws.service';
 import { User } from 'parse';
 import { LoggedUser } from './interfaces/user.interface';
+import { FileService } from './tools/service/file.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
     private articleService: ArticleService,
     private memberService: MemberService,
     private cognitoService: CognitoService,
+    private fileService: FileService
 
   ) { }
   ngOnInit(): void {
@@ -31,9 +33,9 @@ export class AppComponent implements OnInit {
     if (environment.logging_bypass) this.cognitoService.signIn(environment.john_doe);
 
     combineLatest([this.pageService.pagesReady$,
-    this.memberService.members$, this.articleService.articles$])
-      .subscribe(([pagesReady, members, articles]) => {
-        if (members.length > 0 && pagesReady) {
+    this.memberService.members$, this.articleService.articles$, this.fileService.bucketLoaded$])
+      .subscribe(([pagesReady, members, articles, bucketLoaded]) => {
+        if (members.length > 0 && pagesReady && bucketLoaded) {
           this.DBloaded = true;
         }
       });
