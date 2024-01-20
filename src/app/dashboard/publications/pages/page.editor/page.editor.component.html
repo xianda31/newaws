@@ -1,29 +1,25 @@
 <div class="container-fluid ">
+  <h5 class="text-dark mt-2">Editeur de la page: "{{current_page.label}}" </h5>
   <div class="row">
     <div class="col-2 bg-success-subtle mt-2">
-      <!-- <p>{{current_page.root_menu}}</p> -->
-      <h6 class="text-dark mt-2">ajout d'un paragraphe à la page: "{{current_page.label}}" </h6>
-
-      <hr>
-
-
-      <ul class="list-group list-group-flush ">
-        <li class="list-group-item bg-success-subtle w-100">
-          <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('Textual')">
+      <h6 class="text-dark mt-4">ajout d'article : </h6>
+      <ul class="list-group  ">
+        <li class="list-group-item bg-success-subtle ">
+          <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('Textual')">
             <i class="bi bi-card-text"></i>
-            <span> Titre & article </span>
+            <span> Titre et texte </span>
           </button>
         </li>
-        <li class="list-group-item bg-success-subtle w-100">
-          <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('Pictural')">
+        <li class="list-group-item bg-success-subtle ">
+          <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('Pictural')">
             <i class="bi bi-card-image"></i>
-            <span> Sujet et image(s) </span>
+            <span> Titre et image(s) </span>
           </button>
         </li>
-        <li class="list-group-item bg-success-subtle w-100">
-          <button type="button" class="btn btn-sm btn-primary" (click)="createArticle('File')">
+        <li class="list-group-item bg-success-subtle ">
+          <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('File')">
             <i class="bi bi-file-pdf-fill"></i>
-            <span>Dossier et fichier(s) </span>
+            <span>Titre et fichier(s) </span>
           </button>
         </li>
       </ul>
@@ -33,7 +29,7 @@
     <div class="col-10">
       <div class="row justify-content-between p-2">
 
-        <ng-container class="row justify-content-center" *ngFor="let article of articles ; let i = index">
+        <div class="row justify-content-center mb-2" *ngFor="let article of articles ; let i = index">
           <!-- article's edit tools -->
           <div class="col-2 ">
             <div class="row fs-6  text-end justify-content-end me-2">
@@ -74,7 +70,7 @@
             </app-carder>
           </div>
 
-          <div class="col-2 align-content-center">
+          <div class="col-2 ">
             <div class="row text-start">
               <i id="delete" class="bi bi-trash3-fill" style="color:rgb(171, 19, 19)"
                 (click)="deleteArticle(article)"></i>
@@ -82,7 +78,7 @@
 
           </div>
           <!-- </div> -->
-        </ng-container>
+        </div>
         <!-- </div> -->
       </div>
 

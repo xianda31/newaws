@@ -33,20 +33,22 @@ export class AppComponent implements OnInit {
 
     if (environment.logging_bypass) this.cognitoService.signIn({ email: environment.john_doe.email, password: environment.john_doe.password });
 
-    combineLatest([this.pageService.pagesReady$,
-    this.memberService.members$,
-    this.articleService.articles$,
-    this.fileService.bucketLoaded$,
-    this.cognitoService.currentAuthenticatedUser])
-      .subscribe(([pagesReady, members, articles, bucketLoaded, user]) => {
-        if (user !== null) {
-          let member = this.memberService.getMemberByLicense(user.license)!;
-          this.loggedUser = { email: user.email, firstname: user.username, lastname: member.lastname, license: user.license, credentials: member?.rights! };
-        } else {
-          this.loggedUser = null;
-        }
+    combineLatest([
+      this.memberService.members$,
+      this.pageService.pagesReady$,
+      this.articleService.articles$,
+      this.fileService.bucketLoaded$,
+      this.cognitoService.currentAuthenticatedUser])
+      .subscribe(([members, pagesReady, articles, bucketLoaded, user]) => {
 
         if (members.length > 0 && pagesReady && bucketLoaded) {
+
+          if (user !== null) {
+            let member = this.memberService.getMemberByLicense(user.license)!;
+            this.loggedUser = { email: user.email, firstname: user.username, lastname: member.lastname, license: user.license, credentials: member?.rights! };
+          } else {
+            this.loggedUser = null;
+          }
           this.DBloaded = true;
         }
       });
