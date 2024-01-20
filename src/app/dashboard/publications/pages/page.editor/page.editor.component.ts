@@ -108,14 +108,14 @@ export class PageEditorComponent implements OnInit {
   }
 
   directorySelectHandler(event: { id: string, folder: string }) {
-    // console.log('directorySelectHandler : ~~> %o ', event);
+    console.log('directorySelectHandler : ~~> %o ', event);
     let article = this.articleService.getArticleById(event.id)!;
     article.directory = event.folder;
     // this.updateArticle(article);  // will force editor reload
   }
 
-  validateDirectory(article: Article) {
-    // console.log('validateDirectory : %o ', article);
+  DirectoryValidated(article: Article) {
+    console.log('validateDirectory : %o ', article);
     this.updateArticle(article);
   }
 

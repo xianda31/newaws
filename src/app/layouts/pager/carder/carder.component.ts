@@ -21,6 +21,7 @@ export class CarderComponent implements OnChanges {
   @Input() editable: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
   @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
+  @Output() validateDirectoryClick = new EventEmitter<{ id: string, folder: string }>();
   data!: FlashData;
 
 
@@ -114,6 +115,11 @@ export class CarderComponent implements OnChanges {
     }
     console.log('onPictureClick', op, id, co_id);
     this.pictureClick.emit({ op: op, id: id, co_id: co_id });
+  }
+
+  onValidateDirectoryClick() {
+    console.log('onValidateDirectoryClick', this.data.root + this.data.sub_folder);
+    this.validateDirectoryClick.emit({ id: this.data.id, folder: this.data.root + this.data.sub_folder });
   }
 
   getMonth(date: Date): string {

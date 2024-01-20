@@ -80,6 +80,9 @@
       </app-files>
       <h6 *ngIf="editable" class="fs-6 fst-italic">
         répertoire : {{data.root}} {{data.sub_folder}}
+        <span>
+          <i class="bi bi-file-earmark-check-fill text-primary" (click)="onValidateDirectoryClick()"></i>
+        </span>
       </h6>
     </div>
   </div>
