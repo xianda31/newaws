@@ -99,7 +99,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   confirmSignUp(code: string) {
     this.cognitoService._confirmSignUp({
       email: this.email.value,
-      password: this.password.value,
+      // password: this.password.value,
       code: code,
     }).then((result) => {
       this.toastService.showSuccessToast('signup success', 'Bienvenue ' + this.firstname.value);

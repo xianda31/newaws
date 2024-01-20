@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, map, concatAll, take, filter, tap, toArray } from 'rxjs';
-import { CreatePageInput, Page } from 'src/app/API.service';
+import { Observable } from 'rxjs';
+import { Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
@@ -44,10 +44,7 @@ export class HeaderComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['loggedUser']) {
-      this.isLogged = !!this.loggedUser;
-      this.isAdmin = this.loggedUser?.credentials?.includes('Admin')!;
-      this.isPublisher = this.loggedUser?.credentials?.includes('Publisher')!;
-      this.isSeller = this.loggedUser?.credentials?.includes('Seller')!;
+      this.isLogged = this.setRights(this.loggedUser);
       if (this.isLogged) {
         this.menuItems = this.buildMenuMap(this._pages);
       }
@@ -71,13 +68,15 @@ export class HeaderComponent implements OnInit, OnChanges {
       this._pages = pages;
       this.menuItems = this.buildMenuMap(this._pages);
     });
-    this.setRights(this.loggedUser!);
+    this.isLogged = this.setRights(this.loggedUser!);
   }
 
-  setRights(user: LoggedUser) {
-    this.isAdmin = user.credentials?.includes('Admin')!;
-    this.isPublisher = user.credentials?.includes('Publisher')!;
-    this.isSeller = user.credentials?.includes('Seller')!;
+  setRights(user: LoggedUser | null): boolean {
+    if (user === null) { return false }
+    this.isAdmin = user.credentials?.includes('Admin');
+    this.isPublisher = user.credentials?.includes('Publisher');
+    this.isSeller = user.credentials?.includes('Seller');
+    return true;
   }
 
   onLogout() {

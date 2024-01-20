@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Auth } from 'aws-amplify';
-import { LoggedUser } from "../interfaces/user.interface";
-import { BehaviorSubject, Observable } from "rxjs";
+import { SignInParams, SignUpParams } from "../interfaces/user.interface";
+import { BehaviorSubject } from "rxjs";
 import { environment } from "../environments/environment";
 
 @Injectable({
@@ -22,7 +22,7 @@ export class CognitoService {
     return this._currentAuthenticatedUser$.value;
   }
 
-  async signIn(user: LoggedUser): Promise<any> {
+  async signIn(user: SignInParams): Promise<any> {
     try {
       const result = await Auth.signIn(user.email, user.password);
       this.currentUser = { username: result.attributes.name, license: result.attributes['custom:license'] };
@@ -36,7 +36,7 @@ export class CognitoService {
   }
 
 
-  _signUp(user: LoggedUser): Promise<any> {
+  _signUp(user: SignUpParams): Promise<any> {
     return Auth.signUp({
       username: user.email,
       password: user.password ?? '',
@@ -49,15 +49,15 @@ export class CognitoService {
     });
   }
 
-  _confirmSignUp(user: LoggedUser): Promise<any> {
-    return Auth.confirmSignUp(user.email, user.code ? user.code : '');
+  _confirmSignUp(user: { email: string, code: string }): Promise<any> {
+    return Auth.confirmSignUp(user.email, user.code);
   }
 
   _deleteLoggedUser(): Promise<any> {
     return Auth.deleteUser();
   }
 
-  _signIn(user: LoggedUser): Promise<any> {
+  _signIn(user: SignUpParams): Promise<any> {
     return Auth.signIn(user.email, user.password);
   }
 
