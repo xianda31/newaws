@@ -5,7 +5,7 @@ import { Page } from 'src/app/API.service';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { MemberService } from 'src/app/aws.services/member.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { environment } from 'src/app/environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',

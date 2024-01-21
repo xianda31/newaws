@@ -7,7 +7,7 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import tinymce from 'tinymce';
 import { GetDateComponent } from '../get-date/get-date.component';
-import { environment } from 'src/app/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
@@ -132,7 +132,7 @@ export class PageEditorComponent implements OnInit {
       rank: this.maxRank + 1,
       // public: true,
       pageId: this.current_page.id,
-      directory: 'documents/'
+      directory: environment.S3articlesDirectory
     };
     this.articleService.createArticle(article);
 
@@ -228,14 +228,14 @@ export class PageEditorComponent implements OnInit {
     // S3 files uploading
     let uploadPromises: Promise<any>[] = [];
     files.forEach((file: any) => {
-      const key = 'confidential/' + article.title + '/' + file.name;
+      const key = environment.S3filesDirectory + article.title + '/' + file.name;
       uploadPromises.push(uploadPromise(key, file))
     });
     Promise.all(uploadPromises)
       .then(() => {
         // create associated pictures within dynamodb
         files.forEach((file: any, index: number) => {
-          const key = 'confidential/' + article.title + '/' + file.name;
+          const key = environment.S3filesDirectory + article.title + '/' + file.name;
           this.createPicture(key, article, index);
         });
       })
@@ -244,7 +244,6 @@ export class PageEditorComponent implements OnInit {
         this.toastService.showErrorToast('Error uploading pictures', err);
       });
   }
-
 
 
   // tinyMCE

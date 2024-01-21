@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article } from 'src/app/API.service';
+import { environment } from 'src/environments/environment';
 import { FolderItem } from 'src/app/interfaces/files.interface';
 import { FileService } from 'src/app/tools/service/file.service';
 
@@ -24,13 +25,13 @@ export class GetDirectoryComponent implements OnInit {
   ngOnInit(): void {
     // console.log('GetDirectoryComponent', this.article);
     let dir = this.article.directory ?? '';
-    dir = dir.replace('documents/', '');
+    dir = dir.replace(environment.S3articlesDirectory, '');
     this.dirForm = new FormGroup({
       directory: new FormControl(dir, [Validators.required, Validators.minLength(3)]),
     });
     this.fileService.bucketLoaded.subscribe((loaded) => {
       if (loaded) {
-        this.folderItems = this.fileService.genFolderItems('documents/');
+        this.folderItems = this.fileService.genFolderItems(environment.S3articlesDirectory);
         console.log('folderItems', this.folderItems)
       };
     });
@@ -48,7 +49,7 @@ export class GetDirectoryComponent implements OnInit {
     let dir = this.dirForm.value.directory;
     if (dir.charAt(dir.length - 1) !== '/') { dir = dir + '/' };
 
-    this.article.directory = "documents/" + dir;
+    this.article.directory = environment.S3articlesDirectory + dir;
     this.activeModal.close(this.article);
   }
 

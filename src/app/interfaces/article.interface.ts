@@ -3,7 +3,7 @@ import { PictureOrientationTypeEnum } from "src/app/interfaces/picture.interface
 
 
 
-export interface FlashData {
+export interface ArticleData {
   title: string;
   layout: CardType,
   pictures?: Array<{

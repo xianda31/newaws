@@ -6,7 +6,7 @@ import { MembersComponent } from '../members/members.component';
 // import { ArticlesComponent } from '../publications/articles/articles/articles.component';
 import { TestComponent } from '../tests/test.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { ToolsModule } from 'src/app/tools/tools/tools.module';
+import { ToolsModule } from 'src/app/tools/module/tools.module';
 import { EditComponent } from '../editor/edit.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { PagesComponent } from '../publications/pages/pages/pages.component';

@@ -5,9 +5,7 @@ import { Editor } from 'tinymce';
 import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
 import { FilesComponent } from '../files/files.component';
 import { RightsInputComponent } from '../rights-input/rights-input.component';
-import { CarderComponent } from 'src/app/layouts/pager/carder/carder.component';
-import { AdDirective } from 'src/app/layouts/pager/plugins/ad/ad.directive';
-import { FlashPluginComponent } from 'src/app/layouts/pager/plugins/flash-plugin/flash-plugin.component';
+import { CarderComponent } from 'src/app/layouts/carder/carder.component';
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -25,9 +23,7 @@ import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
     ViewerInputComponent,
     FilesComponent,
     RightsInputComponent,
-    FlashPluginComponent,
     GetDateComponent,
-    AdDirective,
     CarderComponent,
     FilesizePipe,
     SafeHtmlPipe,
@@ -47,8 +43,6 @@ import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
     RightsInputComponent,
     ViewerInputComponent,
     FilesComponent,
-    FlashPluginComponent,
-    AdDirective,
     CarderComponent,
     FormsModule,
     ReactiveFormsModule,

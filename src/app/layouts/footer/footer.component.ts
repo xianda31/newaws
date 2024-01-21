@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { environment } from 'src/app/environments/environment';
+import { environment } from 'src/environments/environment';
 import { Menu } from 'src/app/interfaces/navigation.interface';
 
 @Component({

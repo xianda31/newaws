@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageService } from './aws.services/page.aws.service';
 import { combineLatest, delay } from 'rxjs';
 import { MemberService } from './aws.services/member.aws.service';
-import { environment } from './environments/environment';
+import { environment } from '../environments/environment';
 import { ArticleService } from './aws.services/article.aws.service';
 import { CognitoService } from './aws.services/cognito.aws.service';
 import { User } from 'parse';
@@ -17,7 +17,6 @@ import { LoggedUser } from './interfaces/user.interface';
 })
 export class AppComponent implements OnInit {
   DBloaded: boolean = false;
-  test_links: boolean = environment.test_links;
   showSideMenu: boolean = true;
   loggedUser!: LoggedUser | null;
 

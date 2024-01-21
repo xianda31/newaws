@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Article, Picture } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
-import { FlashData } from '../plugins/flash-plugin/flash-plugin.interface';
-import { environment } from 'src/app/environments/environment';
+import { ArticleData } from '../../interfaces/article.interface';
+import { environment } from 'src/environments/environment';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
-import { FileService } from '../../../tools/service/file.service';
+import { FileService } from '../../tools/service/file.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 
 
@@ -23,7 +23,7 @@ export class CarderComponent implements OnChanges {
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
   // @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
   @Output() validateDirectoryClick = new EventEmitter<{ id: string, folder: string }>();
-  data!: FlashData;
+  data!: ArticleData;
 
 
   constructor(
@@ -42,15 +42,15 @@ export class CarderComponent implements OnChanges {
 
 
   async prepView(article: Article): Promise<void> {
-    let flashData: FlashData = {
+    let flashData: ArticleData = {
       title: article.title,
       // image: "",
       headline: article.headline,
       layout: article.layout as CardType,
       body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
       date: article.date ? new Date(article.date) : null,
-      root: this.editable ? 'documents/' : article.directory ?? '',
-      sub_folder: this.editable ? (article.directory ? article.directory.replace('documents/', '') : '') : '',
+      root: this.editable ? environment.S3articlesDirectory : article.directory ?? '',
+      sub_folder: this.editable ? (article.directory ? article.directory.replace(environment.S3articlesDirectory, '') : '') : '',
       id: article.id
     };
 
@@ -94,7 +94,7 @@ export class CarderComponent implements OnChanges {
 
   // onFolderClick(folder: string) {
   //   // console.log('onFolderClick', folder)
-  //   this.data.sub_folder = folder.replace('documents/', '');
+  //   this.data.sub_folder = folder.replace(environment.S3articlesDirectory, '');
   //   this.directoryClick.emit({ id: this.data.id, folder: folder });
   // }
 

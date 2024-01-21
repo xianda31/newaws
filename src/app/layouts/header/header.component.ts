@@ -29,7 +29,6 @@ export class HeaderComponent implements OnInit, OnChanges {
 
 
   menuItems!: Map<string, Menu[]>;
-  // test_links: boolean = environment.test_links;
 
   pages$: Observable<Page[]> = this.pageService.pages$;
   private _pages: Page[] = [];

@@ -3,12 +3,11 @@ import { RouterModule, Routes, provideRouter, withComponentInputBinding, withDeb
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
-import { Page404Component } from './pages/page404/page404.component';
-import { LinksComponent } from './pages/links/links.component';
+import { Page404Component } from './static_pages/page404/page404.component';
 import { canActivateGuard } from './guards/can-activate.guard';
-import { MyDataComponent } from './pages/my-data/my-data.component';
-import { PagerComponent } from './layouts/pager/pager/pager.component';
-import { TodoComponent } from './pages/todo/todo.component';
+import { MyDataComponent } from './static_pages/my-data/my-data.component';
+import { PagerComponent } from './layouts/pager/pager.component';
+import { TodoComponent } from './static_pages/todo/todo.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 
@@ -25,7 +24,6 @@ const routes: Routes = [
     component: DashboardComponent,
     loadChildren: () => import('./dashboard/modules/dashboard.module').then(m => m.DashboardModule)
   },
-  { path: 'links', component: LinksComponent },
   { path: 'todo', component: TodoComponent },
   { path: '404', component: Page404Component },
 

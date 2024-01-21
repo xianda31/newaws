@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Auth } from 'aws-amplify';
 import { SignInParams, SignUpParams } from "../interfaces/user.interface";
 import { BehaviorSubject } from "rxjs";
-import { environment } from "../environments/environment";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root"
