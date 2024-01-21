@@ -3,7 +3,7 @@
   <ng-template *ngIf="data.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
   <ng-template *ngIf="data.layout ==='File'" [ngTemplateOutlet]="document"></ng-template>
 
-  <div *ngIf="data  && showLess" class="card-body bg-body-secondary m-1" id="sidebar">
+  <div *ngIf="data  && showLess" class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
     <section [innerHTML]="data.headline | smaller | smaller | safeHtml"></section>
   </div>
 </div>
