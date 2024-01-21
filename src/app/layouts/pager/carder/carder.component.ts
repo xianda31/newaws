@@ -19,6 +19,7 @@ export class CarderComponent implements OnChanges {
   @Input() article!: Article;
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
+  @Input() picturesInCol: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
   // @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
   @Output() validateDirectoryClick = new EventEmitter<{ id: string, folder: string }>();

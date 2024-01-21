@@ -1989,9 +1989,21 @@ export class APIService {
             expiry_date
             rank
             pictures {
+            __typename
+            items {
               __typename
-              nextToken
+              id
+              filename
+              orientation
+              rank
+              articleId
+              caption1
+              caption2
+              createdAt
+              updatedAt
             }
+            nextToken
+          }
             pageId
             createdAt
             updatedAt

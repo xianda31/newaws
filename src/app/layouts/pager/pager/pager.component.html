@@ -9,7 +9,7 @@
       <div class="row">
         <div class="col-4 mt-3">
           <ng-container *ngFor="let article of articles$ | async ">
-            <app-carder *ngIf="article.id !== selectedArticle.id" class="col-lg-4" [article]="article"
+            <app-carder *ngIf="(article.id !== selectedArticle.id) || allInSide" class="col-lg-4" [article]="article"
               [editable]="false" [showLess]="true" (click)="selectArticle(article)">
             </app-carder>
           </ng-container>
@@ -24,11 +24,18 @@
       </div>
     </div>
 
-    <div *ngIf="page.viewer !== 'SIDE'" class="row justify-content-center ">
+    <div *ngIf="page.viewer === 'ROWS'" class="row justify-content-center ">
       <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
         [showLess]="false">
       </app-carder>
     </div>
+
+    <div *ngIf="page.viewer === 'COLUMNS'" class="row justify-content-center ">
+      <app-carder class="col col-md-3" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
+        [showLess]="false" [picturesInCol]="true">
+      </app-carder>
+    </div>
+
 
   </div>
 </div>

@@ -156,6 +156,7 @@ export class PageEditorComponent implements OnInit {
   createPicture(filename: string, article: Article, rankOffset: number) {
     let max = 0;
     if (article.pictures) {
+      console.log('createPicture : article.pictures = %o', article.pictures)
       max = article.pictures.items.reduce(
         (max, item) => (item!.rank > max) ? item!.rank : max,
         0,

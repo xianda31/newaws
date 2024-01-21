@@ -20,8 +20,8 @@ export class PagerComponent implements OnChanges {
 
   authenticatedUser: boolean = false;
   page!: Page;
-  // solo !: boolean;
   selectedArticle!: Article;
+  allInSide: boolean = true;
 
 
   constructor(

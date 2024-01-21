@@ -19,7 +19,8 @@ export class HeaderComponent implements OnInit, OnChanges {
   @Input() loggedUser!: LoggedUser | null;
 
   frontMenuShow: boolean = true;
-
+  front_url: string = 'front/home';
+  back_url: string = 'back';
   isLogged!: boolean;
   isAdmin!: boolean;
   isPublisher!: boolean;
@@ -91,9 +92,13 @@ export class HeaderComponent implements OnInit, OnChanges {
   toggleFrontMenuVisibility() {
     this.frontMenuShow = !this.frontMenuShow;
     if (!this.frontMenuShow) {
-      this.router.navigate(['back']);
+      this.front_url = this.router.url;
+      // console.log('leaving front', this.front_url)
+      this.router.navigate([this.back_url]);
     } else {
-      this.router.navigate(['front/home']);
+      this.back_url = this.router.url;
+      // console.log('returning to front', this.front_url)
+      this.router.navigate([this.front_url]);
     }
   }
   // menu utilities
