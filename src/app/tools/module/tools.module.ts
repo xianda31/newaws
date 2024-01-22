@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToggleInputComponent } from '../toggle-input/toggle-input.component';
+import { ToggleInputComponent } from '../value_accessors/toggle-input/toggle-input.component';
 import { Editor } from 'tinymce';
 import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
 import { FilesComponent } from '../files/files.component';
-import { RightsInputComponent } from '../rights-input/rights-input.component';
-import { CarderComponent } from 'src/app/layouts/carder/carder.component';
+import { RightsInputComponent } from '../value_accessors/rights-input/rights-input.component';
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/get-date.component';
 import { BucketnamePipe } from '../../pipes/bucketname.pipe';
 import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
-import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
+import { ViewerInputComponent } from '../value_accessors/viewer-input/viewer-input.component';
+import { CarderComponent } from 'src/app/dynamic_pages/carder/carder.component';
+import { IconsTogglerInputComponent } from '../value_accessors/icons-toggler-input/icons-toggler-input.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -23,6 +24,7 @@ import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
     ViewerInputComponent,
     FilesComponent,
     RightsInputComponent,
+    IconsTogglerInputComponent,
     GetDateComponent,
     CarderComponent,
     FilesizePipe,
@@ -42,6 +44,7 @@ import { ViewerInputComponent } from '../viewer-input/viewer-input.component';
     ToggleInputComponent,
     RightsInputComponent,
     ViewerInputComponent,
+    IconsTogglerInputComponent,
     FilesComponent,
     CarderComponent,
     FormsModule,

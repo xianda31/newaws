@@ -13,6 +13,7 @@ import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
 import { ToastService } from 'src/app/tools/service/toast.service';
+import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 
 
 
@@ -166,7 +167,7 @@ export class PageEditorComponent implements OnInit {
       filename: filename,
       caption1: '',
       caption2: '',
-      orientation: 'Portrait',
+      orientation: PictureOrientationTypeEnum.Italian,
       rank: max + 1 + rankOffset,
       articleId: article.id,
     };

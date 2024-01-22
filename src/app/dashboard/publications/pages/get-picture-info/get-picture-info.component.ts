@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Picture } from 'src/app/API.service';
+import { orientationIcons } from 'src/app/interfaces/picture.interface';
 
 
 @Component({
@@ -12,6 +13,9 @@ import { Picture } from 'src/app/API.service';
 export class GetPictureInfoComponent {
   @Input() picture!: Picture;
   pictureForm !: FormGroup;
+
+  options = orientationIcons;
+
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -33,7 +37,7 @@ export class GetPictureInfoComponent {
   }
   clear_caption1() { this.pictureForm.get('caption1')!.patchValue(''); }
   clear_caption2() { this.pictureForm.get('caption2')!.patchValue(''); }
-  clear_orientation() { this.pictureForm.get('orientation')!.patchValue('PORTRAIT'); }
+  // clear_orientation() { this.pictureForm.get('orientation')!.patchValue(''); }
 
   infoChanged() {
     this.picture.caption1 = this.pictureForm.get('caption1')!.value;

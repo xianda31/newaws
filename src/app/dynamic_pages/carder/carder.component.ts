@@ -66,7 +66,7 @@ export class CarderComponent implements OnChanges {
             alt: getFn(item!.filename),
             caption1: item?.caption1 ?? '',
             caption2: item?.caption2 ?? '',
-            orientation: item?.orientation as PictureOrientationTypeEnum ?? 'PORTRAIT',
+            orientation: item?.orientation as PictureOrientationTypeEnum ?? PictureOrientationTypeEnum.Italian,
             rank: item?.rank ?? 0,
           }
         })
@@ -80,7 +80,7 @@ export class CarderComponent implements OnChanges {
         alt: 'no_image',
         caption1: '',
         caption2: '',
-        orientation: 'PORTRAIT' as PictureOrientationTypeEnum,
+        orientation: PictureOrientationTypeEnum.Italian,
         rank: 0,
       }
       // console.log('...', default_image);

@@ -41,9 +41,9 @@
       <div *ngIf="data.pictures "
         [class]="picturesInCol ? 'col g-2' : 'row row-cols-1 row-cols-md-6 justify-content-around g-2'">
         <div *ngFor="let picture of data.pictures ; let i=index"
-          [class]="picturesInCol ? 'row g-0' : picture.orientation === 'PORTRAIT' ? 'col col-md-2' : 'col col-md-4'">
+          [class]="picturesInCol ? 'row g-0' : picture.orientation === 'ITALIAN' ? 'col col-md-2' : 'col col-md-4'">
           <div class="card h-100">
-            <img [class]="picture.orientation === 'PORTRAIT' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage'"
+            <img [class]="picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage'"
               [src]="picture.uri | async" [alt]="picture.alt">
             <div class="card-body text-center p-0">
               <div *ngIf="picture.caption1" class="text-primary"> {{picture.caption1}}

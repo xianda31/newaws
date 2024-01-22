@@ -1,0 +1,8 @@
+<div class="form-check form-check-inline text-center" *ngFor="let option of options | keyvalue;let i=index">
+    <input class="form-check-input " type="radio" id="option{{i}}" name="options" [value]="option.key"
+        [(ngModel)]="selectedOption" (ngModelChange)="onSelectionChanged(option.key)">
+    <label class="form-check-label" [for]="option">
+        <i [class]="option.value"> </i>
+        <!-- {{i}} {{option.key}} {{option.value}} -->
+    </label>
+</div>

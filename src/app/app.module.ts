@@ -3,8 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { HeaderComponent } from './layouts/header/header.component';
+import { FooterComponent } from './dynamic_pages/footer/footer.component';
 import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
 import { SignupComponent } from './authentication/signup/signup.component';
@@ -15,10 +14,11 @@ import { Page404Component } from './static_pages/page404/page404.component';
 import { RightsComponent } from './tests/rights/rights.component';
 import { MyDataComponent } from './static_pages/my-data/my-data.component';
 import { TodoComponent } from './static_pages/todo/todo.component';
-import { PagerComponent } from './layouts/pager/pager.component';
+import { PagerComponent } from './dynamic_pages/pager/pager.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { HeaderComponent } from './dynamic_pages/header/header.component';
 
 @NgModule({
   declarations: [

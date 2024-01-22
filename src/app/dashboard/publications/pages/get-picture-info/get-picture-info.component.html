@@ -35,13 +35,12 @@
             <div class="col">
                 <label> orientation photo</label>
                 <div class="input-group">
-                    <span class="input-group-text">
+                    <!-- <span class="input-group-text">
                         <i class="bi bi-x-circle-fill" (click)="clear_orientation()"></i>
-                    </span>
-                    <select class="form-select" formControlName="orientation">
-                        <option value="LANDSCAPE">paysage</option>
-                        <option value="PORTRAIT">portrait</option>
-                    </select>
+                    </span> -->
+                    <app-icons-toggler-input [options]="options"
+                        formControlName="orientation"></app-icons-toggler-input>
+
 
                 </div>
             </div>

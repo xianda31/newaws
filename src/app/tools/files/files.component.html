@@ -52,7 +52,7 @@
                     </button>
                     <span>{{item.key}}</span>
                 </div>
-                <div *ngIf="item.size === 0 && full_rights" class="col-1 offset-2 text-end">
+                <div *ngIf=" full_rights" class="col-1 offset-2 text-end">
                     <button type="button" class="btn  h-100" (click)="deleteDirectory(item)">
                         <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
                     </button>

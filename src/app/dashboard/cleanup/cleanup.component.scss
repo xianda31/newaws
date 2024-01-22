@@ -1,9 +1,48 @@
 .img-fit {
   position: relative;
   width: 75%;
-  height: 60px;
+  height: 30px;
   object-fit: cover;
   aspect-ratio: 1/1.45;
   // border-radius: 6px;
   box-shadow: 2px 2px 2px rgb(178, 178, 178);
+}
+
+// body{
+//   background-color: #bdc3c7;
+// }
+.table-fixed {
+  width: 100%;
+  // background-color: #f3f3f3;
+
+  tbody {
+    height: 60vh;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  thead,
+  tbody,
+  tr,
+  td,
+  th {
+    display: block;
+  }
+
+  tbody {
+    tr {
+      display: flex;
+      // border: #f39c12;
+    }
+  }
+
+  thead {
+    tr {
+      th {
+        float: left;
+        background-color: #f39c12;
+        // border-color: #e67e22;
+      }
+    }
+  }
 }
