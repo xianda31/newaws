@@ -51,6 +51,7 @@ import { IconsTogglerInputComponent } from '../value_accessors/icons-toggler-inp
     ReactiveFormsModule,
     FilesizePipe,
     SafeHtmlPipe,
+    SmallerPipe,
 
 
     // EditorModule

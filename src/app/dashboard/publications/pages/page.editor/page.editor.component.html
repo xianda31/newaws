@@ -6,20 +6,20 @@
       <ul class="list-group  ">
         <li class="list-group-item bg-success-subtle ">
           <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('Textual')">
-            <i class="bi bi-card-text"></i>
-            <span> Titre et texte </span>
+            <i [class]="getLayoutIcon('Textual')"></i>
+            <span> {{getLayoutMeaning('Textual')}} </span>
           </button>
         </li>
         <li class="list-group-item bg-success-subtle ">
           <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('Pictural')">
-            <i class="bi bi-card-image"></i>
-            <span> Titre et image(s) </span>
+            <i [class]="getLayoutIcon('Pictural')"></i>
+            <span> {{getLayoutMeaning('Pictural')}} </span>
           </button>
         </li>
         <li class="list-group-item bg-success-subtle ">
           <button type="button" class="btn btn-sm btn-primary w-100 text-start" (click)="createArticle('File')">
-            <i class="bi bi-file-pdf-fill"></i>
-            <span>Titre et fichier(s) </span>
+            <i [class]="getLayoutIcon('File')"></i>
+            <span>{{getLayoutMeaning('File')}} </span>
           </button>
         </li>
       </ul>
@@ -32,8 +32,8 @@
         <div class="row justify-content-center mb-2" *ngFor="let article of articles ; let i = index">
           <!-- article's edit tools -->
           <div class="col-2 ">
-            <div class="row fs-6  text-end justify-content-end me-2">
-              {{article.layout}}
+            <div class="row fs-6 fw-bold text-end justify-content-end ms-2 me-2">
+              {{getLayoutMeaning(article.layout)}}
             </div>
             <div class="row justify-content-end">
 
@@ -54,9 +54,6 @@
                 <div *ngIf="article.layout ==='Textual'" class="row text-end">
                   <i class="bi bi-calendar2-date-fill text-primary" (click)="setDate(article)"></i>
                 </div>
-                <!-- <div *ngIf="article.layout ==='File'" class="row text-end">
-                  <i class="bi bi-file-earmark-check-fill text-primary" (click)="validateDirectory(article)"></i>
-                </div> -->
               </div>
             </div>
           </div>

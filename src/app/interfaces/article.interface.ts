@@ -1,11 +1,31 @@
-import { CardType } from "src/app/interfaces/page.interface";
 import { PictureOrientationTypeEnum } from "src/app/interfaces/picture.interface";
 
 
+export const Layouts = {
+  Textual: 'un titre et un texte editable',
+  Pictural: 'un titre et des images',
+  File: 'un titre et des fichiers'
+};
+export type Layout = keyof typeof Layouts;
+
+export const LayoutIcons = {
+  Textual: 'bi bi bi-card-text',
+  Pictural: 'bi bi-card-image',
+  File: 'bi bi-file-earmark-font-fill'
+};
+
+
+export enum PictureOpEnum {
+  Delete = 'DELETE',
+  Left = 'LEFT',
+  Right = 'RIGHT',
+  Edit = 'EDIT'
+}
+export type PictureOp = keyof typeof PictureOpEnum;
 
 export interface ArticleData {
   title: string;
-  layout: CardType,
+  layout: Layout,
   pictures?: Array<{
     id: string;
     uri: Promise<string>;

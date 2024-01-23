@@ -10,10 +10,10 @@ import { GetDateComponent } from '../get-date/get-date.component';
 import { environment } from 'src/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
-import { CardType, PictureOp } from 'src/app/interfaces/page.interface';
 import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
 import { ToastService } from 'src/app/tools/service/toast.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
+import { Layout, LayoutIcons, Layouts, PictureOp } from 'src/app/interfaces/article.interface';
 
 
 
@@ -69,6 +69,12 @@ export class PageEditorComponent implements OnInit {
 
   }
 
+  getLayoutMeaning(layout: Layout | string): string {
+    return Layouts[layout as Layout];
+  }
+  getLayoutIcon(layout: Layout | string): string {
+    return LayoutIcons[layout as Layout];
+  }
 
   up(i: number) {
     if (i === 0) return;
@@ -122,7 +128,7 @@ export class PageEditorComponent implements OnInit {
 
   // C(R)UD ARTICLES
 
-  createArticle(layout: CardType) {
+  createArticle(layout: Layout) {
     // create dummy article
     const article: CreateArticleInput = {
       title: this.current_page.label + '/' + layout + (this.maxRank + 1),

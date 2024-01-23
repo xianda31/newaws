@@ -102,6 +102,12 @@ export class ArticleService {
 
 
   deleteArticle(article: Article) {
+
+    article.pictures?.items?.forEach((picture) => {
+      this.pictureService.deletePicture(picture!);
+    }
+    );
+
     this.api.DeleteArticle({ id: article.id }).then((result) => {
       this._articles = this._articles.filter((item) => item.id !== article.id);
       this._articles$.next(this._articles);

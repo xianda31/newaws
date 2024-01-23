@@ -4,7 +4,6 @@ import { Observable, map, of, tap } from 'rxjs';
 import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { CardType } from 'src/app/interfaces/page.interface';
 
 @Component({
   selector: 'app-pager',

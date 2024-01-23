@@ -1,70 +1,149 @@
-<div *ngIf="pictures$" class="row mt-2">
-  <div class="col-8">
-    <form [formGroup]="pictureForm">
-      <table class="table table-responsive-sm align-items-center table-hover">
+<div class="container-fluid text-center  gx-0">
+  <h6 class="text-dark mb-2 text-start"> outils de maintenance articles et images </h6>
 
-        <thead>
-          <tr>
-            <th scope="col" class="col-2">image</th>
-            <th scope="col" class="col-2">orientation</th>
-            <th scope="col" class="col-1">rank</th>
-            <th scope="col" class="col-6">article</th>
-            <th scope="col" class="col-1">action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="col-2"> <img *ngIf="selectedPicture" class="img-fit"
-                [src]="geturi(selectedPicture.filename) | async"> </td>
-            <td class="col-2">
-              <app-icons-toggler-input [options]="options" formControlName="orientation"></app-icons-toggler-input>
-            </td>
-            <td class="col-1">
-              <input type="number" formControlName="rank" class="form-control">
-            </td>
+  <div *ngIf="pictures$" class="row ">
+    <div class="col col-md-6">
 
-            <td class="col-6">
-              <select formControlName="articleId" class="w-100" (change)="onArticleChange()">
-                <option *ngFor="let article of articles$ | async" [value]="article.id">{{article.title}} </option>
-              </select>
-            </td>
-            <td class="col-1 text-center">
-              <i class="bi bi-check-square-fill text-primary" (click)="updatePicture()"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
 
-    <!-- </div>
-  <div class="col-6"> -->
+      <div class="card">
+        <div class="card-header">
+          Articles( {{nbrOfArticles}})
+        </div>
+        <div class="card-body">
+          <form [formGroup]="articleForm">
+            <table class="table table-responsive-sm align-items-center table-hover">
 
-    <table class="table table-striped table-hover table-fixed">
-      <thead>
-        <tr>
-          <th class="col-2">image</th>
-          <th class="col-2">orientation</th>
-          <th class="col-1">rank</th>
-          <th class="col-6">article</th>
+              <thead>
+                <tr>
+                  <th scope="col" class="col-5 text-center">titre</th>
+                  <th scope="col" class="col-1 text-center">layout</th>
+                  <th scope="col" class="col-1">rang*</th>
+                  <th scope="col" class="col-4">page</th>
+                  <th scope="col" class="col-1">action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-5">
+                    <section *ngIf="selectedArticle"
+                      [innerHTML]="selectedArticle.headline | smaller |smaller | safeHtml"> </section>
+                  </td>
+                  <td class="col-1">
+                    <input type="text" formControlName="layout" class="form-control form-control-sm">
+                  <td class="col-1">
+                    <input type="text" formControlName="rank" class="form-control form-control-sm">
+                  </td>
 
-          <th class="col-1">action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let picture of pictures$ | async " (click)="selectPicture(picture)">
-          <td class="col-2"> <img class="img-fit" [src]="geturi(picture.filename) | async"> </td>
-          <td class="col-2 text-center">
-            <i [class]="getIcon(picture.orientation!)"></i>
-          </td>
-          <td class="col-1">{{picture.rank}}</td>
+                  <td class="col-4">
+                    <select formControlName="pageId" class="form-control form-control-sm" (change)="onPageChange()">
+                      <option *ngFor="let page of pages$ | async" [value]="page.id">{{checkPage(page.id)}} </option>
+                    </select>
+                  </td>
+                  <td class="col-1 text-center">
+                    <button type="button" class="btn btn-sm btn-primary" [disabled]="!articleSelected"
+                      (click)="updateArticle()">
 
-          <td class="col-6">{{checkArticle(picture.articleId) ?? '??'}}</td>
-          <td class="col-1">
-            <i *ngIf="!checkArticle(picture.articleId)" (click)="deletePicture(picture)"
-              class="bi bi-trash-fill text-danger"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+                      <i class="bi bi-check-square-fill"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+
+          <table class="table table-striped table-hover table-fixed">
+            <tbody>
+              <tr *ngFor="let article of articles$ | async " (click)="selectArticle(article)">
+                <td class="col-4 text-center">
+                  <section [innerHTML]="article.headline | smaller | smaller | safeHtml"> </section>
+                </td>
+                <td class="col-2 text-center">
+                  <i [class]="getLayoutIcon(article.layout!)"></i>
+                </td>
+                <td class="col-1 text-center">{{article.rank}}</td>
+
+                <td class="col-4 text-start">{{checkPage(article.pageId)}}</td>
+                <td class="col-1 text-end">
+                  <i *ngIf="!checkArticle(article.pageId)" (click)="viewArticle(article)" class="bi bi-search "></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+    <div class="col col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Images( {{nbrOfPictures}})
+        </div>
+        <div class="card-body">
+          <form [formGroup]="pictureForm">
+            <table class="table table-responsive-sm align-items-center table-hover">
+
+              <thead>
+                <tr>
+                  <th scope="col" class="col-2 text-center">image</th>
+                  <th scope="col" class="col-2 text-center">orientation</th>
+                  <th scope="col" class="col-1">rang*</th>
+                  <th scope="col" class="col-6">article typé image(s)</th>
+                  <th scope="col" class="col-1">action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-2"> <img *ngIf="selectedPicture" class="img-fit"
+                      [src]="geturi(selectedPicture.filename) | async"> </td>
+                  <td class="col-2">
+                    <app-icons-toggler-input [options]="getOrientationIcons()"
+                      formControlName="orientation"></app-icons-toggler-input>
+                  </td>
+                  <td class="col-1">
+                    <input type="text" formControlName="rank" class="form-control form-control-sm">
+                  </td>
+
+                  <td class="col-6">
+                    <select formControlName="articleId" class="form-control form-control-sm"
+                      (change)="onArticleChange()">
+                      <option *ngFor="let article of picturalArticles$ | async" [value]="article.id">
+                        {{stripHtmlTags(article.headline)}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="col-1 text-center">
+                    <button class="btn btn-sm btn-primary" [disabled]="!pictureSelected" (click)="updatePicture()">
+                      <i class="bi bi-check-square-fill "></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+
+          <table class="table table-striped table-hover table-fixed">
+            <tbody>
+              <tr *ngFor="let picture of pictures$ | async " (click)="selectPicture(picture)">
+                <td class="col-2 text-center"> <img class="img-fit" [src]="geturi(picture.filename) | async"> </td>
+                <td class="col-2 text-center">
+                  <i [class]="getOrientationIcon(picture.orientation!)"></i>
+                </td>
+                <td class="col-1 text-center">{{picture.rank}}</td>
+
+                <td class="col-6 text-start">
+                  <section [innerHTML]="getArticleHeadline(picture.articleId) | smaller | smaller | safeHtml">
+                  </section>
+                  <!-- {{checkArticle(picture.articleId) ?? '??'}}</td> -->
+                <td class="col-1 text-end">
+                  <i *ngIf="!checkArticle(picture.articleId)" (click)="deletePicture(picture)"
+                    class="bi bi-trash-fill text-danger"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>
