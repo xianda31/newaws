@@ -3,22 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './dynamic_pages/footer/footer.component';
 import { ToastComponent } from './toaster/components/toast/toast.component';
 import { ToasterComponent } from './toaster/components/toaster/toaster.component';
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { ToolsModule } from './tools/module/tools.module';
-import { Page404Component } from './static_pages/page404/page404.component';
+import { Page404Component } from './layout/static_pages/page404/page404.component';
 import { RightsComponent } from './tests/rights/rights.component';
-import { MyDataComponent } from './static_pages/my-data/my-data.component';
-import { TodoComponent } from './static_pages/todo/todo.component';
-import { PagerComponent } from './dynamic_pages/pager/pager.component';
+import { MyDataComponent } from './layout/static_pages/my-data/my-data.component';
+import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { HeaderComponent } from './dynamic_pages/header/header.component';
+import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HeaderComponent } from './dynamic_pages/header/header.component';
     PagerComponent,
     CleanupComponent,
     DashboardComponent,
+    DynamicMenuComponent,
   ],
   imports: [
     BrowserModule,

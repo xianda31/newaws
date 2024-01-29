@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
 import { Article, Picture } from 'src/app/API.service';
 import { Storage } from 'aws-amplify/lib-esm';
-import { ArticleData, Layout, PictureOp } from '../../interfaces/article.interface';
+import { ArticleData, Layout, PictureOp } from '../../../interfaces/article.interface';
 import { environment } from 'src/environments/environment';
-import { FileService } from '../../tools/service/file.service';
+import { FileService } from '../../../tools/service/file.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 
 

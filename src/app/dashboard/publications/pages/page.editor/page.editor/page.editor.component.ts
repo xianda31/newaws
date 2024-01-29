@@ -6,11 +6,11 @@ import { Article, CreateArticleInput, CreatePictureInput, Page, Picture } from '
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import tinymce from 'tinymce';
-import { GetDateComponent } from '../get-date/get-date.component';
+import { GetDateComponent } from '../../get-date/get-date.component';
 import { environment } from 'src/environments/environment';
 import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
-import { GetPictureInfoComponent } from '../get-picture-info/get-picture-info.component';
+import { GetPictureInfoComponent } from '../../get-picture-info/get-picture-info.component';
 import { ToastService } from 'src/app/tools/service/toast.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
 import { Layout, LayoutIcons, Layouts, PictureOp } from 'src/app/interfaces/article.interface';

@@ -6,8 +6,9 @@ import { TestComponent } from '../tests/test.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { RightsComponent } from 'src/app/tests/rights/rights.component';
 import { canActivateGuard } from 'src/app/guards/can-activate.guard';
-import { PageEditorComponent } from '../publications/pages/page.editor/page.editor.component';
+import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { CleanupComponent } from '../cleanup/cleanup.component';
+import { EditPagesComponent } from '../editor/edit-pages/edit-pages.component';
 
 const routes: Routes = [
 
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'cleanup', component: CleanupComponent },
       { path: 'pages/:id', component: PageEditorComponent },
       { path: 'files', component: FilemgrComponent },
+      { path: 'editor', component: EditPagesComponent },
     ]
   },
 

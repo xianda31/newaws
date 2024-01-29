@@ -7,12 +7,15 @@ import { MembersComponent } from '../members/members.component';
 import { TestComponent } from '../tests/test.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ToolsModule } from 'src/app/tools/module/tools.module';
-import { EditComponent } from '../editor/edit.component';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
 import { PagesComponent } from '../publications/pages/pages/pages.component';
-import { PageEditorComponent } from '../publications/pages/page.editor/page.editor.component';
+import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../publications/pages/get-picture-info/get-picture-info.component';
 import { GetDirectoryComponent } from '../publications/pages/get-directory/get-directory.component';
+import { ListPagesComponent } from '../editor/list-pages/list-pages.component';
+import { ShowPageComponent } from '../editor/show-page/show-page.component';
+import { EditPagesComponent } from '../editor/edit-pages/edit-pages.component';
+import { CardPageComponent } from '../editor/list-pages/card-page/card-page.component';
 
 
 
@@ -21,12 +24,16 @@ import { GetDirectoryComponent } from '../publications/pages/get-directory/get-d
     MembersComponent,
     // ArticlesComponent,
     TestComponent,
-    EditComponent,
     FilemgrComponent,
     PagesComponent,
     PageEditorComponent,
     GetPictureInfoComponent,
-    GetDirectoryComponent
+    GetDirectoryComponent,
+    EditPagesComponent,
+    ListPagesComponent,
+    ShowPageComponent,
+    EditPagesComponent,
+    CardPageComponent
   ],
   imports: [
     CommonModule,

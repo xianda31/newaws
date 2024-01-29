@@ -4,7 +4,6 @@ import { ToggleInputComponent } from '../value_accessors/toggle-input/toggle-inp
 import { Editor } from 'tinymce';
 import { FilesizePipe } from 'src/app/pipes/filesize.pipe';
 import { FilesComponent } from '../files/files.component';
-import { RightsInputComponent } from '../value_accessors/rights-input/rights-input.component';
 import { SafeHtmlPipe } from 'src/app/pipes/safe-html.pipe';
 import { NgbActiveModal, NgbModal, NgbModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -12,8 +11,9 @@ import { GetDateComponent } from 'src/app/dashboard/publications/pages/get-date/
 import { BucketnamePipe } from '../../pipes/bucketname.pipe';
 import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
 import { ViewerInputComponent } from '../value_accessors/viewer-input/viewer-input.component';
-import { CarderComponent } from 'src/app/dynamic_pages/carder/carder.component';
+import { CarderComponent } from 'src/app/layout/dynamic_pages/carder/carder.component';
 import { IconsTogglerInputComponent } from '../value_accessors/icons-toggler-input/icons-toggler-input.component';
+import { RightsInputComponent } from '../value_accessors/rights-input/rights-input.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 

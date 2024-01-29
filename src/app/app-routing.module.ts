@@ -3,11 +3,11 @@ import { RouterModule, Routes, provideRouter, withComponentInputBinding, withDeb
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
-import { Page404Component } from './static_pages/page404/page404.component';
+import { Page404Component } from './layout/static_pages/page404/page404.component';
 import { canActivateGuard } from './guards/can-activate.guard';
-import { MyDataComponent } from './static_pages/my-data/my-data.component';
-import { PagerComponent } from './dynamic_pages/pager/pager.component';
-import { TodoComponent } from './static_pages/todo/todo.component';
+import { MyDataComponent } from './layout/static_pages/my-data/my-data.component';
+import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
+import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 
 

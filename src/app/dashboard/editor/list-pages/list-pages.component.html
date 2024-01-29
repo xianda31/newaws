@@ -1,0 +1,6 @@
+<div class="row row-cols-1 row-cols-md-4 g-1 mt-1">
+
+    <div class="col" *ngFor="let page of pages$ | async">
+        <app-card-page [page]="page"></app-card-page>
+    </div>
+</div>

@@ -19,22 +19,8 @@
       <ul [id]="frontMenuShow ? 'show' : 'noShow'" class="navbar-nav">
 
         <!-- menu customisable -->
-        <ng-container *ngFor="let item of menuItems | keyvalue">
-          <li *ngIf="item.value.length === 1" class="nav-item ">
-            <a class="nav-link mx-2" routerLinkActive="active-link"
-              [routerLink]="[item.value[0].route_path]">{{item.value[0].label}}</a>
-          </li>
 
-          <li *ngIf="item.value.length > 1" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{stripOrder(item.key)}}</a>
-            <ul class="dropdown-menu">
-              <li *ngFor="let subMenu of item.value">
-                <a class="dropdown-item" [routerLink]=" [subMenu.route_path]">{{subMenu.label}}</a>
-              </li>
-            </ul>
-          </li>
-        </ng-container>
+        <app-dynamic-menu [isLogged]="isLogged"></app-dynamic-menu>
 
         <!-- login -->
         <li *ngIf="!loggedUser" class="nav-item">
@@ -53,6 +39,9 @@
             </li>
           </ul>
         </li>
+
+        <li class="nav-item mx-5">
+          <a class="nav-link" routerLinkActive="active-link" routerLink="back/publisher/editor">Editeur site</a>
       </ul>
 
       <!-- backend menu -->
