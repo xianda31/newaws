@@ -41,7 +41,7 @@ import { ImageComponent } from '../image/image.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    NgbTypeaheadModule
+    NgbTypeaheadModule,
   ],
 
   exports: [
