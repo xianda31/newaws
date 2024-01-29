@@ -108,10 +108,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bcsto:build:production"
+              "buildTarget": "bcsto:build:production"
             },
             "development": {
-              "browserTarget": "bcsto:build:development"
+              "buildTarget": "bcsto:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -119,7 +119,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bcsto:build"
+            "buildTarget": "bcsto:build"
           }
         },
         "test": {
