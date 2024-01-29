@@ -1,110 +1,30 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren, ViewContainerRef, OnChanges, SimpleChanges } from '@angular/core';
-import { Article, Picture } from 'src/app/API.service';
-import { Storage } from 'aws-amplify/lib-esm';
-import { ArticleData, Layout, PictureOp } from '../../../interfaces/article.interface';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Article } from 'src/app/API.service';
+import { PictureOp } from 'src/app/interfaces/article.interface';
 import { environment } from 'src/environments/environment';
-import { FileService } from '../../../tools/service/file.service';
-import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
-
-
 
 @Component({
   selector: 'app-carder',
   templateUrl: './carder.component.html',
   styleUrls: ['./carder.component.scss']
 })
-export class CarderComponent implements OnChanges {
+export class CarderComponent {
 
-  @Input() article!: Article;
+  @Input() article: Article = {} as Article;
   @Input() showLess: boolean = false;
   @Input() editable: boolean = false;
   @Input() picturesInCol: boolean = false;
   @Output() pictureClick = new EventEmitter<{ id: string, op: PictureOp, co_id: string }>();
-  // @Output() directoryClick = new EventEmitter<{ id: string, folder: string }>();
   @Output() validateDirectoryClick = new EventEmitter<{ id: string, folder: string }>();
-  data!: ArticleData;
-
-
-  constructor(
-    private fileService: FileService,
-    // private http: HttpClient,
-  ) { }
-
-  async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (changes['editable'] && changes['editable'].currentValue) {
-      console.log(' ngOnChanges ...  editable changed : %o', changes['editable'].currentValue);
-    } else {
-    }
-
-    this.prepView(this.article);
-  }
-
-
-  async prepView(article: Article): Promise<void> {
-    let flashData: ArticleData = {
-      title: article.title,
-      // image: "",
-      headline: article.headline,
-      layout: article.layout as Layout,
-      body: article.body ?? ' ', //this.getHTMLcontent$('articles/' + article.body),
-      date: article.date ? new Date(article.date) : null,
-      root: this.editable ? environment.S3articlesDirectory : article.directory ?? '',
-      sub_folder: this.editable ? (article.directory ? article.directory.replace(environment.S3articlesDirectory, '') : '') : '',
-      id: article.id
-    };
-
-    // console.log('prepView : root ->sub_folder = %s%s', flashData.root, flashData.sub_folder);
-
-    if (article.pictures?.items && article.pictures?.items.length > 0) {
-      let getFn = (path: string) => { const keys = path.split('/'); return keys[keys.length - 1]; };
-      flashData.pictures = article.pictures?.items
-        .map((item) => {
-          return {
-            id: item!.id,
-            uri: this.fileService.getFileURL(item!.filename),
-            alt: getFn(item!.filename),
-            caption1: item?.caption1 ?? '',
-            caption2: item?.caption2 ?? '',
-            orientation: item?.orientation as PictureOrientationTypeEnum ?? PictureOrientationTypeEnum.Italian,
-            rank: item?.rank ?? 0,
-          }
-        })
-        .sort((a, b) => (a.rank < b.rank ? 1 : -1));
-    } else {
-      const default_image = {
-        id: 'default_image',
-        uri: new Promise<string>((resolve, reject) => {
-          resolve('../../../../assets/images/no_image.jpg');
-        }),
-        alt: 'no_image',
-        caption1: '',
-        caption2: '',
-        orientation: PictureOrientationTypeEnum.Italian,
-        rank: 0,
-      }
-      // console.log('...', default_image);
-      flashData.pictures = [];
-      flashData.pictures.push(default_image);
-    }
-
-    // console.log('flashData', flashData);
-    this.data = { ...flashData };
-  }
-
-  // onFolderClick(folder: string) {
-  //   // console.log('onFolderClick', folder)
-  //   this.data.sub_folder = folder.replace(environment.S3articlesDirectory, '');
-  //   this.directoryClick.emit({ id: this.data.id, folder: folder });
-  // }
 
   onPictureClick(op: PictureOp, id: string, i: number) {
     let co_id = id;
     switch (op) {
       case 'Left':
-        co_id = (i === 0 ? id : this.data.pictures![i - 1].id);
+        co_id = (i === 0 ? id : this.article.pictures!.items[i - 1]!.id);
         break;
       case 'Right':
-        co_id = (i === this.data.pictures!.length - 1 ? id : this.data.pictures![i + 1].id);
+        co_id = (i === this.article.pictures!.items.length - 1 ? id : this.article.pictures!.items[i + 1]!.id);
         break;
       case 'Edit':
         co_id = id;
@@ -118,12 +38,26 @@ export class CarderComponent implements OnChanges {
   }
 
   onValidateDirectoryClick(event: any) {
-    this.validateDirectoryClick.emit({ id: this.data.id, folder: this.data.root + this.data.sub_folder });
+    let root = this.getRoot(this.article)
+    let folder = this.getFolder(this.article);
+    this.validateDirectoryClick.emit({ id: this.article.id, folder: root + folder });
     event.stopPropagation();
   }
 
-  getMonth(date: Date): string {
+  getMonth(date: Date | string): string {
     return date.toLocaleString('fr-FR', { month: 'short' });
+  }
+  getDayOfTheMonth(date: string): number {
+    let d = new Date(date);
+    return d.getDate();
+  }
+
+  getFolder(article: Article): string {
+    return this.editable ? (article.directory ? article.directory.replace(environment.S3articlesDirectory, '') : '') : '';
+  }
+
+  getRoot(article: Article) {
+    return this.editable ? environment.S3articlesDirectory : article.directory ?? '';
   }
 
 }

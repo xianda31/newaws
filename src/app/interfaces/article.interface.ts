@@ -1,4 +1,5 @@
 import { PictureOrientationTypeEnum } from "src/app/interfaces/picture.interface";
+import { Picture } from "../API.service";
 
 
 export const Layouts = {
@@ -34,8 +35,23 @@ export interface ArticleData {
     caption2: string;
     orientation: PictureOrientationTypeEnum;
     rank: number;
+    filename?: string;
   }>;
 
+  headline: string;
+  body: string;
+  date: Date | null | undefined;
+  root: string;
+  sub_folder: string;
+  id: string;
+}
+
+export interface ArticleInterface {
+  title: string;
+  layout: Layout,
+  pictures?: {
+    items: Picture[]
+  },
   headline: string;
   body: string;
   date: Date | null | undefined;

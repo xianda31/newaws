@@ -14,6 +14,8 @@ import { ViewerInputComponent } from '../value_accessors/viewer-input/viewer-inp
 import { CarderComponent } from 'src/app/layout/dynamic_pages/carder/carder.component';
 import { IconsTogglerInputComponent } from '../value_accessors/icons-toggler-input/icons-toggler-input.component';
 import { RightsInputComponent } from '../value_accessors/rights-input/rights-input.component';
+import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
+import { ImageComponent } from '../image/image.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -27,10 +29,12 @@ import { RightsInputComponent } from '../value_accessors/rights-input/rights-inp
     IconsTogglerInputComponent,
     GetDateComponent,
     CarderComponent,
+    ImageComponent,
     FilesizePipe,
     SafeHtmlPipe,
     BucketnamePipe,
     SmallerPipe,
+    OrderByPipe
   ],
   imports: [
     CommonModule,
@@ -52,6 +56,7 @@ import { RightsInputComponent } from '../value_accessors/rights-input/rights-inp
     FilesizePipe,
     SafeHtmlPipe,
     SmallerPipe,
+    OrderByPipe
 
 
     // EditorModule

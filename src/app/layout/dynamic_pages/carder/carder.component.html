@@ -1,30 +1,29 @@
-<div *ngIf="data" class="col">
-  <ng-template *ngIf="data.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
-  <ng-template *ngIf="data.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
-  <ng-template *ngIf="data.layout ==='File'" [ngTemplateOutlet]="document"></ng-template>
+<div class="col">
+  <ng-template *ngIf="article.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
+  <ng-template *ngIf="article.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
+  <ng-template *ngIf="article.layout ==='File'" [ngTemplateOutlet]="document"></ng-template>
 
-  <div *ngIf="data  && showLess" class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
-    <section [innerHTML]="data.headline | smaller | smaller | safeHtml"></section>
+  <div *ngIf="showLess" class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
+    <section [innerHTML]="article.headline | smaller | smaller | safeHtml"></section>
   </div>
 </div>
 
 <ng-template #textual>
   <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
 
-    <div *ngIf="data  && !showLess" class="card-body text-start">
-      <div *ngIf="!data.date">
-        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+    <div *ngIf="!showLess" class="card-body text-start">
+      <div *ngIf="!article.date">
+        <section #headArea [id]="'headArea' + article.id" [innerHTML]="article.headline | safeHtml">
         </section>
       </div>
 
-      <div *ngIf="data.date" class="hdate" [attr.data-hday]="data.date.getDate()"
-        [attr.data-hmonth]="getMonth(data.date)">
-        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml">
+      <div *ngIf="article.date" class="hdate" [attr.data-hday]="getDayOfTheMonth(article.date)">
+        <section #headArea [id]="'headArea' + article.id" [innerHTML]="article.headline | safeHtml">
         </section>
       </div>
 
       <div class="text-start ps-2">
-        <section #bodyArea [id]="'bodyArea'+ data.id" [innerHTML]="data.body | bucketname | safeHtml "></section>
+        <section #bodyArea [id]="'bodyArea'+ article.id" [innerHTML]="article.body | bucketname | safeHtml "></section>
       </div>
     </div>
 
@@ -34,36 +33,35 @@
 
 <ng-template #pictural>
   <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-    <div *ngIf="data && !showLess" class="card-body">
+    <div *ngIf="!showLess" class="card-body">
       <div class="text-start">
-        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
+        <section class="title" #headArea [id]="'headArea' + article.id" [innerHTML]="article.headline | safeHtml">
+        </section>
       </div>
-      <div *ngIf="data.pictures "
+      <div *ngIf="article.pictures "
         [class]="picturesInCol ? 'col g-2' : 'row row-cols-1 row-cols-md-6 justify-content-around g-2'">
-        <div *ngFor="let picture of data.pictures ; let i=index"
-          [class]="picturesInCol ? 'row g-0' : picture.orientation === 'ITALIAN' ? 'col col-md-2' : 'col col-md-4'">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'; let i=index"
+          [class]="picturesInCol ? 'row g-0' : (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-4'">
           <div class="card h-100">
-            <img [class]="picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage'"
-              [src]="picture.uri | async" [alt]="picture.alt">
+            <app-image [picture]="picture!"> </app-image>
             <div class="card-body text-center p-0">
-              <div *ngIf="picture.caption1" class="text-primary"> {{picture.caption1}}
+              <div *ngIf="picture?.caption1" class="text-primary"> {{picture?.caption1}}
               </div>
-              <div *ngIf="picture.caption2">
-                <small class="text-muted"> {{picture.caption2}} </small>
+              <div *ngIf="picture?.caption2">
+                <small class="text-muted"> {{picture?.caption2}} </small>
               </div>
             </div>
-            <div *ngIf="editable && picture.alt !== 'no_image'" class="card-footer p-0">
+            <div *ngIf="editable" class="card-footer p-0">
               <div class="d-flex justify-content-around">
-                <i class="bi bi-trash-fill text-danger" (click)="onPictureClick('Delete',picture.id,i)"></i>
-                <i class="bi bi-arrow-left-square-fill text-primary" (click)="onPictureClick('Left',picture.id,i)"></i>
+                <i class="bi bi-trash-fill text-danger" (click)="onPictureClick('Delete',picture!.id,i)"></i>
+                <i class="bi bi-arrow-left-square-fill text-primary" (click)="onPictureClick('Left',picture!.id,i)"></i>
                 <i class="bi bi-arrow-right-square-fill text-primary"
-                  (click)="onPictureClick('Right',picture.id,i)"></i>
-                <i class="bi bi-info-square-fill text-primary" (click)="onPictureClick('Edit',picture.id,i)"></i>
-                <small class="text-muted"> {{picture.rank}} </small>
+                  (click)="onPictureClick('Right',picture!.id,i)"></i>
+                <i class="bi bi-info-square-fill text-primary" (click)="onPictureClick('Edit',picture!.id,i)"></i>
+                <small class="text-muted"> {{picture!.rank}} </small>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -72,11 +70,11 @@
 
 <ng-template #document>
   <div [class]=" editable ? 'card border-1 h-100' : 'card border-0 h-100' ">
-    <div *ngIf="data && !showLess" class="card-body">
+    <div *ngIf="!showLess" class="card-body">
       <div class="text-start">
-        <section #headArea [id]="'headArea' + data.id" [innerHTML]="data.headline | safeHtml"> </section>
+        <section #headArea [id]="'headArea' + article.id" [innerHTML]="article.headline | safeHtml"> </section>
       </div>
-      <app-files [root_folder]="data.root" [sub_folder]="data.sub_folder" [full_rights]="editable"
+      <app-files [root_folder]="getRoot(article)" [sub_folder]="getFolder(article)" [full_rights]="editable"
         [arbo_only]="!editable">
       </app-files>
       <h6 *ngIf="editable" class="fs-6 fst-italic">
