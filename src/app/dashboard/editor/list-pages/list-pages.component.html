@@ -1,17 +1,6 @@
-<div class="row row-cols-1 row-cols-md-4 g-1 mt-1">
+<div class="row row-cols-1 row-cols-md-4 g-1 ">
 
-    <div class="col">
-        <div cdkDrag>
-
-            <ul class="list-group">
-                <li *ngFor="let root_menu of root_menus | keyvalue" class="list-group-item ">
-                    {{stripOrder(root_menu.key)}}
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!-- 
-    <div class="col" *ngFor="let page of pages$ | async">
+    <div class="col" *ngFor="let page of filteredPages">
         <app-card-page [page]="page"></app-card-page>
-    </div> -->
+    </div>
 </div>

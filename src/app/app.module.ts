@@ -39,6 +39,7 @@ import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.compone
     CleanupComponent,
     DashboardComponent,
     DynamicMenuComponent,
+
   ],
   imports: [
     BrowserModule,

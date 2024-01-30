@@ -12,10 +12,11 @@ import { PagesComponent } from '../publications/pages/pages/pages.component';
 import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../publications/pages/get-picture-info/get-picture-info.component';
 import { GetDirectoryComponent } from '../publications/pages/get-directory/get-directory.component';
-import { ListPagesComponent } from '../editor/list-pages/list-pages.component';
 import { ShowPageComponent } from '../editor/show-page/show-page.component';
-import { EditPagesComponent } from '../editor/edit-pages/edit-pages.component';
 import { CardPageComponent } from '../editor/list-pages/card-page/card-page.component';
+import { ListMenusComponent } from '../editor/list-menus/list-menus.component';
+import { ListPagesComponent } from '../editor/list-pages/list-pages.component';
+import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
 
 
 
@@ -29,11 +30,11 @@ import { CardPageComponent } from '../editor/list-pages/card-page/card-page.comp
     PageEditorComponent,
     GetPictureInfoComponent,
     GetDirectoryComponent,
-    EditPagesComponent,
     ListPagesComponent,
     ShowPageComponent,
-    EditPagesComponent,
-    CardPageComponent
+    CardPageComponent,
+    ListMenusComponent,
+    EditSiteComponent
   ],
   imports: [
     CommonModule,

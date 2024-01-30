@@ -1,0 +1,20 @@
+<div class="col">
+    <ul class="list-group ">
+        <!-- menus customisables instanciés dans la barre de menu -->
+        <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+            <li cdkDrag *ngFor=" let item of drag_list "
+                [class]=" 'list-group-item movable' + (item.key === selected_key ?' bg-secondary text-white' :'') "
+                (click)="onSelect(item.key)">
+                {{stripOrder(item.key)}}
+            </li>
+        </div>
+        <!-- menus non affichés dans la barre de menus -->
+        <div>
+            <li *ngFor=" let item of fix_list "
+                [class]="'list-group-item'+ (item.key === selected_key ?' bg-secondary text-white' :'')"
+                (click)="onSelect(item.key)">
+                {{stripOrder(item.key)}}
+            </li>
+        </div>
+    </ul>
+</div>

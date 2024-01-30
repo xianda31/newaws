@@ -16,6 +16,7 @@ import { IconsTogglerInputComponent } from '../value_accessors/icons-toggler-inp
 import { RightsInputComponent } from '../value_accessors/rights-input/rights-input.component';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { ImageComponent } from '../image/image.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -42,6 +43,7 @@ import { ImageComponent } from '../image/image.component';
     ReactiveFormsModule,
     NgbModule,
     NgbTypeaheadModule,
+    DragDropModule,
   ],
 
   exports: [
@@ -53,6 +55,7 @@ import { ImageComponent } from '../image/image.component';
     CarderComponent,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule,
     FilesizePipe,
     SafeHtmlPipe,
     SmallerPipe,
