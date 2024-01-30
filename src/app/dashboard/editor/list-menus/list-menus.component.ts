@@ -12,7 +12,7 @@ import { PageService } from 'src/app/aws.services/page.aws.service';
 })
 export class ListMenusComponent {
 
-  @Output() selectedMenu = new EventEmitter<string>();
+  @Output() select = new EventEmitter<string>();
   pages: Page[] = [];
   pages$: Observable<Page[]> = this.pageService.pages$.pipe(
     map((pages) => pages.sort((a, b) => (a.root_menu < b.root_menu ? 1 : -1))),
@@ -46,7 +46,7 @@ export class ListMenusComponent {
 
   onSelect(menu: string): void {
     this.selected_key = menu;
-    this.selectedMenu.emit(menu);
+    this.select.emit(menu);
 
   }
   extractRank(root: string): number {

@@ -1,5 +1,5 @@
 <div class="col">
-    <ul class="list-group ">
+    <ul class="list-group shadow ">
         <!-- menus customisables instanciés dans la barre de menu -->
         <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
             <li cdkDrag *ngFor=" let item of drag_list "

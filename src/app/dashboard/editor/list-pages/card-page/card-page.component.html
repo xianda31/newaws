@@ -1,10 +1,49 @@
-<div class="card  h-100 border-2 text-center">
+<form [formGroup]="pageForm">
+    <div class="card shadow">
+        <div class="card-header bg-secondary text-center text-white">
+            paramètres page
+        </div>
+        <div class="row card-body  text-start mt-0">
+            <!-- <div class="row"> -->
+            <label class="col-form-label-sm">description :</label>
+            <input type="text" class="form-control-sm" formControlName="description" id="description">
 
-    <div class="card-header "> {{page.label}} </div>
-    <div class="card-body">
-        <div class="card-title"> {{page.description}} </div>
+            <div class="row justify-content-between mt-1">
+                <div class="col ">
+                    <label class="col-form-label-sm" for="viewer">mise en page :</label>
+                    <div class="input-group ">
+                        <app-viewer-input formControlName="viewer" id="viewer"></app-viewer-input>
+                    </div>
+                </div>
+                <div class="col justify-content-between">
+                    <label class="col-form-label-sm" for="public">accès public:</label>
+                    <div class="input-group ">
+                        <app-toggle-input class="form-control-sm" formControlName="public"
+                            id="public"></app-toggle-input>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-sm btn-secondary" (click)="onUpdate()"
+                        [disabled]="!pageForm.dirty">modifier</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-footer text-muted">
-        nbr articles : {{getArticlesNumber()}}
+
+    <div class="card shadow mt-2">
+        <div class="card-header bg-secondary text-center text-white">
+            articles de la page ({{getArticlesNumber()}})
+        </div>
+        <!-- <p class="text-muted p-0"> articles de la page ({{getArticlesNumber()}})</p> -->
+        <div class="row card-body  text-start mt-0">
+            <!-- <label class="col-form-label-sm">{{getArticlesNumber()}} article(s) :</label> -->
+            <ul *ngIf="page.articles" class="list-group text-start">
+                <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+                    <li cdkDrag class="list-group-item movable" *ngFor="let item of drag_list | orderBy:'rank':'asc' ">
+                        <span [innerHTML]="item!.headline | smaller | smaller |safeHtml"></span>
+                    </li>
+                </div>
+            </ul>
+        </div>
     </div>
-</div>
+</form>

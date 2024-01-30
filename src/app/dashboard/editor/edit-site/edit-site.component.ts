@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Page } from 'src/app/API.service';
 
 @Component({
   selector: 'app-edit-site',
@@ -6,8 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./edit-site.component.scss']
 })
 export class EditSiteComponent {
-  selectedMenu: string = '';
+  selected_menu: string = '';
+  selected_page!: Page | null;
 
-
+  select_menu(menu: string): void {
+    this.selected_menu = menu;
+    this.selected_page = null;
+  }
 
 }

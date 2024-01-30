@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { ArticleService } from './article.aws.service';
+import { ToastService } from '../tools/service/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PageService {
   constructor(
     private api: APIService,
     private articleService: ArticleService,
+    private toastService: ToastService,
   ) {
 
     // READ ALL PAGES
@@ -59,11 +61,14 @@ export class PageService {
 
 
 
-  updatePage(page: Page) {
+  updatePage(page: Page, feedback?: boolean) {
     const { articles, createdAt, updatedAt, __typename, ...pageInput } = page;
     this.api.UpdatePage(pageInput).then((result) => {
       this._pages = this._pages.map((item) => item.id === result.id ? result : item);
       this.pages$.next(this._pages);
+      if (feedback) {
+        this.toastService.showSuccessToast('page service', 'mise à jour page effectuée',);
+      }
     })
       .catch((error) => { console.log('Error updating page: ', error); });
 
