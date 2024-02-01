@@ -1,14 +1,28 @@
 <div class="container-fluid">
+    <!-- <div class="col-md-12"> -->
+
     <div class="row mt-2">
         <div class="col-md-2">
             <app-list-menus (select)="select_menu($event)"></app-list-menus>
         </div>
         <div class="col-md-2">
-            <app-list-pages [menu]="selected_menu" (select)="selected_page=$event"> </app-list-pages>
+            <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
         </div>
-        <div class="col-md-4">
-            <app-card-page *ngIf="selected_page" [page]="selected_page"></app-card-page>
+        <div *ngIf="selected_page" class="col-md-3">
+            <app-edit-page [page]="selected_page"></app-edit-page>
+        </div>
+        <div *ngIf="selected_page" class="col-md-3">
+            <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
         </div>
     </div>
+    <!-- </div> -->
+    <!-- <div class="col-md-12"> -->
+    <!-- <div class="col-md-auto"> -->
+    <div *ngIf="selected_article" class="row mt-2">
+        <app-edit-article [article]="selected_article"></app-edit-article>
+        <!-- </div> -->
+    </div>
+
+    <!-- </div> -->
 
 </div>

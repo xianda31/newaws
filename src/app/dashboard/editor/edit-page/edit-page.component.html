@@ -4,9 +4,14 @@
             paramètres page
         </div>
         <div class="row card-body  text-start mt-0">
-            <!-- <div class="row"> -->
-            <label class="col-form-label-sm">description :</label>
-            <input type="text" class="form-control-sm" formControlName="description" id="description">
+            <!-- <div class="col-md-6"> -->
+            <div class="row">
+                <label class="col-form-label-sm">description :</label>
+                <input type="text" class="form-control-sm" formControlName="description" id="description">
+            </div>
+
+            <!-- </div> -->
+            <!-- <div class="col-md-6"> -->
 
             <div class="row justify-content-between mt-1">
                 <div class="col ">
@@ -27,23 +32,9 @@
                         [disabled]="!pageForm.dirty">modifier</button>
                 </div>
             </div>
+            <!-- </div> -->
         </div>
     </div>
 
-    <div class="card shadow mt-2">
-        <div class="card-header bg-secondary text-center text-white">
-            articles de la page ({{getArticlesNumber()}})
-        </div>
-        <!-- <p class="text-muted p-0"> articles de la page ({{getArticlesNumber()}})</p> -->
-        <div class="row card-body  text-start mt-0">
-            <!-- <label class="col-form-label-sm">{{getArticlesNumber()}} article(s) :</label> -->
-            <ul *ngIf="page.articles" class="list-group text-start">
-                <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
-                    <li cdkDrag class="list-group-item movable" *ngFor="let item of drag_list | orderBy:'rank':'asc' ">
-                        <span [innerHTML]="item!.headline | smaller | smaller |safeHtml"></span>
-                    </li>
-                </div>
-            </ul>
-        </div>
-    </div>
+
 </form>

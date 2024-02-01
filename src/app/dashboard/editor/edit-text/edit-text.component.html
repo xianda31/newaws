@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header">
+        Editeur des champs textuels
+    </div>
+
+    <!-- <section *ngIf="!article.date" [innerHTML]="article.headline | safeHtml">
+    </section> -->
+
+    <div>
+        <section id="headArea" [innerHTML]="article.headline | safeHtml">
+        </section>
+    </div>
+
+    <div class="text-start ps-2">
+        <section id="bodyArea" [innerHTML]="article.body | bucketname | safeHtml ">
+        </section>
+    </div>
+</div>

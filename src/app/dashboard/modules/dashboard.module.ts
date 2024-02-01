@@ -12,11 +12,13 @@ import { PagesComponent } from '../publications/pages/pages/pages.component';
 import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../publications/pages/get-picture-info/get-picture-info.component';
 import { GetDirectoryComponent } from '../publications/pages/get-directory/get-directory.component';
-import { ShowPageComponent } from '../editor/show-page/show-page.component';
-import { CardPageComponent } from '../editor/list-pages/card-page/card-page.component';
 import { ListMenusComponent } from '../editor/list-menus/list-menus.component';
 import { ListPagesComponent } from '../editor/list-pages/list-pages.component';
 import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
+import { EditPageComponent } from '../editor/edit-page/edit-page.component';
+import { EditArticleComponent } from '../editor/edit-article/edit-article.component';
+import { ListArticlesComponent } from '../editor/list-articles/list-articles.component';
+import { EditTextComponent } from '../editor/edit-text/edit-text.component';
 
 
 
@@ -31,10 +33,12 @@ import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
     GetPictureInfoComponent,
     GetDirectoryComponent,
     ListPagesComponent,
-    ShowPageComponent,
-    CardPageComponent,
+    EditPageComponent,
     ListMenusComponent,
-    EditSiteComponent
+    EditSiteComponent,
+    EditArticleComponent,
+    ListArticlesComponent,
+    EditTextComponent
   ],
   imports: [
     CommonModule,

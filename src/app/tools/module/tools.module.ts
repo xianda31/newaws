@@ -59,7 +59,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     FilesizePipe,
     SafeHtmlPipe,
     SmallerPipe,
-    OrderByPipe
+    OrderByPipe,
+    BucketnamePipe
 
 
     // EditorModule

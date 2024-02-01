@@ -1,26 +1,32 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { pageViewIcons } from 'src/app/interfaces/page.interface';
-import { PageService } from '../../../../aws.services/page.aws.service';
+import { PageService } from '../../../aws.services/page.aws.service';
 
 @Component({
-  selector: 'app-card-page',
-  templateUrl: './card-page.component.html',
-  styleUrls: ['./card-page.component.scss']
+  selector: 'app-edit-page',
+  templateUrl: './edit-page.component.html',
+  styleUrls: ['./edit-page.component.scss']
 })
-export class CardPageComponent implements OnInit {
+export class EditPageComponent implements OnInit, OnChanges {
   @Input() page!: Page;
   pageForm !: FormGroup;
   viewIcons: { [key: string]: string } = pageViewIcons;
-  drag_list: { id: string, headline: string, rank: number }[] = [];
+  // drag_list: { id: string, headline: string, rank: number }[] = [];
 
   constructor(
     private articleService: ArticleService,
     private PageService: PageService,
   ) { }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['page'].isFirstChange()) return;
+    this.pageForm.patchValue(this.page);
+  }
 
 
   ngOnInit(): void {
@@ -37,11 +43,11 @@ export class CardPageComponent implements OnInit {
     });
 
     this.pageForm.patchValue(this.page);
-    this.drag_list = [];
-    if (this.page.articles?.items && this.page.articles.items.length > 0) {
+    // this.drag_list = [];
+    // if (this.page.articles?.items && this.page.articles.items.length > 0) {
 
-      this.drag_list = this.page.articles.items.map((item) => ({ id: item!.id, headline: item!.headline, rank: item!.rank }));
-    }
+    //   this.drag_list = this.page.articles.items.map((item) => ({ id: item!.id, headline: item!.headline, rank: item!.rank }));
+    // }
   }
 
   getArticlesNumber(): number {
@@ -54,16 +60,4 @@ export class CardPageComponent implements OnInit {
     this.PageService.updatePage(this.pageForm.value, true);
   }
 
-  dropped(event: any) {
-    moveItemInArray(this.drag_list, event.previousIndex, event.currentIndex);
-    const count = this.drag_list.length;
-    this.drag_list.forEach((item, index) => {
-      console.log('%s was %s ~~> %s', item.headline, item.rank, count - index);
-      let article = this.articleService.getArticleById(item.id);
-      if (article) {
-        article.rank = count - index;
-        this.articleService.updateArticle(article);
-      }
-    });
-  }
 }
