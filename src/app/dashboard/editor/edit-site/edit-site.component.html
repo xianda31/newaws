@@ -9,7 +9,7 @@
             <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
         </div>
         <div *ngIf="selected_page" class="col-md-3">
-            <app-edit-page [page]="selected_page"></app-edit-page>
+            <app-edit-page [(page)]="selected_page"></app-edit-page>
         </div>
         <div *ngIf="selected_page" class="col-md-3">
             <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>

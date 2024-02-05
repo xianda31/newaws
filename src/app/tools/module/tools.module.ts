@@ -17,6 +17,7 @@ import { RightsInputComponent } from '../value_accessors/rights-input/rights-inp
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { ImageComponent } from '../image/image.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { GetMenuNameComponent } from 'src/app/dashboard/publications/pages/get-menu-name/get-menu-name.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -29,6 +30,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     RightsInputComponent,
     IconsTogglerInputComponent,
     GetDateComponent,
+    GetMenuNameComponent,
     CarderComponent,
     ImageComponent,
     FilesizePipe,

@@ -1,5 +1,5 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
@@ -12,19 +12,19 @@ import { PageService } from '../../../aws.services/page.aws.service';
   styleUrls: ['./edit-page.component.scss']
 })
 export class EditPageComponent implements OnInit, OnChanges {
-  @Input() page!: Page;
+  @Input() page!: Page | null;
+  @Output() pageChange = new EventEmitter<Page | null>();
   pageForm !: FormGroup;
   viewIcons: { [key: string]: string } = pageViewIcons;
-  // drag_list: { id: string, headline: string, rank: number }[] = [];
 
   constructor(
-    private articleService: ArticleService,
     private PageService: PageService,
   ) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'].isFirstChange()) return;
+    if (this.page === null) return;
     this.pageForm.patchValue(this.page);
   }
 
@@ -42,22 +42,17 @@ export class EditPageComponent implements OnInit, OnChanges {
       public: new FormControl(''),
     });
 
-    this.pageForm.patchValue(this.page);
-    // this.drag_list = [];
-    // if (this.page.articles?.items && this.page.articles.items.length > 0) {
-
-    //   this.drag_list = this.page.articles.items.map((item) => ({ id: item!.id, headline: item!.headline, rank: item!.rank }));
-    // }
+    if (this.page !== null) this.pageForm.patchValue(this.page);
   }
 
-  getArticlesNumber(): number {
-    if (!this.page.articles) return 0;
-    return this.page.articles.items.length;
-  }
 
   onUpdate(): void {
-    console.log('submitting ..', this.pageForm.value);
     this.PageService.updatePage(this.pageForm.value, true);
   }
 
+  onDelete(): void {
+    this.PageService.deletePage(this.pageForm.value);
+    this.page = null;
+    this.pageChange.emit(this.page);
+  }
 }

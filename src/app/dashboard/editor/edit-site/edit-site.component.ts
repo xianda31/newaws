@@ -8,8 +8,8 @@ import { Article, Page } from 'src/app/API.service';
 })
 export class EditSiteComponent {
   selected_menu: string = '';
-  selected_page!: Page | null;
-  selected_article!: Article | null;
+  selected_page: Page | null = null;
+  selected_article: Article | null = null;
 
   select_menu(menu: string): void {
     this.selected_menu = menu;

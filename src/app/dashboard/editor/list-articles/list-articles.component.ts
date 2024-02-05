@@ -26,6 +26,7 @@ export class ListArticlesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'].isFirstChange()) return;
+    console.log('page changed', this.page);
     this.init_drag_list();
   }
 

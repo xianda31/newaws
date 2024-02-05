@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, map } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { ArticleService } from './article.aws.service';
 import { ToastService } from '../tools/service/toast.service';
+import { Menu } from '../interfaces/navigation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ export class PageService {
   private _pages: Page[] = [];
   pages$: BehaviorSubject<Page[]> = new BehaviorSubject<Page[]>(this._pages);
   pagesReady$: Observable<boolean> = this.pages$.pipe(map((pages) => pages.length > 0));
-
 
   constructor(
     private api: APIService,
@@ -26,8 +26,7 @@ export class PageService {
       console.log('%s pages identifiées : ', this._pages.length, this._pages);
       this.pages$.next(this._pages);
 
-    })
-      .catch((error) => { console.log('init pages failed !!', error) });
+    }).catch((error) => { console.log('init pages failed !!', error) });
 
     this.articleService.onUpdateArticle$.subscribe((id) => {
       if (id === '') return;
@@ -105,6 +104,33 @@ export class PageService {
     return page;
   }
 
+  generatePath(root_menu: string, label: string): string {
+    const count = this._pages.reduce((acc, page) => (page.root_menu === root_menu ? acc + 1 : acc), 0);
+    return (count === 1) ? label.toLowerCase().replace(/\s/g, '-') : (root_menu + '/' + label).toLowerCase().replace(/\s/g, '-');
+  }
+
+  buildMenu(isLogged: boolean): Map<string, Menu[]> {
+    let menuMap = new Map<string, Menu[]>([]);
+
+    this._pages.forEach((page) => {
+      if (!isLogged && !page.public) { return; }
+      const root = page.root_menu;
+      if (page.hidden) { return; }
+      const menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };
+
+      if (menuMap.has(root)) {
+        let arr = menuMap.get(root)!;
+        arr.push(menu);
+      } else {
+        menuMap.set(root, [menu]);
+      };
+    });
+
+    // console.log('menuMap: %o', menuMap);
+    return menuMap;
+
+
+  }
 }
 
 

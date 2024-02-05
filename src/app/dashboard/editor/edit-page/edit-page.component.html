@@ -1,40 +1,61 @@
-<form [formGroup]="pageForm">
-    <div class="card shadow">
-        <div class="card-header bg-secondary text-center text-white">
-            paramètres page
-        </div>
-        <div class="row card-body  text-start mt-0">
-            <!-- <div class="col-md-6"> -->
-            <div class="row">
-                <label class="col-form-label-sm">description :</label>
-                <input type="text" class="form-control-sm" formControlName="description" id="description">
+<div *ngIf="page !== null">
+    <form [formGroup]="pageForm">
+        <div class="card shadow">
+            <div class="card-header bg-secondary text-center text-white">
+                paramètres page
             </div>
+            <div class="card-body text-start mt-0">
+                <!-- <div class="col-md-6"> -->
+                <div>
+                    <div class="col">
+                        <label class="form-label-sm">intitulé sous-menu :</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control-sm" formControlName="label" id="label">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label class="form-label-sm">descriptif page :</label>
+                        <div class="input-group">
 
-            <!-- </div> -->
-            <!-- <div class="col-md-6"> -->
+                            <input type="text" class="form-control-sm w-100" formControlName="description"
+                                id="description">
+                        </div>
+                    </div>
 
-            <div class="row justify-content-between mt-1">
-                <div class="col ">
-                    <label class="col-form-label-sm" for="viewer">mise en page :</label>
-                    <div class="input-group ">
-                        <app-viewer-input formControlName="viewer" id="viewer"></app-viewer-input>
+                </div>
+
+                <!-- </div> -->
+                <!-- <div class="col-md-6"> -->
+
+                <div class="row justify-content-between mt-1">
+                    <div class="col ">
+                        <label class="col-form-label-sm" for="viewer">mise en page :</label>
+                        <div class="input-group ">
+                            <app-viewer-input formControlName="viewer" id="viewer"></app-viewer-input>
+                        </div>
+                    </div>
+                    <div class="col justify-content-between">
+                        <label class="col-form-label-sm" for="public">accès public :</label>
+                        <div class="input-group ">
+                            <app-toggle-input class="form-control-sm" formControlName="public"
+                                id="public"></app-toggle-input>
+                        </div>
+                    </div>
+                    <div class="row justify-content-around">
+                        <div class="text-start">
+                            <button type="button" class="btn btn-sm btn-secondary shadow text-white"
+                                (click)="onUpdate()" [disabled]="!pageForm.dirty">modifier</button>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-sm btn-danger shadow text-white"
+                                (click)="onDelete()">supprimer</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col justify-content-between">
-                    <label class="col-form-label-sm" for="public">accès public:</label>
-                    <div class="input-group ">
-                        <app-toggle-input class="form-control-sm" formControlName="public"
-                            id="public"></app-toggle-input>
-                    </div>
-                </div>
-                <div class="text-end">
-                    <button type="submit" class="btn btn-sm btn-secondary" (click)="onUpdate()"
-                        [disabled]="!pageForm.dirty">modifier</button>
-                </div>
+                <!-- </div> -->
             </div>
-            <!-- </div> -->
         </div>
-    </div>
 
 
-</form>
+    </form>
+</div>

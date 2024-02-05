@@ -1,9 +1,11 @@
 import { CdkDrag, CdkDropList, CdkDropListGroup, moveItemInArray } from '@angular/cdk/drag-drop';
 
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Observable, map } from 'rxjs';
-import { Page } from 'src/app/API.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, map, max } from 'rxjs';
+import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
+import { GetMenuNameComponent } from '../../publications/pages/get-menu-name/get-menu-name.component';
 
 @Component({
   selector: 'app-list-menus',
@@ -19,11 +21,14 @@ export class ListMenusComponent {
     map((pages) => pages.sort((a, b) => (a.hidden ? 1 : -1))),
   );
   drag_list: { key: string, rank: number }[] = [];
+
   fix_list: { key: string, rank: number }[] = [];
   selected_key: string = '';
 
   constructor(
     private pageService: PageService,
+    private modalService: NgbModal,
+
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +61,28 @@ export class ListMenusComponent {
     return root.replace(/^\w\#/g, '');
   }
 
+  onCreate(): void {
+    const modalRef = this.modalService.open(GetMenuNameComponent, { centered: true });
+    modalRef.componentInstance.text = 'Donnez un nom à votre nouveau menu';
+
+    modalRef.result.then((menu) => {
+      console.log('result', menu);
+      const path = this.pageService.generatePath(menu, menu);
+      const max_rank = this.drag_list.reduce((max, item) => (item.rank > max ? item.rank : max), 0);
+      const newPage: CreatePageInput = {
+        root_menu: (max_rank + 1) + '#' + menu,
+        label: menu,
+        hidden: false,
+        description: 'nouvelle page',
+        path: path,
+        viewer: 'ROWS',
+        public: true,
+      };
+      this.pageService.createPage(newPage);
+    }).catch((error) => {
+      console.log('error', error);
+    });
+  }
 
   dropped(event: any) {
     moveItemInArray(this.drag_list, event.previousIndex, event.currentIndex);
