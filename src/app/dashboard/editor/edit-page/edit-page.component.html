@@ -17,8 +17,7 @@
                         <label class="form-label-sm">descriptif page :</label>
                         <div class="input-group">
 
-                            <input type="text" class="form-control-sm w-100" formControlName="description"
-                                id="description">
+                            <input type="text" class="form-control-sm " formControlName="description" id="description">
                         </div>
                     </div>
 
@@ -47,8 +46,8 @@
                                 (click)="onUpdate()" [disabled]="!pageForm.dirty">modifier</button>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn btn-sm btn-danger shadow text-white"
-                                (click)="onDelete()">supprimer</button>
+                            <button type="button" class="btn btn-sm btn-danger shadow text-white" (click)="onDelete()"
+                                [disabled]="hasArticles">supprimer</button>
                         </div>
                     </div>
                 </div>

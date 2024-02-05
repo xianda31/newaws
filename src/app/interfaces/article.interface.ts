@@ -3,9 +3,9 @@ import { Picture } from "../API.service";
 
 
 export const Layouts = {
-  Textual: 'un titre et un texte editable',
-  Pictural: 'un titre et des images',
-  File: 'un titre et des fichiers'
+  Textual: 'un titre et un corps de texte',
+  Pictural: 'un titre et des images protégées',
+  File: 'un titre et des fichiers protégés'
 };
 export type Layout = keyof typeof Layouts;
 

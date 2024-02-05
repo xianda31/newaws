@@ -45,7 +45,11 @@ export class CarderComponent {
   }
 
   getMonth(date: Date | string): string {
-    return date.toLocaleString('fr-FR', { month: 'short' });
+    const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+    let d = new Date(date);
+    let m = d.getMonth();
+    return months[m];
+    // return date.toLocaleString('fr-FR', { month: 'short' });
   }
   getDayOfTheMonth(date: string): number {
     let d = new Date(date);

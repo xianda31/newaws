@@ -1,17 +1,15 @@
-<div class="card">
-    <div class="card-header">
-        Editeur des champs textuels
-    </div>
-
-    <!-- <section *ngIf="!article.date" [innerHTML]="article.headline | safeHtml">
-    </section> -->
-
-    <div>
-        <section id="headArea" [innerHTML]="article.headline | safeHtml">
+<label class="col-form-label-sm pt-2 pb-0">le titre</label>
+<div class="card shadow m-2">
+    <div class="p-2">
+        <section id="headArea" [class]="article.date ? 'hdate':'hnodate'"
+            [attr.data-hday]="getDayOfTheMonth(article.date)" [attr.data-hmonth]="getMonth(article.date)"
+            [innerHTML]="article.headline | safeHtml">
         </section>
     </div>
-
-    <div class="text-start ps-2">
+</div>
+<label class="col-form-label-sm pt-2 pb-0">le corps de texte</label>
+<div class="card shadow m-2">
+    <div class="p-2">
         <section id="bodyArea" [innerHTML]="article.body | bucketname | safeHtml ">
         </section>
     </div>

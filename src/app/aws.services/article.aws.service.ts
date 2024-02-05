@@ -92,6 +92,8 @@ export class ArticleService {
 
         this._articles = this._articles.map((item) => item.id === newArticle.id ? newArticle : item);
         this._articles$.next(this._articles);
+        this.onUpdateArticle$.next(article.pageId);   // incomplet : il faudrait aussi mettre à jour les articles de l'ancienne page si differente
+
       })
       .catch((error) => {
         console.log('Error updating article: ', error);

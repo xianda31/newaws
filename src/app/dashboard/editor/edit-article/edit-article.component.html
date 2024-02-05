@@ -1,16 +1,42 @@
 <div *ngIf="article">
     <div class=" card  shadow">
-        <div class="card-body text-start">
-            <div class="row">
-                <div class="col-md-6">
-
-                    <app-edit-text [article]="article"></app-edit-text>
+        <div class="card-body text-start p-2">
+            <div class="col">
+                <div class="row">
+                    <span> type d'article (disposition) : &nbsp;<strong> {{getLayout(article.layout)}} </strong></span>
                 </div>
-                <div class="col-md-3"></div>
-                les iamges
-                <div class="col-md-3"></div>
-                les fichiers
+                <div class="row">
+                    <span> datation du titre</span>
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            <input class="form-check-input" type="checkbox" (change)="onDateCheckBoxChange($event)"
+                                [(ngModel)]="withDate">
+                        </div>
+                        <input type="date" class="form-control" [valueAsDate]="getDate()"
+                            (change)="onChangeDate($event)">
+                    </div>
+
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="article.date?" (change)="toggleDate()" 
+                            [checked]="article.date">
+                        <label class="form-check-label" >
+                            avec date
+                        </label>
+
+                    </div> -->
+
+                </div>
             </div>
+            <!-- <div class="row"> -->
+
+            <div class="col-auto">
+                <app-edit-text [article]="article"></app-edit-text>
+            </div>
+            <div class="col-auto"></div>
+            les iamges
+            <div class="col-auto"></div>
+            les fichiers
+            <!-- </div> -->
         </div>
     </div>
 </div>

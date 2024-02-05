@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { Article } from 'src/app/API.service';
 import { environment } from 'src/environments/environment';
@@ -32,14 +32,20 @@ export class EditTextComponent implements OnChanges, OnDestroy {
   // ngOnInit(): void {
   // }
 
-  getMonth(date: Date | string): string {
-    return date.toLocaleString('fr-FR', { month: 'short' });
+  getMonth(date: string | null | undefined): string {
+    const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
+    if (!date) return '';
+    let d = new Date(date);
+    let m = d.getMonth();
+    return months[m];
+    // return date.toLocaleString('fr-FR', { month: 'short' });
   }
   getDayOfTheMonth(date: string | null | undefined): number {
     if (!date) return 0;
     let d = new Date(date);
     return d.getDate();
   }
+
 
 
   openEditors() {
@@ -76,10 +82,10 @@ export class EditTextComponent implements OnChanges, OnDestroy {
     tinymce.init(
       {
         target: el,
-        inline: false,
-        height: '200px',
+        inline: true,
+        // height: '200px',
         plugins: '  wordcount save',
-        menubar: 'edit  view format ',
+        // menubar: 'edit  view format ',
         toolbar: 'undo redo save blocks | bold italic | forecolor |   cancel',
         toolbar_location: 'bottom',
 

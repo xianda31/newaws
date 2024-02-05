@@ -17,7 +17,8 @@
         </section>
       </div>
 
-      <div *ngIf="article.date" class="hdate" [attr.data-hday]="getDayOfTheMonth(article.date)">
+      <div *ngIf="article.date" class="hdate" [attr.data-hday]="getDayOfTheMonth(article.date)"
+        [attr.data-hmonth]="getMonth(article.date)">
         <section #headArea [id]="'headArea' + article.id" [innerHTML]="article.headline | safeHtml">
         </section>
       </div>

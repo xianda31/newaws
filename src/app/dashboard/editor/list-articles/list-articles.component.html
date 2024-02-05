@@ -1,28 +1,31 @@
-<div *ngIf="page!==null" class="card shadow ">
-    <div class="card-header bg-secondary text-center text-white">
-        articles de la page ({{getArticlesNumber()}})
-    </div>
-    <!-- <p class="text-muted p-0"> articles de la page ({{getArticlesNumber()}})</p> -->
-    <div class="row card-body  text-center mt-0">
-        <!-- <label class="col-form-label-sm">{{getArticlesNumber()}} article(s) :</label> -->
-        <ul *ngIf="page.articles" class="list-group text-start shadow">
-            <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
-                <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
-                    [class]="'list-group-item movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')"
-                    (click)="onSelect(item)">
+<div *ngIf="page!==null">
+    <div class="card shadow mt-3">
+        <div class="card-header bg-secondary text-center text-white">
+            articles de la page ({{getArticlesNumber()}})
+        </div>
+        <!-- <div class="text-center"> -->
 
-                    <div class="row ">
-                        <div class="col-auto">
+        <div class="card-body text-start mt-0 ">
+            <!-- <label class="col-form-label-sm">{{getArticlesNumber()}} article(s) :</label> -->
+            <ul *ngIf="page.articles" class="list-group text-start">
+                <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+                    <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
+                        [class]="'list-group-item movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')"
+                        (click)="onSelect(item)">
 
-                            <i [class]="getIcon(item.layout)"></i>
-                        </div>
-                        <div class="col-auto">
+                        <!-- <div class="row ">
+                            <div class="col-auto">
 
-                            <span [innerHTML]="item!.headline | smaller | smaller |safeHtml"></span>
-                        </div>
-                    </div>
-                </li>
-            </div>
-        </ul>
+                                <i [class]="getIcon(item.layout)"></i>
+                            </div>
+                            <div class="col-auto"> -->
+
+                        <span [innerHTML]="item!.headline | smaller | smaller |safeHtml"></span>
+                        <!-- </div>
+                        </div> -->
+                    </li>
+                </div>
+            </ul>
+        </div>
     </div>
 </div>

@@ -15,7 +15,8 @@ export class EditPageComponent implements OnInit, OnChanges {
   @Input() page!: Page | null;
   @Output() pageChange = new EventEmitter<Page | null>();
   pageForm !: FormGroup;
-  viewIcons: { [key: string]: string } = pageViewIcons;
+  hasArticles: boolean = false;
+  // viewIcons: { [key: string]: string } = pageViewIcons;
 
   constructor(
     private PageService: PageService,
@@ -24,8 +25,10 @@ export class EditPageComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'].isFirstChange()) return;
-    if (this.page === null) return;
-    this.pageForm.patchValue(this.page);
+    if (this.page !== null) {
+      this.hasArticles = (this.page.articles && this.page.articles?.items.length > 0) ? true : false;
+      this.pageForm.patchValue(this.page);
+    }
   }
 
 
@@ -42,7 +45,11 @@ export class EditPageComponent implements OnInit, OnChanges {
       public: new FormControl(''),
     });
 
-    if (this.page !== null) this.pageForm.patchValue(this.page);
+    if (this.page !== null) {
+      this.pageForm.patchValue(this.page);
+      this.hasArticles = (this.page.articles && this.page.articles?.items.length > 0) ? true : false;
+
+    }
   }
 
 

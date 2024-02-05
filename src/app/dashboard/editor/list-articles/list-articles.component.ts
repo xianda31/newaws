@@ -13,7 +13,7 @@ import { LayoutIcons } from 'src/app/interfaces/article.interface';
 })
 export class ListArticlesComponent implements OnInit, OnChanges {
   drag_list: { id: string, headline: string, layout: string, rank: number }[] = [];
-  icons = LayoutIcons;
+  // icons = LayoutIcons;
   selected_id: string = '';
   @Input() page!: Page;
   @Output() select: EventEmitter<Article> = new EventEmitter<Article>();
@@ -46,10 +46,7 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     return this.page.articles.items.length;
   }
 
-  getIcon(layout: string): string {
-    const icon = this.icons[layout as keyof typeof this.icons];
-    return this.icons[layout as keyof typeof this.icons];
-  }
+
 
   onSelect(item: { id: string, headline: string, rank: number }): void {
     this.selected_id = item.id;
