@@ -1,0 +1,8 @@
+<img *ngIf="picture" (click)="onClick()" [class]="orientation" [src]="signedUrl" [alt]="alt">
+<div class="card-body text-center p-0">
+    <div *ngIf="picture?.caption1" class="text-primary"> {{picture.caption1}}
+    </div>
+    <div *ngIf="picture?.caption2">
+        <small class="text-muted"> {{picture.caption2}} </small>
+    </div>
+</div>

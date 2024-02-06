@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Article } from 'src/app/API.service';
+import { Article, Picture } from 'src/app/API.service';
 import { LayoutIcons, Layouts } from 'src/app/interfaces/article.interface';
 
 @Component({
@@ -47,8 +47,9 @@ export class EditArticleComponent implements OnInit {
       delete this.article.date;
     }
   }
-  getDate(): Date {
-    return new Date(this.article.date!);
+  getDate(): Date | null {
+    if (!this.article.date) return null;
+    return new Date(this.article.date);
   }
   onChangeDate(event: any) {
     this.article.date = event.target.value;

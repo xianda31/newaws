@@ -1,28 +1,30 @@
 <div class="container-fluid">
-    <!-- <div class="col-md-12"> -->
-
     <div class="row mt-2">
-        <div class="col-lg-2">
+        <div class="col-md-2">
             <app-list-menus (select)="select_menu($event)"></app-list-menus>
         </div>
-        <div class="col-lg-2">
+        <div class="col-md-2">
             <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
         </div>
-        <div *ngIf="selected_page" class="col-lg-2">
-            <!-- </div>
-        <div *ngIf="selected_page" class="col-lg-2"> -->
+        <div *ngIf="selected_page" class="col-md-3">
             <app-edit-page [(page)]="selected_page"></app-edit-page>
-            <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
         </div>
-        <!-- </div> -->
-        <!-- <div class="col-md-12"> -->
-        <!-- <div class="col-md-auto"> -->
-        <div *ngIf="selected_article" class="col-lg-6">
-            <app-edit-article [article]="selected_article"></app-edit-article>
+        <div *ngIf="selected_page" class="col-md-2">
+            <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
+            <!-- <div  class="row mt-2"> -->
             <!-- </div> -->
+        </div>
+        <div class="col-md-3">
+            <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
         </div>
     </div>
 
-    <!-- </div> -->
-
+    <div *ngIf="selected_article && selected_article.layout==='Textual'" class="col-md-12">
+        <app-edit-body [article]="selected_article"></app-edit-body>
+    </div>
+    <div *ngIf="selected_article && selected_article.layout==='Pictural'" class="col-md-12">
+        <app-list-images [article]="selected_article"></app-list-images>
+    </div>
+    <div *ngIf="selected_article && selected_article.layout==='File'" class="col-md-12" les fichiers>
+    </div>
 </div>

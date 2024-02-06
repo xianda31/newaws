@@ -1,0 +1,9 @@
+<label class="col-form-label-sm p-2 "><strong> le titre (ici éditable)</strong></label>
+<div class="card shadow">
+    <div class="p-2">
+        <section id="headArea" [class]="article.date ? 'hdate':'hnodate'"
+            [attr.data-hday]="getDayOfTheMonth(article.date)" [attr.data-hmonth]="getMonth(article.date)"
+            [innerHTML]="article.headline |smaller | safeHtml">
+        </section>
+    </div>
+</div>

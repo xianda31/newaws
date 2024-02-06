@@ -55,6 +55,7 @@ import { GetMenuNameComponent } from 'src/app/dashboard/publications/pages/get-m
     IconsTogglerInputComponent,
     FilesComponent,
     CarderComponent,
+    ImageComponent,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

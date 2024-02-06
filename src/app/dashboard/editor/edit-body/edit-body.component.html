@@ -1,0 +1,8 @@
+<label class="col-form-label-sm p-2 "> <strong> le corps de texte (ici éditable)</strong></label>
+<div class="card shadow">
+    <!-- <div class="p-2"> -->
+    <section id="bodyArea" [innerHTML]="article.body | bucketname | safeHtml ">
+    </section>
+    <!-- </div> -->
+</div>
+<!-- </ng-container> -->

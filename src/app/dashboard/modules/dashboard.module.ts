@@ -18,7 +18,10 @@ import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
 import { EditPageComponent } from '../editor/edit-page/edit-page.component';
 import { EditArticleComponent } from '../editor/edit-article/edit-article.component';
 import { ListArticlesComponent } from '../editor/list-articles/list-articles.component';
-import { EditTextComponent } from '../editor/edit-text/edit-text.component';
+import { EditHeadlineComponent } from '../editor/edit-headline/edit-headline.component';
+import { ListImagesComponent } from '../editor/list-images/list-images.component';
+import { EditBodyComponent } from '../editor/edit-body/edit-body.component';
+import { EditImageComponent } from '../editor/edit-image/edit-image.component';
 
 
 
@@ -38,7 +41,10 @@ import { EditTextComponent } from '../editor/edit-text/edit-text.component';
     EditSiteComponent,
     EditArticleComponent,
     ListArticlesComponent,
-    EditTextComponent
+    EditHeadlineComponent,
+    EditBodyComponent,
+    ListImagesComponent,
+    EditImageComponent
   ],
   imports: [
     CommonModule,

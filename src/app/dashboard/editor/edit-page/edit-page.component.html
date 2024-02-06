@@ -13,11 +13,11 @@
                             <input type="text" class="form-control-sm" formControlName="label" id="label">
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col-auto">
                         <label class="form-label-sm">descriptif page :</label>
                         <div class="input-group">
-
-                            <input type="text" class="form-control-sm " formControlName="description" id="description">
+                            <input type="text" class="form-control-sm w-100 " formControlName="description"
+                                id="description">
                         </div>
                     </div>
 
@@ -41,11 +41,11 @@
                         </div>
                     </div>
                     <div class="row justify-content-around">
-                        <div class="text-start">
+                        <div class="col text-start">
                             <button type="button" class="btn btn-sm btn-secondary shadow text-white"
                                 (click)="onUpdate()" [disabled]="!pageForm.dirty">modifier</button>
                         </div>
-                        <div class="text-end">
+                        <div class="col text-end">
                             <button type="button" class="btn btn-sm btn-danger shadow text-white" (click)="onDelete()"
                                 [disabled]="hasArticles">supprimer</button>
                         </div>
