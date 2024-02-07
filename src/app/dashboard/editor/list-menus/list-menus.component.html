@@ -3,7 +3,7 @@
         <!-- menus customisables instanciés dans la barre de menu -->
         <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
             <li cdkDrag *ngFor=" let item of drag_list "
-                [class]=" 'list-group-item movable' + (item.key === selected_key ?' bg-secondary text-white' :'') "
+                [class]=" 'list-group-item py-1 movable' + (item.key === selected_key ?' bg-secondary text-white' :'') "
                 (click)="onSelect(item.key)">
                 {{stripOrder(item.key)}}
             </li>
@@ -11,7 +11,7 @@
         <!-- menus non affichés dans la barre de menus -->
         <div>
             <li *ngFor=" let item of fix_list "
-                [class]="'list-group-item'+ (item.key === selected_key ?' bg-secondary text-white' :'')"
+                [class]="'list-group-item py-1'+ (item.key === selected_key ?' bg-secondary text-white' :'')"
                 (click)="onSelect(item.key)">
                 {{stripOrder(item.key)}}
             </li>
@@ -19,7 +19,7 @@
     </ul>
 
     <div class="text-start mt-2 ">
-        <button class="btn btn-sm btn-secondary shadow text-white w-100" (click)="onCreate()">ajouter un autre
+        <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
             menu</button>
     </div>
 </div>

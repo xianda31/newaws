@@ -11,20 +11,20 @@
         </div>
         <div *ngIf="selected_page" class="col-md-2">
             <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
-            <!-- <div  class="row mt-2"> -->
-            <!-- </div> -->
         </div>
         <div class="col-md-3">
             <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
         </div>
     </div>
+    <div class="row mt-2">
 
-    <div *ngIf="selected_article && selected_article.layout==='Textual'" class="col-md-12">
-        <app-edit-body [article]="selected_article"></app-edit-body>
-    </div>
-    <div *ngIf="selected_article && selected_article.layout==='Pictural'" class="col-md-12">
-        <app-list-images [article]="selected_article"></app-list-images>
-    </div>
-    <div *ngIf="selected_article && selected_article.layout==='File'" class="col-md-12" les fichiers>
+        <div *ngIf="selected_article && selected_article.layout==='Textual'">
+            <app-edit-body [article]="selected_article"></app-edit-body>
+        </div>
+        <div *ngIf="selected_article && selected_article.layout==='Pictural'">
+            <app-list-images [article]="selected_article"></app-list-images>
+        </div>
+        <div *ngIf="selected_article && selected_article.layout==='File'" les fichiers>
+        </div>
     </div>
 </div>

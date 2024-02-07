@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <div class="col">
+
+        <div>
+            <h5 class="modal-title" id="modal-basic-title">
+                <h6>choisissez le type d'article</h6>
+            </h5>
+            <app-icons-toggler-input [options]="getOrientationIcons()" class="form-control" [(ngModel)]="layout"
+                id="label"></app-icons-toggler-input>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()">Valider</button>
+    </div>
+</div>

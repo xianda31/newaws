@@ -1,9 +1,9 @@
 <div *ngIf="page !== null">
     <form [formGroup]="pageForm">
         <div class="card shadow">
-            <div class="card-header bg-secondary text-center text-white">
+            <!-- <div class="card-header bg-secondary text-center text-white">
                 paramètres page
-            </div>
+            </div> -->
             <div class="card-body text-start mt-0">
                 <!-- <div class="col-md-6"> -->
                 <div>
@@ -42,14 +42,16 @@
                     </div>
                     <div class="row justify-content-around">
                         <div class="col text-start">
-                            <button type="button" class="btn btn-sm btn-secondary shadow text-white"
-                                (click)="onUpdate()" [disabled]="!pageForm.dirty">modifier</button>
+                            <button type="button" class="btn btn-sm btn-primary shadow text-white" (click)="onUpdate()"
+                                [disabled]="!pageForm.dirty">modifier</button>
                         </div>
                         <div class="col text-end">
                             <button type="button" class="btn btn-sm btn-danger shadow text-white" (click)="onDelete()"
                                 [disabled]="hasArticles">supprimer</button>
                         </div>
                     </div>
+
+
                 </div>
                 <!-- </div> -->
             </div>

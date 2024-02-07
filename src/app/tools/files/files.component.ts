@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FolderItem } from 'src/app/interfaces/files.interface';
-import { FileService } from 'src/app/tools/service/file.service';
-import { ToastService } from '../service/toast.service';
+import { FileService } from 'src/app/shared/service/file.service';
+import { ToastService } from '../../toaster/toast.service';
 
 
 

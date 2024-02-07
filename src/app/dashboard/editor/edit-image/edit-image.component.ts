@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Picture } from 'src/app/API.service';
-import { FileService } from 'src/app/tools/service/file.service';
-import { GetPictureInfoComponent } from '../../publications/pages/get-picture-info/get-picture-info.component';
+import { FileService } from 'src/app/shared/service/file.service';
+import { GetPictureInfoComponent } from '../../../shared/modals/get-picture-info/get-picture-info.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 

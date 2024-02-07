@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, map } from 'rxjs';
 import { Page } from 'src/app/API.service';
-import { ToastService } from 'src/app/tools/service/toast.service';
+import { ToastService } from 'src/app/toaster/toast.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { Router } from '@angular/router';
 import { pageViewIcons } from 'src/app/interfaces/page.interface';

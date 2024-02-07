@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, map, max } from 'rxjs';
 import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { GetMenuNameComponent } from '../../publications/pages/get-menu-name/get-menu-name.component';
+import { GetMenuNameComponent } from '../../../shared/modals/get-menu-name/get-menu-name.component';
 
 @Component({
   selector: 'app-list-menus',

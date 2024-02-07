@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
-import { ToastService } from 'src/app/tools/service/toast.service';
+import { ToastService } from 'src/app/toaster/toast.service';
 
 @Component({
   selector: 'app-pswreset',

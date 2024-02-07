@@ -7,8 +7,8 @@ import { Observable, map } from 'rxjs';
 import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { pageViewIcons } from 'src/app/interfaces/page.interface';
-import { ToastService } from 'src/app/tools/service/toast.service';
-import { GetMenuNameComponent } from '../../publications/pages/get-menu-name/get-menu-name.component';
+import { ToastService } from 'src/app/toaster/toast.service';
+import { GetMenuNameComponent } from '../../../shared/modals/get-menu-name/get-menu-name.component';
 
 @Component({
   selector: 'app-list-pages',

@@ -5,7 +5,7 @@ import { Article, Page, Picture } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
-import { FileService } from 'src/app/tools/service/file.service';
+import { FileService } from 'src/app/shared/service/file.service';
 import { PictureOrientationTypeEnum, orientationIcons } from 'src/app/interfaces/picture.interface';
 import { Layout, LayoutIcons } from 'src/app/interfaces/article.interface';
 import { Router } from '@angular/router';

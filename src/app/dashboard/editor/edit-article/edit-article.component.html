@@ -1,12 +1,12 @@
-<div class=" card  shadow mt-2">
+<div class=" card  shadow ">
     <div class="card-body text-start">
         <!-- <div class="row"> -->
         <div class="col">
             <div class="row p-2">
-                <span> <strong>type d'article (disposition) : &nbsp;</strong> {{getLayout(article.layout)}} </span>
+                <span> <strong>type d'article : &nbsp;</strong> {{getLayout(article.layout)}} </span>
             </div>
             <div class="row p-2">
-                <span><strong> option datation du titre</strong> </span>
+                <span><strong> date de l'événement (option)</strong> </span>
                 <div class="input-group ">
                     <div class="input-group-text">
                         <input class="form-check-input" type="checkbox" (change)="onDateCheckBoxChange($event)"
@@ -14,9 +14,12 @@
                     </div>
                     <input type="date" class="form-control" [valueAsDate]="getDate()" (change)="onChangeDate($event)">
                 </div>
-                <app-edit-headline [article]="article"></app-edit-headline>
-
             </div>
+            <div class="row p-2">
+                <label class="col-form-label-sm p-2 "><strong> le titre de l'article</strong></label>
+                <app-edit-headline class="py-1" [article]="article"></app-edit-headline>
+            </div>
+
         </div>
         <!-- </div> -->
 

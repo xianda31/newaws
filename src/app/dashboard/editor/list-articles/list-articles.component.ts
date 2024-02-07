@@ -2,8 +2,11 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ArticleService } from '../../../aws.services/article.aws.service';
 import { PageService } from '../../../aws.services/page.aws.service';
-import { Article, Page } from 'src/app/API.service';
-import { LayoutIcons } from 'src/app/interfaces/article.interface';
+import { Article, CreateArticleInput, Page } from '../../../API.service';
+import { GetArticleNameComponent } from '../../../shared/modals/get-article-name/get-article-name.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Article_prefilled } from '../../../interfaces/article.interface';
+import { orientationIcons } from 'src/app/interfaces/picture.interface';
 
 
 @Component({
@@ -20,7 +23,8 @@ export class ListArticlesComponent implements OnInit, OnChanges {
 
   constructor(
     private articleService: ArticleService,
-    private PageService: PageService,
+    private modalService: NgbModal,
+
   ) { }
 
 
@@ -46,7 +50,21 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     return this.page.articles.items.length;
   }
 
+  onCreate() {
+    let article: CreateArticleInput = { ...Article_prefilled } as CreateArticleInput;
+    const modalRef = this.modalService.open(GetArticleNameComponent, { centered: true });
+    modalRef.result.then((layout) => {
+      article.title = this.page.label + '/' + layout + this.getArticlesNumber(),
+        article.headline = Article_prefilled.headline;
+      article.layout = layout;
+      article.body = Article_prefilled.body;
+      article.pageId = this.page.id;
+      article.rank = this.getArticlesNumber();
 
+      this.articleService.createArticle(article);
+
+    });
+  }
 
   onSelect(item: { id: string, headline: string, rank: number }): void {
     this.selected_id = item.id;
@@ -68,5 +86,6 @@ export class ListArticlesComponent implements OnInit, OnChanges {
       }
     });
   }
+
 
 }

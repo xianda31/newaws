@@ -1,13 +1,13 @@
 <div class="col">
     <ul class="list-group shadow">
         <li *ngFor=" let page of filtered_pages "
-            [class]=" 'list-group-item' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "
+            [class]=" 'list-group-item py-1' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "
             (click)="onSelect(page)">
             {{page.label}}
         </li>
     </ul>
     <div *ngIf="menu" class="text-start mt-2 ">
-        <button class="btn btn-sm btn-secondary shadow text-white w-100" (click)="onCreate()">ajouter un autre
+        <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
             sous-menu</button>
     </div>
 </div>

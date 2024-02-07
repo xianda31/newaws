@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Picture } from 'src/app/API.service';
-import { FileService } from '../service/file.service';
+import { FileService } from '../../shared/service/file.service';
 
 @Component({
   selector: 'app-image',

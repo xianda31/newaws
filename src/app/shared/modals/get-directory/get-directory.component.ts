@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article } from 'src/app/API.service';
 import { environment } from 'src/environments/environment';
 import { FolderItem } from 'src/app/interfaces/files.interface';
-import { FileService } from 'src/app/tools/service/file.service';
+import { FileService } from 'src/app/shared/service/file.service';
 
 @Component({
   selector: 'app-get-directory',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { ArticleService } from './article.aws.service';
-import { ToastService } from '../tools/service/toast.service';
+import { ToastService } from '../toaster/toast.service';
 import { Menu } from '../interfaces/navigation.interface';
 
 @Injectable({

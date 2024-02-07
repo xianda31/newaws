@@ -6,7 +6,7 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
-import { ToastService } from 'src/app/tools/service/toast.service';
+import { ToastService } from 'src/app/toaster/toast.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

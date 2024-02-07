@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { APIService, Article, CreateArticleInput, UpdateArticleInput } from '../API.service';
-import { ToastService } from '../tools/service/toast.service';
+import { ToastService } from '../toaster/toast.service';
 import { environment } from '../../environments/environment';
 import { PictureService } from './picture.aws.service';
 

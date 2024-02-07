@@ -7,7 +7,7 @@ import { ArticleService } from './aws.services/article.aws.service';
 import { CognitoService } from './aws.services/cognito.aws.service';
 import { User } from 'parse';
 // import { LoggedUser } from './interfaces/user.interface';
-import { FileService } from './tools/service/file.service';
+import { FileService } from './shared/service/file.service';
 import { LoggedUser } from './interfaces/user.interface';
 
 @Component({

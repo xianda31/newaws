@@ -8,7 +8,7 @@ import { ToasterComponent } from './toaster/components/toaster/toaster.component
 import { SignupComponent } from './authentication/signup/signup.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
-import { ToolsModule } from './tools/module/tools.module';
+import { ToolsModule } from './shared/shared.module';
 import { Page404Component } from './layout/static_pages/page404/page404.component';
 import { RightsComponent } from './tests/rights/rights.component';
 import { MyDataComponent } from './layout/static_pages/my-data/my-data.component';

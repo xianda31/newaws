@@ -1,5 +1,6 @@
 import { PictureOrientationTypeEnum } from "src/app/interfaces/picture.interface";
 import { Picture } from "../API.service";
+import { environment } from "src/environments/environment";
 
 
 export const Layouts = {
@@ -59,3 +60,13 @@ export interface ArticleInterface {
   sub_folder: string;
   id: string;
 }
+
+export const Article_prefilled: any = {
+  // title: '',
+  headline: '<h2> Le titre </h2>',
+  body: '<div class="editable"> <div style="float: left;margin-top:0.5em;margin-right:1em;"><img src="../assets/images/bcsto.jpg" style="width:10rem" alt="bcsto"></div><div> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pellentesque ullamcorper libero non pretium. Sed facilisis nisl nec interdum interdum. Fusce eu lorem quis ante ultrices vehicula ultrices et nunc. Fusce ac velit felis. Aenean faucibus, dolor eget convallis lobortis, mauris sapien porttitor urna, ac dapibus massa velit eu ante. Etiam molestie tincidunt purus a maximus. Nulla sed vehicula metus, non malesuada diam. Nunc imperdiet metus a tellus tincidunt, eget tincidunt augue blandit. Etiam ut tellus enim.</div></div>',
+  // layout: 'Textual',
+  date: null,
+  // rank: 666,
+  directory: environment.S3articlesDirectory
+};

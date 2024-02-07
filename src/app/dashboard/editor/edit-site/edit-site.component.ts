@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Article, Page } from 'src/app/API.service';
+import { Article, Page } from '../../../API.service';
 
 @Component({
   selector: 'app-edit-site',
