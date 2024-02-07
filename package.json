@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:stats": "ng build --stats-json",
+    "analyse": "webpack-bundle-analyzer dist/bcsto/stats.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -49,6 +51,7 @@
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0"
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "webpack-bundle-analyzer": "^4.10.1"
   }
 }

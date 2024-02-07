@@ -67,6 +67,7 @@ export class ListImagesComponent implements OnInit {
       articleId: article.id,
     };
     this.pictureService.createPicture(picture);
+    this.pictures.push(picture as Picture);
 
   }
 
@@ -85,6 +86,10 @@ export class ListImagesComponent implements OnInit {
     // this.article.pictures = { items: this.pictures };
   }
 
+  emptyTrash() {
+    this.deleted_pictures.forEach((picture) => this.deletePicture(picture));
+    this.deleted_pictures = [];
+  }
 
   // picture files upload
   pictureUpload(event: any) {

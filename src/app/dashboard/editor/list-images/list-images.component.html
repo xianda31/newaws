@@ -1,42 +1,50 @@
 <label class="col-form-label-sm pt-1"> <strong> les images (en espace protégé) : </strong></label>
 <!-- <div class="container"> -->
 <div class="row justify-content-between">
-    <div class="col col-md-8">
-        <div class="card shadow h-100">
+    <div class="col col-md-9">
+        <div class="card shadow h-100 p-2">
             <!-- <div class="card-header">les images</div> -->
 
-            <div id="active" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="['trash']"
-                (cdkDropListDropped)="dropped($event)" class="row justify-content-start" [cdkDropListData]="pictures">
+            <div id="active" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
+                [cdkDropListConnectedTo]="['trash']" (cdkDropListDropped)="dropped($event)"
+                class="row justify-content-start" [cdkDropListData]="pictures">
                 <div id="draggable" cdkDrag *ngFor="let picture of pictures "
-                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-3' : 'col col-md-3'">
+                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-2'">
                     <app-edit-image class="card h-100" [picture]="picture"> </app-edit-image>
-                    <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" />
+                    <!-- <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" /> -->
 
                 </div>
             </div>
-            <div class="text-end me-3">
-                <i class="bi bi-plus-circle-fill text-primary" (click)="fileInput.click()"></i>
-                <input hidden multiple #fileInput type="file" (change)="pictureUpload($event)" />
-            </div>
+        </div>
+        <div class="text-start mt-2 ">
+            <button class="btn btn-sm btn-secondary shadow text-white " (click)="fileInput.click()">
+                ajouter une ou plusieurs images</button>
+            <!-- <i class="bi bi-plus-circle-fill text-primary" (click)="fileInput.click()"></i> -->
+            <input hidden multiple #fileInput type="file" (change)="pictureUpload($event)" />
         </div>
     </div>
 
-    <div class="col col-md-4">
-        <div class="card   h-100">
-            <!-- <div class="card-header">trash</div> -->
-            <div class="card-body bg-warning">
+    <div class="col col-md-3">
+        <div class="card h-100  recycle_bin">
+            <div class="card-header">corbeille</div>
+            <!-- <div class="bg-image "> -->
 
-                <div id="trash" style="min-height: 150px; " cdkDropList cdkDropListOrientation="horizontal"
-                    [cdkDropListConnectedTo]="['active']" (cdkDropListDropped)="dropped($event)"
-                    class="row justify-content-start" [cdkDropListData]="deleted_pictures">
-                    <div id="draggable" cdkDrag *ngFor="let picture of deleted_pictures "
-                        [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-3' : 'col col-md-3'">
-                        <app-edit-image class="card h-100" [picture]="picture"> </app-edit-image>
-                        <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" />
-                    </div>
+            <div id="trash" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
+                [cdkDropListConnectedTo]="['active']" (cdkDropListDropped)="dropped($event)"
+                class="row justify-content-start p-2" [cdkDropListData]="deleted_pictures">
+                <div id="draggable" cdkDrag *ngFor="let picture of deleted_pictures "
+                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-4' : 'col col-md-4'">
+                    <app-edit-image [picture]="picture"> </app-edit-image>
+                    <!-- <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" /> -->
                 </div>
             </div>
+            <!-- </div> -->
         </div>
+        <div class="text-start mt-2 ">
+            <button class="btn btn-sm btn-secondary shadow text-white " (click)="emptyTrash()">
+                confirmer la suppression</button>
+        </div>
+
         <!-- </div> -->
 
     </div>
