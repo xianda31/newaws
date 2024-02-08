@@ -1,7 +1,70 @@
-<div class="col col-md-12">
-    <div class="card shadow h-100 p-2">
-        <label class="col-form-label-sm pt-1"> <strong> le répertoire de documents mis à disposition : </strong></label>
-        <app-files [root_folder]="getRoot()" [sub_folder]="getFolder(article)" [full_rights]="true" [arbo_only]="false">
-        </app-files>
+<div class="col col-md-8 justify-content-md-evenly">
+    <label class="col-form-label-sm pt-1"> <strong> le répertoire : </strong> ../{{current_folder}}</label>
+    <div class="card shadow h-100 p-2 text-start">
+        <div class="row  align-items-center">
+            <div class="col-4 ">
+                <div class="input-group input-group-sm ">
+                    <button type="button" class="btn btn-sm" (click)="createFolder()">
+                        <i class="bi bi-folder-plus" id="actions"></i>
+                    </button>
+                    <input type="text" [(ngModel)]="new_folder" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <!-- directory back button -->
+        <div *ngIf="folder_level" class=" text-start px-1">
+            <button type="button" class="btn btn-sm" (click)="folderUp()">
+                <i class="bi bi-arrow-90deg-up" id="actions"></i>
+            </button>
+        </div>
+        <!-- show folder's items -->
+        <div class="row justify-content-between align-items-center" *ngFor="let item of folderItems ">
+            <ng-container [ngTemplateOutlet]="item.__isFile ? file : directory" [ngTemplateOutletContext]="{item:item}">
+            </ng-container>
+        </div>
+
+        <!-- upload file button -->
+        <div class="input-group input-group-sm px-1">
+            <button type="button" class="btn btn-sm" (click)="fileSelect.click()">
+                <i class="bi bi-file-earmark-plus" id="actions"></i>
+            </button>
+            <input #fileSelect type="file" (change)="uploadFile($event)" id="file-input" class="form-control">
+        </div>
     </div>
 </div>
+
+<ng-template let-item="item" #directory>
+    <div class="col text-start">
+        <button type="button" class="btn  h-100" (click)="folderDown(item)">
+            <i class="bi bi-folder-fill" style="color:rgb(212, 186, 36)"></i>
+        </button>
+        <span>{{item.key}}</span>
+    </div>
+    <div class="col  text-end">
+        <button type="button" class="btn  h-100" (click)="deleteDirectory(item)">
+            <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
+        </button>
+    </div>
+</ng-template>
+
+<ng-template let-item="item" #file>
+    <div class="col text-start">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn  h-100" (click)="showFile(item)">
+                    <i class="bi bi-file-fill" style="color:rgb(39, 167, 199)"></i>
+                </button>
+                <span>{{item.key}}</span>
+            </div>
+            <div class="col text-end">
+                {{item.size | filesize}}
+            </div>
+        </div>
+    </div>
+    <div class="col text-end">
+        <button type="button" class="btn  h-100" (click)="deleteFile(item)">
+            <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
+        </button>
+    </div>
+</ng-template>
