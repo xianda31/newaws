@@ -12,12 +12,10 @@
         <div *ngIf="selected_page" class="col-md-2">
             <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
         </div>
-        <div class="col-md-3">
-            <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
-        </div>
     </div>
-    <div class="row mt-2">
 
+    <div class="col-md-10 offset-md-2 mt-2">
+        <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
         <div *ngIf="selected_article && selected_article.layout==='Textual'">
             <app-edit-body [article]="selected_article"></app-edit-body>
         </div>

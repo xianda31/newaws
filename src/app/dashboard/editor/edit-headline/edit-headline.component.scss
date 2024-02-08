@@ -11,12 +11,12 @@
 .hdate::before {
     content: attr(data-hmonth);
     position: absolute;
-    left: -58px;
+    left: -50px;
     background: rgb(230, 17, 17);
     color: white;
     text-align: center;
-    font-size: 14px;
-    width: 44px;
+    font-size: 12px;
+    width: 34px;
     height: 17px;
     line-height: 17px;
     vertical-align: bottom;
@@ -29,17 +29,17 @@
 .hdate::after {
     content: attr(data-hday);
     position: absolute;
-    left: -58px;
-    top: 17px;
+    left: -50px;
+    top: 14px;
     background: rgb(249, 247, 211);
     // background: linear-gradient(to bottom, rgb(249, 247, 211), rgb(172, 211, 71));
     color: rgb(77, 77, 77);
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    width: 44px;
-    height: 24px;
-    line-height: 24px;
+    width: 34px;
+    height: 17px;
+    line-height: 17px;
     padding: 0 0 1px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;

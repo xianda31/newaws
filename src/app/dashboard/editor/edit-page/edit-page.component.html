@@ -7,10 +7,20 @@
             <div class="card-body text-start mt-0">
                 <!-- <div class="col-md-6"> -->
                 <div>
-                    <div class="col">
-                        <label class="form-label-sm">intitulé sous-menu :</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control-sm" formControlName="label" id="label">
+                    <div class="row">
+
+                        <div class="col">
+                            <label class="form-label-sm">intitulé sous-menu :</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control-sm" formControlName="label" id="label">
+                            </div>
+                        </div>
+                        <div class="col justify-content-between">
+                            <label class="col-form-label-sm" for="public">accès public :</label>
+                            <div class="input-group ">
+                                <app-toggle-input class="form-control-sm" formControlName="public"
+                                    id="public"></app-toggle-input>
+                            </div>
                         </div>
                     </div>
                     <div class="col-auto">
@@ -23,8 +33,6 @@
 
                 </div>
 
-                <!-- </div> -->
-                <!-- <div class="col-md-6"> -->
 
                 <div class="row justify-content-between mt-1">
                     <div class="col ">
@@ -33,13 +41,7 @@
                             <app-viewer-input formControlName="viewer" id="viewer"></app-viewer-input>
                         </div>
                     </div>
-                    <div class="col justify-content-between">
-                        <label class="col-form-label-sm" for="public">accès public :</label>
-                        <div class="input-group ">
-                            <app-toggle-input class="form-control-sm" formControlName="public"
-                                id="public"></app-toggle-input>
-                        </div>
-                    </div>
+
                     <div class="row justify-content-around">
                         <div class="col text-start">
                             <button type="button" class="btn btn-sm btn-primary shadow text-white" (click)="onUpdate()"

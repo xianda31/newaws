@@ -1,27 +1,29 @@
-<div class=" card  shadow ">
+<!-- <div class="col col-md-8 justify-content-md-evenly"> -->
+<label class="col-form-label-sm pt-1">
+    <i class="bi bi-grid-fill"></i>
+    le titre de l'article ({{getLayout(article.layout)}})
+</label>
+
+<div class="card shadow h-100 text-start">
     <div class="card-body text-start">
-        <!-- <div class="row"> -->
-        <div class="col">
-            <div class="row p-2">
-                <span> <strong>type d'article : &nbsp;</strong> {{getLayout(article.layout)}} </span>
-            </div>
-            <div class="row p-2">
-                <span><strong> date de l'événement (option)</strong> </span>
+        <div class="row ">
+            <div class=" col-md-4 my-auto">
                 <div class="input-group ">
-                    <div class="input-group-text">
+                    <label class="input-group-text" for="input-date">
                         <input class="form-check-input" type="checkbox" (change)="onDateCheckBoxChange($event)"
                             [(ngModel)]="withDate">
-                    </div>
-                    <input type="date" class="form-control" [valueAsDate]="getDate()" (change)="onChangeDate($event)">
+                        &nbsp; avec date
+                    </label>
+                    <input id="input-date" type="date" class="form-control" [valueAsDate]="getDate()"
+                        (change)="onChangeDate($event)">
                 </div>
             </div>
-            <div class="row p-2">
-                <label class="col-form-label-sm p-2 "><strong> le titre de l'article</strong></label>
+
+            <div class="col-md-8 my-auto">
+                <!-- <label class="col-form-label-sm p-2 "> le titre de l'article :</label> -->
                 <app-edit-headline class="py-1" [article]="article"></app-edit-headline>
             </div>
-
         </div>
-        <!-- </div> -->
-
     </div>
 </div>
+<!-- </div> -->

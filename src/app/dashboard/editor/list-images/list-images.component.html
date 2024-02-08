@@ -1,13 +1,15 @@
 <!-- <div class="container"> -->
+<label class="col-form-label-sm pt-1">
+    <i class="bi bi-grid-fill"></i>
+    la collection d'images de l'article </label>
 <div class="row justify-content-between">
     <div class="col col-md-9">
         <div class="card shadow h-100 p-2">
-            <label class="col-form-label-sm pt-1"> <strong> les photos (espace protégé) : </strong></label>
             <!-- <div class="card-header">les images</div> -->
 
             <div id="active" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
                 [cdkDropListConnectedTo]="['trash']" (cdkDropListDropped)="dropped($event)"
-                class="row justify-content-start" [cdkDropListData]="pictures">
+                class="row justify-content-start h-100" [cdkDropListData]="pictures">
                 <div id="draggable" cdkDrag *ngFor="let picture of pictures "
                     [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-3'">
                     <app-edit-image class="card h-100" [picture]="picture"> </app-edit-image>

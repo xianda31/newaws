@@ -49,6 +49,10 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     return this.page.articles.items.length;
   }
 
+  stripTags(html: string): string {
+    return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é')
+  }
+
   onCreate() {
     let article: CreateArticleInput = { ...Article_prefilled } as CreateArticleInput;
     const modalRef = this.modalService.open(GetArticleNameComponent, { centered: true });

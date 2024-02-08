@@ -8,15 +8,17 @@ import { LayoutIcons, Layouts } from 'src/app/interfaces/article.interface';
   templateUrl: './edit-article.component.html',
   styleUrl: './edit-article.component.scss'
 })
-export class EditArticleComponent implements OnInit {
+export class EditArticleComponent implements OnInit, OnChanges {
   @Input() article!: Article;
   layouts = Layouts
   withDate: boolean = false;
   articleForm !: FormGroup;
   constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.withDate = this.article.date ? true : false;
+  }
 
   ngOnInit(): void {
-    this.withDate = this.article.date ? true : false;
     this.initForm();
   }
 

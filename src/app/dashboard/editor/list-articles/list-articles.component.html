@@ -1,15 +1,13 @@
-<div *ngIf="page!==null">
-    <div class="card shadow">
-        <ul *ngIf="page.articles" class="list-group text-start">
-            <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
-                <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
-                    [class]="'list-group-item py-1 movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')"
-                    (click)="onSelect(item)">
-                    <span [innerHTML]="item!.headline | smaller | smaller |safeHtml"></span>
-                </li>
-            </div>
-        </ul>
-    </div>
+<div *ngIf="page!==null" class="col">
+    <ul *ngIf="page.articles" class="list-group shadow">
+        <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+            <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
+                [class]="'list-group-item py-1 movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')"
+                (click)="onSelect(item)">
+                <span [innerText]="stripTags(item!.headline) "></span>
+            </li>
+        </div>
+    </ul>
 
     <div class="text-start mt-2 ">
         <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
