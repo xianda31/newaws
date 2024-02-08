@@ -33,11 +33,27 @@ export class ListFilesComponent {
     this.current_folder = this.root_folder + sub_folder;
     this.folder_level = sub_folder.split('/').length - 1;
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
-    console.log('folderItems : ~~> %o ', this.folderItems);
   }
 
   ngOnInit(): void {
   };
+
+  onSelectItem(item: FolderItem) {
+    if (item.__isFile) {
+      this.showFile(item);
+    } else {
+      this.folderDown(item);
+    }
+  }
+
+  onDeleteItem(item: FolderItem) {
+    if (item.__isFile) {
+      this.deleteFile(item);
+    } else {
+      this.deleteDirectory(item);
+    }
+  }
+
 
   folderDown(item: FolderItem) {
     this.current_folder += (item.key + '/');
@@ -58,7 +74,6 @@ export class ListFilesComponent {
     window.open(signedURL as string);
 
   }
-  // uplooad fichier
 
   async uploadFile(e: any) {
     const newfile = e.target.files[0];
@@ -69,13 +84,12 @@ export class ListFilesComponent {
     }
   }
 
-  // modification de l'arborescence
-
   async createFolder() {
     if (this.new_folder !== '') {
       const key = this.current_folder + this.new_folder + '/';
       await this.fileService.createDirectory(key)
       this.folderItems = this.fileService.genFolderItems(this.current_folder);
+      this.new_folder = '';
     }
   }
 
@@ -87,7 +101,6 @@ export class ListFilesComponent {
 
   async deleteFile(item: FolderItem) {
     this.fileService.deleteFile(this.current_folder + item.key).then((result) => {
-      this.toastService.showSuccessToast("files", "Fichier supprimé");
       this.folderItems = this.fileService.genFolderItems(this.current_folder);
     })
       .catch((err) => {
@@ -95,15 +108,6 @@ export class ListFilesComponent {
       }
       );
   }
-
-
-
-  // directorySelectHandler(event: { id: string, folder: string }) {
-  //   console.log('directorySelectHandler : ~~> %o ', event);
-  //   let article = this.articleService.getArticleById(event.id)!;
-  //   article.directory = event.folder;
-  // }
-
 
 
 }
