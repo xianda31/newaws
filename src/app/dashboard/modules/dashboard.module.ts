@@ -22,6 +22,7 @@ import { EditHeadlineComponent } from '../editor/edit-headline/edit-headline.com
 import { ListImagesComponent } from '../editor/list-images/list-images.component';
 import { EditBodyComponent } from '../editor/edit-body/edit-body.component';
 import { EditImageComponent } from '../editor/edit-image/edit-image.component';
+import { ListFilesComponent } from '../editor/list-files/list-files.component';
 
 
 
@@ -44,7 +45,8 @@ import { EditImageComponent } from '../editor/edit-image/edit-image.component';
     EditHeadlineComponent,
     EditBodyComponent,
     ListImagesComponent,
-    EditImageComponent
+    EditImageComponent,
+    ListFilesComponent
   ],
   imports: [
     CommonModule,

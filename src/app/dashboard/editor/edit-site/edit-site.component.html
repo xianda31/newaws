@@ -25,6 +25,7 @@
             <app-list-images [article]="selected_article"></app-list-images>
         </div>
         <div *ngIf="selected_article && selected_article.layout==='File'" les fichiers>
+            <app-list-files [article]="selected_article"></app-list-files>
         </div>
     </div>
 </div>
