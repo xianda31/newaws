@@ -9,7 +9,7 @@
                 [cdkDropListConnectedTo]="['trash']" (cdkDropListDropped)="dropped($event)"
                 class="row justify-content-start" [cdkDropListData]="pictures">
                 <div id="draggable" cdkDrag *ngFor="let picture of pictures "
-                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-2'">
+                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-3'">
                     <app-edit-image class="card h-100" [picture]="picture"> </app-edit-image>
                     <!-- <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" /> -->
 
@@ -32,9 +32,8 @@
             <div id="trash" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
                 [cdkDropListConnectedTo]="['active']" (cdkDropListDropped)="dropped($event)"
                 class="row justify-content-start p-2" [cdkDropListData]="deleted_pictures">
-                <div id="draggable" cdkDrag *ngFor="let picture of deleted_pictures "
-                    [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-4' : 'col col-md-4'">
-                    <app-edit-image [picture]="picture"> </app-edit-image>
+                <div id="draggable" cdkDrag *ngFor="let picture of deleted_pictures " class="col col-md-3">
+                    <app-edit-image class="card" [picture]="picture"> </app-edit-image>
                     <!-- <img *cdkDragPreview src="../../../../assets/images/picture.png" class="img-fluid" /> -->
                 </div>
             </div>

@@ -14,7 +14,7 @@ export class EditImageComponent implements OnInit {
 
   @Input() picture: Picture = {} as Picture;
   signedUrl: string = '../../../../assets/images/no_image.jpg';
-  orientation: string = 'ITALIAN';
+  orientation: string = 'img-fit-paysage';
   alt: string = 'alt'
 
   constructor(
@@ -33,7 +33,7 @@ export class EditImageComponent implements OnInit {
       .then((result) => this.signedUrl = result)
       .catch((err) => console.log('fichier image non trouvé ...', err));
 
-    this.orientation = this.picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage';
+    this.orientation = this.picture.orientation === 'ITALIAN' ? 'img-fit-portrait' : 'img-fit-paysage';
     this.alt = this.getFilename(this.picture.filename);
   }
 
@@ -46,8 +46,9 @@ export class EditImageComponent implements OnInit {
     const modalRef = this.modalService.open(GetPictureInfoComponent, { centered: true });
     modalRef.componentInstance.picture = (this.picture as Picture);
     modalRef.result.then((picture) => {
-      console.log('result', picture);
+      // console.log('result', picture);
       this.pictureService.updatePicture(picture);
+      this.orientation = this.picture.orientation === 'ITALIAN' ? 'img-fit-portrait' : 'img-fit-paysage';
 
     }).catch((error) => {
       console.log('error', error);

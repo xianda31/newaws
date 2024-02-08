@@ -1,5 +1,5 @@
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article, CreatePictureInput, Picture } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
@@ -14,9 +14,9 @@ import { environment } from 'src/environments/environment';
   templateUrl: './list-images.component.html',
   styleUrl: './list-images.component.scss'
 })
-export class ListImagesComponent implements OnInit {
+export class ListImagesComponent implements OnInit, OnChanges {
   @Input() article!: Article;
-  @Input() picturesInCol: boolean = true;
+  // @Input() picturesInCol: boolean = true;
   pictures: Picture[] = [];
   deleted_pictures: Picture[] = [];
 
@@ -24,8 +24,17 @@ export class ListImagesComponent implements OnInit {
     private pictureService: PictureService,
     private toastService: ToastService,
   ) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['article']) {
+      this.getPictures();
+    }
+  }
 
   ngOnInit(): void {
+    // this.getPictures();
+  }
+
+  getPictures() {
     this.pictures = this.article.pictures?.items as Picture[];
     this.pictures = this.pictures.sort((a, b) => (a.rank > b.rank ? -1 : 1));
 
