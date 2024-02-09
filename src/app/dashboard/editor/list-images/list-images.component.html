@@ -7,9 +7,9 @@
         <div class="card shadow h-100 p-2">
             <!-- <div class="card-header">les images</div> -->
 
-            <div id="active" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
-                [cdkDropListConnectedTo]="['trash']" (cdkDropListDropped)="dropped($event)"
-                class="row justify-content-start h-100" [cdkDropListData]="pictures">
+            <div id="active" cdkDropList cdkDropListOrientation="horizontal" [cdkDropListConnectedTo]="['imagesBin']"
+                (cdkDropListDropped)="dropped($event)" class="row justify-content-start h-100"
+                [cdkDropListData]="pictures">
                 <div id="draggable" cdkDrag *ngFor="let picture of pictures "
                     [class]=" (picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-3'">
                     <app-edit-image class="card h-100" [picture]="picture"> </app-edit-image>
@@ -31,7 +31,7 @@
             <div class="card-header py-1 text-center">corbeille</div>
             <!-- <div class="bg-image "> -->
 
-            <div id="trash" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
+            <div id="imagesBin" style="min-height: 150px;" cdkDropList cdkDropListOrientation="horizontal"
                 [cdkDropListConnectedTo]="['active']" (cdkDropListDropped)="dropped($event)"
                 class="row justify-content-start p-2" [cdkDropListData]="deleted_pictures">
                 <div id="draggable" cdkDrag *ngFor="let picture of deleted_pictures " class="col col-md-3">

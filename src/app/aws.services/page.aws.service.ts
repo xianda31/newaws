@@ -30,7 +30,7 @@ export class PageService {
 
     this.articleService.onUpdateArticle$.subscribe((id) => {
       if (id === '') return;
-      console.log('pageService : an article event...', id);
+      // console.log('pageService : an article event...', id);
       this.api.GetPage(id).then((result) => {
         const page = result as Page;
         this._pages = this._pages.map((item) => item.id === page.id ? page : item);

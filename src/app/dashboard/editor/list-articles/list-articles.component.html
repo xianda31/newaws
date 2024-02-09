@@ -1,6 +1,13 @@
 <div *ngIf="page!==null" class="col">
-    <ul *ngIf="page.articles" class="list-group shadow">
-        <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+    <label class="col-form-label-sm pt-1">
+        <i class="bi bi-grid-fill"></i>
+        les articles de la page
+    </label>
+
+    <ul id="dropzone" class="list-group shadow ">
+        <div id="articlesList" cdkDropList [cdkDropListConnectedTo]="['articlesBin']"
+            (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+            <li *ngIf="drag_list.length === 0" class="list-group-item py-1">aucun article</li>
             <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
                 [class]="'list-group-item py-1 movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')"
                 (click)="onSelect(item)">

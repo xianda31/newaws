@@ -1,4 +1,4 @@
-import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ArticleService } from '../../../aws.services/article.aws.service';
 import { PageService } from '../../../aws.services/page.aws.service';
@@ -50,7 +50,7 @@ export class ListArticlesComponent implements OnInit, OnChanges {
   }
 
   stripTags(html: string): string {
-    return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é')
+    return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é').replace(/&nbsp;/g, ' ')
   }
 
   onCreate() {
@@ -78,17 +78,25 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     }
   }
   dropped(event: any) {
-    moveItemInArray(this.drag_list, event.previousIndex, event.currentIndex);
+    if (event.previousIndex === event.currentIndex) {
+      moveItemInArray(this.drag_list, event.previousIndex, event.currentIndex);
+    } else {
+      console.log('external drop event', event);
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
+
     const count = this.drag_list.length;
     this.drag_list.forEach((item, index) => {
-      console.log('%s was %s ~~> %s', item.headline, item.rank, count - index);
       let article = this.articleService.getArticleById(item.id);
       if (article) {
         article.rank = count - index;
+        article.pageId = this.page.id;   // cas où on déplace un article d'une page à une autre
         this.articleService.updateArticle(article);
       }
     });
   }
-
-
 }
+

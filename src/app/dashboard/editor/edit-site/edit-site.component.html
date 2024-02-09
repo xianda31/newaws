@@ -1,20 +1,29 @@
 <div class="container-fluid">
-    <div class="row mt-2">
-        <div class="col-md-2">
-            <app-list-menus (select)="select_menu($event)"></app-list-menus>
+    <div class="row">
+        <div class="col col-md-9">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <app-list-menus (select)="select_menu($event)"></app-list-menus>
+                </div>
+                <div class="col-md-3 ">
+                    <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
+                </div>
+                <div *ngIf="selected_page" class="col-md-3">
+                    <app-edit-page [(page)]="selected_page"></app-edit-page>
+                </div>
+                <div *ngIf="selected_page" class="col-md-3">
+                    <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
+                </div>
+
+            </div>
         </div>
-        <div class="col-md-2">
-            <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
-        </div>
-        <div *ngIf="selected_page" class="col-md-3">
-            <app-edit-page [(page)]="selected_page"></app-edit-page>
-        </div>
-        <div *ngIf="selected_page" class="col-md-2">
-            <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
+        <div class="col-md-3">
+            <app-articles-trash></app-articles-trash>
         </div>
     </div>
 
-    <div class="col-md-10 offset-md-2 mt-2">
+    <div class="col col-md-10 offset-md-2 mt-2">
         <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
         <div *ngIf="selected_article && selected_article.layout==='Textual'">
             <app-edit-body [article]="selected_article"></app-edit-body>

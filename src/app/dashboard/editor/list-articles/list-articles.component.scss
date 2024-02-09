@@ -1,12 +1,18 @@
 .list-group-item.movable {
     cursor: move;
-    transition: transform 250ms ease-in-out;
+    // transition: transform 250ms ease-in-out;
+    // min-width: 20vw;
 }
 
+// #dropzone {
+//     min-height: 20vh;
+//     background-color: blueviolet;
+
+// }
 
 .list-group-item.cdk-drag-preview {
     opacity: 0.8;
-    // background-color: #FFA500;
+    background-color: #FFA500;
     // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 

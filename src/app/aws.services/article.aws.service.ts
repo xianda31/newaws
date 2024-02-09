@@ -57,7 +57,13 @@ export class ArticleService {
   }
 
   getArticleById(id: string): Article | undefined {
-    return this._articles.find((article) => article.id === id);
+    const article = { ...this._articles.find((article) => article.id === id) } as Article;
+    if (!article) {
+      console.log('article not found');
+      return undefined;
+    } else {
+      return article;
+    }
   }
 
   // CRUD CATEGORIES
@@ -85,15 +91,18 @@ export class ArticleService {
   updateArticle(article: Article) {
     // console.log('articleInput: ', articleInput)
     let { __typename, createdAt, updatedAt, pictures, ...newArticleInput } = article;
-
+    let previousPageId = this.getArticleById(article.id)?.pageId;
     this.api.UpdateArticle(newArticleInput)
       .then((result) => {
         const newArticle = result as Article;
 
         this._articles = this._articles.map((item) => item.id === newArticle.id ? newArticle : item);
         this._articles$.next(this._articles);
-        this.onUpdateArticle$.next(article.pageId);   // incomplet : il faudrait aussi mettre à jour les articles de l'ancienne page si differente
 
+        this.onUpdateArticle$.next(newArticle.pageId);
+        if (previousPageId !== newArticle.pageId) {
+          this.onUpdateArticle$.next(previousPageId!);
+        }
       })
       .catch((error) => {
         console.log('Error updating article: ', error);

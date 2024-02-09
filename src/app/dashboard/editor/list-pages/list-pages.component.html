@@ -1,4 +1,9 @@
-<div class="col">
+<div *ngIf="menu">
+    <label class="col-form-label-sm pt-1">
+        <i class="bi bi-grid-fill"></i>
+        les sous-menus
+    </label>
+
     <ul class="list-group shadow">
         <li *ngFor=" let page of filtered_pages "
             [class]=" 'list-group-item py-1' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "

@@ -1,25 +1,30 @@
-<div class="col">
-    <ul class="list-group shadow ">
-        <!-- menus customisables instanciés dans la barre de menu -->
-        <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
-            <li cdkDrag *ngFor=" let item of drag_list "
-                [class]=" 'list-group-item py-1 movable' + (item.key === selected_key ?' bg-secondary text-white' :'') "
-                (click)="onSelect(item.key)">
-                {{stripOrder(item.key)}}
-            </li>
-        </div>
-        <!-- menus non affichés dans la barre de menus -->
-        <div>
-            <li *ngFor=" let item of fix_list "
-                [class]="'list-group-item py-1'+ (item.key === selected_key ?' bg-secondary text-white' :'')"
-                (click)="onSelect(item.key)">
-                {{stripOrder(item.key)}}
-            </li>
-        </div>
-    </ul>
+<!-- <div class="col"> -->
+<label class="col-form-label-sm pt-1">
+    <i class="bi bi-grid-fill"></i>
+    les menus
+</label>
 
-    <div class="text-start mt-2 ">
-        <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
-            menu</button>
+<ul class="list-group shadow ">
+    <!-- menus customisables instanciés dans la barre de menu -->
+    <div cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+        <li cdkDrag *ngFor=" let item of drag_list "
+            [class]=" 'list-group-item py-1 movable' + (item.key === selected_key ?' bg-secondary text-white' :'') "
+            (click)="onSelect(item.key)">
+            {{stripOrder(item.key)}}
+        </li>
     </div>
+    <!-- menus non affichés dans la barre de menus -->
+    <div>
+        <li *ngFor=" let item of fix_list "
+            [class]="'list-group-item py-1'+ (item.key === selected_key ?' bg-secondary text-white' :'')"
+            (click)="onSelect(item.key)">
+            {{stripOrder(item.key)}}
+        </li>
+    </div>
+</ul>
+
+<div class="text-start mt-2 ">
+    <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
+        menu</button>
 </div>
+<!-- </div> -->

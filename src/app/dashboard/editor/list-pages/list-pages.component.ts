@@ -36,7 +36,7 @@ export class ListPagesComponent implements OnInit, OnChanges {
     if (this.filtered_pages.length === 1) {
       this.selected_page = this.filtered_pages[0];
       this.select.emit(this.selected_page);
-      this.selected_page.label = '(' + this.selected_page.label.toLocaleLowerCase() + ')';
+      // this.selected_page.label =  this.selected_page.label.toLocaleLowerCase() ;
     }
   }
 
