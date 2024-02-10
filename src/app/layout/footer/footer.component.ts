@@ -22,8 +22,8 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
 
     this.pages$.subscribe((pages) => {
-      this.contactPage = pages.filter((page) => page.root_menu === 'Contact')[0] ?? null;
-      this.legalPage = pages.filter((page) => page.root_menu === 'Legal')[0] ?? null;
+      this.contactPage = pages.filter((page) => page.root_menu.toLocaleLowerCase().includes('contact'))[0] ?? null;
+      this.legalPage = pages.filter((page) => page.root_menu.toLocaleLowerCase().includes('legal'))[0] ?? null;
     });
 
   }

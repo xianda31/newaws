@@ -29,29 +29,9 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
     this.removeEditors();
     this.openEditors();
   }
-  // ngOnInit(): void {
-  // }
-
-  // getMonth(date: string | null | undefined): string {
-  //   const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
-  //   if (!date) return '';
-  //   let d = new Date(date);
-  //   let m = d.getMonth();
-  //   return months[m];
-  //   // return date.toLocaleString('fr-FR', { month: 'short' });
-  // }
-  // getDayOfTheMonth(date: string | null | undefined): number {
-  //   if (!date) return 0;
-  //   let d = new Date(date);
-  //   return d.getDate();
-  // }
-
 
 
   openEditors() {
-    // const headlineId = document.getElementById('headArea');
-    // if (!headlineId) return;
-    // this.initHeadLineEditor(headlineId);
 
     const bodyId = document.getElementById('bodyArea');
     if (!bodyId) return;
@@ -60,14 +40,8 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
   }
 
   removeEditors() {
-    // this.headlineEditor?.remove();
     this.bodyEditor?.remove();
   }
-
-  // headSave(html: SafeHtml): void {
-  //   this.article!.headline = html.toString();
-  //   this.articleService.updateArticle(this.article);
-  // }
 
   bodySave(html: SafeHtml): void {
     const BucketName = environment.BucketName;
@@ -76,33 +50,6 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
     this.article!.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
     this.articleService.updateArticle(this.article!);
   }
-
-  // initHeadLineEditor(el: HTMLElement) {
-  //   // console.log('initHeadLineEditor : %o', el);
-  //   tinymce.init(
-  //     {
-  //       target: el,
-  //       inline: true,
-  //       // height: '200px',
-  //       plugins: '  wordcount save',
-  //       // menubar: 'edit  view format ',
-  //       toolbar: 'undo redo save blocks | bold italic | forecolor |   cancel',
-  //       toolbar_location: 'bottom',
-
-  //       valid_elements: 'p[style],h*,strong,em,span[style]',
-  //       valid_styles: { '*': 'font-size,font-family,color,text-decoration,text-align' },
-
-  //       save_onsavecallback: () => { this.headSave(tinymce.activeEditor!.getContent()); },
-
-  //     }).then((editors) => {
-  //       if (editors.length === 0) {
-  //         console.log('initHeadLineEditor failed with');
-  //       }
-  //       else {
-  //         this.headlineEditor = editors[0];
-  //       }
-  //     });
-  // }
 
   initBodyEditor(el: HTMLElement) {
 
@@ -115,7 +62,6 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
         toolbar: 'undo redo save | table | blocks | bold italic strikethrough backcolor | mergetags | link image | align bullist numlist | code ',
         table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
         toolbar_location: 'bottom',
-
 
         save_onsavecallback: () => {
           // tinymce.activeEditor!.uploadPictures();

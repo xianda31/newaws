@@ -30,6 +30,7 @@ export class CognitoService {
       this._currentAuthenticatedUser$.next(this.currentUser);
       return (result);
     } catch (error) {
+      console.log('signIn error : ', error);
       return (null);
     }
 

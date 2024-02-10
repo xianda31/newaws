@@ -1,17 +1,25 @@
 <label class="col-form-label-sm pt-1">
     <i class="bi bi-grid-fill"></i>
     articles dans la corbeille </label>
-<div class="card shadow h-100 p-2">
+<div class="card shadow">
 
-    <ul cdkDropListGroup class="list-group shadow ">
-        <div id="articlesBin" cdkDropList class="droparea" [cdkDropListConnectedTo]="['articlesList']"
-            (cdkDropListDropped)="dropped($event)" [cdkDropListData]="bin_list">
+    <div cdkDropListGroup class="card-body">
+        <div id="articlesBin" cdkDropList class="row justify-content-between droparea"
+            [cdkDropListConnectedTo]="['articlesList']" (cdkDropListDropped)="dropped($event)"
+            [cdkDropListData]="bin_list">
             <!-- <li *ngIf="bin_list.length === 0" class="list-group-item py-1">aucun article</li> -->
 
-            <li cdkDrag *ngFor="let item of bin_list" [class]="'list-group-item py-1 movable'" (click)="onSelect(item)">
-                <span [innerText]="stripTags(item!.headline) "></span>
+            <div cdkDrag *ngFor="let item of bin_list" class="card col-md-3 bg-transparent border-2"
+                (click)="onSelect(item)">
+                <div class="text-center p-1 ">
+                    <i class="bi bi-pencil-square fs-3 py-0" style="color:blue;"></i>
+                    <p class=" m-0" style="font-size:xx-small;">{{stripTags(item!.headline)}}</p>
+                </div>
+                <li *cdkDragPreview class="list-group ">
+                    <span [innerText]="stripTags(item.headline) "></span>
+                </li>
                 <!-- <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;"> -->
-            </li>
+            </div>
         </div>
-    </ul>
+    </div>
 </div>

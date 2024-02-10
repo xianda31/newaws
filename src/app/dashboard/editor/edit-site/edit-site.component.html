@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-md-9">
+        <div class="col col-md-12">
 
             <div class="row">
                 <div class="col-md-3">
@@ -14,16 +14,16 @@
                 </div>
                 <div *ngIf="selected_page" class="col-md-3">
                     <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
+                    <app-articles-trash></app-articles-trash>
                 </div>
 
             </div>
         </div>
-        <div class="col-md-3">
-            <app-articles-trash></app-articles-trash>
-        </div>
+        <!-- <div class="col-md-3">
+        </div> -->
     </div>
 
-    <div class="col col-md-10 offset-md-2 mt-2">
+    <div class="col col-md-9 offset-md-3 mt-2">
         <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
         <div *ngIf="selected_article && selected_article.layout==='Textual'">
             <app-edit-body [article]="selected_article"></app-edit-body>

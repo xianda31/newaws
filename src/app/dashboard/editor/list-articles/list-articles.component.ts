@@ -78,7 +78,8 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     }
   }
   dropped(event: any) {
-    if (event.previousIndex === event.currentIndex) {
+    console.log('drop event', event);
+    if (event.previousContainer === event.currentContainer) {
       moveItemInArray(this.drag_list, event.previousIndex, event.currentIndex);
     } else {
       console.log('external drop event', event);
