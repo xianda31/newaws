@@ -3,12 +3,14 @@
     articles dans la corbeille </label>
 <div class="card shadow h-100 p-2">
 
-    <ul class="list-group shadow droparea">
-        <div id="articlesBin" cdkDropList [cdkDropListConnectedTo]="['articlesList']"
+    <ul cdkDropListGroup class="list-group shadow ">
+        <div id="articlesBin" cdkDropList class="droparea" [cdkDropListConnectedTo]="['articlesList']"
             (cdkDropListDropped)="dropped($event)" [cdkDropListData]="bin_list">
+            <!-- <li *ngIf="bin_list.length === 0" class="list-group-item py-1">aucun article</li> -->
+
             <li cdkDrag *ngFor="let item of bin_list" [class]="'list-group-item py-1 movable'" (click)="onSelect(item)">
                 <span [innerText]="stripTags(item!.headline) "></span>
-                <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;">
+                <!-- <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;"> -->
             </li>
         </div>
     </ul>
