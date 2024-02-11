@@ -5,14 +5,17 @@
     </label>
 
     <ul cdkDropListGroup class="list-group shadow ">
-        <div id="articlesList" cdkDropList class="droparea" [cdkDropListConnectedTo]="['articlesBin']"
+        <div id="articlesList" cdkDropList class="droparea" [cdkDropListConnectedTo]="['Bin']"
             (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
-            <li *ngIf="drag_list.length === 0" class="list-group-item py-1">aucun article</li>
+            <!-- <li *ngIf="drag_list.length === 0" class="list-group-item py-1">aucun article</li> -->
             <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
                 [class]="'list-group-item py-1 movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')">
                 <span (click)="onSelect(item)" [innerText]="stripTags(item.headline) "></span>
-                <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;">
-
+                <!-- <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;"> -->
+                <div *cdkDragPreview class="text-center p-1 ">
+                    <i class="bi bi-pencil-square fs-3 py-0" style="color:blue;"></i>
+                    <p class=" m-0" style="font-size:xx-small;">{{stripTags(item!.headline)}}</p>
+                </div>
             </li>
         </div>
     </ul>

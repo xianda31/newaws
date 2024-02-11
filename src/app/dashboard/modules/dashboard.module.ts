@@ -23,7 +23,8 @@ import { ListImagesComponent } from '../editor/list-images/list-images.component
 import { EditBodyComponent } from '../editor/edit-body/edit-body.component';
 import { EditImageComponent } from '../editor/edit-image/edit-image.component';
 import { ListFilesComponent } from '../editor/list-files/list-files.component';
-import { ArticlesTrashComponent } from '../editor/articles-trash/articles-trash.component';
+import { ShowBinComponent } from '../editor/articles-trash/show-bin.component';
+import { BinComponent } from '../editor/bin/bin.component';
 
 
 
@@ -48,7 +49,8 @@ import { ArticlesTrashComponent } from '../editor/articles-trash/articles-trash.
     ListImagesComponent,
     EditImageComponent,
     ListFilesComponent,
-    ArticlesTrashComponent
+    BinComponent,
+    ShowBinComponent
   ],
   imports: [
     CommonModule,

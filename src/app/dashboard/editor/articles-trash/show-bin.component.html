@@ -1,0 +1,39 @@
+<div *ngIf="show" class="mt-2">
+
+    <div cdkDropListGroup class="container-fluid">
+        <!-- <div  class="card-body"> -->
+        <div class="row">
+            <div class="col">
+                <div id="articlesBin" cdkDropList class="row justify-content-start"
+                    [cdkDropListConnectedTo]="['articlesList']" (cdkDropListDropped)="dropped($event)"
+                    [cdkDropListData]="bin_list">
+                    <!-- <li *ngIf="bin_list.length === 0" class="list-group-item py-1">aucun article</li> -->
+
+                    <div cdkDrag *ngFor="let item of bin_list" class="card col-md-3 bg-transparent border-0"
+                        (click)="onSelect(item)">
+                        <div class="text-center p-1 ">
+                            <i class="bi bi-pencil-square fs-3 py-0" style="color:blue;"></i>
+                            <p class=" m-0" style="font-size:xx-small;">{{stripTags(item!.headline)}}</p>
+                        </div>
+                        <li *cdkDragPreview class="list-group ">
+                            <span [innerText]="stripTags(item.headline) "></span>
+                        </li>
+                        <!-- <img *cdkDragPreview src="../../../../assets/images/bcsto.jpg" style="max-width:60px;"> -->
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col">
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-sm btn-primary text-white" (click)="close()">
+                        fermer la corbeille
+                    </button>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- </div> -->
+    </div>
+
+
+
+</div>

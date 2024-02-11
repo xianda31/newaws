@@ -12,6 +12,7 @@ export class EditSiteComponent implements OnInit {
   selected_menu: string = '';
   selected_page: Page | null = null;
   selected_article: Article | null = null;
+  show_bin: boolean = false;
 
   constructor(
     private pageService: PageService,

@@ -1,28 +1,33 @@
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, filter, map } from 'rxjs';
-import { Page } from 'src/app/API.service';
+import { transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { Article, Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
+import { ShowBinComponent } from '../articles-trash/show-bin.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-articles-trash',
-  templateUrl: './articles-trash.component.html',
-  styleUrl: './articles-trash.component.scss'
+  selector: 'app-bin',
+  templateUrl: './bin.component.html',
+  styleUrl: './bin.component.scss'
 })
-export class ArticlesTrashComponent implements OnInit {
+export class BinComponent implements OnInit {
+
   bin_list: { id: string, headline: string, layout: string, rank: number }[] = [];
   bin!: Page;
   filtered_pages: Page[] = [];
   selected_page: Page | null = null;
-  selected_id: string = '';
+  @Input() show: boolean = false;
+  @Output() showChange = new EventEmitter<boolean>();
+  // selected_id: string = '';
 
   pages$: Observable<Page[]> = this.pageService.pages$;
 
   constructor(
     private pageService: PageService,
     private articleService: ArticleService,
+    private modalService: NgbModal,
 
 
   ) { }
@@ -49,32 +54,28 @@ export class ArticlesTrashComponent implements OnInit {
     }
   }
 
-  getArticlesNumber(): number {
-    if (!this.bin!.articles) return 0;
-    return this.bin!.articles.items.length;
+  binIsEmpty(): boolean {
+    return (!this.bin.articles || this.bin.articles.items.length === 0);
   }
 
-  stripTags(html: string): string {
-    return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é')
+  click_bin(): void {
+    this.show = !this.show;
+    this.showChange.emit(this.show);
+    // const modalRef = this.modalService.open(ShowBinComponent, { centered: true });
   }
+  // stripTags(html: string): string {
+  //   return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é')
+  // }
 
-  onSelect(item: { id: string, headline: string, rank: number }): void {
-    this.selected_id = item.id;
-    let article = this.articleService.getArticleById(item.id);
-    if (article) {
-      // console.log('selecting article', article);
-      // this.select.emit(article);
-    }
-  }
+
   dropped(event: any) {
     transferArrayItem(event.previousContainer.data,
       event.container.data,
       event.previousIndex,
       event.currentIndex);
 
-    console.log('trash drop event', event.container.data);
-    const count = this.bin_list.length;
-    this.bin_list.forEach((item) => {
+    console.log('BIN drop event', event.container.data);
+    event.container.data.forEach((item: { id: string; }) => {
       let article = this.articleService.getArticleById(item.id);
       if (article) {
         article.pageId = this.bin.id;
