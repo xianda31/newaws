@@ -1,12 +1,16 @@
-<div class="card  bg-transparent border-0 text-center mt-4">
-    <!-- <div class="card-body text-center"> -->
-    <div (click)="click_bin()" id="Bin" cdkDropList class="text-center p-2 " [cdkDropListConnectedTo]="['articlesList']"
-        (cdkDropListDropped)="dropped($event)" [cdkDropListData]="bin_list">
-        <!-- <i class="bi bi-trash3 fs-3" style="color:blue;"></i> -->
-        <img [src]=" binIsEmpty() ? 
+<div class="col align-center">
+    <div class="card  bg-transparent border-0 text-center mt-4">
+        <div (click)="click_bin()" id="Bin" cdkDropList class="text-center p-2 "
+            [cdkDropListConnectedTo]="['articlesList']" (cdkDropListDropped)="dropped($event)"
+            [cdkDropListData]="bin_list">
+            <img [src]=" binIsEmpty() ? 
         'https://icons.iconarchive.com/icons/wwalczyszyn/iwindows/128/Recycle-Bin-icon.png' :
         'https://icons.iconarchive.com/icons/wwalczyszyn/iwindows/128/Recycle-Bin-Full-icon.png'" alt="bin">
-        <p class=" m-0" style="font-size:x-small;">corbeille <br> articles</p>
+            <!-- <p class=" m-0" style="font-size:x-small;">corbeille <br> articles</p> -->
+        </div>
     </div>
-    <!-- </div> -->
+    <div class="text-center" *ngIf="!binIsEmpty()">
+        <button cdkMenuItem class="btn btn-outline-warning btn-sm " style="font-size:x-small;"
+            (click)="flush_bin()">vider</button>
+    </div>
 </div>

@@ -65,7 +65,7 @@ import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/
     SafeHtmlPipe,
     SmallerPipe,
     OrderByPipe,
-    BucketnamePipe
+    BucketnamePipe,
 
 
     // EditorModule

@@ -1,7 +1,6 @@
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, filter, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
@@ -70,6 +69,7 @@ export class ShowBinComponent implements OnInit {
     if (article) {
     }
   }
+
 
   close() {
     this.show = false;

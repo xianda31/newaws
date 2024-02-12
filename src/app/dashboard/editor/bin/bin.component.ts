@@ -1,11 +1,9 @@
 import { transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Article, Page } from 'src/app/API.service';
+import { Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
-import { ShowBinComponent } from '../articles-trash/show-bin.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-bin',
@@ -27,10 +25,8 @@ export class BinComponent implements OnInit {
   constructor(
     private pageService: PageService,
     private articleService: ArticleService,
-    private modalService: NgbModal,
-
-
   ) { }
+
   ngOnInit(): void {
     this.pageService.pages$.pipe(
       map((pages) => pages.filter((page) => page.root_menu.toLocaleLowerCase().includes('articlesbin'))
@@ -46,14 +42,20 @@ export class BinComponent implements OnInit {
 
   }
 
-
   init_bin_list(): void {
     this.bin_list = [];
     if (this.bin!.articles?.items && this.bin!.articles.items.length > 0) {
       this.bin_list = this.bin!.articles.items.map((item) => ({ id: item!.id, headline: item!.headline, layout: item!.layout, rank: item!.rank }));
     }
   }
-
+  flush_bin(): void {
+    if (this.bin.articles?.items) {
+      this.bin.articles.items.forEach((item) => {
+        this.articleService.deleteArticle(item!);
+      });
+    }
+    this.bin_list = [];
+  }
   binIsEmpty(): boolean {
     return (!this.bin.articles || this.bin.articles.items.length === 0);
   }
@@ -61,11 +63,7 @@ export class BinComponent implements OnInit {
   click_bin(): void {
     this.show = !this.show;
     this.showChange.emit(this.show);
-    // const modalRef = this.modalService.open(ShowBinComponent, { centered: true });
   }
-  // stripTags(html: string): string {
-  //   return html.replace(/<[^>]*>?/gm, '').replace(/&eacute;/g, 'é')
-  // }
 
 
   dropped(event: any) {
@@ -74,7 +72,6 @@ export class BinComponent implements OnInit {
       event.previousIndex,
       event.currentIndex);
 
-    console.log('BIN drop event', event.container.data);
     event.container.data.forEach((item: { id: string; }) => {
       let article = this.articleService.getArticleById(item.id);
       if (article) {
