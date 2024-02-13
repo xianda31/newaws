@@ -1,4 +1,4 @@
-<div [class]="'navbar  navbar-expand-lg navbar-dark rounded-2 ' + (frontMenuShow ? 'bg-success' : 'bg-secondary')">
+<div class="navbar  navbar-expand-lg navbar-dark rounded-2  bg-success">
   <div class="container">
     <!-- toggler button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -6,17 +6,16 @@
     </button>
 
     <!-- brand logo -->
-    <a *ngIf="frontMenuShow" class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
+    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
       <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
       <i class="bi bi-house-fill"></i>
     </a>
-    <a *ngIf="!frontMenuShow" class="text-white text-decoration-none">Outils Administrateur</a>
 
     <!-- collapsible bar -->
     <div class="collapse navbar-collapse fs-5  justify-content-center" id="collapsibleNavbar">
 
       <!-- frontend menu -->
-      <ul [id]="frontMenuShow ? 'show' : 'noShow'" class="navbar-nav">
+      <ul class="navbar-nav">
 
         <!-- menu customisable -->
 
@@ -39,58 +38,68 @@
             </li>
           </ul>
         </li>
-
-        <li class="nav-item mx-5">
-          <a class="nav-link" routerLinkActive="active-link" routerLink="back/publisher/editor">Editeur site</a>
-      </ul>
-
-      <!-- backend menu -->
-      <ul [id]="!frontMenuShow ? 'show':'noShow'" class="navbar-nav">
-        <li *ngIf="isAdmin" class="nav-item mx-5 dropdown">
+        <!-- menu Outils -->
+        <li class="nav-item mx-5 dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-people-fill"></i>
-            Adhérents
+            <i class="bi bi-gear-fill"></i>
+            Outils
           </a>
           <ul class="dropdown-menu ">
-            <li><a class="dropdown-item" routerLink="back/admin/members">Adhérents</a></li>
-
-          </ul>
-        </li>
-
-        <li *ngIf="isPublisher" class="nav-item mx-5 dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-window-stack"></i>
-            Publication </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="back/publisher/pages">Edition pages</a></li>
-            <li><a class="dropdown-item" routerLink="back/publisher/files">Edition fichiers</a>
+            <li>
+              <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-gear-fill"></i>
+                caisse
+              </a>
+              <ul class="dropdown-menu dropdown-submenu">
+                <li>
+                  <a class="dropdown-item" routerLink="back/admin/members">
+                    <i class="bi bi-people-fill"></i>
+                    accueil tournoi</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="back/admin/members">
+                    <i class="bi bi-currency-euro"></i>
+                    autre vente</a>
+                </li>
+              </ul>
+            <li *ngIf="isAdmin">
+              <a class="dropdown-item" routerLink="back/admin/members">
+                <i class="bi bi-people-fill"></i>
+                Adhérents</a>
             </li>
-            <li><a class="dropdown-item" routerLink="back/publisher/cleanup">Articles & Images</a>
+            <li>
+              <a class="dropdown-item" routerLink="back/publisher/editor">
+                <i class="bi bi-pencil-square"></i>
+                Contenu site</a>
+            </li>
+            <!-- sous-menu outils DB -->
+            <li>
+              <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-gear-fill"></i>
+                base de données
+              </a>
+              <ul class="dropdown-menu dropdown-submenu">
+                <li>
+                  <a class="dropdown-item" routerLink="back/publisher/pages">
+                    <i class="bi bi-window-stack"></i>
+                    Edition pages</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="back/publisher/files">
+                    <i class="bi bi-file-earmark-text"></i>
+                    Edition fichiers</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" routerLink="back/publisher/cleanup">
+                    <i class="bi bi-collection"></i>
+                    Articles & Images</a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-
-        <li *ngIf="isSeller" class="nav-item mx-5 dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-cart4"></i>
-            Ventes </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Accueil tournoi</a></li>
-          </ul>
-        </li>
-
       </ul>
 
     </div>
-    <ul *ngIf="isLogged" class="navbar-nav  ">
-      <!-- <div id="back-menu"> -->
-      <li class="nav-item text-end">
-        <a id="trigger" class="navbar-brand">
-          <i [class]="frontMenuShow ? 'bi bi-gear-fill' : 'bi bi-house-up-fill'"
-            (click)="toggleFrontMenuVisibility()"></i>
-        </a>
-      </li>
-      <!-- </div> -->
-    </ul>
+
   </div>
 </div>

@@ -13,14 +13,11 @@ import { LoggedUser } from 'src/app/interfaces/user.interface';
 export class HeaderComponent implements OnInit, OnChanges {
   @Input() loggedUser!: LoggedUser | null;
 
-  frontMenuShow: boolean = true;
-  front_url: string = 'front/home';
-  back_url: string = 'back';
   isLogged!: boolean;
   isAdmin!: boolean;
   isPublisher!: boolean;
   isSeller!: boolean;
-
+  frontMenuShow = true;
 
   constructor(
     private cognitoService: CognitoService,
@@ -35,8 +32,6 @@ export class HeaderComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    const route = this.router.url;
-    this.frontMenuShow = !route.includes('back');
     this.setRights();
   }
 
@@ -61,18 +56,5 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.router.navigate(['front/home']);
   }
 
-
-  toggleFrontMenuVisibility() {
-    this.frontMenuShow = !this.frontMenuShow;
-    if (!this.frontMenuShow) {
-      this.front_url = this.router.url;
-      // console.log('leaving front', this.front_url)
-      this.router.navigate([this.back_url]);
-    } else {
-      this.back_url = this.router.url;
-      // console.log('returning to front', this.front_url)
-      this.router.navigate([this.front_url]);
-    }
-  }
 
 }

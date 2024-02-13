@@ -3,9 +3,9 @@
 }
 
 // essai drop on hover
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
+// .dropdown:hover .dropdown-menu {
+//   display: block;
+// }
 
 .dropdown-menu .dropdown-submenu {
   display: none;
@@ -29,17 +29,4 @@
   // font-size: larger;
   // background-color: cadetblue;
   // border-radius: 30%;
-}
-
-
-#collapsibleNavbar {
-
-  #noShow {
-    display: none;
-  }
-
-  #show {
-    display: flex;
-  }
-
 }
