@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
-    if (environment.logging_bypass) this.cognitoService.signIn({ email: environment.john_doe.email, password: environment.john_doe.password });
+    if (!environment.logging_bypass) this.cognitoService.signIn({ email: environment.john_doe.email, password: environment.john_doe.password });
 
     combineLatest([
       this.memberService.members$,

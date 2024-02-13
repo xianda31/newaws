@@ -1,8 +1,6 @@
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article, CreatePictureInput, Picture } from 'src/app/API.service';
-import { ArticleService } from 'src/app/aws.services/article.aws.service';
 import { Storage } from 'aws-amplify/lib-esm';
 import { PictureService } from 'src/app/aws.services/picture.aws.service';
 import { PictureOrientationTypeEnum } from 'src/app/interfaces/picture.interface';
