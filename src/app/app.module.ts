@@ -20,6 +20,7 @@ import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.component';
+import { PageTitleComponent } from './page-title/page-title.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.compone
     CleanupComponent,
     DashboardComponent,
     DynamicMenuComponent,
+    PageTitleComponent
 
   ],
   imports: [

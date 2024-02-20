@@ -17,7 +17,6 @@ export class HeaderComponent implements OnInit, OnChanges {
   isAdmin!: boolean;
   isPublisher!: boolean;
   isSeller!: boolean;
-  frontMenuShow = true;
 
   constructor(
     private cognitoService: CognitoService,

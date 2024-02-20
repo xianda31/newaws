@@ -9,12 +9,19 @@ import { environment } from "../../environments/environment";
 })
 export class CognitoService {
 
-  currentUser: { username: string; license: string; } | null =
-    (environment.logging_bypass ? { username: 'Christian', license: '02439752' } : null);
-
+  currentUser: { username: string; license: string; } | null = null;
   private _currentAuthenticatedUser$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
 
-  get currentAuthenticatedUser() {
+  constructor() {
+    console.log('environment.logging_bypass : ', environment.logging_bypass);
+    if (environment.logging_bypass === true) {
+      this.currentUser = { username: 'Christian', license: '02439752' };
+    }
+    console.log('this.currentUser : ', this.currentUser);
+    this._currentAuthenticatedUser$.next(this.currentUser);
+  }
+
+  get currentAuthenticatedUser$() {
     return this._currentAuthenticatedUser$.asObservable();
   }
 

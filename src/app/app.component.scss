@@ -1,14 +1,13 @@
-.outer-wrapper {
-    // max-width: 1600px;
-    min-height: calc(100vh - 80px); //viewport height - app-navbar height
-    background-color: rgb(252, 250, 250);
+.shadow {
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
 }
 
-// .inner-wrapper {
-//     flex: 1; // if you want center container large space else will take size of the content or apply flex-basis
+.outer-wrapper {
+    // max-width: 1600px;
+    min-height: calc(100vh - 75px); //viewport height - app-navbar height
 
-// }
-
+}
 
 
 // pulse animation

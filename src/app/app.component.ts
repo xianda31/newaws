@@ -18,7 +18,7 @@ import { LoggedUser } from './interfaces/user.interface';
 export class AppComponent implements OnInit {
   DBloaded: boolean = false;
   showSideMenu: boolean = true;
-  loggedUser!: LoggedUser | null;
+  loggedUser: LoggedUser | null = null;
 
   constructor(
     private pageService: PageService,
@@ -30,17 +30,18 @@ export class AppComponent implements OnInit {
   ) { }
   ngOnInit(): void {
 
-    if (!environment.logging_bypass) this.cognitoService.signIn({ email: environment.john_doe.email, password: environment.john_doe.password });
+    // if (!environment.logging_bypass) this.cognitoService.signIn({ email: environment.john_doe.email, password: environment.john_doe.password });
 
     combineLatest([
       this.memberService.members$,
       this.pageService.pagesReady$,
       this.articleService.articles$,
       this.fileService.bucketLoaded$,
-      this.cognitoService.currentAuthenticatedUser])
+      this.cognitoService.currentAuthenticatedUser$])
       .subscribe(([members, pagesReady, articles, bucketLoaded, user]) => {
 
         if (members.length > 0 && pagesReady && bucketLoaded) {
+          console.log('user : ', user);
 
           if (user !== null) {
             let member = this.memberService.getMemberByLicense(user.license)!;

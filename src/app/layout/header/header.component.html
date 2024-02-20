@@ -1,105 +1,103 @@
-<div class="navbar  navbar-expand-lg navbar-dark rounded-2  bg-success">
-  <div class="container">
-    <!-- toggler button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<div class="navbar  navbar-expand-lg  rounded-2  ">
+  <!-- toggler button -->
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <!-- brand logo -->
-    <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
-      <!-- <img class="img-fluid " src="../../../assets/images/bcsto.jpg" alt="bcsto"> -->
-      <i class="bi bi-house-fill"></i>
-    </a>
+  <!-- collapsible bar -->
+  <div class="collapse navbar-collapse fs-5 justify-content-around " id="collapsibleNavbar">
+    <ul class="navbar-nav">
 
-    <!-- collapsible bar -->
-    <div class="collapse navbar-collapse fs-5  justify-content-center" id="collapsibleNavbar">
+      <!-- brand logo -->
+      <a class="navbar-brand " routerLinkActive="active-link" [routerLink]=" ['front/home']">
+        <div class="text-center align-items-center">
+          <h5 class="text-success ">Bridge Club<br>de Saint-Orens</h5>
+        </div>
+        <!-- <img class="img-fluid " style="max-width: 110px; opacity: 75%;" src="../../../assets/images/bcsto.jpg" -->
+        <!-- alt="bcsto"> -->
+        <!-- <i class="bi bi-house-fill"></i> -->
+      </a>
+      <!-- menu customisable -->
 
-      <!-- frontend menu -->
-      <ul class="navbar-nav">
+      <app-dynamic-menu [isLogged]="isLogged"></app-dynamic-menu>
 
-        <!-- menu customisable -->
+      <!-- login -->
+      <li *ngIf="!loggedUser" class="nav-item">
+        <a class="nav-link" routerLinkActive="active-link" routerLink="login">CONNEXION</a>
+      </li>
 
-        <app-dynamic-menu [isLogged]="isLogged"></app-dynamic-menu>
-
-        <!-- login -->
-        <li *ngIf="!loggedUser" class="nav-item">
-          <a class="nav-link mx-2" routerLinkActive="active-link" routerLink="login">Se connecter</a>
-        </li>
-
-        <li *ngIf="loggedUser" class="nav-item mx-5 dropdown">
-          <a class="nav-link dropdown-toggle " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle"> </i>
-            {{loggedUser.firstname}}
-          </a>
-          <ul class="dropdown-menu ">
-            <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
-            <li class="dropdown-item" (click)="onLogout()">
-              déconnexion
-            </li>
-          </ul>
-        </li>
-        <!-- menu Outils -->
-        <li class="nav-item mx-5 dropdown">
-          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-gear-fill"></i>
-            Outils
-          </a>
-          <ul class="dropdown-menu ">
-            <li>
-              <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-gear-fill"></i>
-                caisse
-              </a>
-              <ul class="dropdown-menu dropdown-submenu">
-                <li>
-                  <a class="dropdown-item" routerLink="back/admin/members">
-                    <i class="bi bi-people-fill"></i>
-                    accueil tournoi</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" routerLink="back/admin/members">
-                    <i class="bi bi-currency-euro"></i>
-                    autre vente</a>
-                </li>
-              </ul>
-            <li *ngIf="isAdmin">
-              <a class="dropdown-item" routerLink="back/admin/members">
-                <i class="bi bi-people-fill"></i>
-                Adhérents</a>
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="back/publisher/editor">
-                <i class="bi bi-pencil-square"></i>
-                Contenu site</a>
-            </li>
-            <!-- sous-menu outils DB -->
-            <li>
-              <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-gear-fill"></i>
-                base de données
-              </a>
-              <ul class="dropdown-menu dropdown-submenu">
-                <li>
-                  <a class="dropdown-item" routerLink="back/publisher/pages">
-                    <i class="bi bi-window-stack"></i>
-                    Edition pages</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" routerLink="back/publisher/files">
-                    <i class="bi bi-file-earmark-text"></i>
-                    Edition fichiers</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" routerLink="back/publisher/cleanup">
-                    <i class="bi bi-collection"></i>
-                    Articles & Images</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-      </ul>
-
-    </div>
-
+      <li *ngIf="loggedUser" class="nav-item  dropdown">
+        <a class="nav-link dropdown-toggle text-success " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <!-- <i class="bi bi-person-circle"> </i> -->
+          {{loggedUser.firstname}}
+        </a>
+        <ul class="dropdown-menu ">
+          <li><a class="dropdown-item" routerLink="me">Mes données</a></li>
+          <li class="dropdown-item" (click)="onLogout()">
+            déconnexion
+          </li>
+        </ul>
+      </li>
+      <!-- menu Outils -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-success " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-gear-fill"></i>
+          OUTILS
+        </a>
+        <ul class="dropdown-menu ">
+          <li>
+            <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-gear-fill"></i>
+              caisse
+            </a>
+            <ul class="dropdown-menu dropdown-submenu">
+              <li>
+                <a class="dropdown-item" routerLink="back/admin/members">
+                  <i class="bi bi-people-fill"></i>
+                  accueil tournoi</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="back/admin/members">
+                  <i class="bi bi-currency-euro"></i>
+                  autre vente</a>
+              </li>
+            </ul>
+          <li *ngIf="isAdmin">
+            <a class="dropdown-item" routerLink="back/admin/members">
+              <i class="bi bi-people-fill"></i>
+              Adhérents</a>
+          </li>
+          <li>
+            <a class="dropdown-item" routerLink="back/publisher/editor">
+              <i class="bi bi-pencil-square"></i>
+              Contenu site</a>
+          </li>
+          <!-- sous-menu outils DB -->
+          <li>
+            <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-gear-fill"></i>
+              base de données
+            </a>
+            <ul class="dropdown-menu dropdown-submenu">
+              <li>
+                <a class="dropdown-item" routerLink="back/publisher/pages">
+                  <i class="bi bi-window-stack"></i>
+                  Edition pages</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="back/publisher/files">
+                  <i class="bi bi-file-earmark-text"></i>
+                  Edition fichiers</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="back/publisher/cleanup">
+                  <i class="bi bi-collection"></i>
+                  Articles & Images</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+    </ul>
   </div>
+
 </div>
