@@ -16,7 +16,6 @@ import { ListMenusComponent } from '../editor/list-menus/list-menus.component';
 import { ListPagesComponent } from '../editor/list-pages/list-pages.component';
 import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
 import { EditPageComponent } from '../editor/edit-page/edit-page.component';
-import { EditArticleComponent } from '../editor/edit-article/edit-article.component';
 import { ListArticlesComponent } from '../editor/list-articles/list-articles.component';
 import { EditHeadlineComponent } from '../editor/edit-headline/edit-headline.component';
 import { ListImagesComponent } from '../editor/list-images/list-images.component';
@@ -25,6 +24,7 @@ import { EditImageComponent } from '../editor/edit-image/edit-image.component';
 import { ListFilesComponent } from '../editor/list-files/list-files.component';
 import { ShowBinComponent } from '../editor/articles-trash/show-bin.component';
 import { BinComponent } from '../editor/bin/bin.component';
+import { EditArticlesComponent } from '../editor/edit-articles/edit-articles.component';
 
 
 
@@ -42,8 +42,8 @@ import { BinComponent } from '../editor/bin/bin.component';
     EditPageComponent,
     ListMenusComponent,
     EditSiteComponent,
-    EditArticleComponent,
     ListArticlesComponent,
+    EditArticlesComponent,
     EditHeadlineComponent,
     EditBodyComponent,
     ListImagesComponent,

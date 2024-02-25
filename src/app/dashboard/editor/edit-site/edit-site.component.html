@@ -1,50 +1,20 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col col-md-12">
-
-            <div class="row">
-                <div class="col-md-3">
-                    <app-list-menus (select)="select_menu($event)"></app-list-menus>
-                </div>
-                <div class="col-md-2 ">
-                    <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
-                </div>
-                <div *ngIf="selected_page" class="col-md-3">
-                    <app-edit-page [(page)]="selected_page"></app-edit-page>
-                </div>
-                <div *ngIf="selected_page" class="col-md-4">
-                    <div class="row align-center">
-                        <div class="col-8">
-
-                            <app-list-articles [page]="selected_page"
-                                (select)="select_article($event)"></app-list-articles>
-                        </div>
-                        <div class="col-4">
-
-                            <app-bin [(show)]="show_bin"></app-bin>
-                        </div>
-                    </div>
-                    <app-show-bin [(show)]="show_bin"></app-show-bin>
-                </div>
-                <div *ngIf="selected_page" class="col-md-2">
-                </div>
-
-            </div>
+        <div class="col-md-3">
+            <app-list-menus (select)="select_menu($event)"></app-list-menus>
         </div>
-        <!-- <div class="col-md-3">
-        </div> -->
+        <div class="col-md-3 ">
+            <app-list-pages [menu]="selected_menu" (select)="select_page($event)"> </app-list-pages>
+        </div>
+        <div *ngIf="selected_page" class="col-md-3">
+            <app-edit-page [(page)]="selected_page"></app-edit-page>
+        </div>
+        <div *ngIf="selected_page" class="col-md-3">
+            <app-list-articles [page]="selected_page" (select)="select_article($event)"></app-list-articles>
+        </div>
     </div>
-
-    <div class="col col-md-9 offset-md-3 mt-2">
-        <app-edit-article *ngIf="selected_article" [article]="selected_article"></app-edit-article>
-        <div *ngIf="selected_article && selected_article.layout==='Textual'">
-            <app-edit-body [article]="selected_article"></app-edit-body>
-        </div>
-        <div *ngIf="selected_article && selected_article.layout==='Pictural'">
-            <app-list-images [article]="selected_article"></app-list-images>
-        </div>
-        <div *ngIf="selected_article && selected_article.layout==='File'" les fichiers>
-            <app-list-files [article]="selected_article"></app-list-files>
-        </div>
+    <hr>
+    <div *ngIf="selected_page" class="offset-md-2 col-md-10">
+        <app-edit-articles [page]="selected_page"></app-edit-articles>
     </div>
 </div>

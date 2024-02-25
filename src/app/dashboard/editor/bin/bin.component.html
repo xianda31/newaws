@@ -1,5 +1,5 @@
 <div class="col align-center">
-    <div class="card  bg-transparent border-0 text-center mt-4">
+    <div class="card  bg-transparent border-0 text-center">
         <div (click)="click_bin()" id="Bin" cdkDropList class="text-center p-2 "
             [cdkDropListConnectedTo]="['articlesList']" (cdkDropListDropped)="dropped($event)"
             [cdkDropListData]="bin_list">

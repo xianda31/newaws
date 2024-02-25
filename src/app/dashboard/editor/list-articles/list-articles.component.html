@@ -1,12 +1,13 @@
-<div *ngIf="page!==null" class="col">
+<div *ngIf="page!==null">
+
     <label class="col-form-label-sm pt-1">
         <i class="bi bi-grid-fill"></i>
         les articles de la page
     </label>
 
-    <ul cdkDropListGroup class="list-group shadow ">
-        <div id="articlesList" cdkDropList class="droparea" [cdkDropListConnectedTo]="['Bin']"
-            (cdkDropListDropped)="dropped($event)" [cdkDropListData]="drag_list">
+    <ul class="list-group shadow">
+        <div id="articlesList" cdkDropList [cdkDropListConnectedTo]="['Bin']" (cdkDropListDropped)="dropped($event)"
+            [cdkDropListData]="drag_list">
             <!-- <li *ngIf="drag_list.length === 0" class="list-group-item py-1">aucun article</li> -->
             <li cdkDrag *ngFor="let item of drag_list | orderBy:'rank':'asc' "
                 [class]="'list-group-item py-1 movable'+ (item.id === selected_id ?' bg-secondary text-white' :'')">
@@ -20,8 +21,14 @@
         </div>
     </ul>
 
-    <div class="text-start mt-2 ">
-        <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un autre
-            article</button>
+    <div class="row align-items-start mt-2">
+        <div class="col-md-6 text-start">
+            <button class="btn btn-sm btn-primary shadow text-white w-100" (click)="onCreate()">ajouter un
+                article</button>
+        </div>
+        <div class="col-md-6">
+            <app-bin [(show)]="show_bin"></app-bin>
+            <app-show-bin [(show)]="show_bin"></app-show-bin>
+        </div>
     </div>
 </div>

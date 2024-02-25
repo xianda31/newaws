@@ -1,12 +1,11 @@
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ArticleService } from '../../../aws.services/article.aws.service';
-import { PageService } from '../../../aws.services/page.aws.service';
 import { Article, CreateArticleInput, Page } from '../../../API.service';
 import { GetArticleNameComponent } from '../../../shared/modals/get-article-name/get-article-name.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Article_prefilled } from '../../../interfaces/article.interface';
-import { orientationIcons } from 'src/app/interfaces/picture.interface';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 
 
 @Component({
@@ -20,6 +19,16 @@ export class ListArticlesComponent implements OnInit, OnChanges {
   selected_id: string = '';
   @Input() page!: Page;
   @Output() select: EventEmitter<Article> = new EventEmitter<Article>();
+  private _page$: BehaviorSubject<Page> = new BehaviorSubject<Page>({} as Page);
+
+  articles$: Observable<any> = combineLatest([
+    this._page$,
+    this.articleService.articles$]).pipe(
+      map(([page, articles]) => articles.filter((article) => article.pageId === page.id)),
+      map((articles) => articles.sort((a, b) => (a.rank > b.rank ? 1 : -1)))
+    );
+  show_bin: boolean = false;
+
 
   constructor(
     private articleService: ArticleService,
@@ -30,10 +39,13 @@ export class ListArticlesComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'].isFirstChange()) return;
+    this._page$.next(this.page);
+
     this.init_drag_list();
   }
 
   ngOnInit(): void {
+    this._page$.next(this.page);
     this.init_drag_list();
   }
 
@@ -91,7 +103,7 @@ export class ListArticlesComponent implements OnInit, OnChanges {
     this.drag_list.forEach((item, index) => {
       let article = this.articleService.getArticleById(item.id);
       if (article) {
-        article.rank = count - index;
+        article.rank = index;
         article.pageId = this.page.id;   // cas où on déplace un article d'une page à une autre
         this.articleService.updateArticle(article);
       }

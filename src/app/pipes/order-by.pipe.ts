@@ -13,9 +13,9 @@ export class OrderByPipe implements PipeTransform {
 
     let comparison = (a: any, b: any) => a[sortBy] < b[sortBy];
     if (order === 'asc' || !order) {
-      comparison = (a: any, b: any) => a[sortBy] > b[sortBy];
+      comparison = (a: any, b: any) => a[sortBy] >= b[sortBy];
     }
 
-    return array.sort((a, b) => comparison(a, b) ? -1 : 1)
+    return array.sort((a, b) => comparison(a, b) ? 1 : -1)
   }
 }

@@ -1,48 +1,53 @@
-<div class="col col-md-8 justify-content-md-evenly">
-    <label class="col-form-label-sm pt-1">
-        le répertoire associé à cette page:
-        <strong> {{current_folder}} </strong>
+<div class="row">
+    <div class="col-md-8">
 
-    </label>
-    <div class="card shadow h-100 p-2 text-start">
-        <!-- directory back button -->
-        <div *ngIf="folder_level" class=" text-start">
-            <button type="button" class="btn h-100" (click)="folderUp()">
-                <i class="bi bi-arrow-90deg-up"></i>
-            </button>
+
+        <div class="card shadow h-100 p-2 text-start">
+            <!-- directory back button -->
+            <div *ngIf="folder_level" class=" text-start">
+                <button type="button" class="btn h-100" (click)="folderUp()">
+                    <i class="bi bi-arrow-90deg-up"></i>
+                </button>
+            </div>
+            <!-- show folder's items -->
+            <table class="table table-sm table-borderless table-hover">
+                <tbody>
+                    <tr *ngFor="let item of folderItems ">
+                        <ng-container [ngTemplateOutlet]="item.__isFile ? file : directory"
+                            [ngTemplateOutletContext]="{item:item}">
+                        </ng-container>
+                        <td>
+                            <button type="button" class="btn  h-100" (click)="onDeleteItem(item)">
+                                <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
-        <!-- show folder's items -->
-        <table class="table table-sm table-borderless table-hover">
-            <tbody>
-                <tr *ngFor="let item of folderItems ">
-                    <ng-container [ngTemplateOutlet]="item.__isFile ? file : directory"
-                        [ngTemplateOutletContext]="{item:item}">
-                    </ng-container>
-                    <td>
-                        <button type="button" class="btn  h-100" (click)="onDeleteItem(item)">
-                            <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
     </div>
+    <div class="col-md-4">
 
-    <div class="row">
-        <div class="col-md-6">
+        <label class="col-form-label-sm pt-1">
+            répertoire :
+            <strong> {{current_folder}} </strong>
+        </label>
+        <div class="row">
+            <!-- <div class="col-md-6"> -->
 
             <!-- upload file button -->
             <div class="input-group input-group-sm mt-2">
                 <label for="file-input" class="btn btn-sm btn-primary text-white">
                     <i class="bi bi-file-earmark-plus"></i>
                 </label>
-                <label id="file-input-label" for="file-input" class="input-group-text">Ajouter un fichier pdf</label>
+                <label id="file-input-label" for="file-input" class="input-group-text">Ajouter un fichier
+                    pdf</label>
                 <input id="file-input" accept=".pdf" name="file-input" type="file" (change)="uploadFile($event)"
                     class="form-control">
             </div>
-        </div>
-        <div class="col-md-6">
+            <!-- </div> -->
+            <!-- <div class="col-md-6"> -->
             <!-- add directory button -->
             <div class="input-group input-group-sm mt-2">
                 <button type="button" class="btn btn-sm btn-primary text-white" [disabled]="!new_folder"
@@ -52,6 +57,7 @@
                 <label class=" input-group-text">Ajouter un répertoire</label>
                 <input type="text" [(ngModel)]="new_folder" class="form-control">
             </div>
+            <!-- </div> -->
         </div>
     </div>
 

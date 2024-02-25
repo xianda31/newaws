@@ -1,10 +1,10 @@
-<label class="col-form-label-sm p-2 ">
+<!-- <label class="col-form-label-sm p-2 ">
     <i class="bi bi-grid-fill"></i>
-    le corps de texte de l'article</label>
-<div class="card shadow">
+    le corps de texte de l'article</label> -->
+<div>
     <!-- <div class="p-2"> -->
-    <section id="bodyArea" [innerHTML]="article.body | bucketname | safeHtml ">
-    </section>
+    <textarea [id]="'bodyArea'+ article.id" [innerHTML]="article.body | bucketname | safeHtml ">
+    </textarea>
     <!-- </div> -->
 </div>
 <!-- </ng-container> -->

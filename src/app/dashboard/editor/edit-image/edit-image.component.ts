@@ -33,7 +33,9 @@ export class EditImageComponent implements OnInit {
       .then((result) => this.signedUrl = result)
       .catch((err) => console.log('fichier image non trouvé ...', err));
 
-    this.orientation = this.picture.orientation === 'ITALIAN' ? 'img-fit-portrait' : 'img-fit-paysage';
+    // this.orientation = 'card-img ' + this.picture.orientation === 'ITALIAN' ? 'img-fit-portrait' : 'img-fit-paysage';
+    // this.orientation = this.picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage';
+    this.orientation = 'card-img';
     this.alt = this.getFilename(this.picture.filename);
   }
 
@@ -53,6 +55,10 @@ export class EditImageComponent implements OnInit {
     }).catch((error) => {
       console.log('error', error);
     });
+  }
+
+  onDelete(): void {
+    this.pictureService.deletePicture(this.picture);
   }
 }
 

@@ -1,11 +1,16 @@
 .hdate {
-    position: relative;
-    left: 58px;
+    left: 50px;
     text-rendering: auto;
     // width: -moz-calc(100% - 48px);
     // width: -webkit-calc(100% - 48px);
     width: calc(100% - 58px);
-    min-height: 51px;
+    height: 51px;
+}
+
+.headline-container {
+    display: flex;
+    height: 51px;
+    padding-top: 10px;
 }
 
 .hdate::before {
@@ -21,6 +26,7 @@
     line-height: 17px;
     vertical-align: bottom;
     padding: 0;
+    padding-bottom: 4px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     box-shadow: 2px 2px 2px rgb(178, 178, 178);

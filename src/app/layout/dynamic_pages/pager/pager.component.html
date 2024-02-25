@@ -38,7 +38,7 @@
         </div>
 
         <div *ngIf="page.viewer === 'ROWS'" class="row justify-content-center ">
-          <app-carder class="col-8" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
+          <app-carder class="col-12" *ngFor="let article of articles$ | async " [article]="article" [editable]="false"
             [showLess]="false">
           </app-carder>
         </div>

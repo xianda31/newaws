@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
       .subscribe(([members, pagesReady, articles, bucketLoaded, user]) => {
 
         if (members.length > 0 && pagesReady && bucketLoaded) {
-          console.log('user : ', user);
+          // console.log('user : ', user);
 
           if (user !== null) {
             let member = this.memberService.getMemberByLicense(user.license)!;

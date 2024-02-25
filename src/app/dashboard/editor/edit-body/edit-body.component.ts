@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 import { Article } from 'src/app/API.service';
 import { environment } from 'src/environments/environment';
@@ -13,7 +13,7 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
   templateUrl: './edit-body.component.html',
   styleUrl: './edit-body.component.scss'
 })
-export class EditBodyComponent implements OnChanges, OnDestroy {
+export class EditBodyComponent implements AfterViewInit, OnDestroy {
 
   @Input() article !: Article;
   // headlineEditor: Editor | null = null;
@@ -22,21 +22,18 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
   constructor(
     private articleService: ArticleService,
   ) { }
+
+  ngAfterViewInit(): void {
+    this.openEditors();
+  }
   ngOnDestroy(): void {
     this.removeEditors();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.removeEditors();
-    this.openEditors();
-  }
-
 
   openEditors() {
-
-    const bodyId = document.getElementById('bodyArea');
+    const bodyId = document.getElementById('bodyArea' + this.article.id);
     if (!bodyId) return;
     this.initBodyEditor(bodyId);
-
   }
 
   removeEditors() {
@@ -62,7 +59,7 @@ export class EditBodyComponent implements OnChanges, OnDestroy {
         toolbar: 'undo redo save | table | blocks | bold italic strikethrough backcolor | mergetags | link image | align bullist numlist | code ',
         table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
         toolbar_location: 'bottom',
-
+        height: 300,
         save_onsavecallback: () => {
           // tinymce.activeEditor!.uploadPictures();
           let content = tinymce.activeEditor!.getContent();

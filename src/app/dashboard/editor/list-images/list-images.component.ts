@@ -34,23 +34,17 @@ export class ListImagesComponent implements OnInit, OnChanges {
 
   getPictures() {
     this.pictures = this.article.pictures?.items as Picture[];
-    this.pictures = this.pictures.sort((a, b) => (a.rank > b.rank ? -1 : 1));
+    // console.log('pictures', this.pictures);
+    // this.pictures = this.pictures.sort((a, b) => (a.rank > b.rank ? -1 : 1));
 
   }
 
   dropped(event: any) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(this.pictures, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
+    moveItemInArray(this.pictures, event.previousIndex, event.currentIndex);
     this.pictures.forEach((picture, index) => {
       picture.rank = index;
+      this.pictureService.updatePicture(picture);
     });
-    // console.log('pictures', this.pictures);
   }
 
 

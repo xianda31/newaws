@@ -1,0 +1,16 @@
+<div class="row justify-content-center">
+    <div class="mt-2" *ngFor="let article of articles$ | async">
+        <!-- <app-edit-article [article]="article"></app-edit-article> -->
+        <app-edit-headline [article]="article"></app-edit-headline>
+        <div *ngIf="article.layout==='Textual'">
+            <app-edit-body [article]="article"></app-edit-body>
+        </div>
+        <div *ngIf="article.layout==='Pictural'">
+            <app-list-images [article]="article"></app-list-images>
+        </div>
+        <div *ngIf="article.layout==='File'" les fichiers>
+            <app-list-files [article]="article"></app-list-files>
+        </div>
+
+    </div>
+</div>

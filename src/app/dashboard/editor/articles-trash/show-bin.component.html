@@ -6,8 +6,7 @@
 
     <div id="articlesBin" cdkDropList class="row justify-content-start" [cdkDropListConnectedTo]="['articlesList']"
         (cdkDropListDropped)="dropped($event)" [cdkDropListData]="bin_list">
-        <div cdkDrag *ngFor="let item of bin_list" class="card col-md-3 bg-transparent border-0"
-            (click)="onSelect(item)">
+        <div cdkDrag *ngFor="let item of bin_list" class="card  bg-transparent border-0" (click)="onSelect(item)">
             <div class="text-center p-1 ">
                 <img src="https://icons.iconarchive.com/icons/avosoft/toolbar/48/document-icon.png">
 

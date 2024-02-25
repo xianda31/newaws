@@ -1,8 +1,21 @@
-<div class="card shadow">
-    <div class="p-2">
-        <section id="headArea" [class]="article.date ? 'hdate':'hnodate'"
+<div class="row justify-content-around">
+
+    <div class="col-md-9 headline-container">
+        <section [id]="'headArea' + article.id" [class]="article.date ? 'hdate':'hnodate'"
             [attr.data-hday]="getDayOfTheMonth(article.date)" [attr.data-hmonth]="getMonth(article.date)"
-            [innerHTML]="article.headline | smaller | smaller  | safeHtml">
+            [innerHTML]="article.headline | smaller   | safeHtml">
         </section>
+    </div>
+
+    <div class=" col-md-3">
+        <div class="input-group input-group-sm ">
+            <label class="input-group-text" for="input-date">
+                <input class="form-check-input" type="checkbox" (change)="onDateCheckBoxChange($event)"
+                    [(ngModel)]="withDate">
+                &nbsp; daté
+            </label>
+            <input id="input-date" type="date" class="form-control" [valueAsDate]="getDate()"
+                (change)="onChangeDate($event)">
+        </div>
     </div>
 </div>
