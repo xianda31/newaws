@@ -8,8 +8,8 @@ import { TestComponent } from '../tests/test.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ToolsModule } from 'src/app/shared/shared.module';
 import { FilemgrComponent } from '../filemgr/filemgr.component';
-import { PagesComponent } from '../publications/pages/pages/pages.component';
-import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
+// import { PagesComponent } from '../publications/pages/pages/pages.component';
+// import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../../shared/modals/get-picture-info/get-picture-info.component';
 import { GetDirectoryComponent } from '../../shared/modals/get-directory/get-directory.component';
 import { ListMenusComponent } from '../editor/list-menus/list-menus.component';
@@ -34,8 +34,8 @@ import { EditArticlesComponent } from '../editor/edit-articles/edit-articles.com
     // ArticlesComponent,
     TestComponent,
     FilemgrComponent,
-    PagesComponent,
-    PageEditorComponent,
+    // PagesComponent,
+    // PageEditorComponent,
     GetPictureInfoComponent,
     GetDirectoryComponent,
     ListPagesComponent,

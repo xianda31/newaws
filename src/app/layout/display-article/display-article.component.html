@@ -1,0 +1,53 @@
+<div class="col">
+    <div class="card border-0 h-100 ">
+        <div class="card-body text-start">
+            <!-- <div *ngIf="!article.date">
+                <section [innerHTML]="article.headline | safeHtml">
+                </section>
+            </div> -->
+
+            <div>
+                <section [class]=" article.date ? 'hdate' :'ms-2'" [attr.data-hday]="getDayOfTheMonth(article.date)"
+                    [attr.data-hmonth]="getMonth(article.date)" [innerHTML]="article.headline | safeHtml">
+                </section>
+            </div>
+
+            <div *ngIf="article.layout ==='Textual'" class="text-start ps-2">
+                <section [innerHTML]="article.body | bucketname | safeHtml ">
+                </section>
+            </div>
+
+            <ng-template *ngIf="article.layout ==='Pictural'" [ngTemplateOutlet]="pictural"></ng-template>
+
+            <app-files *ngIf="article.layout ==='File'" [root_folder]="getRoot(article)"
+                [sub_folder]="getFolder(article)" [arbo_only]="true">
+            </app-files>
+        </div>
+
+    </div>
+</div>
+
+
+<ng-template #pictural>
+    <div *ngIf="article.pictures " class="row row-cols-1 row-cols-md-6 justify-content-around g-2">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'; let i=index"
+            [class]="(picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-4'">
+            <div class="card h-100">
+                <app-image [picture]="picture!"> </app-image>
+                <div class="card-body text-center p-0">
+                    <div *ngIf="picture?.caption1" class="text-primary"> {{picture?.caption1}}
+                    </div>
+                    <div *ngIf="picture?.caption2">
+                        <small class="text-muted"> {{picture?.caption2}} </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #document>
+
+    <app-files [root_folder]="getRoot(article)" [sub_folder]="getFolder(article)" [arbo_only]="true">
+    </app-files>
+</ng-template>

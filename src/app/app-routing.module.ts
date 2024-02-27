@@ -9,6 +9,7 @@ import { MyDataComponent } from './layout/static_pages/my-data/my-data.component
 import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
 import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { FrontPageComponent } from './layout/front-page/front-page.component';
 
 
 
@@ -28,8 +29,8 @@ const routes: Routes = [
   { path: '404', component: Page404Component },
 
 
-  { path: 'front/:root/:menu', component: PagerComponent },
-  { path: 'front/:menu', component: PagerComponent },
+  { path: 'front/:root/:menu', component: FrontPageComponent },
+  { path: 'front/:menu', component: FrontPageComponent },
 
   { path: '**', redirectTo: '404' },
 ];
