@@ -48,7 +48,6 @@ import { EditArticlesComponent } from '../editor/edit-articles/edit-articles.com
     EditBodyComponent,
     ListImagesComponent,
     EditImageComponent,
-    ListFilesComponent,
     BinComponent,
     ShowBinComponent
   ],

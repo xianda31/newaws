@@ -1,5 +1,3 @@
-<!-- <app-headband [title]="page.label + '|' + page.description"> </app-headband> -->
-
 <div class="container-fluid text-center  gx-0">
     <app-page-title [title]=" page.description"> </app-page-title>
     <div class="row mt-2">
@@ -17,37 +15,32 @@
             </div>
         </div>
         <div class="col-md-8">
-            <div class="card shadow ">
-                <div *ngIf="page.viewer === 'SIDE'">
-                    <div class="row">
-                        <div class="col-4 mt-3">
-                            <ng-container *ngFor="let article of articles$ | async ">
-                                <div *ngIf="(article.id !== selectedArticle.id) || allInSide" class="col-lg-4"
-                                    class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
-                                    <section [innerHTML]="article.headline | smaller | smaller | safeHtml"></section>
-                                </div>
-                            </ng-container>
-                        </div>
-
-                        <div class="col-8 text-start">
-                            <app-display-article *ngIf="selectedArticle"
-                                [article]="selectedArticle"></app-display-article>
-                        </div>
-
+            <div *ngIf="page.viewer === 'SIDE'">
+                <div class="row">
+                    <div class="col-4 mt-3">
+                        <ng-container *ngFor="let article of articles$ | async ">
+                            <div *ngIf="(article.id !== selectedArticle.id) " class="col-lg-4"
+                                class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
+                                <section [innerHTML]="article.headline | smaller | smaller | safeHtml"></section>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="col-8 text-start">
+                        <app-display-article *ngIf="selectedArticle" [article]="selectedArticle"></app-display-article>
                     </div>
                 </div>
-
-                <div *ngIf="page.viewer === 'ROWS'" class="row justify-content-center ">
-                    <app-display-article class="col-12" *ngFor="let article of articles$ | async " [article]="article">
-                    </app-display-article>
-                </div>
-
-                <div *ngIf="page.viewer === 'COLUMNS'" class="row justify-content-center ">
-                    <app-display-article class="col col-md-3" *ngFor="let article of articles$ | async "
-                        [article]="article">
-                    </app-display-article>
-                </div>
-
             </div>
+
+            <div *ngIf="page.viewer === 'ROWS'" class="row justify-content-center ">
+                <app-display-article class="col-12" *ngFor="let article of articles$ | async " [article]="article">
+                </app-display-article>
+            </div>
+
+            <div *ngIf="page.viewer === 'COLUMNS'" class="row justify-content-center ">
+                <app-display-article class="col col-md-3" *ngFor="let article of articles$ | async "
+                    [article]="article">
+                </app-display-article>
+            </div>
+
         </div>
     </div>

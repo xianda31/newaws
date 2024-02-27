@@ -1,8 +1,6 @@
 <div class="row">
-    <div class="col-md-8">
-
-
-        <div class="card shadow h-100 p-2 text-start">
+    <div [class]="isEditor ? 'col-md-8':'col'">
+        <div class="  p-2 text-start">
             <!-- directory back button -->
             <div *ngIf="folder_level" class=" text-start">
                 <button type="button" class="btn h-100" (click)="folderUp()">
@@ -16,7 +14,7 @@
                         <ng-container [ngTemplateOutlet]="item.__isFile ? file : directory"
                             [ngTemplateOutletContext]="{item:item}">
                         </ng-container>
-                        <td>
+                        <td *ngIf="isEditor" class="text-end">
                             <button type="button" class="btn  h-100" (click)="onDeleteItem(item)">
                                 <i class="bi bi-trash3-fill" style="color:rgb(184, 38, 33)"></i>
                             </button>
@@ -27,9 +25,8 @@
 
         </div>
     </div>
-    <div class="col-md-4">
-
-        <label class="col-form-label-sm pt-1">
+    <div *ngIf="isEditor" class="col-md-4">
+        <label class="col-form-label-sm pt-3">
             répertoire :
             <strong> {{current_folder}} </strong>
         </label>
@@ -64,22 +61,25 @@
 </div>
 
 <ng-template let-item="item" #directory>
-    <td colspan="2" class="align-middle">
-        <button type="button" class="btn " (click)="onSelectItem(item)">
-            <i class="bi bi-folder-fill" style="color:rgb(212, 186, 36)"></i>
-        </button>
+    <td colspan="2" class="selectable fs-4 align-middle" (click)="onSelectItem(item)">
+        <!-- <button type="button" class="btn "> -->
+        <i class="bi bi-folder-fill" style="color:rgb(245, 155, 43)"></i>
+        <!-- </button> -->
+        &nbsp;
         <span>{{item.key}}</span>
     </td>
 </ng-template>
 
 <ng-template let-item="item" #file>
-    <td class="align-middle">
-        <button type="button" class="btn h-100" (click)="onSelectItem(item)">
-            <i class="bi bi-file-pdf-fill" style="color:rgb(39, 167, 199)"></i>
-        </button>
+    <td class="selectable fs-4 align-middle" (click)="onSelectItem(item)">
+        <!-- <button type="button" class="btn"> -->
+        <i class="bi bi-file-pdf-fill" style="color:rgb(43, 139, 67)"></i>
+        &nbsp;
+        <!-- </button> -->
         <span>{{item.key}}</span>
     </td>
-    <td class="align-middle">
-        <span> {{item.size | filesize}}</span>
+    <td class="fs-4 align-middle">
+        <span *ngIf="isEditor"> {{item.size | filesize}}</span>
     </td>
+
 </ng-template>

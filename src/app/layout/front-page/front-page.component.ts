@@ -20,7 +20,6 @@ export class FrontPageComponent implements OnChanges {
   authenticatedUser: boolean = false;
   page!: Page;
   selectedArticle!: Article;
-  allInSide: boolean = true;
   picturesInCol: boolean = true;  // utile ??
 
 
@@ -56,7 +55,7 @@ export class FrontPageComponent implements OnChanges {
 
     this.articles$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.pageId === this.page.id)),
-      map((articles) => articles.sort((a, b) => (a.rank < b.rank ? 1 : -1))),
+      map((articles) => articles.sort((a, b) => (a.rank > b.rank ? 1 : -1))),
       tap((articles) => {
         // console.log('pager articles', articles);
         // this.solo = articles.length === 1;

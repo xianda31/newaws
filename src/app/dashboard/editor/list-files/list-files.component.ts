@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ListFilesComponent {
   @Input() article!: Article;
+  @Input() isEditor: boolean = false;
 
   root_folder: string = '';
   // sub_folder: string = '';
@@ -31,7 +32,7 @@ export class ListFilesComponent {
     const sub_folder = this.article.directory ? this.article.directory.replace(environment.S3articlesDirectory, '') : '';
     this.root_folder = environment.S3articlesDirectory;
     this.current_folder = this.root_folder + sub_folder;
-    this.folder_level = sub_folder.split('/').length - 1;
+    this.folder_level = this.isEditor ? sub_folder.split('/').length - 1 : 0;
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
   }
 

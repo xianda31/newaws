@@ -18,6 +18,7 @@ export class EditHeadlineComponent implements OnDestroy, AfterViewInit, OnChange
   @Input() article !: Article;
   headlineEditor: Editor | null = null;
   withDate: boolean = false;
+  date: Date | null = null;
 
   constructor(
     private articleService: ArticleService,
@@ -30,6 +31,7 @@ export class EditHeadlineComponent implements OnDestroy, AfterViewInit, OnChange
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.withDate = this.article.date ? true : false;
+    this.date = this.article.date ? new Date(this.article.date) : null;
   }
   getMonth(date: string | null | undefined): string {
     const months = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Août', 'Sep', 'Oct', 'Nov', 'Déc'];
@@ -46,25 +48,35 @@ export class EditHeadlineComponent implements OnDestroy, AfterViewInit, OnChange
   }
 
   onDateCheckBoxChange(event: any) {
+
     this.withDate = event.target.checked;
     if (this.withDate) {
-      this.article.date = new Date().toISOString();
+      this.date = new Date();
+      this.article.date = this.date.toISOString();
     } else {
-      delete this.article.date;
+      this.article.date = null;
+      this.date = null;
     }
+    this.articleService.updateArticle(this.article);
+
   }
   onChangeDate(event: any) {
     this.article.date = event.target.value;
+    this.articleService.updateArticle(this.article);
+
   }
   getDate(): Date | null {
-    if (!this.article.date) return null;
-    return new Date(this.article.date);
+    if (this.article.date) {
+      const date = new Date(this.article.date);
+      console.log('getDate', date);
+      return date;
+    }
+    return null;
   }
 
   openEditors() {
     const headlineId = document.getElementById('headArea' + this.article.id);
     if (!headlineId) {
-      // console.log('%s not found !!', 'headArea' + this.article.id);
       return;
     }
     this.initHeadLineEditor(headlineId);
@@ -87,9 +99,9 @@ export class EditHeadlineComponent implements OnDestroy, AfterViewInit, OnChange
         target: el,
         inline: true,
         // height: '200px',
-        plugins: '  wordcount save',
+        plugins: '  wordcount save code',
         // menubar: 'edit  view format ',
-        toolbar: 'undo redo save blocks | bold italic | forecolor |   cancel',
+        toolbar: 'undo redo save blocks  | forecolor | view  cancel',
         toolbar_location: 'bottom',
 
         valid_elements: 'p[style],h*,strong,em,span[style]',

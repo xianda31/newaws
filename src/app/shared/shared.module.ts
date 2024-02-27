@@ -19,6 +19,7 @@ import { ImageComponent } from '../tools/image/image.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GetMenuNameComponent } from 'src/app/shared/modals/get-menu-name/get-menu-name.component';
 import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/get-article-name.component';
+import { ListFilesComponent } from '../dashboard/editor/list-files/list-files.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -35,6 +36,7 @@ import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/
     GetArticleNameComponent,
     CarderComponent,
     ImageComponent,
+    ListFilesComponent,
     FilesizePipe,
     SafeHtmlPipe,
     BucketnamePipe,
@@ -58,6 +60,7 @@ import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/
     FilesComponent,
     CarderComponent,
     ImageComponent,
+    ListFilesComponent,
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

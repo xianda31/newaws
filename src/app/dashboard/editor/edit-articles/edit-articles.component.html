@@ -9,7 +9,8 @@
             <app-list-images [article]="article"></app-list-images>
         </div>
         <div *ngIf="article.layout==='File'" les fichiers>
-            <app-list-files [article]="article"></app-list-files>
+            <app-list-files [article]="article" [isEditor]="true"></app-list-files>
+            <hr>
         </div>
 
     </div>
