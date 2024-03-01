@@ -8,6 +8,7 @@ import { Article } from 'src/app/API.service';
 })
 export class DisplayArticleComponent {
   @Input() article: Article = {} as Article;
+  @Input() columnView: boolean = false;
 
 
   getMonth(date: string | null | undefined): string {

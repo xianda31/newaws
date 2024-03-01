@@ -16,10 +16,10 @@ export class FrontPageComponent implements OnChanges {
   @Input('menu') menu!: string;
 
   articles$!: Observable<Article[]>;
+  selectedArticle: Article | null = null;
 
   authenticatedUser: boolean = false;
   page!: Page;
-  selectedArticle!: Article;
   picturesInCol: boolean = true;  // utile ??
 
 
@@ -51,16 +51,16 @@ export class FrontPageComponent implements OnChanges {
       return;
     } else {
       this.page = page;
+      if (this.page.articles && this.page.articles.items.length > 0) {
+        this.selectedArticle = this.page.articles.items.reduce((acc, article) => (acc && article && (acc.rank > article.rank) ? acc : article));
+      }
     }
 
     this.articles$ = this.articleService.articles$.pipe(
       map((articles) => articles.filter((article) => article.pageId === this.page.id)),
       map((articles) => articles.sort((a, b) => (a.rank > b.rank ? 1 : -1))),
       tap((articles) => {
-        // console.log('pager articles', articles);
-        // this.solo = articles.length === 1;
         this.selectedArticle = articles[0];
-
       })
     );
 

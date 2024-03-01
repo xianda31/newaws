@@ -27,8 +27,6 @@ const routes: Routes = [
   },
   { path: 'todo', component: TodoComponent },
   { path: '404', component: Page404Component },
-
-
   { path: 'front/:root/:menu', component: FrontPageComponent },
   { path: 'front/:menu', component: FrontPageComponent },
 

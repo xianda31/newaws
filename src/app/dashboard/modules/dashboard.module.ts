@@ -3,13 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MembersComponent } from '../members/members.component';
-// import { ArticlesComponent } from '../publications/articles/articles/articles.component';
-import { TestComponent } from '../tests/test.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { ToolsModule } from 'src/app/shared/shared.module';
-import { FilemgrComponent } from '../filemgr/filemgr.component';
-// import { PagesComponent } from '../publications/pages/pages/pages.component';
-// import { PageEditorComponent } from '../publications/pages/page.editor/page.editor/page.editor.component';
 import { GetPictureInfoComponent } from '../../shared/modals/get-picture-info/get-picture-info.component';
 import { GetDirectoryComponent } from '../../shared/modals/get-directory/get-directory.component';
 import { ListMenusComponent } from '../editor/list-menus/list-menus.component';
@@ -21,21 +16,19 @@ import { EditHeadlineComponent } from '../editor/edit-headline/edit-headline.com
 import { ListImagesComponent } from '../editor/list-images/list-images.component';
 import { EditBodyComponent } from '../editor/edit-body/edit-body.component';
 import { EditImageComponent } from '../editor/edit-image/edit-image.component';
-import { ListFilesComponent } from '../editor/list-files/list-files.component';
 import { ShowBinComponent } from '../editor/articles-trash/show-bin.component';
 import { BinComponent } from '../editor/bin/bin.component';
 import { EditArticlesComponent } from '../editor/edit-articles/edit-articles.component';
+import { CleanupComponent } from '../cleanup/cleanup.component';
 
 
 
 @NgModule({
   declarations: [
     MembersComponent,
-    // ArticlesComponent,
-    TestComponent,
-    FilemgrComponent,
-    // PagesComponent,
-    // PageEditorComponent,
+    CleanupComponent,
+    // TestComponent,
+    // FilemgrComponent,
     GetPictureInfoComponent,
     GetDirectoryComponent,
     ListPagesComponent,

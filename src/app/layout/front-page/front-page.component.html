@@ -1,11 +1,54 @@
-<div class="container-fluid text-center  gx-0">
+<div *ngIf="page" class="container-fluid text-center  gx-0">
     <app-page-title [title]=" page.description"> </app-page-title>
     <div class="row mt-2">
+
+
+        <!--  page.viewer === 'SIDE' -->
+        <ng-container *ngIf="selectedArticle && page.viewer === 'SIDE'">
+            <div class="col-md-2 mt-3">
+                <ng-container *ngFor="let article of articles$ | async ">
+                    <div *ngIf="article.id !== selectedArticle.id"
+                        class="card bg-secondary rounded-2 border-2 m-1 h-auto align-content-center"
+                        (click)="selectArticle(article)">
+                        <div class="card-body text-white">
+                            <section [innerHTML]="article.headline | smaller  | smaller | safeHtml"></section>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="col-md-8">
+                <app-display-article [article]="selectedArticle"></app-display-article>
+            </div>
+        </ng-container>
+
+        <!-- page.viewer == 'ROWS' -->
+        <div *ngIf="page.viewer === 'ROWS'" class="offset-md-2 col-md-8 ">
+            <div class="row">
+                <app-display-article class="col-12" *ngFor="let article of articles$ | async " [article]="article">
+                </app-display-article>
+            </div>
+        </div>
+        <!-- page.viewer == 'COLUMNS' -->
+        <div *ngIf="page.viewer === 'COLUMNS'" class="offset-md-2 col-md-8">
+            <div class="row row-cols-1 row-cols-md-3 g-4 ">
+                <!-- <ng-container > -->
+                <ng-container *ngFor="let article of articles$ | async ">
+                    <div class="col">
+                        <app-display-article class=" card shadow h-100" [article]="article" [columnView]="true">
+                        </app-display-article>
+                    </div>
+                </ng-container>
+                <!-- </ng-container> -->
+            </div>
+        </div>
+
+        <!-- accès rapides -->
         <div class="col-md-2 ">
             <div class="d-flex align-items-end my-5">
                 <div class="card m-3">
                     <div class="card-header">
-                        <img src="../../../assets/images/bcsto.jpg" class="img-fluid" alt="bcsto">
+                        <!-- <img src="../../../assets/images/bcsto.jpg" class="img-fluid" alt="bcsto"> -->
                         <h5 class="card-title">accès direct aux tournois</h5>
                     </div>
                     <div class="card-body">
@@ -14,33 +57,5 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
-            <div *ngIf="page.viewer === 'SIDE'">
-                <div class="row">
-                    <div class="col-4 mt-3">
-                        <ng-container *ngFor="let article of articles$ | async ">
-                            <div *ngIf="(article.id !== selectedArticle.id) " class="col-lg-4"
-                                class="card-body bg-body-tertiary rounded-3 border-2 m-1" id="sidebar">
-                                <section [innerHTML]="article.headline | smaller | smaller | safeHtml"></section>
-                            </div>
-                        </ng-container>
-                    </div>
-                    <div class="col-8 text-start">
-                        <app-display-article *ngIf="selectedArticle" [article]="selectedArticle"></app-display-article>
-                    </div>
-                </div>
-            </div>
-
-            <div *ngIf="page.viewer === 'ROWS'" class="row justify-content-center ">
-                <app-display-article class="col-12" *ngFor="let article of articles$ | async " [article]="article">
-                </app-display-article>
-            </div>
-
-            <div *ngIf="page.viewer === 'COLUMNS'" class="row justify-content-center ">
-                <app-display-article class="col col-md-3" *ngFor="let article of articles$ | async "
-                    [article]="article">
-                </app-display-article>
-            </div>
-
-        </div>
     </div>
+</div>

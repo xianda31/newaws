@@ -10,11 +10,10 @@ import { LoginComponent } from './authentication/login/login.component';
 import { PswresetComponent } from './authentication/pswreset/pswreset.component';
 import { ToolsModule } from './shared/shared.module';
 import { Page404Component } from './layout/static_pages/page404/page404.component';
-import { RightsComponent } from './tests/rights/rights.component';
 import { MyDataComponent } from './layout/static_pages/my-data/my-data.component';
 import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
+// import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -35,11 +34,10 @@ import { DisplayArticleComponent } from './layout/display-article/display-articl
     LoginComponent,
     PswresetComponent,
     Page404Component,
-    RightsComponent,
     MyDataComponent,
     TodoComponent,
     PagerComponent,
-    CleanupComponent,
+    // CleanupComponent,
     DashboardComponent,
     DynamicMenuComponent,
     PageTitleComponent,

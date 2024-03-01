@@ -8,8 +8,8 @@
 // Include any default variable overrides here (though functions won't be available)
 
 $primary: #25408f;
-$secondary: #3c978f;
-$success: rgb(43, 139, 67);
+$secondary: rgb(43, 139, 67);
+$success: rgb(6, 77, 23);
 $info: rgb(245, 155, 43);
 $warning: #ba4d61;
 $danger: #e0103a;
@@ -32,7 +32,7 @@ $dark: #343a40;
 
 // hdate before & after
 .headline-container {
-    height: 48px;
+    min-height: 48px;
     // background-color: aquamarine;
 }
 
