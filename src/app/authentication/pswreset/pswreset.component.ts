@@ -45,7 +45,7 @@ export class PswresetComponent implements OnInit {
     ).catch((error) => {
       console.log('forgotPassword error : ', error);
       this.toastService.showErrorToast('forgotPassword error', error);
-      this.router.navigate(['front/home']);
+      this.router.navigate(['home']);
     });
   }
 

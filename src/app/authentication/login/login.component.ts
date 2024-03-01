@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.toastService.showSuccessToast('login success', 'Bonjour ' + result.attributes.name);
           this.articleService.loadArticles(false);
-          this.router.navigate(['front/home']);
+          this.router.navigate(['home']);
 
         }
       })

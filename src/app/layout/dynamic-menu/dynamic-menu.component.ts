@@ -25,28 +25,6 @@ export class DynamicMenuComponent {
     private pageService: PageService,
   ) { }
 
-  // buildMenuMap(pages: Page[]): Map<string, Menu[]> {
-  //   let menuMap = new Map<string, Menu[]>([]);
-
-  //   pages.forEach((page) => {
-  //     if (!this.isLogged && !page.public) { return; }
-  //     const root = page.root_menu;
-  //     if (page.hidden) { return; }
-  //     const menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };
-
-  //     if (menuMap.has(root)) {
-  //       let arr = menuMap.get(root)!;
-  //       arr.push(menu);
-  //     } else {
-  //       menuMap.set(root, [menu]);
-  //     };
-  //   });
-
-  //   // console.log('menuMap: %o', menuMap);
-  //   return menuMap;
-
-
-  // }
 
   stripOrder(root: string): string {
     return root.replace(/^\w\#/g, '');

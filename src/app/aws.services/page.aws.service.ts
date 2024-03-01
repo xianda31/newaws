@@ -116,7 +116,7 @@ export class PageService {
       if (!isLogged && !page.public) { return; }
       const root = page.root_menu;
       if (page.hidden) { return; }
-      const menu = { label: page.label, route_path: 'front/' + page.path, pageId: page.id, page: page };
+      const menu = { label: page.label, route_path: page.path, pageId: page.id, page: page };
 
       if (menuMap.has(root)) {
         let arr = menuMap.get(root)!;

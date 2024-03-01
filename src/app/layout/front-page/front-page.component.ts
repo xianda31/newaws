@@ -12,8 +12,9 @@ import { PageService } from 'src/app/aws.services/page.aws.service';
 })
 export class FrontPageComponent implements OnChanges {
 
-  @Input('root') root!: string;
   @Input('menu') menu!: string;
+  @Input('submenu') submenu!: string;
+  root: string = '';
 
   articles$!: Observable<Article[]>;
   selectedArticle: Article | null = null;
@@ -32,15 +33,21 @@ export class FrontPageComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('pager changes', changes);
-    let path = '';
-    if (changes['root']) {
-      path = changes['root'].currentValue === undefined ? '' : changes['root'].currentValue + '/';
-    } else {
-      path = this.root === undefined ? '' : this.root + '/';
+    console.log('FrontPageComponent ngOnChanges', changes);
+    // console.log('calling menu :%s  submenu:%s', changes['menu'].currentValue, changes['submenu'].currentValue);
+    if (changes['menu']) {
+      this.root = changes['menu'].currentValue;
+      console.log('menu changed', this.root);
+    }
+    let path = this.root;
+
+    if (changes['submenu']) {
+      if (changes['submenu'].currentValue) {
+        path += '/' + changes['submenu'].currentValue;
+      }
     }
 
-    path += (changes['menu'].currentValue ?? '');
+    console.log('path:', path);
 
     let page: Page | undefined;
     page = this.pageService.sgetPageByPath(path);
@@ -53,6 +60,8 @@ export class FrontPageComponent implements OnChanges {
       this.page = page;
       if (this.page.articles && this.page.articles.items.length > 0) {
         this.selectedArticle = this.page.articles.items.reduce((acc, article) => (acc && article && (acc.rank > article.rank) ? acc : article));
+      } else {
+        this.selectedArticle = null;
       }
     }
 
@@ -63,7 +72,6 @@ export class FrontPageComponent implements OnChanges {
         this.selectedArticle = articles[0];
       })
     );
-
   }
 
 
@@ -86,7 +94,7 @@ export class FrontPageComponent implements OnChanges {
     return '';
   }
 
-  getRoot(article: Article) {
+  getmenu(article: Article) {
     return article.directory ?? '';
   }
 }

@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnChanges {
     this.isLogged = false;
     this.isAdmin = false;
     this.isPublisher = false;
-    this.router.navigate(['front/home']);
+    this.router.navigate(['home']);
   }
 
 

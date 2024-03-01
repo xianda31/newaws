@@ -1,7 +1,6 @@
-<div *ngIf="page" class="container-fluid text-center  gx-0">
+<div *ngIf="page && selectedArticle" class="container-fluid text-center  gx-0">
     <app-page-title [title]=" page.description"> </app-page-title>
     <div class="row mt-2">
-
 
         <!--  page.viewer === 'SIDE' -->
         <ng-container *ngIf="selectedArticle && page.viewer === 'SIDE'">

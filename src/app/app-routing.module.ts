@@ -14,7 +14,7 @@ import { FrontPageComponent } from './layout/front-page/front-page.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/front/home' },
+  { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'signup', component: SignupComponent },
   { path: 'login', component: LoginComponent },
   { path: 'me', component: MyDataComponent },
@@ -27,8 +27,11 @@ const routes: Routes = [
   },
   { path: 'todo', component: TodoComponent },
   { path: '404', component: Page404Component },
-  { path: 'front/:root/:menu', component: FrontPageComponent },
-  { path: 'front/:menu', component: FrontPageComponent },
+
+  // sinon c'est une page "dynamique"
+
+  { path: ':menu', component: FrontPageComponent },
+  { path: ':menu/:submenu', component: FrontPageComponent },
 
   { path: '**', redirectTo: '404' },
 ];
