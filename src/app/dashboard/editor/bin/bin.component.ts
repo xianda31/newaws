@@ -51,7 +51,8 @@ export class BinComponent implements OnInit {
   flush_bin(): void {
     if (this.bin.articles?.items) {
       this.bin.articles.items.forEach((item) => {
-        this.articleService.deleteArticle(item!);
+        let article = this.articleService.getArticleById(item!.id);
+        this.articleService.deleteArticle(article!);
       });
     }
     this.bin_list = [];

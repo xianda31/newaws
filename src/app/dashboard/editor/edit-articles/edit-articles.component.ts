@@ -1,5 +1,4 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { Page } from 'src/app/API.service';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
@@ -23,7 +22,6 @@ export class EditArticlesComponent {
 
   constructor(
     private articleService: ArticleService,
-    private modalService: NgbModal,
 
   ) { }
 

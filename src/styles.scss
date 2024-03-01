@@ -27,7 +27,7 @@ $dark: #343a40;
     padding-top: 4px;
 
     height: 40px;
-    padding-left: 50px;
+    padding-left: 30px;
 }
 
 // hdate before & after
@@ -40,7 +40,7 @@ $dark: #343a40;
     content: attr(data-hmonth);
     position: absolute;
     display: block;
-    left: 10px;
+    left: -20px;
     top: 5px;
     background: rgb(245, 155, 43);
     color: black;
@@ -58,7 +58,7 @@ $dark: #343a40;
 .hdate::after {
     content: attr(data-hday);
     position: absolute;
-    left: 10px;
+    left: -20px;
     top: 23px;
     background: rgb(43, 139, 67);
     // background: linear-gradient(to bottom, rgb(249, 247, 211), rgb(172, 211, 71));

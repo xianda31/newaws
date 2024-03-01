@@ -22,12 +22,16 @@ export class ArticleService {
 
     this.pictureService.onUpdatePicture$.subscribe((id) => {
       if (id === '') return;
-      // console.log('articleService : pictures of articleid %s changed...');
+      // console.log('articleService : pictures of articleid %s changed...', id);
       this.api.GetArticle(id).then((result) => {
         const article = result as Article;
+        if (!article) {
+          // console.log('article id_ %s dont exists', id);
+          return;
+        }
         this._articles = this._articles.map((item) => item.id === article.id ? article : item);
         this._articles$.next(this._articles);
-      });
+      })
     });
 
   }
@@ -113,7 +117,6 @@ export class ArticleService {
 
 
   deleteArticle(article: Article) {
-
     article.pictures?.items?.forEach((picture) => {
       this.pictureService.deletePicture(picture!);
     }

@@ -63,6 +63,7 @@ export class PictureService {
 
 
   deletePicture(picture: Picture) {
+    // console.log('deleting picture : ', picture);
     this.api.DeletePicture({ id: picture.id }).then((result) => {
       this._pictures = this._pictures.filter((item) => item.id !== picture.id);
       this.pictures$.next(this._pictures);
