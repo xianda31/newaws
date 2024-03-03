@@ -33,11 +33,9 @@ export class FrontPageComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('FrontPageComponent ngOnChanges', changes);
     // console.log('calling menu :%s  submenu:%s', changes['menu'].currentValue, changes['submenu'].currentValue);
     if (changes['menu']) {
       this.root = changes['menu'].currentValue;
-      console.log('menu changed', this.root);
     }
     let path = this.root;
 
@@ -47,7 +45,6 @@ export class FrontPageComponent implements OnChanges {
       }
     }
 
-    console.log('path:', path);
 
     let page: Page | undefined;
     page = this.pageService.sgetPageByPath(path);
