@@ -15,11 +15,10 @@ import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { CleanupComponent } from './dashboard/cleanup/cleanup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
-import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.component';
-import { PageTitleComponent } from './page-title/page-title.component';
+import { PageTitleComponent } from './layout/page-title/page-title.component';
 import { FrontPageComponent } from './layout/front-page/front-page.component';
 import { DisplayArticleComponent } from './layout/display-article/display-article.component';
 
@@ -36,7 +35,6 @@ import { DisplayArticleComponent } from './layout/display-article/display-articl
     Page404Component,
     MyDataComponent,
     TodoComponent,
-    PagerComponent,
     // CleanupComponent,
     DashboardComponent,
     DynamicMenuComponent,

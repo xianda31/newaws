@@ -6,7 +6,6 @@ import { PswresetComponent } from './authentication/pswreset/pswreset.component'
 import { Page404Component } from './layout/static_pages/page404/page404.component';
 import { canActivateGuard } from './guards/can-activate.guard';
 import { MyDataComponent } from './layout/static_pages/my-data/my-data.component';
-import { PagerComponent } from './layout/dynamic_pages/pager/pager.component';
 import { TodoComponent } from './layout/static_pages/todo/todo.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { FrontPageComponent } from './layout/front-page/front-page.component';

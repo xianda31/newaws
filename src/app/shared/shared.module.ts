@@ -11,7 +11,6 @@ import { GetDateComponent } from 'src/app/shared/modals/get-date/get-date.compon
 import { BucketnamePipe } from '../pipes/bucketname.pipe';
 import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
 import { ViewerInputComponent } from './value-accessors/viewer-input/viewer-input.component';
-import { CarderComponent } from 'src/app/layout/dynamic_pages/carder/carder.component';
 import { IconsTogglerInputComponent } from './value-accessors/icons-toggler-input/icons-toggler-input.component';
 import { RightsInputComponent } from './value-accessors/rights-input/rights-input.component';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
@@ -34,7 +33,6 @@ import { ListFilesComponent } from '../dashboard/editor/list-files/list-files.co
     GetDateComponent,
     GetMenuNameComponent,
     GetArticleNameComponent,
-    CarderComponent,
     ImageComponent,
     ListFilesComponent,
     FilesizePipe,
@@ -58,7 +56,6 @@ import { ListFilesComponent } from '../dashboard/editor/list-files/list-files.co
     ViewerInputComponent,
     IconsTogglerInputComponent,
     FilesComponent,
-    CarderComponent,
     ImageComponent,
     ListFilesComponent,
     FormsModule,
