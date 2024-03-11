@@ -21,34 +21,39 @@ $dark: #343a40;
 // Then add additional custom code here
 
 
+
+// hdate before & after
+// .headline-container {
+//     min-height: 48px;
+// }
+
+.nohdate {
+    min-height: 47px;
+}
+
 .hdate {
     position: relative;
     text-rendering: auto;
-    padding-top: 4px;
-
-    height: 40px;
-    padding-left: 30px;
-}
-
-// hdate before & after
-.headline-container {
-    min-height: 48px;
-    // background-color: aquamarine;
+    text-align: left;
+    // padding-top: 4px;
+    min-height: 47px;
+    // padding-left: 25px;
 }
 
 .hdate::before {
     content: attr(data-hmonth);
     position: absolute;
     display: block;
-    left: -20px;
-    top: 5px;
+    left: -50px;
+    top: 4px;
+    width: 42px;
+    height: 22px;
+    line-height: 22px;
+
     background: rgb(245, 155, 43);
     color: black;
     text-align: center;
-    font-size: 12px;
-    width: 34px;
-    height: 20px;
-    line-height: 20px;
+    font-size: 14px;
     // padding-bottom: 14px;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -58,17 +63,17 @@ $dark: #343a40;
 .hdate::after {
     content: attr(data-hday);
     position: absolute;
-    left: -20px;
-    top: 23px;
+    left: -50px;
+    top: 25px;
     background: rgb(43, 139, 67);
     // background: linear-gradient(to bottom, rgb(249, 247, 211), rgb(172, 211, 71));
     color: white;
     text-align: center;
     font-size: 12px;
     font-weight: bold;
-    width: 34px;
-    height: 17px;
-    line-height: 17px;
+    width: 42px;
+    height: 20px;
+    line-height: 20px;
     padding: 0 0 1px;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;

@@ -1,11 +1,11 @@
 <div [class]="columnView ?'text-center' :'text-start ps-2'">
-    <div>
-        <section [class]=" article.date ? 'hdate' :'ms-2'" [attr.data-hday]="getDayOfTheMonth(article.date)"
+    <div class="card-body g-0">
+        <section [class]=" article.date ? 'hdate' :'nohdate'" [attr.data-hday]="getDayOfTheMonth(article.date)"
             [attr.data-hmonth]="getMonth(article.date)" [innerHTML]="article.headline | safeHtml">
         </section>
     </div>
 
-    <div class="card-body">
+    <div class="card-body g-0">
         <ng-template *ngIf=" article.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
         <ng-template *ngIf="!columnView && article.layout ==='Pictural'"
             [ngTemplateOutlet]="pictural_row"></ng-template>
@@ -23,46 +23,22 @@
 </ng-template>
 
 <ng-template #pictural_row>
-    <div *ngIf="article.pictures " class="row row-cols-1 row-cols-md-6 justify-content-around g-1">
-        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'"
-            [class]="(picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-4'">
-            <div class="card h-100">
-                <app-image [picture]="picture!"> </app-image>
-                <div class="card-body text-center p-0">
-                    <div *ngIf="picture?.caption1" class="text-primary py-0"> {{picture?.caption1}}
-                    </div>
-                    <div *ngIf="picture?.caption2">
-                        <small class="text-muted"> {{picture?.caption2}} </small>
-                    </div>
-                </div>
-            </div>
+    <div *ngIf="article.pictures " class="row row-cols-1 row-cols-md-4 justify-content-around g-1">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'">
+            <app-image [class]="(picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-4'"
+                [picture]="picture!"> </app-image>
         </div>
     </div>
 </ng-template>
 
 <ng-template #pictural_column>
-    <div *ngIf="article.pictures " class="col ">
-        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'"
-            [class]="(picture?.orientation === 'ITALIAN') ? 'col col-md-12' : 'col col-md-12'">
-            <div class="card border-0 h-100">
-                <app-image [picture]="picture!"> </app-image>
-                <div class="card-body text-center p-0">
-                    <div *ngIf="picture?.caption1" class="text-primary p-0 mb-2"> {{picture?.caption1}}
-                        <span *ngIf="picture?.caption2">
-                            <br>
-                            <small class="text-muted py-0"> {{picture?.caption2}} </small>
-                        </span>
-                    </div>
-                </div>
-            </div>
+    <div *ngIf="article.pictures " class="col">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'">
+            <app-image [picture]="picture!"> </app-image>
         </div>
     </div>
 </ng-template>
 
 <ng-template #document>
-
-    <!-- <app-files [root_folder]="getRoot(article)" [sub_folder]="getFolder(article)" [arbo_only]="true">
-    </app-files> -->
-
     <app-list-files [article]="article"></app-list-files>
 </ng-template>

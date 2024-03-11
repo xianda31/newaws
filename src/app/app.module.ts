@@ -18,7 +18,6 @@ import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.component';
-import { PageTitleComponent } from './layout/page-title/page-title.component';
 import { FrontPageComponent } from './layout/front-page/front-page.component';
 import { DisplayArticleComponent } from './layout/display-article/display-article.component';
 
@@ -38,7 +37,6 @@ import { DisplayArticleComponent } from './layout/display-article/display-articl
     // CleanupComponent,
     DashboardComponent,
     DynamicMenuComponent,
-    PageTitleComponent,
     FrontPageComponent,
     DisplayArticleComponent
 
