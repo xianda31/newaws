@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['loggedUser'].isFirstChange()) return;
+    // console.log('HeaderComponent : ngOnChanges : loggedUser changed : ', this.loggedUser);
     this.setRights();
   }
 
@@ -44,6 +46,7 @@ export class HeaderComponent implements OnInit, OnChanges {
       this.isPublisher = this.loggedUser.credentials?.includes('Publisher');
       this.isSeller = this.loggedUser.credentials?.includes('Seller');
     }
+    // console.log('this.isLogged : ', this.isLogged, this.isAdmin, this.isPublisher, this.isSeller);
   }
 
 

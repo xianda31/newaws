@@ -39,7 +39,7 @@
         </ul>
       </li>
       <!-- menu Outils -->
-      <li class="nav-item dropdown">
+      <li *ngIf="loggedUser" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-success " role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <!-- <i class="bi bi-gear-fill"></i> -->
           OUTILS

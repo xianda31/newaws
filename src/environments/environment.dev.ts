@@ -1,8 +1,7 @@
 
 
 export const environment = {
-  // test_links: true,  // true => masque le menu test
-  logging_bypass: true,
+  logging_bypass: false,
   john_doe: { email: 'chrrenoux@yahoo.fr', password: 'Bogomol2024!!', credentials: 'Admin', license: '02439752' },
 
   version: 'dev 5.0.0',

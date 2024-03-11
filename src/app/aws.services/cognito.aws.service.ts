@@ -17,7 +17,7 @@ export class CognitoService {
     if (environment.logging_bypass === true) {
       this.currentUser = { username: 'Christian', license: '02439752' };
     }
-    console.log('this.currentUser : ', this.currentUser);
+    // console.log('this.currentUser : ', this.currentUser);
     this._currentAuthenticatedUser$.next(this.currentUser);
   }
 

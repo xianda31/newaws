@@ -40,15 +40,17 @@ export class AppComponent implements OnInit {
       this.cognitoService.currentAuthenticatedUser$])
       .subscribe(([members, pagesReady, articles, bucketLoaded, user]) => {
 
-        if (members.length > 0 && pagesReady && bucketLoaded) {
-          // console.log('user : ', user);
+        if (user !== null) {
+          let member = this.memberService.getMemberByLicense(user.license)!;
+          this.loggedUser = { email: user.email, firstname: user.username, lastname: member.lastname, license: user.license, credentials: member?.rights! };
+          // console.log('logged user : ', this.loggedUser);
+        } else {
+          this.loggedUser = null;
+          // console.log('no logged user ... ');
+        }
 
-          if (user !== null) {
-            let member = this.memberService.getMemberByLicense(user.license)!;
-            this.loggedUser = { email: user.email, firstname: user.username, lastname: member.lastname, license: user.license, credentials: member?.rights! };
-          } else {
-            this.loggedUser = null;
-          }
+        if (members.length > 0 && pagesReady && bucketLoaded) {
+
           this.DBloaded = true;
         }
       });

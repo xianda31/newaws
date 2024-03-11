@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
           this.toastService.showInfoToast('login error', 'email/password incorrect');
           return;
         } else {
+          console.log('login success : ', result);
           this.toastService.showSuccessToast('login success', 'Bonjour ' + result.attributes.name);
           this.articleService.loadArticles(false);
           this.router.navigate(['home']);

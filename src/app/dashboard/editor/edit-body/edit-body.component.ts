@@ -18,6 +18,7 @@ export class EditBodyComponent implements AfterViewInit, OnDestroy {
   @Input() article !: Article;
   // headlineEditor: Editor | null = null;
   bodyEditor: Editor | null = null;
+  host: string = 'https://' + environment.BucketName + '.s3.' + environment.Region + '.amazonaws.com';
 
   constructor(
     private articleService: ArticleService,
@@ -41,12 +42,15 @@ export class EditBodyComponent implements AfterViewInit, OnDestroy {
   }
 
   bodySave(html: SafeHtml): void {
-    const BucketName = environment.BucketName;
-    const Region = environment.Region;
-    const hostname = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com';
-    this.article!.body = html.toString().replaceAll(hostname, 'https://HOSTNAME');
+    this.article!.body = html.toString().replaceAll(this.host, '%HOSTNAME%');
     this.articleService.updateArticle(this.article!);
   }
+
+  fetchLinkList = () => [
+    { title: 'My page 1', value: 'https://www.tiny.cloud' },
+    { title: 'tarifs', value: 'https://bcstoapp0ee6a242edb74c79a78263aa5cb1473e113936-dev.s3.eu-west-3.amazonaws.com/public/documents/tarifs/Flyer+Formation+BCSTO+2023.pdf' }
+  ];
+
 
   initBodyEditor(el: HTMLElement) {
 
@@ -60,56 +64,54 @@ export class EditBodyComponent implements AfterViewInit, OnDestroy {
         table_toolbar: 'tableprops tabledelete | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
         toolbar_location: 'bottom',
         height: 300,
+        image_caption: true,
+        link_context_toolbar: true,
+        link_title: false,
+        link_quicklink: true,
+        link_list: (success: (arg0: { title: string; value: string; }[]) => void) => { // called on link dialog open
+          const links = this.fetchLinkList(); // get link_list data
+          success(links);
+        },
+
         save_onsavecallback: () => {
-          // tinymce.activeEditor!.uploadPictures();
           let content = tinymce.activeEditor!.getContent();
-          this.bodySave(content.replaceAll('src="data:image', 'src="https://bcsto.s3.eu-west-3.amazonaws.com/public/images'));
+          this.bodySave(content);
         },
 
         file_picker_callback: (callback, value, meta) => { this.ImagePickerCallback(callback, value, meta) },
 
         images_upload_handler: (blobInfo: { filename: () => string; blob: () => any; }): Promise<string> => {
-          // console.log('image_upload_handler : ', blobInfo.filename(), blobInfo.blob());
-
-          const buildURL = (key: string) => {
-            const BucketName = environment.BucketName;
-            const Region = environment.Region;
-            const uri = 'https://' + BucketName + '.s3.' + Region + '.amazonaws.com' + '/public/' + key;
-            return uri;
-          };
-
-          let promise: Promise<string> = new Promise((resolve, reject) => {
-            const key = 'images/' + this.article!.title + '/' + blobInfo.filename();
-            Storage.put(key, blobInfo.blob(), {
-              level: 'public',
-              // contentType: blobInfo.blob().type,
-              progressCallback(progress: any) {
-                // console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
-              },
-            })
-              .then((result) => {
-                // console.log('image_upload_handler : S3 result:%o ', result);
-                resolve(buildURL(result.key));
-
-              })
-              .catch((err) => {
-                console.log('image_upload_handler : S3 error:%o ', err);
-                reject(err);
-              });
-
-
-          });
-          return (promise);
+          return (this.uploadImage(blobInfo));
         },
 
-        image_caption: true,
       }).then((editors) => {
         if (editors.length === 0) { console.log('initBodyEditor failed on'); }
-        else {
-          // console.log('initBodyEditor  initialised');
-          this.bodyEditor = editors[0];
-        }
+        else { this.bodyEditor = editors[0]; }
       });
+  }
+
+
+  uploadImage(blobInfo: { filename: () => string; blob: () => any; }): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const key = 'images/' + this.article!.title + '/' + blobInfo.filename();
+      Storage.put(key, blobInfo.blob(), {
+        level: 'public',
+        // contentType: blobInfo.blob().type,
+        // progressCallback(progress: any) {
+        //   // console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+        // },
+      })
+        .then((result) => {
+          console.log('image_upload_handler : S3 result:%o ', result);
+          // resolve(this.buildURL(result.key));
+          resolve(this.host + '/public/' + result.key);
+
+        })
+        .catch((err) => {
+          console.log('image_upload_handler : S3 error:%o ', err);
+          reject(err);
+        });
+    });
   }
 
   ImagePickerCallback(cb: (blobUri: string, arg1: { title: string; }) => void, value: any, meta: any): void {
