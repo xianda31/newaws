@@ -10,6 +10,8 @@ import { FileService } from '../../shared/service/file.service';
 export class ImageComponent implements OnInit {
 
   @Input() picture: Picture = {} as Picture;
+  @Input() cardMode: boolean = false;
+
   signedUrl: string = '../../../../assets/images/no_image.jpg';
   orientation: string = 'ITALIAN';
   alt: string = 'alt'
@@ -25,8 +27,12 @@ export class ImageComponent implements OnInit {
     this.fileService.getFileURL(this.picture.filename)
       .then((result) => this.signedUrl = result)
       .catch((err) => console.log('fichier image non trouvé ...', err));
+    if (this.cardMode) {
+      this.orientation = this.picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage';
+    } else {
 
-    this.orientation = this.picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage';
+      this.orientation = this.picture.orientation === 'ITALIAN' ? 'card-img img-fit-portrait' : 'card-img img-fit-paysage';
+    }
     this.alt = this.getFilename(this.picture.filename);
   }
 

@@ -5,7 +5,7 @@
         <div *ngIf="article.layout==='Textual'">
             <app-edit-body [article]="article"></app-edit-body>
         </div>
-        <div *ngIf="article.layout==='Pictural'">
+        <div *ngIf="article.layout==='Pictural' || article.layout==='Card'">
             <app-list-images [article]="article"></app-list-images>
         </div>
         <div *ngIf="article.layout==='File'" les fichiers>

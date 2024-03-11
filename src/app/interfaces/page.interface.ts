@@ -9,6 +9,6 @@ export enum PageViewerEnum {
 export type PageViewer = keyof typeof PageViewerEnum;
 export const pageViewIcons = {
     [PageViewerEnum.Side]: 'bi bi-layout-text-sidebar-reverse',
-    [PageViewerEnum.Rows]: 'bi bi-view-stacked',
-    [PageViewerEnum.Columns]: 'bi bi-layout-three-columns'
+    [PageViewerEnum.Rows]: 'bi bi-box-arrow-right',
+    [PageViewerEnum.Columns]: 'bi bi-box-arrow-down'
 };

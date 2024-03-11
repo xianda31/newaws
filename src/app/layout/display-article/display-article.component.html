@@ -7,10 +7,11 @@
 
     <div class="card-body g-0">
         <ng-template *ngIf=" article.layout ==='Textual'" [ngTemplateOutlet]="textual"></ng-template>
-        <ng-template *ngIf="!columnView && article.layout ==='Pictural'"
-            [ngTemplateOutlet]="pictural_row"></ng-template>
-        <ng-template *ngIf="columnView && article.layout ==='Pictural'"
-            [ngTemplateOutlet]="pictural_column"></ng-template>
+        <ng-template *ngIf="article.layout ==='Pictural'"
+            [ngTemplateOutlet]="columnView ? pictural_column : pictural_row"></ng-template>
+
+        <ng-template *ngIf="article.layout ==='Card'"
+            [ngTemplateOutlet]="columnView ? card_column : card_row"></ng-template>
 
         <ng-template *ngIf="article.layout ==='File'" [ngTemplateOutlet]="document"></ng-template>
 
@@ -25,8 +26,23 @@
 <ng-template #pictural_row>
     <div *ngIf="article.pictures " class="row row-cols-1 row-cols-md-4 justify-content-around g-1">
         <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'">
-            <app-image [class]="(picture?.orientation === 'ITALIAN') ? 'col col-md-2' : 'col col-md-4'"
-                [picture]="picture!"> </app-image>
+            <app-image [picture]="picture!"> </app-image>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #card_column>
+    <div *ngIf="article.pictures " class="col">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'">
+            <app-image [picture]="picture!" [cardMode]='true'> </app-image>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #card_row>
+    <div *ngIf="article.pictures " class="row row-cols-1 row-cols-md-4 justify-content-around g-1">
+        <div *ngFor="let picture of article.pictures.items | orderBy:'rank':'asc'">
+            <app-image [picture]="picture!" [cardMode]='true'> </app-image>
         </div>
     </div>
 </ng-template>
@@ -38,7 +54,6 @@
         </div>
     </div>
 </ng-template>
-
 <ng-template #document>
     <app-list-files [article]="article"></app-list-files>
 </ng-template>

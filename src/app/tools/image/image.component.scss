@@ -10,6 +10,15 @@
     object-fit: cover;
 }
 
+
+.card .img-flat {
+    // max-height: 5rem;
+    // object-fit: cover;
+
+    opacity: 0.5;
+    max-width: 40%;
+}
+
 // @media (max-width: 768px) {
 //     .card .img-fit {
 //         aspect-ratio: 1.45/1;

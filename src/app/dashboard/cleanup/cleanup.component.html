@@ -15,20 +15,20 @@
 
               <thead>
                 <tr>
-                  <th scope="col" class="col-5 text-center">titre</th>
-                  <th scope="col" class="col-1 text-center">layout</th>
-                  <th scope="col" class="col-1">rang*</th>
+                  <th scope="col" class="col-4 text-center">titre</th>
+                  <th scope="col" class="col-2 text-center">layout</th>
+                  <th scope="col" class="col-1">rang</th>
                   <th scope="col" class="col-4">page</th>
                   <th scope="col" class="col-1">action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="col-5">
+                  <td class="col-4">
                     <section *ngIf="selectedArticle"
                       [innerHTML]="selectedArticle.headline | smaller |smaller | safeHtml"> </section>
                   </td>
-                  <td class="col-1">
+                  <td class="col-2">
                     <input type="text" formControlName="layout" class="form-control form-control-sm">
                   <td class="col-1">
                     <input type="text" formControlName="rank" class="form-control form-control-sm">
