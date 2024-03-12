@@ -4,6 +4,7 @@ import { APIService, Article, CreatePageInput, Page } from '../API.service';
 import { ArticleService } from './article.aws.service';
 import { ToastService } from '../toaster/toast.service';
 import { Menu } from '../interfaces/navigation.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class PageService {
 
     this.api.ListPages().then((result) => {
       this._pages = result.items as Page[];
-      console.log('%s pages identifiées : ', this._pages.length, this._pages);
+      if (environment.dev_mode) console.log('%s pages identifiées : ', this._pages.length, this._pages);
       this.pages$.next(this._pages);
 
     }).catch((error) => { console.log('init pages failed !!', error) });

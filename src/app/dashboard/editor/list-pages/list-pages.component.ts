@@ -27,17 +27,25 @@ export class ListPagesComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit(): void {
-    this.pageService.pages$.subscribe((pages) => { this.pages = pages; });
+    this.pageService.pages$.subscribe((pages) => {
+      this.pages = pages;
+      this.filterPages();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.filtered_pages = this.pages.filter((page) => (page.root_menu === this.menu));
-    // si une seule page dans le menu, on la sélectionne
+    this.filterPages();
     if (this.filtered_pages.length === 1) {
       this.selected_page = this.filtered_pages[0];
       this.select.emit(this.selected_page);
       // this.selected_page.label =  this.selected_page.label.toLocaleLowerCase() ;
     }
+  }
+
+  filterPages() {
+    this.filtered_pages = this.pages.filter((page) => (page.root_menu === this.menu));
+    // si une seule page dans le menu, on la sélectionne
+
   }
 
   onSelect(page: Page): void {

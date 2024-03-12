@@ -24,6 +24,7 @@ export class ListFilesComponent {
   new_folder: string = '';
 
   constructor(
+    private articleService: ArticleService,
     private fileService: FileService,
     private toastService: ToastService
   ) { }
@@ -60,6 +61,8 @@ export class ListFilesComponent {
     this.current_folder += (item.key + '/');
     this.folder_level++;
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    this.article.directory = this.current_folder;
+    this.articleService.updateArticle(this.article);
   }
   folderUp() {
     const keys = this.current_folder.split('/');
@@ -68,6 +71,9 @@ export class ListFilesComponent {
     keys.pop();    // repA/repB/ => repA/   et repA/ => ''
     this.current_folder = (keys.length === 0) ? '' : keys.join('/') + '/';
     this.folderItems = this.fileService.genFolderItems(this.current_folder);
+    this.article.directory = this.current_folder;
+    this.articleService.updateArticle(this.article);
+
   }
 
   async showFile(item: FolderItem) {

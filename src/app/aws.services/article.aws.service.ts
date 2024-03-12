@@ -44,7 +44,7 @@ export class ArticleService {
       .then((articles) => {
         const articlesItems = articles.items as Article[];
         // console.log('loadArticles', articlesItems);
-        console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
+        if (environment.dev_mode) console.log('%s articles identifiés : ', articlesItems.length, articlesItems);
         this._articles = [...articlesItems];
         this._articles$.next(this._articles)
       })

@@ -13,7 +13,7 @@ export class CognitoService {
   private _currentAuthenticatedUser$: BehaviorSubject<any> = new BehaviorSubject<any>(this.currentUser);
 
   constructor() {
-    console.log('environment.logging_bypass : ', environment.logging_bypass);
+    if (environment.dev_mode) console.log('environment.logging_bypass : ', environment.logging_bypass);
     if (environment.logging_bypass === true) {
       this.currentUser = { username: 'Christian', license: '02439752' };
     }

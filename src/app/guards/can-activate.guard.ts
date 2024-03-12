@@ -2,6 +2,7 @@ import { CanActivateFn } from '@angular/router';
 import { CognitoService } from '../aws.services/cognito.aws.service';
 import { inject } from '@angular/core';
 import { MemberService } from '../aws.services/member.aws.service';
+import { environment } from 'src/environments/environment';
 
 export function canActivateGuard(right: string): CanActivateFn {
   return () => {
@@ -9,7 +10,7 @@ export function canActivateGuard(right: string): CanActivateFn {
     const memberService: MemberService = inject(MemberService);
     const user = authService.user;
     if (!user) {
-      console.log('user not logged in')
+      if (environment.dev_mode) console.log('user not logged in');
       return false;
     } else {
       let member = memberService.getMemberByLicense(user.license);
