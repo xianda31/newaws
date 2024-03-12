@@ -1,23 +1,29 @@
 <footer>
   <div class="container">
-    <div class="col-md-12 text-center">
-
-      <div *ngIf="contactPage && legalPage">
-        <ul class="nav justify-content-center  ">
-          <li class="nav-item"> <a class="nav-link" routerLink='/contact'>
-              contactez nous</a>
-          </li>
-          <li class="nav-item"> <a class="nav-link" routerLink='/legal'>
-              mentions légales</a> </li>
-          <li class="nav-item"> <a class="nav-link " routerLink="signup">s'enregistrer</a> </li>
-        </ul>
+    <div class="row">
+      <div class="col-md-2">
+        <img src="../../../assets/images/bcsto.jpg" style="padding-bottom: 5px; max-height: 60px; opacity: 95%;"
+          alt="bcsto">
       </div>
+      <div class="col-md-8 text-center">
 
-      <p class="col-md-12 text-center"> © 2024 BCSTO. All rights reserved.
-        <small>&nbsp;&nbsp; {{release}} </small>
-      </p>
+        <div *ngIf="contactPage && legalPage">
+          <ul class="nav justify-content-center  ">
+            <li class="nav-item"> <a class="nav-link" routerLink='/contact'>
+                contactez nous</a>
+            </li>
+            <li class="nav-item"> <a class="nav-link" routerLink='/legal'>
+                mentions légales</a> </li>
+            <li class="nav-item"> <a class="nav-link " routerLink="signup">s'enregistrer</a> </li>
+          </ul>
+        </div>
+
+        <p class="col-md-12 text-center"> © 2024 BCSTO. All rights reserved.
+          <small>&nbsp;&nbsp; {{release}} </small>
+        </p>
 
 
+      </div>
 
     </div>
 

@@ -73,22 +73,12 @@
               Contenu site</a>
           </li>
           <!-- sous-menu outils DB -->
-          <li>
+          <li *ngIf="dev_mode">
             <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-gear-fill"></i>
               base de données
             </a>
             <ul class="dropdown-menu dropdown-submenu">
-              <!-- <li>
-                <a class="dropdown-item" routerLink="back/publisher/pages">
-                  <i class="bi bi-window-stack"></i>
-                  Edition pages</a>
-              </li> -->
-              <!-- <li>
-                <a class="dropdown-item" routerLink="back/publisher/files">
-                  <i class="bi bi-file-earmark-text"></i>
-                  Edition fichiers</a>
-              </li> -->
               <li>
                 <a class="dropdown-item" routerLink="back/publisher/cleanup">
                   <i class="bi bi-collection"></i>

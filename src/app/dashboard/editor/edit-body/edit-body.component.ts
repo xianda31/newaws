@@ -5,6 +5,8 @@ import { environment } from 'src/environments/environment';
 import tinymce, { Editor } from 'tinymce';
 import { Storage } from 'aws-amplify/lib-esm';
 import { ArticleService } from 'src/app/aws.services/article.aws.service';
+import { FolderItem } from 'src/app/interfaces/files.interface';
+import { FileService } from 'src/app/shared/service/file.service';
 
 
 
@@ -13,16 +15,26 @@ import { ArticleService } from 'src/app/aws.services/article.aws.service';
   templateUrl: './edit-body.component.html',
   styleUrl: './edit-body.component.scss'
 })
-export class EditBodyComponent implements AfterViewInit, OnDestroy {
+export class EditBodyComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() article !: Article;
   // headlineEditor: Editor | null = null;
   bodyEditor: Editor | null = null;
   host: string = 'https://' + environment.BucketName + '.s3.' + environment.Region + '.amazonaws.com';
+  link_list: { title: string; value: string; }[] = [];
+  folderItems !: FolderItem[];
 
   constructor(
     private articleService: ArticleService,
+    private fileService: FileService,
   ) { }
+  ngOnInit(): void {
+    this.folderItems = this.fileService.listAllFiles(environment.S3articlesDirectory);
+    this.folderItems.forEach((item) => {
+      // console.log('item : %s', item.key);
+      this.link_list.push({ title: this.fileService.extractFilename(item.key), value: this.host + '/public/' + item.key });
+    });
+  }
 
   ngAfterViewInit(): void {
     this.openEditors();
@@ -46,10 +58,7 @@ export class EditBodyComponent implements AfterViewInit, OnDestroy {
     this.articleService.updateArticle(this.article!);
   }
 
-  fetchLinkList = () => [
-    { title: 'My page 1', value: 'https://www.tiny.cloud' },
-    { title: 'tarifs', value: 'https://bcstoapp0ee6a242edb74c79a78263aa5cb1473e113936-dev.s3.eu-west-3.amazonaws.com/public/documents/tarifs/Flyer+Formation+BCSTO+2023.pdf' }
-  ];
+  fetchLinkList = () => this.link_list;
 
 
   initBodyEditor(el: HTMLElement) {
@@ -67,7 +76,10 @@ export class EditBodyComponent implements AfterViewInit, OnDestroy {
         image_caption: true,
         link_context_toolbar: true,
         link_title: false,
-        link_quicklink: true,
+        // link_quicklink: true,
+        link_target_list: [
+          { title: 'New window', value: '_blank' }
+        ],
         link_list: (success: (arg0: { title: string; value: string; }[]) => void) => { // called on link dialog open
           const links = this.fetchLinkList(); // get link_list data
           success(links);

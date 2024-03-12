@@ -3,7 +3,7 @@
 export const environment = {
   logging_bypass: false,
   john_doe: { email: 'chrrenoux@yahoo.fr', password: 'Bogomol2024!!', credentials: 'Admin', license: '02439752' },
-
+  dev_mode: true,
   version: 'dev 5.0.0',
   spinner_tempo: 500,
   BucketName: 'bcstoapp0ee6a242edb74c79a78263aa5cb1473e113936-dev',

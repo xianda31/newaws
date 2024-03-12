@@ -156,4 +156,24 @@ export class FileService {
 
     return folderItems;
   }
+
+
+  listAllFiles(folder_path: string): FolderItem[] {
+
+    let folderItems: FolderItem[] = [];
+    // const bucket: any[] = [];
+    this.publicBucket.forEach((item: any) => {
+      if (item.key.startsWith(folder_path) && item.size) {
+        folderItems.push({ key: item.key, lastModified: item.lastModified, size: item.size, __isFile: true });
+
+      }
+    });
+
+    return folderItems;
+  }
+
+  extractFilename(path: string): string {
+    const keys = path.split('/');
+    return keys[keys.length - 1];
+  }
 }

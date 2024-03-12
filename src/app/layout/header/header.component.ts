@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Router } from '@angular/router';
 import { CognitoService } from 'src/app/aws.services/cognito.aws.service';
 import { LoggedUser } from 'src/app/interfaces/user.interface';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit, OnChanges {
   isAdmin!: boolean;
   isPublisher!: boolean;
   isSeller!: boolean;
+  dev_mode: boolean = environment.dev_mode;
 
   constructor(
     private cognitoService: CognitoService,

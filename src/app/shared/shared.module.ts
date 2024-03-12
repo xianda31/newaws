@@ -12,7 +12,6 @@ import { BucketnamePipe } from '../pipes/bucketname.pipe';
 import { SmallerPipe } from 'src/app/pipes/smaller.pipe';
 import { ViewerInputComponent } from './value-accessors/viewer-input/viewer-input.component';
 import { IconsTogglerInputComponent } from './value-accessors/icons-toggler-input/icons-toggler-input.component';
-import { RightsInputComponent } from './value-accessors/rights-input/rights-input.component';
 import { OrderByPipe } from 'src/app/pipes/order-by.pipe';
 import { ImageComponent } from '../tools/image/image.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -20,6 +19,7 @@ import { GetMenuNameComponent } from 'src/app/shared/modals/get-menu-name/get-me
 import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/get-article-name.component';
 import { ListFilesComponent } from '../dashboard/editor/list-files/list-files.component';
 import { PageTitleComponent } from '../layout/page-title/page-title.component';
+import { RightsInputComponent } from './value-accessors/rights-input/rights-input.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 

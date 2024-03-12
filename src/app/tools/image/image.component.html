@@ -1,11 +1,14 @@
-<div *ngIf="!cardMode" class="card h-100 mt-2">
-    <img *ngIf="picture" [class]="orientation" [src]="signedUrl" [alt]="alt">
+<div *ngIf="!cardMode" class="card h-100 mt-2 border-0">
+    <img *ngIf="picture"
+        [class]="picture.orientation === 'ITALIAN' ? 'img-fluid img-fit-portrait' : 'img-fluid img-fit-paysage'"
+        [src]="signedUrl" [alt]="alt">
     <div *ngIf="picture?.caption1 || picture?.caption2" class="card-body text-center g-0">
-        <div *ngIf="picture?.caption1" class="text-primary py-0">
-            {{picture.caption1}}
+        <div *ngIf="picture?.caption1">
+            <p [innerText]="picture.caption1" class="card-title text-primary"> </p>
+
         </div>
         <div *ngIf="picture?.caption2" class="text-muted">
-            <small> {{picture.caption2}} </small>
+            <h6 [innerText]="picture.caption2"> </h6>
         </div>
     </div>
 </div>
@@ -13,13 +16,13 @@
 <div *ngIf="cardMode" class="card h-100 mt-2 p-0">
     <img *ngIf="picture" class="card-img img-flat " [src]="signedUrl" [alt]="alt">
     <div class="card-img-overlay">
-        <h4> {{picture.caption1}} </h4>
+        <h4 [innerText]="picture.caption1" class="card-title text-primary"> </h4>
     </div>
-    <div class="card-body ">
+    <div class="card-body g-0">
 
-        <div *ngIf=" picture?.caption2" class="text-center g-0">
+        <div *ngIf=" picture?.caption2" class="text-center ">
             <div *ngIf="picture?.caption2" class="text-muted">
-                <small> {{picture.caption2}} </small>
+                <h6 [innerText]="picture.caption2"> </h6>
             </div>
         </div>
     </div>

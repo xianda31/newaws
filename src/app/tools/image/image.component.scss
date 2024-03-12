@@ -1,13 +1,15 @@
 .card .img-fit-portrait {
     // aspect-ratio: 9/16;
+    max-height: 10rem;
     aspect-ratio: 1/1.45;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 
 .card .img-fit-paysage {
     // aspect-ratio: 16/9;
+    max-height: 10rem;
     aspect-ratio: 1.45/1;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 
 
