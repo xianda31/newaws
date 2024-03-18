@@ -27,7 +27,7 @@ export class EditPageComponent implements OnInit, OnChanges {
     if (changes['page'].isFirstChange()) return;
     if (this.page !== null) {
       this.hasArticles = (this.page.articles && this.page.articles?.items.length > 0) ? true : false;
-      this.pageForm.patchValue(this.page);
+      this.init_form(this.page);
     }
   }
 
@@ -38,6 +38,7 @@ export class EditPageComponent implements OnInit, OnChanges {
       id: new FormControl(''),
       root_menu: new FormControl(''),
       label: new FormControl(''),
+      rank: new FormControl(''),
       hidden: new FormControl(''),
       description: new FormControl(''),
       path: new FormControl(''),
@@ -46,20 +47,37 @@ export class EditPageComponent implements OnInit, OnChanges {
     });
 
     if (this.page !== null) {
-      this.pageForm.patchValue(this.page);
+      this.init_form(this.page);
       this.hasArticles = (this.page.articles && this.page.articles?.items.length > 0) ? true : false;
 
     }
   }
 
+  init_form(page: Page): void {
+    let page_ = { ...page, rank: this.get_rank(page.label) };
+    page_.label = this.strip_order(page.label);
+    this.pageForm.patchValue(page_);
+  }
 
   onUpdate(): void {
-    this.PageService.updatePage(this.pageForm.value, true);
+    let { ...page_ } = this.pageForm.value;
+    page_.label = page_.rank + '#' + page_.label;
+    delete page_.rank;
+    this.PageService.updatePage(page_, true);
   }
 
   onDelete(): void {
-    this.PageService.deletePage(this.pageForm.value);
+    const { rank, ...page } = this.pageForm.value;
+    this.PageService.deletePage(page);
     this.page = null;
     this.pageChange.emit(this.page);
   }
+
+  strip_order(label: string): string {
+    return label.replace(/^\w\#/g, '');
+  }
+  get_rank(label: string): number {
+    return label.split('#')[0] ? parseInt(label.split('#')[0]) : 0;
+  }
+
 }

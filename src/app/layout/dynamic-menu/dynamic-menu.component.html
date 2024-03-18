@@ -1,18 +1,19 @@
 <div class="row">
 
-    <section class="col" *ngFor="let item of menuMap$ | async | keyvalue ">
-        <li *ngIf="item.value && item.value.length === 1" class="nav-item  ">
+    <section class="col" *ngFor="let menu of menuMap$ | async | keyvalue ">
+        <li *ngIf="menu.value && menu.value.length === 1" class="nav-item  ">
             <a class="nav-link text-success" routerLinkActive="active-link "
-                [routerLink]="[item.value[0].route_path]">{{item.value[0].label.toUpperCase()}}</a>
+                [routerLink]="[menu.value[0].route_path]">{{menu.value[0].label.toUpperCase()}}</a>
         </li>
 
-        <li *ngIf="item.value.length > 1" class="nav-item dropdown">
+        <li *ngIf="menu.value.length > 1" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-success " role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                {{stripOrder(item.key).toUpperCase()}}</a>
+                {{strip_order(menu.key).toUpperCase()}}</a>
             <ul class="dropdown-menu">
-                <li *ngFor="let subMenu of item.value">
-                    <a class="dropdown-item" [routerLink]=" [subMenu.route_path]">{{subMenu.label}}</a>
+                <li *ngFor="let sub_menu of menu.value">
+                    <a class="dropdown-item" [routerLink]=" [sub_menu.route_path]">
+                        {{strip_order(sub_menu.label)}}</a>
                 </li>
             </ul>
         </li>

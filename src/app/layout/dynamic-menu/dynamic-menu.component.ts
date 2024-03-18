@@ -35,7 +35,9 @@ export class DynamicMenuComponent implements OnChanges {
   }
 
 
-  stripOrder(root: string): string {
+  strip_order(root: string): string {
     return root.replace(/^\w\#/g, '');
   }
+
+
 }

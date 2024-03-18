@@ -122,6 +122,8 @@ export class PageService {
       if (menuMap.has(root)) {
         let arr = menuMap.get(root)!;
         arr.push(menu);
+        // sort menu's pages by n#label
+        arr.sort((a, b) => (a.label > b.label ? 1 : -1));
       } else {
         menuMap.set(root, [menu]);
       };
@@ -129,9 +131,8 @@ export class PageService {
 
     // console.log('menuMap: %o', menuMap);
     return menuMap;
-
-
   }
+
 }
 
 

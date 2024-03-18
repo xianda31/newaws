@@ -1,0 +1,15 @@
+.list-group-item.movable {
+    cursor: grab;
+    transition: transform 250ms ease-in-out;
+}
+
+
+.list-group-item.cdk-drag-preview {
+    opacity: 0.8;
+    background-color: #cada88;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-group-item:hover {
+    font-weight: bold;
+}

@@ -44,8 +44,8 @@ export class ListMenusComponent {
           root_menus[page.root_menu] = root_menus[page.root_menu] ? root_menus[page.root_menu] + 1 : 1;
         }
       });
-      this.drag_list = Object.keys(root_menus).map((key) => ({ key, rank: this.extractRank(key) }));
-      this.fix_list = Object.keys(hidden_menus).map((key) => ({ key, rank: this.extractRank(key) }));
+      this.drag_list = Object.keys(root_menus).map((key) => ({ key, rank: this.get_rank(key) }));
+      this.fix_list = Object.keys(hidden_menus).map((key) => ({ key, rank: this.get_rank(key) }));
     });
   }
 
@@ -54,10 +54,10 @@ export class ListMenusComponent {
     this.select.emit(menu);
 
   }
-  extractRank(root: string): number {
+  get_rank(root: string): number {
     return root.split('#')[0] ? parseInt(root.split('#')[0]) : 0;
   }
-  stripOrder(root: string): string {
+  strip_order(root: string): string {
     return root.replace(/^\w\#/g, '');
   }
 
@@ -90,7 +90,7 @@ export class ListMenusComponent {
       root_menu.rank = 1 + index
       this.pages.forEach((page) => {
         if (page.root_menu === root_menu.key) {
-          page.root_menu = root_menu.rank + '#' + this.stripOrder(page.root_menu);
+          page.root_menu = root_menu.rank + '#' + this.strip_order(page.root_menu);
           this.pageService.updatePage(page);
         }
       }

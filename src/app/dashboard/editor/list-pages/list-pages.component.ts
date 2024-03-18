@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { CreatePageInput, Page } from 'src/app/API.service';
 import { PageService } from 'src/app/aws.services/page.aws.service';
 import { GetMenuNameComponent } from '../../../shared/modals/get-menu-name/get-menu-name.component';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-list-pages',
@@ -44,7 +45,7 @@ export class ListPagesComponent implements OnInit, OnChanges {
   filter_pages() {
     this.filtered_pages = this.pages
       .filter((page) => (page.root_menu === this.menu))
-      .sort((a, b) => (a.label > b.label ? 1 : -1));
+      .sort((a, b) => (this.get_rank(a.label) > this.get_rank(b.label) ? 1 : -1));
   }
 
   select_page(page: Page): void {
@@ -73,5 +74,19 @@ export class ListPagesComponent implements OnInit, OnChanges {
     });
   }
 
+  dropped(event: any) {
+    moveItemInArray(this.filtered_pages, event.previousIndex, event.currentIndex);
+    console.log('dropped', this.filtered_pages);
+    this.filtered_pages.forEach((page, index) => {
+      page.label = index + '#' + this.strip_order(page.label);
+      this.pageService.updatePage(page);
+    });
+  }
 
+  strip_order(root: string): string {
+    return root.replace(/^\w\#/g, '');
+  }
+  get_rank(label: string): number {
+    return label.split('#')[0] ? parseInt(label.split('#')[0]) : 0;
+  }
 }

@@ -4,11 +4,11 @@
         les sous-menus
     </label>
 
-    <ul class="list-group shadow">
-        <li *ngFor=" let page of filtered_pages "
-            [class]=" 'list-group-item py-1' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "
+    <ul class="list-group shadow" cdkDropList (cdkDropListDropped)="dropped($event)" [cdkDropListData]="filtered_pages">
+        <li cdkDrag *ngFor=" let page of filtered_pages "
+            [class]=" 'list-group-item py-1 movable' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "
             (click)="select_page(page)">
-            {{page.label}}
+            {{strip_order(page.label)}}
         </li>
     </ul>
     <div *ngIf="menu" class="text-start mt-2 ">
