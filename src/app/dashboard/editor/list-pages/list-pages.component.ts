@@ -18,7 +18,7 @@ export class ListPagesComponent implements OnInit, OnChanges {
   pages: Page[] = [];
   filtered_pages: Page[] = [];
   selected_page: Page | null = null;
-  pages$: Observable<Page[]> = this.pageService.pages$;
+  // pages$: Observable<Page[]> = this.pageService.pages$;
 
   constructor(
     private pageService: PageService,
@@ -29,26 +29,25 @@ export class ListPagesComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.pageService.pages$.subscribe((pages) => {
       this.pages = pages;
-      this.filterPages();
+      this.filter_pages();
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.filterPages();
+    this.filter_pages();
     if (this.filtered_pages.length === 1) {
-      this.selected_page = this.filtered_pages[0];
-      this.select.emit(this.selected_page);
+      this.select_page(this.filtered_pages[0]);
       // this.selected_page.label =  this.selected_page.label.toLocaleLowerCase() ;
     }
   }
 
-  filterPages() {
-    this.filtered_pages = this.pages.filter((page) => (page.root_menu === this.menu));
-    // si une seule page dans le menu, on la sélectionne
-
+  filter_pages() {
+    this.filtered_pages = this.pages
+      .filter((page) => (page.root_menu === this.menu))
+      .sort((a, b) => (a.label > b.label ? 1 : -1));
   }
 
-  onSelect(page: Page): void {
+  select_page(page: Page): void {
     this.selected_page = page;
     this.select.emit(page);
   }
@@ -65,7 +64,7 @@ export class ListPagesComponent implements OnInit, OnChanges {
         hidden: false,
         description: 'nouvelle page',
         path: path,
-        viewer: 'ROW',
+        viewer: 'ROW',    // par défaut
         public: true,
       };
       this.pageService.createPage(newPage);

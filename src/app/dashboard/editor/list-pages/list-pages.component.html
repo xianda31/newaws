@@ -7,7 +7,7 @@
     <ul class="list-group shadow">
         <li *ngFor=" let page of filtered_pages "
             [class]=" 'list-group-item py-1' + ((selected_page && page.id === selected_page.id) ?' bg-secondary text-white' :'') "
-            (click)="onSelect(page)">
+            (click)="select_page(page)">
             {{page.label}}
         </li>
     </ul>
