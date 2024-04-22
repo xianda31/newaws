@@ -23,6 +23,21 @@
       },
       "api": {
         "bcstoapp": {}
+      },
+      "function": {
+        "ffbgateway": {
+          "deploymentBucketName": "amplify-bcstoapp-dev-113936-deployment",
+          "s3Key": "amplify-builds/ffbgateway-52336b51487a4633635a-build.zip"
+        },
+        "bcstoapp5db07b8f": {
+          "deploymentBucketName": "amplify-bcstoapp-dev-113936-deployment",
+          "s3Key": "amplify-builds/bcstoapp5db07b8f-7941464e465433416b49-build.zip"
+        },
+        "myTestFunction": {
+          "deploymentBucketName": "amplify-bcstoapp-dev-113936-deployment",
+          "s3Key": "amplify-builds/myTestFunction-446e5067444371503258-build.zip"
+        },
+        "myFFBapi": {}
       }
     }
   }

@@ -4,6 +4,7 @@ import { MembersComponent } from '../members/members.component';
 import { canActivateGuard } from 'src/app/guards/can-activate.guard';
 import { CleanupComponent } from '../cleanup/cleanup.component';
 import { EditSiteComponent } from '../editor/edit-site/edit-site.component';
+import { ListTournamentsComponent } from 'src/app/ffb/tournaments/list-tournaments/list-tournaments.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     path: 'publisher', canActivate: [canActivateGuard('Publisher')], children: [
       { path: 'cleanup', component: CleanupComponent },
       { path: 'editor', component: EditSiteComponent },
+      { path: 'tournaments', component: ListTournamentsComponent }
     ]
   },
 

@@ -1,0 +1,8 @@
+<div *ngFor="let item of lambdaUrls" class="d-inline">
+    <div class="d-line">
+        {{item.title}} : {{item.url}}
+    </div>
+    <button class="btn btn-primary" (click)="lambda_get(item.url)">GET</button>
+</div>
+<span>{{lambda_resp$ | async}}</span>
+<button class="btn btn-info" (click)="clear_resp()">clear</button>

@@ -20,6 +20,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { DynamicMenuComponent } from './layout/dynamic-menu/dynamic-menu.component';
 import { FrontPageComponent } from './layout/front-page/front-page.component';
 import { DisplayArticleComponent } from './layout/display-article/display-article.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,11 +39,12 @@ import { DisplayArticleComponent } from './layout/display-article/display-articl
     DashboardComponent,
     DynamicMenuComponent,
     FrontPageComponent,
-    DisplayArticleComponent
+    DisplayArticleComponent,
 
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     ToolsModule,
     NgbModule

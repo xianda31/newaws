@@ -20,6 +20,7 @@ import { GetArticleNameComponent } from 'src/app/shared/modals/get-article-name/
 import { ListFilesComponent } from '../dashboard/editor/list-files/list-files.component';
 import { PageTitleComponent } from '../layout/page-title/page-title.component';
 import { RightsInputComponent } from './value-accessors/rights-input/rights-input.component';
+import { ListTournamentsComponent } from '../ffb/tournaments/list-tournaments/list-tournaments.component';
 // import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 
@@ -37,6 +38,7 @@ import { RightsInputComponent } from './value-accessors/rights-input/rights-inpu
     ImageComponent,
     ListFilesComponent,
     PageTitleComponent,
+    ListTournamentsComponent,
     FilesizePipe,
     SafeHtmlPipe,
     BucketnamePipe,
@@ -61,6 +63,8 @@ import { RightsInputComponent } from './value-accessors/rights-input/rights-inpu
     ImageComponent,
     ListFilesComponent,
     PageTitleComponent,
+    ListTournamentsComponent,
+
     FormsModule,
     ReactiveFormsModule,
     DragDropModule,

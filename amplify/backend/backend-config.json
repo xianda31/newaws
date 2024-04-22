@@ -47,10 +47,78 @@
       "service": "Cognito"
     }
   },
+  "function": {
+    "bcstoapp5db07b8f": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "ffbgateway": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "myTestFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "hosting": {
     "S3AndCloudFront": {
       "providerPlugin": "awscloudformation",
       "service": "S3AndCloudFront"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_bcstoapp5db07b8f_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bcstoapp5db07b8f"
+        }
+      ]
+    },
+    "AMPLIFY_function_bcstoapp5db07b8f_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "bcstoapp5db07b8f"
+        }
+      ]
+    },
+    "AMPLIFY_function_ffbgateway_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ffbgateway"
+        }
+      ]
+    },
+    "AMPLIFY_function_ffbgateway_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "ffbgateway"
+        }
+      ]
+    },
+    "AMPLIFY_function_myTestFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myTestFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_myTestFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "myTestFunction"
+        }
+      ]
     }
   },
   "storage": {

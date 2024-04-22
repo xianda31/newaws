@@ -1,0 +1,7 @@
+{
+  "httpMethod": "GET",
+  "path": "/ffb/ping",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}

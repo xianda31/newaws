@@ -38,6 +38,11 @@
           </li>
         </ul>
       </li>
+      <li>
+        <a class="dropdown-item" routerLink="back/publisher/tournaments">
+          <!-- <i class="bi bi-collection"></i> -->
+          test lambda</a>
+      </li>
       <!-- menu Outils -->
       <li *ngIf="loggedUser" class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-success " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -76,9 +81,14 @@
           <li *ngIf="dev_mode">
             <a class="dropdown-item" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-gear-fill"></i>
-              base de données
+              dev tools
             </a>
             <ul class="dropdown-menu dropdown-submenu">
+              <li>
+                <a class="dropdown-item" routerLink="back/publisher/tournaments">
+                  <!-- <i class="bi bi-collection"></i> -->
+                  tournois</a>
+              </li>
               <li>
                 <a class="dropdown-item" routerLink="back/publisher/cleanup">
                   <i class="bi bi-collection"></i>
